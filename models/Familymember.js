@@ -11,5 +11,3 @@ module.exports = (sequelize, DataTypes) => {
     };
     return Familymember;
 };
-
-
