@@ -6,6 +6,6 @@ module.exports = (sequelize, DataTypes) => {
         city: { type: DataTypes.STRING, allowNull: false },
         zip5: { type: DataTypes.STRING, allowNull: false }
     })
+    return Address;
 };
 
-return Address;
