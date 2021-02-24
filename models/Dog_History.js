@@ -1,7 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
     const Dog_History = sequelize.define("Dog_History", {
-        date_from: DataTypes.Date,
-        date_to: DataTypes.Date
+        date_from: DataTypes.DATEONLY,
+        date_to: DataTypes.DATEONLY
     });
  
     Dog_History.associate = db => {
