@@ -3,7 +3,7 @@ module.exports = (sequelize, DataTypes) => {
         date_from: DataTypes.Date,
         date_to: DataTypes.Date
     });
-
+ 
     Dog_History.associate = db => {
         db.Dog.hasMany(Dog_History);
         Dog_History.belongsTo(db.Dog);
