@@ -5,6 +5,7 @@ import {BrowserRouter, Route, Switch} from "react-router-dom";
 import theme from "../src/components/Theme";
 import ResponsiveDrawer from "../src/components/Header"; 
 import DogDossier from "../src/pages/DogDossier"
+import DogDossiersAll from "../src/pages/DogDossiersAll"
 
 export default function App() {
     return (
@@ -21,7 +22,7 @@ export default function App() {
                     <Route path="/Manage ASF Users" />
                     <Route path="/ASF Settings" />
                 </Switch>
-                <DogDossier />
+                <DogDossiersAll />
             </BrowserRouter>
         </ThemeProvider>
     )
