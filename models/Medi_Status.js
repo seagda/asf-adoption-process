@@ -12,8 +12,8 @@ module.exports = (sequelize, DataTypes) => {
     Medi_Status.associate = db => {
         Medi_Status.belongsTo(db.Dog);
         db.Dog.hasOne(Medi_Status);
+        db.Document.belongsTo(Medi_Status, {foreignKey: {allowNull: true}})
         Medi_Status.hasMany(db.Document);
-        db.Document.hasOne(Medi_Status, {foreignKey: {allowNull: true}})
     };
 
     return Medi_Status;
