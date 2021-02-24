@@ -5,8 +5,8 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     App_Type.associate = db => {
-        App_Type.belongsToMany(db.App_Question, { through: "App_Types_Questions" });
-        db.App_Question.belongsToMany(App_Type, { through: "App_Types_Questions" });
+        App_Type.belongsToMany(db.App_Question, { through: "App_TypesQuestions" });
+        db.App_Question.belongsToMany(App_Type, { through: "App_TypesQuestions" });
     };
 
     return App_Type;
