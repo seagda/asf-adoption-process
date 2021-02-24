@@ -28,8 +28,8 @@ module.exports = (sequelize, DataTypes) => {
 
     Dog.associate = db => {
         Dog.hasOne(db.Dog_Photo, { foreignKey: { name: "profile_photo", allowNull: true } });
-        db.External_Contact.hasMany(Dog, { foreignKey: { name: "origin_id", allowNull: true } });
-        Dog.belongsTo(db.External_Contact);
+        db.Ext_Contact.hasMany(Dog, { foreignKey: { name: "origin_id", allowNull: true } });
+        Dog.belongsTo(db.Ext_Contact);
         db.User.hasMany(Dog, { foreignKey: "currently_with_id" });
         Dog.belongsTo(db.User);
         db.Microchip_MFG.hasMany(Dog, { foreignKey: { allowNull: true } });
