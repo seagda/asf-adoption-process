@@ -66,6 +66,8 @@ module.exports = (sequelize, DataTypes) => {
 
         User.belongsToMany(db.Region, { through: "UsersRegions" });
         db.Region.belongsToMany(User, { through: "UsersRegions" });
+
+        User.hasMany(db.Alert, { foreignKey: { name: "to_user_id", allowNull: false } });
     };
 
     return User;
