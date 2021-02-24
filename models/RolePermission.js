@@ -3,6 +3,10 @@ module.exports = (sequelize, DataTypes) => {
         region_lock: {
             type: DataTypes.BOOLEAN,
             defaultValue: true
+        },
+        write: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false
         }
     });
 

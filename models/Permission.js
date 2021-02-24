@@ -3,10 +3,6 @@ module.exports = (sequelize, DataTypes) => {
         name: {
             type: DataTypes.STRING,
             allowNull: false
-        },
-        write: {
-            type: DataTypes.BOOLEAN,
-            defaultValue: false
         }
     });
 
