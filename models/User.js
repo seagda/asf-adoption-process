@@ -62,6 +62,10 @@ module.exports = (sequelize, DataTypes) => {
     User.associate = db => {
         User.hasOne(db.Address);
         db.Auth.belongsTo(User);
+
+        User.belongsToMany(db.Role, { through: "UsersRoles" });
+        db.Role.belongsToMany(User, { through: "UsersRoles" });
+
         User.belongsToMany(db.Region, { through: "UsersRegions" });
         db.Region.belongsToMany(User, { through: "UsersRegions" });
     };
