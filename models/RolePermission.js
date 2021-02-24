@@ -10,4 +10,6 @@ module.exports = (sequelize, DataTypes) => {
         db.Role.belongsToMany(db.Permission, { through: RolePermission });
         db.Permission.belongsToMany(db.Role, { through: RolePermission });
     };
+
+    return RolePermission;
 };
