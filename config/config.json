@@ -1,0 +1,12 @@
+{
+  "development": {
+    "username": "root",
+    "password": "password",
+    "database": "asf_dog_dossiers",
+    "host": "localhost",
+    "dialect": "mysql"
+  },
+  "production": {
+    "use_env_variable": "JAWSDB_URL"
+  }
+}
