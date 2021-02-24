@@ -6,6 +6,7 @@ import theme from "../src/components/Theme";
 import ResponsiveDrawer from "../src/components/Header"; 
 import DogDossier from "../src/pages/DogDossier"
 import DogDossiersAll from "../src/pages/DogDossiersAll"
+import CreateUser from "../src/pages/CreateUser";
 
 export default function App() {
     return (
@@ -23,6 +24,8 @@ export default function App() {
                     <Route path="/ASF Settings" />
                 </Switch>
                 <DogDossiersAll />
+                {/* <DogDossier /> */}
+                <CreateUser/>
             </BrowserRouter>
         </ThemeProvider>
     )
