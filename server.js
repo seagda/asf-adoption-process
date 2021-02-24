@@ -15,6 +15,8 @@ app.use(express.json());
 
 // API routes go here
 
+app.use("/api/auth", require("./controllers/auth"));
+
 if (env === "production") {
     app.use(express.static("client/build"));
     app.get((req, res) => res.sendFile(path.join(__dirname, "./client/build/index.html")));
