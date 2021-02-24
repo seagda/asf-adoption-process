@@ -10,8 +10,8 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     Ext_Contact.associate = db => {
-        Ext_Contact.hasOne(db.Address);
-        Ext_Contact.hasOne(db.Region);
+        Ext_Contact.belongsTo(db.Address);
+        Ext_Contact.belongsTo(db.Region);
     };
 
     return Ext_Contact;

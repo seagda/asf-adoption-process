@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     Event.associate = db => {
-        Event.hasOne(db.Address);
+        Event.belongsTo(db.Address);
 
         Event.belongsToMany(db.Ext_Contact, { through: "EventsContacts" });
         db.Ext_Contact.belongsToMany(Event, { through: "EventsContacts" });
