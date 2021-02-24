@@ -3,7 +3,7 @@ module.exports = (sequelize, DataTypes) => {
         name: {type: DataTypes.STRING, allowNull: false} 
 
     })
+    return App_Type;
 };
 
 
-return App_Type;
