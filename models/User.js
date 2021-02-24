@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
     const User = sequelize.define("User", {
-        create_key: DataTypes.STRING,
+        createKey: DataTypes.STRING,
         email: {
             type: DataTypes.STRING,
             validate: { isEmail: true },
@@ -8,11 +8,11 @@ module.exports = (sequelize, DataTypes) => {
             unique: true
         },
         phone: DataTypes.STRING,
-        first_name: DataTypes.STRING,
-        last_name: DataTypes.STRING,
+        firstName: DataTypes.STRING,
+        lastName: DataTypes.STRING,
         password: DataTypes.STRING,
         dob: DataTypes.DATEONLY,
-        photo_url: {
+        photoUrl: {
             type: DataTypes.STRING,
             validate: { isUrl: true }
         },
@@ -20,12 +20,12 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.BOOLEAN,
             defaultValue: true
         },
-        admin_notes: DataTypes.STRING,
+        adminNotes: DataTypes.STRING,
         blocked: {
             type: DataTypes.BOOLEAN,
             defaultValue: false
         },
-        max_capacity: {
+        maxCapacity: {
             type: DataTypes.INTEGER,
             defaultValue: 0
         },
@@ -41,11 +41,11 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.BOOLEAN,
             defaultValue: false
         },
-        with_behavior_issues: {
+        withBehaviorIssues: {
             type: DataTypes.BOOLEAN,
             defaultValue: false
         },
-        with_medical_issues: {
+        withMedicalIssues: {
             type: DataTypes.BOOLEAN,
             defaultValue: false
         },
@@ -53,7 +53,7 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.BOOLEAN,
             defaultValue: false
         }
-    });
+    }, { underscored: true });
 
     User.associate = db => {
         User.belongsTo(db.Address);
@@ -67,7 +67,7 @@ module.exports = (sequelize, DataTypes) => {
         User.belongsToMany(db.Region, { through: "UsersRegions" });
         db.Region.belongsToMany(User, { through: "UsersRegions" });
 
-        User.hasMany(db.Alert, { foreignKey: { name: "to_user_id", allowNull: false } });
+        User.hasMany(db.Alert, { foreignKey: { name: "toUserId", allowNull: false } });
     };
 
     return User;

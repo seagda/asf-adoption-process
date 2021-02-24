@@ -1,8 +1,9 @@
 module.exports = (sequelize, DataTypes) => {
-    const Role = sequelize.define("Role", {
+    const AppStatus = sequelize.define("AppStatus", {
         name: { type: DataTypes.STRING, allowNull: false }
+
     }, { underscored: true });
-    return Role;
+    return AppStatus;
 };
 
 

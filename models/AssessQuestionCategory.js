@@ -1,8 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
-    const Role = sequelize.define("Role", {
+    const AssessQuestionCategory = sequelize.define("AssessQuestionCategory", {
         name: { type: DataTypes.STRING, allowNull: false }
     }, { underscored: true });
-    return Role;
+    return AssessQuestionCategory;
 };
-
-

@@ -1,8 +1,8 @@
 module.exports = (sequelize, DataTypes) => {
     const Document = sequelize.define("Document", {
-        url: {type:DataTypes.STRING, allowNull: false, validate: { isUrl: true }},
-        desc: {type:DataTypes.STRING, allowNull: false}
-    });
+        url: { type: DataTypes.STRING, allowNull: false, validate: { isUrl: true } },
+        desc: { type: DataTypes.STRING, allowNull: false }
+    }, { underscored: true });
 
     Document.associate = db => {
         db.Dog.hasMany(Document);
@@ -12,4 +12,3 @@ module.exports = (sequelize, DataTypes) => {
 };
 
 
- 

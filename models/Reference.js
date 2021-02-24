@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
     const Reference = sequelize.define("Reference", {
-        full_name: DataTypes.STRING,
+        fullName: DataTypes.STRING,
         email: {
             type: DataTypes.STRING,
             validate: { isEmail: true },
@@ -11,10 +11,10 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.BOOLEAN,
             defaultValue: false
         },
-        date_contacted: DataTypes.DATEONLY,
+        dateContacted: DataTypes.DATEONLY,
         notes: DataTypes.STRING
-    });
-    
+    }, { underscored: true });
+
     Reference.associate = db => {
         Reference.belongsTo(db.User);
         db.User.hasMany(Reference);

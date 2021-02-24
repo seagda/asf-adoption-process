@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
     const RolePermission = sequelize.define("RolePermission", {
-        region_lock: {
+        regionLock: {
             type: DataTypes.BOOLEAN,
             defaultValue: true
         },
@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.BOOLEAN,
             defaultValue: false
         }
-    });
+    }, { underscored: true });
 
     RolePermission.associate = db => {
         db.Role.hasMany(RolePermission);

@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
     const Dog = sequelize.define("Dog", {
-        asf_id: {
+        asfId: {
             type: DataTypes.INTEGER,
             unique: true,
             allowNull: false
@@ -11,12 +11,12 @@ module.exports = (sequelize, DataTypes) => {
         },
         gender: DataTypes.ENUM("male", "female"),
         dob: DataTypes.DATEONLY,
-        microchip_id: DataTypes.INTEGER,
-        is_purebred: DataTypes.BOOLEAN,
-        secondary_breed: DataTypes.STRING,
-        pull_cost: DataTypes.INTEGER,
-        behavior_issues: DataTypes.STRING,
-        medical_issues: DataTypes.STRING,
+        microchipId: DataTypes.INTEGER,
+        isPurebred: DataTypes.BOOLEAN,
+        secondaryBreed: DataTypes.STRING,
+        pullCost: DataTypes.INTEGER,
+        behaviorIssues: DataTypes.STRING,
+        medicalIssues: DataTypes.STRING,
         size: DataTypes.ENUM("mini", "small", "medium", "large"),
         weight: DataTypes.DECIMAL,
         coat: DataTypes.STRING,
@@ -24,22 +24,22 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.BOOLEAN,
             defaultValue: false
         }
-    });
+    }, { underscored: true });
 
     Dog.associate = db => {
-        Dog.hasOne(db.Dog_Photo, { foreignKey: { name: "profile_photo", allowNull: true } });
+        Dog.hasOne(db.DogPhoto, { foreignKey: { name: "profilePhoto", allowNull: true } });
 
-        db.Ext_Contact.hasMany(Dog, { foreignKey: { name: "origin_id", allowNull: true } });
-        Dog.belongsTo(db.Ext_Contact, { foreignKey: { name: "origin_id", allowNull: true } });
+        db.ExtContact.hasMany(Dog, { foreignKey: { name: "originId", allowNull: true } });
+        Dog.belongsTo(db.ExtContact, { foreignKey: { name: "originId", allowNull: true } });
 
-        db.User.hasMany(Dog, { foreignKey: "currently_with_id" });
-        Dog.belongsTo(db.User, { foreignKey: "currently_with_id" });
+        db.User.hasMany(Dog, { foreignKey: "currentlyWithId" });
+        Dog.belongsTo(db.User, { foreignKey: "currentlyWithId" });
 
-        db.Microchip_MFG.hasMany(Dog);
-        Dog.belongsTo(db.Microchip_MFG);
-        
-        db.Dog_Status.hasMany(Dog);
-        Dog.belongsTo(db.Dog_Status);
+        db.MicrochipMFG.hasMany(Dog);
+        Dog.belongsTo(db.MicrochipMFG);
+
+        db.DogStatus.hasMany(Dog);
+        Dog.belongsTo(db.DogStatus);
     };
 
     return Dog;
