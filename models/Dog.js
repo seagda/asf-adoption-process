@@ -35,8 +35,8 @@ module.exports = (sequelize, DataTypes) => {
         db.User.hasMany(Dog, { foreignKey: "currentlyWithId" });
         Dog.belongsTo(db.User, { foreignKey: "currentlyWithId" });
 
-        db.MicrochipMFG.hasMany(Dog);
-        Dog.belongsTo(db.MicrochipMFG);
+        db.MicrochipMfg.hasMany(Dog);
+        Dog.belongsTo(db.MicrochipMfg);
 
         db.DogStatus.hasMany(Dog);
         Dog.belongsTo(db.DogStatus);

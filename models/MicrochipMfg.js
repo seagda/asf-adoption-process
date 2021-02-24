@@ -1,8 +1,8 @@
 module.exports = (sequelize, DataTypes) => {
-    const MicrochipMFG = sequelize.define("MicrochipMFG", {
+    const MicrochipMfg = sequelize.define("MicrochipMfg", {
         name: { type: DataTypes.STRING, allowNull: false }
     }, { underscored: true });
-    return MicrochipMFG;
+    return MicrochipMfg;
 };
 
 
