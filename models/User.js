@@ -63,5 +63,7 @@ module.exports = (sequelize, DataTypes) => {
         User.hasOne(db.Address);
         User.hasOne(db.Auth);
     };
+
+    return User;
 };
 
