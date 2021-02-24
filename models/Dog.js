@@ -28,12 +28,16 @@ module.exports = (sequelize, DataTypes) => {
 
     Dog.associate = db => {
         Dog.hasOne(db.Dog_Photo, { foreignKey: { name: "profile_photo", allowNull: true } });
+
         db.Ext_Contact.hasMany(Dog, { foreignKey: { name: "origin_id", allowNull: true } });
-        Dog.belongsTo(db.Ext_Contact);
+        Dog.belongsTo(db.Ext_Contact, { foreignKey: { name: "origin_id", allowNull: true } });
+
         db.User.hasMany(Dog, { foreignKey: "currently_with_id" });
-        Dog.belongsTo(db.User);
-        db.Microchip_MFG.hasMany(Dog, { foreignKey: { allowNull: true } });
+        Dog.belongsTo(db.User, { foreignKey: "currently_with_id" });
+
+        db.Microchip_MFG.hasMany(Dog);
         Dog.belongsTo(db.Microchip_MFG);
+        
         db.Dog_Status.hasMany(Dog);
         Dog.belongsTo(db.Dog_Status);
     };
