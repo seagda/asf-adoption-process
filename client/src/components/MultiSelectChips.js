@@ -1,3 +1,6 @@
+// re-use this as an input for multi select options, takes an array of options
+// props 
+
 import React from 'react'
 import Input from '@material-ui/core/Input';
 import { makeStyles, useTheme } from '@material-ui/core/styles'
@@ -9,29 +12,20 @@ import Chip from '@material-ui/core/Chip';
 
 
 const useStyles=makeStyles(theme => ({
-    mainContainer: {
-        marginTop: "5em",
-        marginLeft: "20em", 
-        marginRight: "110em",
-        [theme.breakpoints.down("xs")]:{
-            marginLeft: "1em"
-        }
-    }, 
     formControl: {
-        marginLeft: theme.spacing(80),
-        marginTop: theme.spacing(20),
-        minWidth: 120,
-        maxWidth: 300,
+      margin: theme.spacing(1),
+      minWidth: 450,
+      maxWidth: 450,
       },
       chips: {
         display: 'flex',
         flexWrap: 'wrap',
       },
       chip: {
-        margin: 8,
+        margin: 2,
       },
       noLabel: {
-        marginTop: theme.spacing(70),
+        marginTop: theme.spacing(3),
       }
 }))
 
@@ -46,11 +40,11 @@ const MenuProps = {
   },
 };
 
-const names = [
-  'North East',
-  'Texas',
-  'Pacific North West'
-];
+// const names = [
+//   'North East',
+//   'Texas',
+//   'Pacific North West'
+// ];
 
 function getStyles(name, personName, theme) {
     return {
@@ -61,7 +55,7 @@ function getStyles(name, personName, theme) {
     };
   }
 
-  export default function RegionSelectMenu() {
+  export default function MultiSelectChips(props) {
     const classes = useStyles();
     const theme = useTheme();
     const [personName, setPersonName] = React.useState([]);
@@ -85,7 +79,8 @@ function getStyles(name, personName, theme) {
     return (
         <div>
           <FormControl className={classes.formControl}>
-            <InputLabel id="demo-mutiple-chip-label">Select Region</InputLabel>
+            {/* add the title to the input field via props below */}
+            <InputLabel id="demo-mutiple-chip-label">{props.title}</InputLabel>
             <Select
               labelId="demo-mutiple-chip-label"
               id="demo-mutiple-chip"
@@ -101,8 +96,8 @@ function getStyles(name, personName, theme) {
                 </div>
               )}
               MenuProps={MenuProps}
-            >
-              {names.map((name) => (
+              //  pass in the props below which are names in this case
+            > {props.names.map((name) => (
                 <MenuItem key={name} value={name} style={getStyles(name, personName, theme)}>
                   {name}
                 </MenuItem>

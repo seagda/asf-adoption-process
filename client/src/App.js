@@ -14,18 +14,15 @@ export default function App() {
             <BrowserRouter>
                 <ResponsiveDrawer/>
                 <Switch>
-                    <Route path="/" />
-                    <Route path="/My Profile" />
-                    <Route path="/My Dogs" />
+                    <Route exact path="/" />
+                    <Route path="/My-Profile" />
+                    <Route path="/My-Dogs" />
                     <Route path="/Settings" />
                     <Route path="/Logout" />
-                    <Route exact path="/Dog-Dossiers" render={ () => <DogDossier />} />
-                    <Route path="/Manage ASF Users" />
-                    <Route path="/ASF Settings" />
+                    <Route path="/Dog-Dossiers"><DogDossiersAll /></Route>
+                    <Route path="/Manage-ASF-Users" />
+                    <Route path="/ASF-Settings" />
                 </Switch>
-                <DogDossiersAll />
-                {/* <DogDossier /> */}
-                <CreateUser/>
             </BrowserRouter>
         </ThemeProvider>
     )

@@ -94,19 +94,19 @@ function ResponsiveDrawer(props) {
                 <img src={logo} className={classes.logo} component={Link} to="/" />
             </Button>
             <List>
-                {['My Profile', 'My Dogs', 'My Settings', 'Logout'].map((text, index) => (
+                {['My-Profile', 'My-Dogs', 'My-Settings', 'Logout'].map((text, index) => (
                     <ListItem button key={text} className={classes.listItem}>
                         <ListItemIcon className={classes.listItem}>{index === 0 ? <PersonIcon /> : index === 1 ? <PetsIcon /> : index === 2 ? <SettingsIcon /> : <ExitToAppIcon />}</ListItemIcon>
-                        <NavLink to={`/${text}`}>{`${text}`}</NavLink>
+                        <NavLink to={`/${text}`}>{`${text.replace("-", " ")}`}</NavLink>
                     </ListItem>
                 ))}
             </List>
             <Divider />
             <List>
-                {['Dog-Dossiers', 'Manage ASF Users', 'ASF Settings'].map((text, index) => (
+                {['Dog-Dossiers', 'Manage-ASF-Users', 'ASF-Settings'].map((text, index) => (
                     <ListItem button key={text} className={classes.listItem}>
                         <ListItemIcon className={classes.listItem}>{index === 0 ? <DescriptionIcon /> : index === 1 ? <SupervisorAccountIcon /> : <PermDataSettingIcon />}</ListItemIcon>
-                        <NavLink to={`/${text}`}>{`${text}`}</NavLink>
+                        <NavLink to={`/${text}`}>{`${text.replace("-", " ")}`}</NavLink>
                     </ListItem>
                 ))}
             </List>

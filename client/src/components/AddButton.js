@@ -21,7 +21,7 @@ export default function AddButton(props) {
         className={classes.button}
         startIcon={<Add />}
       >
-          {`${props.buttonText}`}
+         {`${props.buttonText}`}
       </Button>
     </div>
   );
