@@ -13,6 +13,9 @@ const db = require("./models");
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+// must be logged in for api routes
+app.use("/api", require("./middleware/verifyToken"));
+
 // API routes go here
 
 app.use("/api/auth", require("./controllers/auth"));
