@@ -32,14 +32,14 @@ router.post("/signup", (req, res) => {
     }).catch(err => handleErr(err, res));
 });
 
-router.post("/signin", (req, res) => db.User.findOne({ where: { email: req.body.email } }).then(user => {
+router.post("/signin", (req, res) => db.User.findOne({ where: { email: req.body.email }, include: db.Role }).then(user => {
     if (!user) return res.status(404).send({ message: "User not found." });
 
     bcrypt.compare(req.body.password, user.password).then(valid => {
         if (valid) res.status(200).send({
             id: user.id,
             email: user.email,
-            accessToken: jwt.sign({ id: user.id, roles: user.roles }, process.env.SECRET, { expiresIn: 86400 })
+            accessToken: jwt.sign({ id: user.id, roles: user.Roles.map(role => role.name) }, process.env.SECRET, { expiresIn: 86400 })
         });
         else return res.status(401).send({ accessToken: null, message: "Invalid Password!" });
     }).catch(err => handleErr(err, res));
