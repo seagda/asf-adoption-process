@@ -15,6 +15,9 @@ router.post("/new", (req, res) => {
 
 /*
 /edit
+/transfer
+/assign
+/add-document
 /
 /move
 /archive
