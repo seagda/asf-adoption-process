@@ -19,7 +19,10 @@ router.post("/signup", (req, res) => {
 
         if (req.body.photoUrl) newUser.photoUrl = req.body.photoUrl;
 
-        db.User.create(newUser).then(() => res.send({ message: "User was registered succesfully!" })).catch(err => {
+        db.User.create(newUser).then(user => {
+            user.addRole(1);
+            res.send({ message: "User was registered succesfully!" });
+        }).catch(err => {
             // 1062 is a unique constraint violation, field is the database field that caused the error
             if (err.parent.errno === 1062)
                 res.status(409).send({ message: err.errors[0].message, field: err.errors[0].path.substring(err.errors[0].path.lastIndexOf(".") + 1) });
