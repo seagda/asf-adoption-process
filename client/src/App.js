@@ -8,8 +8,12 @@ import DogDossier from "../src/pages/DogDossier"
 import DogDossiersAll from "../src/pages/DogDossiersAll"
 import Login from "../src/pages/Login"
 import CreateUser from "../src/pages/CreateUser";
-import Question from "./pages/Question";
+import Application from "./pages/Application";
+import MyProfile from "./pages/MyProfile";
+import MyDogs from "./pages/MyDogs";
 import ManageASFUsers from "./pages/ManageASFUsers";
+import ASFSettings from "./pages/ASFSettings";
+import EditProfile from "./pages/EditProfile";
 
 export default function App() {
     return (
@@ -17,14 +21,16 @@ export default function App() {
             <BrowserRouter>
                 <ResponsiveDrawer/>
                 <Switch>
-                    <Route exact path="/"><Login /></Route>
-                    <Route path="/My-Profile" />
-                    <Route path="/My-Dogs" />
+                    <Route exact path="/" />
+                    <Route path="/My-Profile"><MyProfile/></Route>
+                    <Route path="/My-Dogs"><MyDogs/></Route>
                     <Route path="/Settings" />
                     <Route path="/Logout" />
                     <Route path="/Dog-Dossiers"><DogDossiersAll /></Route>
-                    <Route path="/Manage-ASF-Users"><ManageASFUsers /></Route>
-                    <Route path="/ASF-Settings" />
+                    <Route path="/Manage-ASF-Users"><ManageASFUsers/></Route>
+                    <Route path="/ASF-Settings"><ASFSettings/></Route>
+                    <Route path="/editprofile"><EditProfile/></Route>
+                    <Route path="/application"><Application/></Route>
                 </Switch>
             </BrowserRouter>
         </ThemeProvider>

@@ -1,10 +1,9 @@
-import React from 'react';
+import React from "react";
+import "survey-react/survey.css";
+import * as Survey from "survey-react";
+import {json} from "../components/surveys/questions";
 import Grid from '@material-ui/core/Grid';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-
-import ProfileForm from "../components/ProfileForm";
-import RoleAssignment from "../components/RoleAssignment";
-
 
 const useStyles=makeStyles(theme => ({
     mainContainer: {
@@ -24,15 +23,14 @@ const useStyles=makeStyles(theme => ({
     }
 }))
 
-
-export default function CreateUser() {
-    const classes = useStyles()
-
-    return (
+export default function Application (){
+    const classes = useStyles();
+    
+    return(
         <Grid container className={classes.mainContainer}>
-            <ProfileForm/>
-            <RoleAssignment/>
+            <Survey.Survey
+            json={json}
+            />
         </Grid>
-       
     )
 }
