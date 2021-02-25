@@ -1,3 +1,21 @@
 module.exports = ac => {
     ac.grant("user")
-}
+        .readOwn("Dog")
+        .createOwn("Address")
+        .readOwn("Address")
+        .updateOwn("Address")
+        .readAny("AppQuestion")
+        .createOwn("AppResponse")
+        .readOwn("AppResponse")
+        .readAny("AppTypes")
+        .createOwn("Familymember")
+        .readOwn("Familymember")
+        .updateOwn("Familymember")
+        .deleteOwn("Familymember")
+        .readOwn("User", ["*", "!password", "!blocked", "!adminNotes"])
+        .updateOwn("User", ["*", "!active", "!blocked", "!adminNotes","!maxCapacity", "!puppies","!adults","!seniors","!withBehaviorIssues", "!withMedicalIssues"])
+        .createOwn("Reference")
+        .readOwn("Reference")
+        .updateOwn("Reference")
+        .deleteOwn("Reference")
+};
