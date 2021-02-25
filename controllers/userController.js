@@ -17,6 +17,7 @@ router.post("/new", (req, res) => {
                 return res.status(409).send({ message: "There is already an account associated with that email" });
             } else {
                 // TODO: generate token and email user a link
+                res.sendStatus(200);
             }
         });
     } else {
