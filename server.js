@@ -16,6 +16,8 @@ app.use(express.json());
 // API routes go here
 
 app.use("/api/auth", require("./controllers/auth"));
+app.use("/api/dog", require("./controllers/dog"));
+
 
 if (env === "production") {
     app.use(express.static("client/build"));
