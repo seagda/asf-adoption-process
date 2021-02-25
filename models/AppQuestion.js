@@ -2,17 +2,18 @@ module.exports = (sequelize, DataTypes) => {
     const AppQuestion = sequelize.define("AppQuestion", {
         name: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: false,
+            unique: true
         },
-        question: {
+        title: {
             type: DataTypes.STRING,
             allowNull: false
         },
-        responseFormat: {
-            type: DataTypes.ENUM("boolean", "text", "number", "url", "selection"),
+        type: {
+            type: DataTypes.ENUM("boolean", "text", "number", "url", "radiogroup"),
             allowNull: false
         },
-        required: {
+        isRequired: {
             type: DataTypes.BOOLEAN,
             defaultValue: true
         },
