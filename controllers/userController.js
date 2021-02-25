@@ -4,6 +4,18 @@ const ac = require("../helpers/ac");
 
 const router = require("express").Router();
 
+// root get route is own user data
+router.get("/", (req, res) => {
+    // everyone has this permission but we check to get the filter
+    const permission = ac.can(req.roles).readOwn("User");
+    if (permission.granted) {
+        db.User.findByPk(req.userId).then(user => res.json(permission.filter(user))).catch(err => {
+            console.error(err);
+            res.status(500).send({ message: "Server error finding this user" });
+        });
+    } else return res.status(401).send({ message: "whoops we broke something, everyone should have readOwn user" });
+})
+
 // Create user route for an admin
 router.post("/new", (req, res) => {
     // make sure they have permission to create a user
@@ -20,9 +32,7 @@ router.post("/new", (req, res) => {
                 res.sendStatus(200);
             }
         });
-    } else {
-        res.status(401).send({ message: "Not authorized to create a user" });
-    }
+    } else return res.status(401).send({ message: "Not authorized to create a user" });
 });
 
 
