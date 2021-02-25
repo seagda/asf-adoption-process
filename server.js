@@ -15,8 +15,17 @@ app.use(express.json());
 
 // API routes go here
 
-app.use("/api/auth", require("./controllers/auth"));
-app.use("/api/dog", require("./controllers/dog"));
+app.use("/auth", require("./controllers/authController"));
+app.use("/api/dog", require("./controllers/dogController"));
+//app.use("/api/address", require("./controllers/addressController"));
+//app.use("/api/app-response", require("./controllers/appResponseController"));
+//app.use("/api/behavior-assess", require("./controllers/behavioralAssessmentController"));
+//app.use("/api/document", require("./controllers/documentController"));
+//app.use("/api/event", require("./controllers/eventController"));
+//app.use("/api/contact", require("./controllers/extContactController"));
+app.use("/api/region", require("./controllers/regionController"));
+
+
 
 
 if (env === "production") {
