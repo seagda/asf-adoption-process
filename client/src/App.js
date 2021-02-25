@@ -7,6 +7,7 @@ import ResponsiveDrawer from "../src/components/Header";
 import DogDossier from "../src/pages/DogDossier"
 import DogDossiersAll from "../src/pages/DogDossiersAll"
 import CreateUser from "../src/pages/CreateUser";
+import Question from "./pages/Question";
 
 export default function App() {
     return (

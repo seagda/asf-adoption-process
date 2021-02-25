@@ -67,13 +67,18 @@ const useStyles = makeStyles((theme) => ({
         height: "12em",
         [theme.breakpoints.down("md")]: {
             height: "10em"
-        }
+        },
+        marginLeft: "2em"
     },
     logoContainer: {
         alignItems: "center",
         "&:hover": {
             backgroundColor: "transparent"
         }
+    },
+    link: {
+        color: theme.palette.common.second,
+        textDecoration: "none"
     }
 }));
 
@@ -90,9 +95,9 @@ function ResponsiveDrawer(props) {
     const drawer = (
         <div>
             <div className={classes.toolbar} />
-            <Button className={classes.logoContainer} disableRipple>
-                <img src={logo} className={classes.logo} component={Link} to="/" />
-            </Button>
+            <NavLink to="/" className={classes.logoContainer}>
+                <img src={logo} className={classes.logo}/>
+            </NavLink>
             <List>
                 {['My-Profile', 'My-Dogs', 'My-Settings', 'Logout'].map((text, index) => (
                     <ListItem button key={text} className={classes.listItem}>
