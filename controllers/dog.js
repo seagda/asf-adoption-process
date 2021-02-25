@@ -14,13 +14,16 @@ router.post("/new", (req, res) => {
     })
 
 /*
-/edit
-/transfer
-/assign
+TODO: Here are the routes to create for dog
+
 /add-document
-/
-/move
+/add-event
 /archive
+/assess
+/assign
+/edit-detail
+/med-status
+/rename
 
 */
 
