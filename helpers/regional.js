@@ -1,3 +1,3 @@
 module.exports = ac => {
-    ac.grant("regional")
+    ac.grant("regional").extend("foster")
 }

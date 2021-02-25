@@ -1,3 +1,3 @@
 module.exports = ac => {
-    ac.grant("superAdmin")
+    ac.grant("superAdmin").extend("regional")
 }
