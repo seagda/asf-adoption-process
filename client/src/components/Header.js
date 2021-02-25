@@ -67,13 +67,18 @@ const useStyles = makeStyles((theme) => ({
         height: "12em",
         [theme.breakpoints.down("md")]: {
             height: "10em"
-        }
+        },
+        marginLeft: "2em"
     },
     logoContainer: {
         alignItems: "center",
         "&:hover": {
             backgroundColor: "transparent"
         }
+    },
+    link: {
+        color: theme.palette.common.second,
+        textDecoration: "none"
     }
 }));
 
@@ -90,14 +95,14 @@ function ResponsiveDrawer(props) {
     const drawer = (
         <div>
             <div className={classes.toolbar} />
-            <Button className={classes.logoContainer} disableRipple>
-                <img src={logo} className={classes.logo} component={Link} to="/" />
-            </Button>
+            <NavLink to="/" className={classes.logoContainer}>
+                <img src={logo} className={classes.logo}/>
+            </NavLink>
             <List>
                 {['My Profile', 'My Dogs', 'My Settings', 'Logout'].map((text, index) => (
                     <ListItem button key={text} className={classes.listItem}>
                         <ListItemIcon className={classes.listItem}>{index === 0 ? <PersonIcon /> : index === 1 ? <PetsIcon /> : index === 2 ? <SettingsIcon /> : <ExitToAppIcon />}</ListItemIcon>
-                        <NavLink to={`/${text}`}>{`${text}`}</NavLink>
+                        <NavLink className={classes.link} to={`/${text}`}>{`${text}`}</NavLink>
                     </ListItem>
                 ))}
             </List>
@@ -106,7 +111,7 @@ function ResponsiveDrawer(props) {
                 {['Dog-Dossiers', 'Manage ASF Users', 'ASF Settings'].map((text, index) => (
                     <ListItem button key={text} className={classes.listItem}>
                         <ListItemIcon className={classes.listItem}>{index === 0 ? <DescriptionIcon /> : index === 1 ? <SupervisorAccountIcon /> : <PermDataSettingIcon />}</ListItemIcon>
-                        <NavLink to={`/${text}`}>{`${text}`}</NavLink>
+                        <NavLink className={classes.link} to={`/${text}`}>{`${text}`}</NavLink>
                     </ListItem>
                 ))}
             </List>

@@ -1,11 +1,10 @@
+// Takes props: alt, pic
 import React from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
     large: {
-        marginLeft: "2em",
-        marginRight: "20em",
         width: theme.spacing(40),
         height: theme.spacing(40),
         [theme.breakpoints.down("md")]: {
@@ -30,6 +29,6 @@ export default function Image(props){
     const classes = useStyles();
 
     return (
-        <Avatar alt="Ashley" src={props.pic} className={classes.large} />
+        <Avatar alt={props.alt} src={props.pic} className={classes.large} />
     )
 }
