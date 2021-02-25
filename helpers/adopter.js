@@ -1,3 +1,4 @@
 module.exports = ac => {
-    ac.grant("user")
-}
+    ac.grant("adopter").extend("user")
+        .updateOwn("Dog")
+};
