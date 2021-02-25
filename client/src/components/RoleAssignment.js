@@ -12,7 +12,7 @@ const useStyles = makeStyles(theme => ({
         marginBottom: "3em"
     },
     roleItem: {
-        justifyContent: "space-between",
+        // justifyContent: "space-between",
         [theme.breakpoints.down("xs")]: {
             alignItems: "center",
             justifyContent: "center"
