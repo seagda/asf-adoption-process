@@ -31,6 +31,9 @@ router.post("/new", (req, res) => {
                 // TODO: generate token and email user a link
                 res.sendStatus(200);
             }
+        }).catch(err => {
+            console.error(err);
+            res.status(500).send({ message: "Database error" });
         });
     } else return res.status(401).send({ message: "Not authorized to create a user" });
 });
