@@ -5,7 +5,8 @@ const db = require("../models");
 const router = require("express").Router();
 
 router.post("/signup", (req, res) => {
-    if (!(req.body.email && req.body.password && req.body.firstName && req.body.lastName && req.body.phone)) return res.status(400).send({ message: "Signup request must have an email and password" });
+    if (!(req.body.email && req.body.password && req.body.firstName && req.body.lastName && req.body.phone))
+        return res.status(400).send({ message: "Signup request must have an email, password, first name, last name, and phone" });
 
     bcrypt.hash(req.body.password, 8).then(hash => {
         const newUser = {
