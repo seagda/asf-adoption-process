@@ -5,7 +5,7 @@ import Typography from "@material-ui/core/Typography";
 
 import SaveButton from "../components/SaveButton";
 import MultiLineText from "../components/MultiLineText";
-import RegionSelectMenu from "../components/RegionSelectMenu";
+import MultiSelectChips from "../components/MultiSelectChips";
 
 const useStyles = makeStyles(theme => ({
     roleContainer: {
@@ -32,7 +32,7 @@ export default function RoleAssignment(){
         </Grid>
         <Grid container className={classes.roleItem}>
             <Grid item>
-                <RegionSelectMenu className={classes.select}/>
+                <MultiSelectChips className={classes.select}/>
             </Grid>
             <MultiLineText label="Admin Notes"/>
         </Grid>

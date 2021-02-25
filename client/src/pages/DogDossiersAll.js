@@ -4,10 +4,12 @@ import Input from '@material-ui/core/Input';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import TextField from '@material-ui/core/TextField';
-import { makeStyles, useTheme } from '@material-ui/core/styles'
+import { makeStyles, useTheme } from '@material-ui/core/styles';
+import ReactFlow from 'react-flow-renderer';
 
 import AddButton from '../components/AddButton'
 import MultiSelectChips from '../components/MultiSelectChips';
+import HorizontalFlow from '../components/HorizontalFlow';
 import SingleSelect from '../components/SingleSelect';
 import OverviewTable from '../components/OverviewTable';
 
@@ -22,15 +24,32 @@ const useStyles=makeStyles(theme => ({
 }))
 
 export default function DogDossiersAll() {
-    const names = [
-        'North East',
-        'Texas',
-        'Pacific North West'
+    const regions = [
+        'Midwest/South',
+        'Mid-Atlantic',
+        'Mississippi Valley',
+        'West Coast',
+        'Great Lakes',
+        'Plains States',
+        'Rocky Mountain',
+        'Southeast',
+        'Northeast',
+        'Texas'
       ];
+
+    const dogStatus = [
+        'Pending Intake',
+        'Foster Ready',
+        'In Foster',
+        'Adoption Ready',
+        'Adopted',
+      ];
+
     const classes = useStyles()
     return (
+        
         <Grid container className={classes.mainContainer}>
-            <Grid container xs={12} s={10} m={8} spacing={2}>
+            <Grid container xs={12} s={10} m={8} lg={8} spacing={2}>
                 <Grid item xs={12}>
                 <Typography variant="h3" component="h4" gutterBottom align="center" color="primary">
                     Dog Dossiers
@@ -41,19 +60,24 @@ export default function DogDossiersAll() {
                 <Grid item xs={2}>
                     <AddButton buttonText={"Add Dog"}/>
                 </Grid>
-                <Grid item xs={12}  direction="row" justify="flex-end" alignItems="center">
+                <Grid item xs={12}  /* direction="row" justify="flex-end" alignItems="center" */>
                      <form noValidate autoComplete="off">
                         <TextField id="outlined-basic" label="Search" variant="outlined" fullWidth />
                     </form>
                 </Grid>
                 <Grid item xs={6}>
-                    <SingleSelect title="Number of Results Per Page" />
+                    <MultiSelectChips names={regions} title="Select Region"/>
                 </Grid>
                 <Grid item xs={6}>
-                    <MultiSelectChips names={names} title="Select Region"/>
+                    <MultiSelectChips names={dogStatus} title="Select Dog Status"/>
                 </Grid>
                 <Grid item xs={12}>
                     <Divider />
+                </Grid>
+                <Grid item xs={12}>
+                    <div style={{height: 100, width: 1000}}>
+                        <HorizontalFlow />
+                    </div>
                 </Grid>
                 <Grid item xs={12}>
                     <OverviewTable />

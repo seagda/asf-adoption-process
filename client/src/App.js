@@ -6,8 +6,10 @@ import theme from "../src/components/Theme";
 import ResponsiveDrawer from "../src/components/Header"; 
 import DogDossier from "../src/pages/DogDossier"
 import DogDossiersAll from "../src/pages/DogDossiersAll"
+import Login from "../src/pages/Login"
 import CreateUser from "../src/pages/CreateUser";
 import Question from "./pages/Question";
+import ManageASFUsers from "./pages/ManageASFUsers";
 
 export default function App() {
     return (
@@ -15,13 +17,13 @@ export default function App() {
             <BrowserRouter>
                 <ResponsiveDrawer/>
                 <Switch>
-                    <Route exact path="/" />
+                    <Route exact path="/"><Login /></Route>
                     <Route path="/My-Profile" />
                     <Route path="/My-Dogs" />
                     <Route path="/Settings" />
                     <Route path="/Logout" />
                     <Route path="/Dog-Dossiers"><DogDossiersAll /></Route>
-                    <Route path="/Manage-ASF-Users" />
+                    <Route path="/Manage-ASF-Users"><ManageASFUsers /></Route>
                     <Route path="/ASF-Settings" />
                 </Switch>
             </BrowserRouter>

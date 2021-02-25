@@ -62,13 +62,12 @@ function stableSort(array, comparator) {
 
 //id, name, user, city, state, vetName, vetPhone
 const headCells = [
-  { id: 'id', numeric: true, disablePadding: true, label: 'Dog Id' },
-  { id: 'name', numeric: false, disablePadding: false, label: 'Dog Name' },
-  { id: 'user', numeric: false, disablePadding: false, label: 'ASF User Assigned' },
+  { id: 'id', numeric: true, disablePadding: true, label: 'User Id' },
+  { id: 'name', numeric: false, disablePadding: false, label: 'Name' },
+  { id: 'phone', numeric: false, disablePadding: false, label: 'Phone' },
+  { id: 'email ', numeric: false, disablePadding: false, label: 'Email' },
   { id: 'city', numeric: false, disablePadding: false, label: 'City' },
-  { id: 'state', numeric: false, disablePadding: false, label: 'State' },
-  { id: 'vetName', numeric: false, disablePadding: false, label: 'Vet Name' },
-  { id: 'vetPhone', numeric: false, disablePadding: false, label: 'Vet Phone' },
+  { id: 'state', numeric: false, disablePadding: false, label: 'State' }
 ];
 
 function EnhancedTableHead(props) {
@@ -160,7 +159,7 @@ const EnhancedTableToolbar = (props) => {
         </Typography>
       ) : (
         <Typography className={classes.title} variant="h6" id="tableTitle" component="div">
-          Dog Dossiers
+          User Details
         </Typography>
       )}
 
@@ -209,7 +208,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function OverviewTable() {
+export default function UserTable() {
   const classes = useStyles();
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
