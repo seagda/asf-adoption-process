@@ -8,10 +8,12 @@ const router = require("express").Router();
 router.get("/:typeId", (req, res) => {
     const permission = ac.can(req.roles).readAny("AppQuestion");
     if (permission.granted) {
-        db.AppQuestion.findAll({ include: db.AppType })
-    } else {
-        res.status(401).send({ message: "Not authorized to view application questions" });
-    }
+        // TODO: findall appquestioncategory include appquestion which will include apptype where id is typeid, then map to question panels in surveyjs format
+        db.AppQuestion.findAll({ include: [db.AppQuestionCategory, { model: db.AppType, where: { id: req.params.typeId } }] }).then(questions => {
+            console.log(questions);
+            res.send(questions);
+        });
+    } else res.status(401).send({ message: "Not authorized to view application questions" });
 });
 
 module.exports = router;
