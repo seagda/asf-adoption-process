@@ -16,7 +16,22 @@ router.get("/", (req, res) => {
             res.status(500).send({ message: "Server error finding this user" });
         });
     } else return res.status(401).send({ message: "whoops we broke something, everyone should have readOwn user" });
-})
+});
+
+router.put("/", (req, res) => {
+    const permission = ac.can(req.roles).updateOwn("User");
+    if (permission.granted) {
+        db.User.findByPk(req.userId).then(user => {
+            return user.update(permission.filter(req.body));
+        }).then(user => {
+            console.log(user);
+            res.sendStatus(200);
+        }).catch(err => {
+            console.error(err);
+            res.sendStatus(500);
+        })
+    }
+});
 
 // Create user route for an admin
 router.post("/new", (req, res) => {
