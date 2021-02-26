@@ -7,7 +7,21 @@ router.get("/", (req, res) => {
     const permissionAny = ac.can(req.roles).readAny("Dog");
     const permissionOwn = ac.can(req.roles).readOwn("Dog");
     if (permissionAny.granted) {
-        
+        db.Dog.findAll({ include: [{ model: db.User, include: db.Address }, { model: db.ExtContact, include: db.Address }] }).then(dogs => {
+            const dogRes = dogs.map(dog => {
+                const dogJson = permissionAny.filter(dog.toJSON());
+                if (dogJson.currentlyWithId) {
+                    dogJson.city = dogJson.User.Address.city;
+                    dogJson.state = dogJson.User.Address.state;
+                } else {
+                    dogJson.city = dogJson.ExtContact.Address.city;
+                    dogJson.state = dogJson.ExtContact.Address.state;
+                }
+                return dogJson;
+            });
+            console.log(dogRes);
+            res.json(dogRes);
+        });
     } else if (permissionOwn.granted) {
 
     } else return status(401).send({ message: "Not authorized to view dogs" });
