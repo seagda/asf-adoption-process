@@ -11,12 +11,26 @@ router.get("/", (req, res) => {
     // everyone has this permission but we check to get the filter
     const permission = ac.can(req.roles).readOwn("User");
     if (permission.granted) {
-        db.User.findByPk(req.userId).then(user => res.json(permission.filter(user))).catch(err => {
+        db.User.findByPk(req.userId).then(user => res.json(permission.filter(user.toJSON()))).catch(err => {
             console.error(err);
             res.status(500).send({ message: "Server error finding this user" });
         });
     } else return res.status(401).send({ message: "whoops we broke something, everyone should have readOwn user" });
-})
+});
+
+// edit own user data
+router.put("/", (req, res) => {
+    const permission = ac.can(req.roles).updateOwn("User");
+    if (permission.granted) {
+        db.User.findByPk(req.userId)
+            .then(user => user.update(permission.filter(req.body)))
+            .then(() => res.sendStatus(200))
+            .catch(err => {
+                console.error(err);
+                res.sendStatus(500);
+            })
+    }
+});
 
 // Create user route for an admin
 router.post("/new", (req, res) => {
@@ -61,6 +75,31 @@ router.post("/new", (req, res) => {
             res.status(500).send({ message: "Database error" });
         });
     } else return res.status(401).send({ message: "Not authorized to create a user" });
+});
+
+// view user profile by id
+router.get("/:id", (req, res) => {
+    const permission = ac.can(req.roles).readAny("User");
+    if (permission.granted) {
+        db.User.findByPk(req.params.id).then(user => res.json(permission.filter(user.toJSON()))).catch(err => {
+            console.error(err);
+            res.status(500).send({ message: "Database error" });
+        });
+    } else return res.status(401).send({ message: "Not authorized to view this user" });
+});
+
+// edit user by id
+router.put("/:id", (req, res) => {
+    const permission = ac.can(req.roles).updateAny("User");
+    if (permission.granted) {
+        db.User.findByPk(req.params.id)
+            .then(user => user.update(permission.filter(req.body)))
+            .then(() => res.sendStatus(200))
+            .catch(err => {
+                console.error(err);
+                res.status(500).send({ message: "Database error" });
+            });
+    } else return res.status(401).send({ message: "Not authorized to edit this user" });
 });
 
 
