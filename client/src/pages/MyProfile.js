@@ -3,6 +3,11 @@ import Grid from '@material-ui/core/Grid';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 
 import ProfileBlock from "../components/ProfileBlock";
+import RoleTitleView from "../components/RoleTitleView";
+import UserProfileActions from '../components/UserProfileActions';
+import AdminProfileActions from "../components/AdminProfileActions";
+import RoleTitleEdit from "../components/RoleTitleEdit";
+import CapacityView from "../components/CapacityView";
 
 const useStyles=makeStyles(theme => ({
     mainContainer: {
@@ -28,6 +33,11 @@ export default function MyProfile(){
     return(
         <Grid container className={classes.mainContainer}>
             <ProfileBlock/>
+            <UserProfileActions/>
+            {/* <AdminProfileActions/> */}
+            {/* <RoleTitleView/> */}
+            <RoleTitleEdit/>
+            <CapacityView/>
         </Grid>
     )
 }

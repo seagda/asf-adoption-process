@@ -6,6 +6,7 @@ import TextField from '@material-ui/core/TextField';
 import PhoneInput from "../components/PhoneInput";
 import Image from "../components/Image";
 import AddButton from "../components/AddButton";
+import EditButton from "../components/EditButton";
 import MultiLineText from "../components/MultiLineText";
 import SaveButton from "../components/SaveButton";
 
@@ -34,7 +35,7 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-export default function ProfileBlock(){
+export default function ProfileForm(){
     const classes = useStyles();
 
     return (
@@ -42,7 +43,7 @@ export default function ProfileBlock(){
         <Grid container justify="space-evenly" className={classes.picContainer}>
             <Grid item>
                 <Image alt={"Ashley"} pic={ashley} />
-                <AddButton buttonText="Add Photo"/>
+                <EditButton buttonText="Change Photo" toLink="/"/>
             </Grid>
             <Grid item>
                 <form className={classes.form}>

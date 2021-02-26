@@ -4,8 +4,6 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 
 import Image from "../components/Image";
-import EditButton from "../components/EditButton";
-import ApplyButton from "../components/ApplyButton";
 
 import ashley from "../assets/ashley.jpg";
 
@@ -60,14 +58,6 @@ export default function ProfileBlock(){
                 <Grid item container className={classes.formItem}>
                      <Typography>About Me</Typography>
                 </Grid>
-            </Grid>
-        </Grid>
-        <Grid container justify="space-evenly" style={{marginTop: "4em"}}>
-            <Grid item>
-                <ApplyButton toLink="/application" buttonText="Apply to help an aussie"/>
-            </Grid>
-            <Grid item>
-                <EditButton toLink="/editprofile" buttonText="Edit Profile"/>
             </Grid>
         </Grid>
     </Grid>
