@@ -22,15 +22,13 @@ router.get("/", (req, res) => {
 router.put("/", (req, res) => {
     const permission = ac.can(req.roles).updateOwn("User");
     if (permission.granted) {
-        db.User.findByPk(req.userId).then(user => {
-            return user.update(permission.filter(req.body));
-        }).then(user => {
-            console.log(user);
-            res.sendStatus(200);
-        }).catch(err => {
-            console.error(err);
-            res.sendStatus(500);
-        })
+        db.User.findByPk(req.userId)
+            .then(user => user.update(permission.filter(req.body)))
+            .then(() => res.sendStatus(200))
+            .catch(err => {
+                console.error(err);
+                res.sendStatus(500);
+            })
     }
 });
 
@@ -88,6 +86,20 @@ router.get("/:id", (req, res) => {
             res.status(500).send({ message: "Database error" });
         });
     } else return res.status(401).send({ message: "Not authorized to view this user" });
+});
+
+// edit user by id
+router.put("/:id", (req, res) => {
+    const permission = ac.can(req.roles).updateAny("User");
+    if (permission.granted) {
+        db.User.findByPk(req.params.id)
+            .then(user => user.update(permission.filter(req.body)))
+            .then(() => res.sendStatus(200))
+            .catch(err => {
+                console.error(err);
+                res.status(500).send({ message: "Database error" });
+            });
+    } else return res.status(401).send({ message: "Not authorized to edit this user" });
 });
 
 
