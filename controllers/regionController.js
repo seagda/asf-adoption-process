@@ -36,8 +36,9 @@ router.post("/new", (req, res) => {
 router.put("/update/:id", (req, res) => {
     const permission = ac.can(req.roles).updateAny("Region");
     if (permission.granted) {
+
         db.Region
-            .update(req.body)
+            .update(req.body, {where: {id: req.params.id}})
             .then(dbModel => res.json(dbModel))
             .catch(err => res.status(422).send({ message: "Data not a recognizable type", error:err }));
     } else {
@@ -58,6 +59,5 @@ router.delete("/delete/:id", (req, res) => {
         res.status(401).send({ message: "Not authorized to delete a Region"})
     }
 });
-
 
 module.exports = router;
