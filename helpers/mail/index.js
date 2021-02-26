@@ -1,11 +1,9 @@
 const nodemailer = require("nodemailer");
 
 const transporter = nodemailer.createTransport({
-    host: "smtp.gmail.com",
-    port: 465,
-    secure: true,
+    service: "Outlook365",
     auth: {
-        user: "aussiesfurever.info@gmail.com",
+        user: "aussiesfurever@outlook.com",
         pass: process.env.MAIL_PASSWORD
     }
 });
