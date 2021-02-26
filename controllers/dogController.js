@@ -2,16 +2,18 @@ const db = require("../models");
 const ac = require("../helpers/ac");
 const router = require("express").Router();
 
+// show all DOGS, with correct ROLE permission
 
-router.post("/new", (req, res) => {
-    const permission = ac.can(req.roles).createAny("Dog");
-    if (permission.granted) {
-// TODO: use sequelize dog model to create dog using req body
+// show one DOG, with correct ROLE permission
 
-    } else {
-        res.status(401).send({ message: "Not authorized to create a dog" });
-    }
-    })
+// create new DOG, with correct ROLE permission
+
+// update DOG by id, with correct ROLE permission
+
+// delete DOG by id, with correct ROLE permission
+
+
+module.exports = router;
 
 /*
 TODO: Here are the routes to create for dog
@@ -26,5 +28,3 @@ TODO: Here are the routes to create for dog
 /rename
 
 */
-
-module.exports = router;

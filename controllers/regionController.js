@@ -9,12 +9,13 @@ router.get("/", (req, res) => {
 
     db.Region
       .findAll(req.query)
-      .then(dbModel => res.json(dbModel))
-      .catch(err => res.status(422).send({ message: "Data not a recognizable type", error:err }));
+      .then(region => res.json(permission.filter(region.toJSON())))
+      .catch(err => {
+          console.error(err)
+          res.status(500).send({ message: "Server error finding this region" })
+    });
 
-    } else {
-        res.status(401).send({ message: "Not authorized to view Region" });
-    }
+    } else return res.status(401).send({ message: "Not authorized to view Region" });
 });
 
 // create a new REGION, if user's ROLE has correct permission
@@ -24,26 +25,27 @@ router.post("/new", (req, res) => {
 
     db.Region
       .create(req.body)
-      .then(dbModel => res.json(dbModel))
-      .catch(err => res.status(422).send({ message: "Data not a recognizable type", error:err }));
+      .then(region => res.json(permission.filter(region.toJSON())))
+      .catch(err => {
+        console.error(err)  
+        res.status(500).send({ message: "Server error returned" })
+    });
 
-    } else {
-        res.status(401).send({ message: "Not authorized to create a Region" });
-    }
+    } else return res.status(401).send({ message: "Not authorized to create a Region" });
 });
 
 // update an existing REGION, if user's ROLE has correct permission
 router.put("/update/:id", (req, res) => {
     const permission = ac.can(req.roles).updateAny("Region");
     if (permission.granted) {
-
-        db.Region
-            .update(req.body, {where: {id: req.params.id}})
-            .then(dbModel => res.json(dbModel))
-            .catch(err => res.status(422).send({ message: "Data not a recognizable type", error:err }));
-    } else {
-        res.status(401).send({ message: "Not authorized update a Region"})
-    }
+        db.Region.findByPk(req.params.id)
+            .then(region => region.update(permission.filter(req.body)))
+            .then(() => res.sendStatus(200))
+            .catch(err => {
+                console.error(err);
+                res.status(500).send({ message: "Database error" })
+            });
+    } else return res.status(401).send({ message: "Not authorized update a Region"});
 });
 
 // delete a REGION, if user's ROLE has correct permission

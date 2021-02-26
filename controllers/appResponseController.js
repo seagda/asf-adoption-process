@@ -2,18 +2,14 @@ const db = require("../models");
 const ac = require("../helpers/ac");
 const router = require("express").Router();
 
+// show all APP RESPONSES, with correct ROLE permission
 
-router.post("/new", (req, res) => {
-    const permission = ac.can(req.roles).createOwn("AppResponse");
-    if (permission.granted) {
-// TODO: use sequelize model to create AppResponse using req body
+// show one APP RESPONSE, with correct ROLE permission
 
-    } else {
-        res.status(401).send({ message: "Not authorized to create an Application" });
-    }
-    });
+// create new APP RESPONSE, with correct ROLE permission
 
+// update APP RESPONSE by id, with correct ROLE permission
+
+// delete APP RESPONSE by id, with correct ROLE permission
 
 module.exports = router;
-
-// Admin can update only the status_id within and app response
