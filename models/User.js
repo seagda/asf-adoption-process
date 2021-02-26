@@ -1,9 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
     const User = sequelize.define("User", {
-        createKey: {
-            type: DataTypes.STRING,
-            unique: true
-        },
         email: {
             type: DataTypes.STRING,
             validate: { isEmail: true },
@@ -13,7 +9,6 @@ module.exports = (sequelize, DataTypes) => {
         phone: DataTypes.STRING,
         firstName: DataTypes.STRING,
         lastName: DataTypes.STRING,
-        password: DataTypes.STRING,
         dob: DataTypes.DATEONLY,
         photoUrl: {
             type: DataTypes.STRING,
@@ -61,8 +56,8 @@ module.exports = (sequelize, DataTypes) => {
     User.associate = db => {
         User.belongsTo(db.Address);
 
-        User.belongsTo(db.Auth);
-        db.Auth.hasOne(User);
+        User.belongsTo(db.Auth, { foreignKey: { allowNull: false } });
+        db.Auth.hasOne(User, { foreignKey: { allowNull: false } });
 
         User.belongsToMany(db.Role, { through: "UsersRoles" });
         db.Role.belongsToMany(User, { through: "UsersRoles" });
