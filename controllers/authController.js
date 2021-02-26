@@ -43,7 +43,7 @@ router.put("/signup/:token", (req, res) => {
                 if (permission.granted) {
                     // update user with filtered request body plus hash as password
                     return user.update({ ...permission.filter(req.body), password: hash });
-                }
+                } else return res.status(401).send({ message: "whoops we broke something, everyone should have updateOwn user" });
             })
             .catch(err => {
                 console.error(err);
