@@ -37,14 +37,21 @@ router.post("/signup", (req, res) => {
 router.put("/signup/:token", (req, res) => {
     jwt.verify(req.params.token, process.env.SECRET, (err, decoded) => {
         if (err) return res.status(401).send({ message: "Unauthorized!" });
-        Promise.all([db.User.findOne({ include: [db.Role, { model: db.Auth, where: { createKey: req.params.token } }], where: { email: decoded.email } }), bcrypt.hash(req.body.password, 8)])
+        Promise.all([
+            db.User.findOne({ include: [db.Role, { model: db.Auth, where: { createKey: req.params.token } }], where: { email: decoded.email } }),
+            bcrypt.hash(req.body.password, 8)
+        ])
             .then(([user, hash]) => {
                 const permission = ac.can(user.Roles.map(role => role.name)).updateOwn("User");
                 if (permission.granted) {
-                    // update user with filtered request body plus hash as password
-                    return user.update({ ...permission.filter(req.body), password: hash });
-                } else return res.status(401).send({ message: "whoops we broke something, everyone should have updateOwn user" });
+                    // update user with filtered request body
+                    return Promise.all([
+                        user.update(permission.filter(req.body)),
+                        user.Auth.update({ createKey: null, password: hash })
+                    ]);
+                } else throw new Error("whoops we broke something, everyone should have updateOwn user");
             })
+            .then(() => res.send({ message: "Account was created successfully" }))
             .catch(err => {
                 console.error(err);
                 res.status(500).send({ message: err.message });
