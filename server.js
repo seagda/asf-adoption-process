@@ -28,7 +28,7 @@ app.use("/api/dog", require("./controllers/dogController"));
 //app.use("/api/event", require("./controllers/eventController"));
 //app.use("/api/contact", require("./controllers/extContactController"));
 app.use("/api/region", require("./controllers/regionController"));
-app.use("/api/app-questions", require("./controllers/appQuestionController"));
+app.use("/api/app-question", require("./controllers/appQuestionController"));
 
 
 
