@@ -5,4 +5,6 @@ module.exports = ac => {
         .updateAny("Address")
         .createAny("User")
         .readAny("User")
+        .readAny("Region")
+        .readAny("Alert")
 };
