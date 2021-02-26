@@ -29,9 +29,6 @@ app.use("/api/event", require("./controllers/eventController"));
 app.use("/api/contact", require("./controllers/extContactController"));
 app.use("/api/region", require("./controllers/regionController"));
 
-
-
-
 if (env === "production") {
     app.use(express.static("client/build"));
     app.get((req, res) => res.sendFile(path.join(__dirname, "./client/build/index.html")));
