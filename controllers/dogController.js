@@ -56,7 +56,21 @@ router.get("/", (req, res) => {
 
 // delete DOG by id, with correct ROLE permission
 
+// read MEDI_STATUS with correct ROLE permission
+router.get("/medi-status/:id", (req, res) => {
+    const permission = ac.can(req.roles).updateOwn("Dog");
+    if (permission.granted) {
+        db.MediStatus
+            .findOne({include: {model:db.Dog, where: {id:req.params.id}}})
+            .then(() => res.sendStatus(200))
+            .catch(err => {
+                console.error(err);
+                res.status(422).send({ message: "Error with request" })
+            });
+    } else return res.status(401).send({ message: "Not authorized to update a Medical Status"});
+});
 
+module.exports = router;
 // update MEDI_STATUS with correct ROLE permission
 
 router.put("/medi-status/:id", (req, res) => {
