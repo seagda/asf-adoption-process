@@ -105,7 +105,7 @@ const initialElements = [
     animated: true,
   },
 ];
-const HorizontalFlow = () => {
+const DogAdoptionFlow = () => {
   const [elements, setElements] = useState(initialElements);
   const onElementsRemove = (elementsToRemove) =>
     setElements((els) => removeElements(elementsToRemove, els));
@@ -135,4 +135,4 @@ const HorizontalFlow = () => {
     </ReactFlow>
   );
 };
-export default HorizontalFlow;
+export default DogAdoptionFlow;

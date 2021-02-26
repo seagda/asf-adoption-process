@@ -5,12 +5,9 @@ import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import ReactFlow from 'react-flow-renderer';
-
 import AddButton from '../components/AddButton'
 import MultiSelectChips from '../components/MultiSelectChips';
-import HorizontalFlow from '../components/HorizontalFlow';
-import SingleSelect from '../components/SingleSelect';
+import UserFlow from '../components/UserFlow';
 import UserTable from '../components/UserTable';
 
 const useStyles=makeStyles(theme => ({
@@ -37,13 +34,12 @@ export default function ManageASFUsers() {
         'Texas'
       ];
 
-    const roles = [
+    const role = [
         'Adopter',
         'Foster',
+        'Regional Lead',
         'Transport',
         'Volunteer',
-        'Regional Lead',
-        'Admin',
       ];
 
     const classes = useStyles()
@@ -59,25 +55,26 @@ export default function ManageASFUsers() {
                 </Grid>
                 <Grid item xs={10} />
                 <Grid item xs={2}>
-                    <AddButton buttonText={"Add User"}/>
+                    <AddButton buttonText="Add User" toLink="/Create-User" />
+                    
                 </Grid>
-                <Grid item xs={12}  /* direction="row" justify="flex-end" alignItems="center" */>
+                <Grid item xs={12}>
                      <form noValidate autoComplete="off">
                         <TextField id="outlined-basic" label="Search" variant="outlined" fullWidth />
                     </form>
                 </Grid>
                 <Grid item xs={6}>
-                    <MultiSelectChips names={regions} title="Select Region(s)"/>
+                    <MultiSelectChips names={regions} title="Select Region"/>
                 </Grid>
                 <Grid item xs={6}>
-                    <MultiSelectChips names={roles} title="Select User Role(s)"/>
+                    <MultiSelectChips names={role} title="Select Role"/>
                 </Grid>
                 <Grid item xs={12}>
                     <Divider />
                 </Grid>
                 <Grid item xs={12}>
                     <div style={{height: 100, width: 1000}}>
-                        <HorizontalFlow />
+                        <UserFlow />
                     </div>
                 </Grid>
                 <Grid item xs={12}>

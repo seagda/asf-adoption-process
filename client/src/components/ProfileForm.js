@@ -34,7 +34,7 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-export default function ProfileBlock(){
+export default function ProfileForm(){
     const classes = useStyles();
 
     return (

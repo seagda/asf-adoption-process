@@ -14,6 +14,7 @@ import MyDogs from "./pages/MyDogs";
 import ManageASFUsers from "./pages/ManageASFUsers";
 import ASFSettings from "./pages/ASFSettings";
 import EditProfile from "./pages/EditProfile";
+import AdminDashboard from "./pages/AdminDashboard";
 
 export default function App() {
     return (
@@ -21,7 +22,7 @@ export default function App() {
             <BrowserRouter>
                 <ResponsiveDrawer/>
                 <Switch>
-                    <Route exact path="/" />
+                    <Route exact path="/"><Login /></Route>
                     <Route path="/My-Profile"><MyProfile/></Route>
                     <Route path="/My-Dogs"><MyDogs/></Route>
                     <Route path="/Settings" />
@@ -31,6 +32,9 @@ export default function App() {
                     <Route path="/ASF-Settings"><ASFSettings/></Route>
                     <Route path="/editprofile"><EditProfile/></Route>
                     <Route path="/application"><Application/></Route>
+                    <Route path="/Admin-Dashboard"><AdminDashboard/></Route>
+                    <Route path="/Create-User"><CreateUser/></Route>
+                    {/* <Route path="/addDog"><DogDossier/></Route> */}
                 </Switch>
             </BrowserRouter>
         </ThemeProvider>

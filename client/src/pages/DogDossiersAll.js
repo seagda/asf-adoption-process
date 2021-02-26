@@ -5,12 +5,9 @@ import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import ReactFlow from 'react-flow-renderer';
-
 import AddButton from '../components/AddButton'
 import MultiSelectChips from '../components/MultiSelectChips';
-import HorizontalFlow from '../components/HorizontalFlow';
-import SingleSelect from '../components/SingleSelect';
+import DogAdoptionFlow from '../components/DogAdoptionFlow';
 import OverviewTable from '../components/OverviewTable';
 
 const useStyles=makeStyles(theme => ({
@@ -58,7 +55,8 @@ export default function DogDossiersAll() {
                 </Grid>
                 <Grid item xs={10} />
                 <Grid item xs={2}>
-                    <AddButton buttonText={"Add Dog"}/>
+                    <AddButton buttonText="Add Dog" toLink="/addDog" />
+                    
                 </Grid>
                 <Grid item xs={12}  /* direction="row" justify="flex-end" alignItems="center" */>
                      <form noValidate autoComplete="off">
@@ -76,7 +74,7 @@ export default function DogDossiersAll() {
                 </Grid>
                 <Grid item xs={12}>
                     <div style={{height: 100, width: 1000}}>
-                        <HorizontalFlow />
+                        <DogAdoptionFlow />
                     </div>
                 </Grid>
                 <Grid item xs={12}>
