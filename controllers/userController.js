@@ -29,7 +29,7 @@ router.put("/", (req, res) => {
                 console.error(err);
                 res.sendStatus(500);
             });
-    }
+    } else return res.status(401).send({ message: "whoops we broke something, everyone should have updateOwn user" });
 });
 
 // Create user route for an admin
