@@ -2,6 +2,7 @@ const jwt = require("jsonwebtoken");
 
 const db = require("../models");
 const ac = require("../helpers/ac");
+const mail = require("../helpers/mail");
 
 const router = require("express").Router();
 
@@ -36,9 +37,23 @@ router.post("/new", (req, res) => {
 
                 db.User.upsert(newUser).then(([user]) => {
                     // user only gets currently selected roles plus user roles
-                    user.setRoles([1, ...roles]).then(result => console.log(result));
-                    // TODO: email user a link
-                    res.sendStatus(200);
+                    user.setRoles([1, ...(roles || [])]);
+                    mail.sendMail({
+                        from: '"Australian Shepherds Furever" <aussiesfurever@outlook.com>',
+                        to: req.body.email,
+                        subject: "Invitation to Australian Shepherds Furever",
+                        text: `You have been invited to Australian Shepherds Furever!\nClick this link to create an account: http://localhost:3000/create-account?key=${createKey}`,
+                        html: `You have been invited to Australian Shepherds Furever!<br /><a href="http://localhost:3000/create-account?key=${createKey}">Click here to create an account</a>`
+                    }).then(info => {
+                        console.log(info);
+                        res.status(200).send({ message: "Email sent to create an account!" });
+                    }).catch(err => {
+                        console.error(err);
+                        res.status(500).send({ message: "error sending the email" });
+                    });
+                }).catch(err => {
+                    console.error(err);
+                    res.status(500).send({ message: "error updating/creating user" });
                 });
             }
         }).catch(err => {
