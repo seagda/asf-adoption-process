@@ -94,7 +94,7 @@ function ResponsiveDrawer(props) {
 
     const drawer = (
         <div>
-            <div className={classes.toolbar} />
+            {/* <div className={classes.toolbar} /> */}
             <NavLink to="/" className={classes.logoContainer}>
                 <img src={logo} className={classes.logo}/>
             </NavLink>
@@ -140,7 +140,6 @@ function ResponsiveDrawer(props) {
                 </Toolbar>
             </AppBar>
             <nav className={classes.drawer} aria-label="mailbox folders">
-                {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
                 <Hidden smUp implementation="css">
                     <Drawer
                         container={container}
@@ -152,7 +151,7 @@ function ResponsiveDrawer(props) {
                             paper: classes.drawerPaper,
                         }}
                         ModalProps={{
-                            keepMounted: true, // Better open performance on mobile.
+                            keepMounted: true, 
                         }}
                     >
                         {drawer}
@@ -174,13 +173,5 @@ function ResponsiveDrawer(props) {
         </div>
     );
 }
-
-ResponsiveDrawer.propTypes = {
-    /**
-     * Injected by the documentation to work in an iframe.
-     * You won't need it on your project.
-     */
-    window: PropTypes.func,
-};
 
 export default ResponsiveDrawer;

@@ -1,9 +1,10 @@
-import React from "react";
+import React, {useState, useCallback} from "react";
 import "survey-react/survey.css";
-import * as Survey from "survey-react";
-import {json} from "../components/surveys/questions";
 import Grid from '@material-ui/core/Grid';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
+import Typography from "@material-ui/core/Typography";
+
+import AdoptApp from "../components/applications/AdoptApp";
 
 const useStyles=makeStyles(theme => ({
     mainContainer: {
@@ -25,12 +26,27 @@ const useStyles=makeStyles(theme => ({
 
 export default function Application (){
     const classes = useStyles();
-    
+    const [showPage, setShowPage] = useState(true);
+
+    const onCompletePage = useCallback((data)=>{
+        console.log(data);
+        setShowPage(!showPage)
+    }, [showPage])
+
+    const setFinalPage = ()=>{
+        return(
+            <Grid item>
+                <Typography variant="h5">Thanks for completing the application!</Typography>
+                <Typography variant="h5">An ASF team member will contact you soon.</Typography>
+            </Grid>
+        )
+    }
+
     return(
         <Grid container className={classes.mainContainer}>
-            <Survey.Survey
-            json={json}
-            />
+            {showPage ? <AdoptApp
+            showCompletedPage={data=>onCompletePage(data)}
+            /> : setFinalPage()}
         </Grid>
     )
 }
