@@ -12,7 +12,7 @@ router.get("/", (req, res) => {
       .then(region => res.json(permission.filter(region.toJSON())))
       .catch(err => {
           console.error(err)
-          res.status(500).send({ message: "Server error finding this region" })
+          res.status(422).send({ message: "Error with request" })
     });
 
     } else return res.status(401).send({ message: "Not authorized to view Region" });
@@ -35,21 +35,22 @@ router.post("/new", (req, res) => {
 });
 
 // update an existing REGION, if user's ROLE has correct permission
-router.put("/update/:id", (req, res) => {
+router.put("/:id", (req, res) => {
     const permission = ac.can(req.roles).updateAny("Region");
     if (permission.granted) {
-        db.Region.findByPk(req.params.id)
+        db.Region
+            .findByPk(req.params.id)
             .then(region => region.update(permission.filter(req.body)))
             .then(() => res.sendStatus(200))
             .catch(err => {
                 console.error(err);
-                res.status(500).send({ message: "Database error" })
+                res.status(422).send({ message: "Error with request" })
             });
     } else return res.status(401).send({ message: "Not authorized update a Region"});
 });
 
 // delete a REGION, if user's ROLE has correct permission
-router.delete("/delete/:id", (req, res) => {
+router.delete("/:id", (req, res) => {
     const permission = ac.can(req.roles).deleteAny("Region");
     if (permission.granted) {
         db.Region
@@ -57,10 +58,11 @@ router.delete("/delete/:id", (req, res) => {
             .then(deletedRegion => {
                 res.sendStatus(200);
                 console.log(`Region successfully deleted? 1 means yes, 0 means no: ${deletedRegion}`)})
-            .catch(err => res.status(422).send({ message: "Data not a recognizable type", error:err }));
-    } else {
-        res.status(401).send({ message: "Not authorized to delete a Region"})
-    }
+            .catch(err => {
+                console.error(err)
+                res.status(422).send({ message: "Error with request"})
+            });
+    } else return res.status(401).send({ message: "Not authorized to delete a Region"});
 });
 
 module.exports = router;
