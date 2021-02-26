@@ -1,5 +1,5 @@
-const db = require("../models");
-const ac = require("../helpers/ac");
+const db = require("../../models");
+const ac = require("../../helpers/ac");
 const router = require("express").Router();
 
 // show all BEHAVIORAL ASSESSMENTS, with correct ROLE permission

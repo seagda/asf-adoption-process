@@ -1,10 +1,15 @@
 const jwt = require("jsonwebtoken");
 
-const db = require("../models");
-const ac = require("../helpers/ac");
-const mail = require("../helpers/mail");
+const db = require("../../models");
+const ac = require("../../helpers/ac");
+const mail = require("../../helpers/mail");
 
 const router = require("express").Router();
+
+router.use("/alert", require("./alertController"));
+router.use("/app-response", require("./appResponseController"));
+router.use("/family", require("./familymemberController"));
+router.use("/reference", require("./referenceController"));
 
 // root get route is own user data
 router.get("/", (req, res) => {

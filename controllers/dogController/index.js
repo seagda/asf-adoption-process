@@ -1,8 +1,9 @@
-const db = require("../models");
-const ac = require("../helpers/ac");
+const db = require("../../models");
+const ac = require("../../helpers/ac");
 const router = require("express").Router();
 
-const dogResp = (dogs, res) => 
+router.use("/assess", require("./behavioralAssessmentController"));
+router.use("/document", require("./documentController"));
 
 // show all DOGS, with correct ROLE permission
 router.get("/", (req, res) => {
