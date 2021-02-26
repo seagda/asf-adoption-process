@@ -12,24 +12,24 @@ router.post("/signup", (req, res) => {
     bcrypt.hash(req.body.password, 8).then(hash => {
         const newUser = {
             email: req.body.email,
-            password: hash,
             firstName: req.body.firstName,
             lastName: req.body.lastName,
-            phone: req.body.phone
+            phone: req.body.phone,
+            Auth: { password: hash }
         };
 
         if (req.body.photoUrl) newUser.photoUrl = req.body.photoUrl;
 
-        db.User.create(newUser).then(user => {
-            user.addRole(1);
-            res.send({ message: "User was registered succesfully!" });
-        }).catch(err => {
-            // 1062 is a unique constraint violation, field is the database field that caused the error
-            if (err.parent.errno === 1062)
-                res.status(409).send({ message: err.errors[0].message, field: err.errors[0].path.substring(err.errors[0].path.lastIndexOf(".") + 1) });
-            else
-                handleErr(err, res);
-        });
+        db.User.create(newUser, { include: db.Auth })
+            .then(user => user.addRole(1))
+            .then(() => res.send({ message: "User was registered succesfully!" }))
+            .catch(err => {
+                // 1062 is a unique constraint violation, field is the database field that caused the error
+                if (err.parent && err.parent.errno === 1062)
+                    res.status(409).send({ message: err.errors[0].message, field: err.errors[0].path.substring(err.errors[0].path.lastIndexOf(".") + 1) });
+                else
+                    handleErr(err, res);
+            });
     }).catch(err => handleErr(err, res));
 });
 
@@ -37,7 +37,7 @@ router.post("/signup", (req, res) => {
 router.put("/signup/:token", (req, res) => {
     jwt.verify(req.params.token, process.env.SECRET, (err, decoded) => {
         if (err) return res.status(401).send({ message: "Unauthorized!" });
-        Promise.all([db.User.findOne({ where: { createKey: req.params.token, email: decoded.email }, include: db.Role }), bcrypt.hash(req.body.password, 8)])
+        Promise.all([db.User.findOne({ include: [db.Role, { model: db.Auth, where: { createKey: req.params.token } }], where: { email: decoded.email } }), bcrypt.hash(req.body.password, 8)])
             .then(([user, hash]) => {
                 const permission = ac.can(user.Roles.map(role => role.name)).updateOwn("User");
                 if (permission.granted) {
@@ -52,10 +52,10 @@ router.put("/signup/:token", (req, res) => {
     });
 });
 
-router.post("/signin", (req, res) => db.User.findOne({ where: { email: req.body.email }, include: db.Role }).then(user => {
+router.post("/signin", (req, res) => db.User.findOne({ where: { email: req.body.email }, include: [db.Role, db.Auth] }).then(user => {
     if (!user) return res.status(404).send({ message: "User not found." });
 
-    bcrypt.compare(req.body.password, user.password).then(valid => {
+    bcrypt.compare(req.body.password, user.Auth.password).then(valid => {
         if (valid) res.status(200).send({
             id: user.id,
             email: user.email,
