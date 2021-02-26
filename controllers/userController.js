@@ -1,5 +1,6 @@
-const db = require("../models");
+const jwt = require("jsonwebtoken");
 
+const db = require("../models");
 const ac = require("../helpers/ac");
 
 const router = require("express").Router();
@@ -28,8 +29,17 @@ router.post("/new", (req, res) => {
             if (user && !user.createKey) {
                 return res.status(409).send({ message: "There is already an account associated with that email" });
             } else {
-                // TODO: generate token and email user a link
-                res.sendStatus(200);
+                // generate token, create user, and email user a link
+                const createKey = jwt.sign({ email: req.body.email }, process.env.SECRET, { expiresIn: 86400 });
+                // newUser is req.body without body.roles and with createKey
+                const { roles, ...newUser } = { ...req.body, createKey };
+
+                db.User.upsert(newUser).then(([user]) => {
+                    // user only gets currently selected roles plus user roles
+                    user.setRoles([1, ...roles]).then(result => console.log(result));
+                    // TODO: email user a link
+                    res.sendStatus(200);
+                });
             }
         }).catch(err => {
             console.error(err);
