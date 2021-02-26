@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         // dependsOnAnswer is the answer value for the dependsOnQuestion that triggers asking this question
         dependsOnAnswer: DataTypes.INTEGER
-    }, { underscored: true });
+    }, { underscored: true, paranoid: true });
 
     AppQuestion.associate = db => {
         db.AppQuestionCategory.hasMany(AppQuestion);

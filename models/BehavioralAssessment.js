@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.DATEONLY,
             allowNull: false
         }
-    }, { underscored: true });
+    }, { underscored: true, paranoid: true });
 
     BehavioralAssessment.associate = db => {
         db.Dog.hasMany(BehavioralAssessment, { foreignKey: { allowNull: false } });

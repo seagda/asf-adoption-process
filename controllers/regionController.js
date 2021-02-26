@@ -4,7 +4,7 @@ const router = require("express").Router();
 
 // show all REGIONS, if user's ROLE has correct permission
 router.get("/", (req, res) => {
-    const permission = ac.can(req.roles).Any("Region");
+    const permission = ac.can(req.roles).readAny("Region");
     if (permission.granted) {
 
     db.Region
@@ -53,6 +53,7 @@ router.delete("/delete/:id", (req, res) => {
         db.Region
             .destroy({ where: {id: req.params.id} })
             .then(deletedRegion => {
+                res.sendStatus(200);
                 console.log(`Region successfully deleted? 1 means yes, 0 means no: ${deletedRegion}`)})
             .catch(err => res.status(422).send({ message: "Data not a recognizable type", error:err }));
     } else {
