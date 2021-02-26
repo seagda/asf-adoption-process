@@ -11,7 +11,7 @@ router.get("/", (req, res) => {
     // everyone has this permission but we check to get the filter
     const permission = ac.can(req.roles).readOwn("User");
     if (permission.granted) {
-        db.User.findByPk(req.userId).then(user => res.json(permission.filter(user))).catch(err => {
+        db.User.findByPk(req.userId).then(user => res.json(permission.filter(user.toJSON()))).catch(err => {
             console.error(err);
             res.status(500).send({ message: "Server error finding this user" });
         });
