@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const db = require("../models");
+const ac = require("../helpers/ac");
 
 const router = require("express").Router();
 
@@ -30,6 +31,25 @@ router.post("/signup", (req, res) => {
                 handleErr(err, res);
         });
     }).catch(err => handleErr(err, res));
+});
+
+// route to create user with createKey
+router.put("/signup/:token", (req, res) => {
+    jwt.verify(req.params.token, process.env.SECRET, (err, decoded) => {
+        if (err) return res.status(401).send({ message: "Unauthorized!" });
+        Promise.all([db.User.findOne({ where: { createKey: req.params.token, email: decoded.email }, include: db.Role }), bcrypt.hash(req.body.password, 8)])
+            .then(([user, hash]) => {
+                const permission = ac.can(user.Roles.map(role => role.name)).updateOwn("User");
+                if (permission.granted) {
+                    // update user with filtered request body plus hash as password
+                    return user.update({ ...permission.filter(req.body), password: hash });
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                res.status(500).send({ message: err.message });
+            });
+    });
 });
 
 router.post("/signin", (req, res) => db.User.findOne({ where: { email: req.body.email }, include: db.Role }).then(user => {
