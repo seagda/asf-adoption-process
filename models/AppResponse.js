@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.JSON,
             allowNull: false
         }
-    }, { underscored: true });
+    }, { underscored: true, paranoid: true });
 
     AppResponse.associate = db => {
         db.AppType.hasMany(AppResponse, { foreignKey: { allowNull: false } });

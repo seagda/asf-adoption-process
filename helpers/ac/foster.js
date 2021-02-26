@@ -6,5 +6,4 @@ module.exports = ac => {
         .readAny("BehavorialAssessment")
         .updateAny("BehavorialAssessment")
         .readAny("AssessQuestion")
-
 };

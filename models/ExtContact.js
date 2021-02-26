@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
         phone: { type: DataTypes.STRING, allowNull: false },
         fullName: { type: DataTypes.STRING, allowNull: false },
         contactType: { type: DataTypes.ENUM("shelter", "rescue", "vet", "trainer", "surrender", "other") }
-    }, { underscored: true });
+    }, { underscored: true, paranoid: true });
 
     ExtContact.associate = db => {
         ExtContact.belongsTo(db.Address);

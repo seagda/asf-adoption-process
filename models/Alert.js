@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.BOOLEAN,
             defaultValue: false
         },
-    }, { underscored: true });
+    }, { underscored: true, paranoid: true });
 
     Alert.associate = db => {
         db.Dog.hasOne(Alert, { foreignKey: { name: "aboutDogId", allowNull: true } });

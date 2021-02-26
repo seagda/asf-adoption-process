@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
         fourDX: { type: DataTypes.BOOLEAN, defaultValue: false },
         fleaTick: { type: DataTypes.BOOLEAN, defaultValue: false },
         altered: { type: DataTypes.BOOLEAN, defaultValue: false }
-    }, { underscored: true });
+    }, { underscored: true, paranoid: true });
 
     MediStatus.associate = db => {
         MediStatus.belongsTo(db.Dog, { foreignKey: { allowNull: false } });

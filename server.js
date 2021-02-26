@@ -13,10 +13,23 @@ const db = require("./models");
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+// must be logged in for api routes
+app.use("/api", require("./middleware/verifyToken"));
+
 // API routes go here
 
-app.use("/api/auth", require("./controllers/auth"));
-app.use("/api/dog", require("./controllers/dog"));
+app.use("/auth", require("./controllers/authController"));
+app.use("/api/user", require("./controllers/userController"))
+app.use("/api/dog", require("./controllers/dogController"));
+//app.use("/api/address", require("./controllers/addressController"));
+//app.use("/api/app-response", require("./controllers/appResponseController"));
+//app.use("/api/behavior-assess", require("./controllers/behavioralAssessmentController"));
+//app.use("/api/document", require("./controllers/documentController"));
+//app.use("/api/event", require("./controllers/eventController"));
+//app.use("/api/contact", require("./controllers/extContactController"));
+app.use("/api/region", require("./controllers/regionController"));
+
+
 
 
 if (env === "production") {
@@ -24,4 +37,4 @@ if (env === "production") {
     app.get((req, res) => res.sendFile(path.join(__dirname, "./client/build/index.html")));
 }
 
-db.sequelize.sync({ force: false }).then(() => app.listen(PORT, () => console.log(`API Server now listening on PORT ${PORT}`)));
+db.sequelize.sync({ force: false }).then(() => app.listen(PORT, () => console.log(`API Server now listening on PORT ${PORT}`))); 

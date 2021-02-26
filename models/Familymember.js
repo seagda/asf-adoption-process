@@ -3,7 +3,7 @@ module.exports = (sequelize, DataTypes) => {
         firstName: { type: DataTypes.STRING, allowNull: false },
         lastName: { type: DataTypes.STRING, allowNull: false },
         dob: { type: DataTypes.DATEONLY, allowNull: false }
-    }, { underscored: true });
+    }, { underscored: true, paranoid: true });
 
     Familymember.associate = db => {
         db.User.hasMany(Familymember);
