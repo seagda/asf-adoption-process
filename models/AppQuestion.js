@@ -25,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
         db.AppQuestionCategory.hasMany(AppQuestion);
         AppQuestion.belongsTo(db.AppQuestionCategory);
 
-        AppQuestion.hasOne(AppQuestion, { foreignKey: "dependsOnQuestion" });
+        AppQuestion.belongsTo(AppQuestion, { as: "DependsOnQuestion", foreignKey: "dependsOnQuestionId" });
     };
 
     return AppQuestion;
