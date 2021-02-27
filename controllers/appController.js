@@ -5,7 +5,7 @@ const ac = require("../helpers/ac");
 const router = require("express").Router();
 
 // get application questions for a certain type of application
-router.get("/:type", (req, res) => {
+router.get("/:type/questions", (req, res) => {
     const permission = ac.can(req.roles).readAny("AppQuestion");
     if (permission.granted) {
         db.AppQuestionCategory.findAll({
