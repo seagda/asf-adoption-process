@@ -40,11 +40,6 @@ const MenuProps = {
   },
 };
 
-// const names = [
-//   'North East',
-//   'Texas',
-//   'Pacific North West'
-// ];
 
 function getStyles(name, personName, theme) {
     return {
@@ -58,24 +53,20 @@ function getStyles(name, personName, theme) {
   export default function MultiSelectChips(props) {
     const classes = useStyles();
     const theme = useTheme();
-    const [personName, setPersonName] = React.useState([]);
-  
-    const handleChange = (event) => {
-      setPersonName(event.target.value);
-    };
-  
-    const handleChangeMultiple = (event) => {
-      const { options } = event.target;
-      const value = [];
-      for (let i = 0, l = options.length; i < l; i += 1) {
-        if (options[i].selected) {
-          value.push(options[i].value);
-        }
-      }
-      setPersonName(value);
-    };
-  
 
+  
+    // const handleChangeMultiple = (event) => {
+    //   const { options } = event.target;
+    //   const value = [];
+    //   for (let i = 0, l = options.length; i < l; i += 1) {
+    //     if (options[i].selected) {
+    //       value.push(options[i].value);
+    //     }
+    //   }
+    //   setPersonName(value);
+    // };
+  var selected =props.selectedOption || []
+    console.log(props.selectedOption)
     return (
         <div>
           <FormControl className={classes.formControl}>
@@ -85,8 +76,8 @@ function getStyles(name, personName, theme) {
               labelId="demo-mutiple-chip-label"
               id="demo-mutiple-chip"
               multiple
-              value={personName}
-              onChange={handleChange}
+              value={selected}
+              onChange={props.onOptionChange}
               input={<Input id="select-multiple-chip" />}
               renderValue={(selected) => (
                 <div className={classes.chips}>
@@ -98,7 +89,7 @@ function getStyles(name, personName, theme) {
               MenuProps={MenuProps}
               //  pass in the props below which are names in this case
             > {props.names.map((name) => (
-                <MenuItem key={name} value={name} style={getStyles(name, personName, theme)}>
+                <MenuItem key={name} value={name} style={getStyles(name, selected, theme)}>
                   {name}
                 </MenuItem>
               ))}

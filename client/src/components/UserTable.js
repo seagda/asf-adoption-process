@@ -24,14 +24,15 @@ import FilterListIcon from '@material-ui/icons/FilterList';
 // function createData(name, calories, fat, carbs, protein) {
 //   return { name, calories, fat, carbs, protein };
 // }
-function createData(id, name, user, city, state, vetName, vetPhone) {
-  return { id, name, user, city, state, vetName, vetPhone };
+function createData(id, name, email, city, state, vetName, vetPhone) {
+  return { id, name, email, city, state, vetName, vetPhone };
 }
 
 const rows = [
-  createData(1, 'Bruce', 'Kathy Shaw', 'Austen', 'TX', 'Paul Simon', 235-222-4850),
-  createData(2, 'Sweet Dog', 'Kathy Shaw', 'Austen', 'TX', 'Paul Simon', 235-222-4850),
-  createData(3, 'Cat the Dog', 'Kathy Shaw', 'Austen', 'TX', 'Paul Simon', 235-222-4850),
+  createData(1, 'Kathy Shaw', 'dogs12', 'Austen', 'TX', 'Paul Simon', 235-222-4850),
+  createData(2, 'Kathy Shaw', 'dogs12', 'Austen', 'TX', 'Paul Simon', 235-222-4850),
+  // createData(2, 'Sweet Dog', 'Kathy Shaw', 'Austen', 'TX', 'Paul Simon', 235-222-4850),
+  // createData(3, 'Cat the Dog', 'Kathy Shaw', 'Austen', 'TX', 'Paul Simon', 235-222-4850),
 ];
 
 function descendingComparator(a, b, orderBy) {
@@ -62,12 +63,14 @@ function stableSort(array, comparator) {
 
 //id, name, user, city, state, vetName, vetPhone
 const headCells = [
-  { id: 'id', numeric: true, disablePadding: true, label: 'User Id' },
+  { id: 'id', numeric: true, disablePadding: false, label: 'User Id' },
   { id: 'name', numeric: false, disablePadding: false, label: 'Name' },
-  { id: 'phone', numeric: false, disablePadding: false, label: 'Phone' },
-  { id: 'email ', numeric: false, disablePadding: false, label: 'Email' },
+  // { id: 'phone', numeric: false, disablePadding: false, label: 'Phone' },
+  { id: 'email', numeric: false, disablePadding: false, label: 'Email' },
   { id: 'city', numeric: false, disablePadding: false, label: 'City' },
-  { id: 'state', numeric: false, disablePadding: false, label: 'State' }
+  { id: 'state', numeric: false, disablePadding: false, label: 'State' },
+  { id: 'vet', numeric: false, disablePadding: false, label: 'Vet' },
+  { id: 'vetPhone', numeric: false, disablePadding: false, label: 'Vet Phone' }
 ];
 
 function EnhancedTableHead(props) {
@@ -90,7 +93,7 @@ function EnhancedTableHead(props) {
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
-            align={headCell.numeric ? 'right' : 'left'}
+            // align={headCell.numeric ? 'right' : 'left'}
             padding={headCell.disablePadding ? 'none' : 'default'}
             sortDirection={orderBy === headCell.id ? order : false}
           >
@@ -293,17 +296,17 @@ export default function UserTable() {
               {stableSort(rows, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-                  const isItemSelected = isSelected(row.name);
+                  const isItemSelected = isSelected(row.id);
                   const labelId = `enhanced-table-checkbox-${index}`;
 
                   return (
                     <TableRow
                       hover
-                      onClick={(event) => handleClick(event, row.name)}
+                      onClick={(event) => handleClick(event, row.id)}
                       role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
-                      key={row.name}
+                      key={row.id}
                       selected={isItemSelected}
                     >
                       <TableCell padding="checkbox">
@@ -313,12 +316,14 @@ export default function UserTable() {
                         />
                       </TableCell>
                       <TableCell component="th" id={labelId} scope="row" padding="none">
-                        {row.name}
+                        {row.id}
                       </TableCell>
-                      <TableCell align="right">{row.calories}</TableCell>
-                      <TableCell align="right">{row.fat}</TableCell>
-                      <TableCell align="right">{row.carbs}</TableCell>
-                      <TableCell align="right">{row.protein}</TableCell>
+                      <TableCell >{row.name}</TableCell>
+                      <TableCell >{row.email}</TableCell>
+                      <TableCell >{row.city}</TableCell>
+                      <TableCell >{row.state}</TableCell>
+                      <TableCell >{row.vetName}</TableCell>
+                      <TableCell >{row.vetPhone}</TableCell>
                     </TableRow>
                   );
                 })}

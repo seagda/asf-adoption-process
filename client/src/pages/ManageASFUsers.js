@@ -11,16 +11,33 @@ import UserFlow from '../components/UserFlow';
 import UserTable from '../components/UserTable';
 
 const useStyles=makeStyles(theme => ({
-    mainContainer: {
-        marginTop: "5em",
-        marginLeft: "20em", 
-        [theme.breakpoints.down("xs")]:{
-            marginLeft: "1em"
-        }
+    marginLeft: theme.spacing(35),
+    marginTop: theme.spacing(13),
+    width: "70%",
+    [theme.breakpoints.down("md")]:{
+        width: "80%"
+    },
+    [theme.breakpoints.down("sm")]:{
+        width: "100%"
+    },
+    [theme.breakpoints.down("xs")]:{
+        spacing: theme.spacing(2),
+        marginLeft: 0
     }
 }))
 
 export default function ManageASFUsers() {
+    // set state of the mulitiselectchip
+    const [region, setRegion] = React.useState([]);
+    const [role, setRole] = React.useState([]);
+  
+    const handleRegionChange = (event) => {
+      setRegion(event.target.value);
+    };
+    const handleRoleChange = (event) => {
+      setRole(event.target.value);
+    };
+
     const regions = [
         'Midwest/South',
         'Mid-Atlantic',
@@ -34,7 +51,7 @@ export default function ManageASFUsers() {
         'Texas'
       ];
 
-    const role = [
+    const roles = [
         'Adopter',
         'Foster',
         'Regional Lead',
@@ -46,7 +63,7 @@ export default function ManageASFUsers() {
     return (
         
         <Grid container className={classes.mainContainer}>
-            <Grid container xs={12} s={10} m={8} lg={8} spacing={2}>
+            <Grid container spacing={2}>
                 <Grid item xs={12}>
                 <Typography variant="h3" component="h4" gutterBottom align="center" color="primary">
                     Manage ASF Users
@@ -63,10 +80,10 @@ export default function ManageASFUsers() {
                     </form>
                 </Grid>
                 <Grid item xs={6}>
-                    <MultiSelectChips names={regions} title="Select Region"/>
+                    <MultiSelectChips names={regions} title="Select Region" selectedOption={region} onOptionChange={handleRegionChange}/>
                 </Grid>
                 <Grid item xs={6}>
-                    <MultiSelectChips names={role} title="Select Role"/>
+                    <MultiSelectChips names={roles} title="Select Role" selectedOption={role} onOptionChange={handleRoleChange} />
                 </Grid>
                 <Grid item xs={12}>
                     <Divider />
