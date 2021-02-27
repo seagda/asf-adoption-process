@@ -25,7 +25,7 @@ app.use("/api/address", require("./controllers/addressController"));
 app.use("/api/event", require("./controllers/eventController"));
 app.use("/api/contact", require("./controllers/extContactController"));
 app.use("/api/region", require("./controllers/regionController"));
-app.use("/api/app-question", require("./controllers/appQuestionController"));
+app.use("/api/app", require("./controllers/appController"));
 
 if (env === "production") {
     app.use(express.static("client/build"));
