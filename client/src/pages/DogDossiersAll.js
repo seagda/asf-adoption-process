@@ -23,9 +23,21 @@ const useStyles=makeStyles(theme => ({
         },
         [theme.breakpoints.down("xs")]:{
             spacing: theme.spacing(2),
-            marginLeft: 0
+            marginLeft: 5
         }
-    }
+    },
+  
+    // chipSelectionWidth: {
+    //     [theme.breakpoints.down("md")]:{
+    //         width: 450
+    //     },
+    //     [theme.breakpoints.down("sm")]:{
+    //         width: 400
+    //     },
+    //     [theme.breakpoints.down("xs")]:{
+    //         width: 350
+    //     }
+    // }
 }))
 
 export default function DogDossiersAll() {
@@ -55,14 +67,14 @@ export default function DogDossiersAll() {
         
         <Grid container className={classes.mainContainer}>
             <Grid container spacing={2}>
-                <Grid item xs={4} s={4} m={6} lg={12}>
+                <Grid item xs={12}>
                 <Typography variant="h3" component="h4" gutterBottom align="center" color="primary">
                     Dog Dossiers
                     <Divider />
                 </Typography>
                 </Grid>
-                <Grid item xs={0} s={0} m={8} lg={10}/>
-                <Grid item xs={12} s={8} m={4} lg={2}>
+                <Grid item xs={4} s={4} m={8} lg={10}/>
+                <Grid item xs={8} s={8} m={4} lg={2}>
                     <AddButton buttonText="Add Dog" toLink="/addDog" />
                 </Grid>
                 <Grid item xs={12}>
@@ -79,8 +91,9 @@ export default function DogDossiersAll() {
                 <Grid item xs={12}>
                     <Divider />
                 </Grid>
-                <Grid item xs={12}>
-                    <div style={{height: 100, width: 1000}}>
+                <Grid item xs={1} />
+                <Grid item xs={11}>
+                    <div /* className={classes.flowContainer} */ style={{height: 100, width: 1500}}>
                         <DogAdoptionFlow />
                     </div>
                 </Grid>

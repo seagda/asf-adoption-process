@@ -11,6 +11,7 @@ import UserFlow from '../components/UserFlow';
 import UserTable from '../components/UserTable';
 
 const useStyles=makeStyles(theme => ({
+    mainContainer: {
     marginLeft: theme.spacing(35),
     marginTop: theme.spacing(13),
     width: "70%",
@@ -22,14 +23,25 @@ const useStyles=makeStyles(theme => ({
     },
     [theme.breakpoints.down("xs")]:{
         spacing: theme.spacing(2),
-        marginLeft: 0
+        marginLeft: 5
     }
+},   flowContainer: {
+        width: 1000,
+        height: 100,
+    [theme.breakpoints.down("sm")]:{
+        hidden: true 
+    },
+    // [theme.breakpoints.down("xs")]:{
+    //     width: 300,
+    //     height: 100
+    // }
+},
 }))
 
 export default function ManageASFUsers() {
     // set state of the mulitiselectchip
-    const [region, setRegion] = React.useState([]);
-    const [role, setRole] = React.useState([]);
+    const [selectedRegions, setRegion] = React.useState([]);
+    const [selectedRoles, setRole] = React.useState([]);
   
     const handleRegionChange = (event) => {
       setRegion(event.target.value);
@@ -70,8 +82,8 @@ export default function ManageASFUsers() {
                     <Divider />
                 </Typography>
                 </Grid>
-                <Grid item xs={10} />
-                <Grid item xs={2}>
+                <Grid item xs={4} s={4} m={8} lg={10} />
+                <Grid item xs={8} s={8} m={4} lg={2}>
                     <AddButton buttonText="Add User" toLink="/createUser" />
                 </Grid>
                 <Grid item xs={12}>
@@ -79,22 +91,22 @@ export default function ManageASFUsers() {
                         <TextField id="outlined-basic" label="Search" variant="outlined" fullWidth />
                     </form>
                 </Grid>
-                <Grid item xs={6}>
-                    <MultiSelectChips names={regions} title="Select Region" selectedOption={region} onOptionChange={handleRegionChange}/>
+                <Grid item xs={12} s={12} m={6} lg={6}>
+                    <MultiSelectChips names={regions} title="Select Region" selectedOption={selectedRegions} onOptionChange={handleRegionChange}/>
                 </Grid>
-                <Grid item xs={6}>
-                    <MultiSelectChips names={roles} title="Select Role" selectedOption={role} onOptionChange={handleRoleChange} />
+                <Grid item xs={12} s={12} m={6} lg={6}>
+                    <MultiSelectChips names={roles} title="Select Role" selectedOption={selectedRoles} onOptionChange={handleRoleChange} />
                 </Grid>
                 <Grid item xs={12}>
                     <Divider />
                 </Grid>
                 <Grid item xs={12}>
-                    <div style={{height: 100, width: 1000}}>
+                    <div className={classes.flowContainer} /* style={{height: 100, width: 1000}} */>
                         <UserFlow />
                     </div>
                 </Grid>
                 <Grid item xs={12}>
-                    <UserTable />
+                    <UserTable selectedRegions={selectedRegions} selectedRoles={selectedRoles}/>
                 </Grid>
             </Grid>
         </Grid>

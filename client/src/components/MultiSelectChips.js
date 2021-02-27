@@ -14,8 +14,12 @@ import Chip from '@material-ui/core/Chip';
 const useStyles=makeStyles(theme => ({
     formControl: {
       margin: theme.spacing(1),
-      minWidth: 450,
-      maxWidth: 450,
+      minWidth: 550,
+      maxWidth: 550,
+      [theme.breakpoints.down("xs")]:{
+          minWidth:350,
+          maxWidth: 350,
+      }
       },
       chips: {
         display: 'flex',
@@ -54,17 +58,6 @@ function getStyles(name, personName, theme) {
     const classes = useStyles();
     const theme = useTheme();
 
-  
-    // const handleChangeMultiple = (event) => {
-    //   const { options } = event.target;
-    //   const value = [];
-    //   for (let i = 0, l = options.length; i < l; i += 1) {
-    //     if (options[i].selected) {
-    //       value.push(options[i].value);
-    //     }
-    //   }
-    //   setPersonName(value);
-    // };
   var selected =props.selectedOption || []
     console.log(props.selectedOption)
     return (

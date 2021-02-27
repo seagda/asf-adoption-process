@@ -24,13 +24,13 @@ import FilterListIcon from '@material-ui/icons/FilterList';
 // function createData(name, calories, fat, carbs, protein) {
 //   return { name, calories, fat, carbs, protein };
 // }
-function createData(id, name, email, city, state, vetName, vetPhone) {
-  return { id, name, email, city, state, vetName, vetPhone };
+function createData(id, name, email, city, state, region, role) {
+  return { id, name, email, city, state, region, role };
 }
 
 const rows = [
-  createData(1, 'Kathy Shaw', 'dogs12', 'Austen', 'TX', 'Paul Simon', 235-222-4850),
-  createData(2, 'Kathy Shaw', 'dogs12', 'Austen', 'TX', 'Paul Simon', 235-222-4850),
+  createData(1, 'Kathy Shaw', 'dogs12', 'Austen', 'TX', ['South West'], ['Regional Lead']),
+  createData(2, 'Kathy Shaw', 'dogs12', 'Austen', 'TX', ['North East'], ['Foster']),
   // createData(2, 'Sweet Dog', 'Kathy Shaw', 'Austen', 'TX', 'Paul Simon', 235-222-4850),
   // createData(3, 'Cat the Dog', 'Kathy Shaw', 'Austen', 'TX', 'Paul Simon', 235-222-4850),
 ];
@@ -63,14 +63,14 @@ function stableSort(array, comparator) {
 
 //id, name, user, city, state, vetName, vetPhone
 const headCells = [
-  { id: 'id', numeric: true, disablePadding: false, label: 'User Id' },
+  // { id: 'id', numeric: true, disablePadding: false, label: 'User Id' },
   { id: 'name', numeric: false, disablePadding: false, label: 'Name' },
   // { id: 'phone', numeric: false, disablePadding: false, label: 'Phone' },
   { id: 'email', numeric: false, disablePadding: false, label: 'Email' },
   { id: 'city', numeric: false, disablePadding: false, label: 'City' },
   { id: 'state', numeric: false, disablePadding: false, label: 'State' },
-  { id: 'vet', numeric: false, disablePadding: false, label: 'Vet' },
-  { id: 'vetPhone', numeric: false, disablePadding: false, label: 'Vet Phone' }
+  { id: 'region', numeric: false, disablePadding: false, label: 'Region' },
+  { id: 'role', numeric: false, disablePadding: false, label: 'Role' }
 ];
 
 function EnhancedTableHead(props) {
@@ -322,8 +322,8 @@ export default function UserTable() {
                       <TableCell >{row.email}</TableCell>
                       <TableCell >{row.city}</TableCell>
                       <TableCell >{row.state}</TableCell>
-                      <TableCell >{row.vetName}</TableCell>
-                      <TableCell >{row.vetPhone}</TableCell>
+                      <TableCell >{row.region.join(", ")}</TableCell>
+                      <TableCell >{row.role.join(", ")}</TableCell>
                     </TableRow>
                   );
                 })}
