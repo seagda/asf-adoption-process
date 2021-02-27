@@ -44,41 +44,31 @@ router.post("/new", (req, res) => {
     if (permission.granted) {
         // one field that is absolutely required is email so we can send the create key
         if (!req.body.email) return res.status(400).send({ message: "Must specify an email to create a user" });
-        db.User.findOne({ where: { email: req.body.email } }).then(user => {
-            // user with that email must either not exist or must already have a create key (meaning they didn't use the create key yet)
-            if (user && !user.createKey) {
-                return res.status(409).send({ message: "There is already an account associated with that email" });
-            } else {
-                // generate token, create user, and email user a link
-                const createKey = jwt.sign({ email: req.body.email }, process.env.SECRET, { expiresIn: 86400 });
-                // newUser is req.body without body.roles and with createKey
-                const { roles, ...newUser } = { ...req.body, createKey };
-
-                db.User.upsert(newUser).then(([user]) => {
-                    // user only gets currently selected roles plus user roles
-                    user.setRoles([1, ...(roles || [])]);
-                    mail.sendMail({
-                        from: '"Australian Shepherds Furever" <aussiesfurever@outlook.com>',
-                        to: req.body.email,
-                        subject: "Invitation to Australian Shepherds Furever",
-                        text: `You have been invited to Australian Shepherds Furever!\nClick this link to create an account: http://localhost:3000/create-account?key=${createKey}`,
-                        html: `You have been invited to Australian Shepherds Furever!<br /><a href="http://localhost:3000/create-account?key=${createKey}">Click here to create an account</a>`
-                    }).then(info => {
-                        console.log(info);
-                        res.status(200).send({ message: "Email sent to create an account!" });
-                    }).catch(err => {
-                        console.error(err);
-                        res.status(500).send({ message: "error sending the email" });
-                    });
-                }).catch(err => {
-                    console.error(err);
-                    res.status(500).send({ message: "error updating/creating user" });
-                });
-            }
-        }).catch(err => {
-            console.error(err);
-            res.status(500).send({ message: "Database error" });
-        });
+        const createKey = jwt.sign({ email: req.body.email }, process.env.SECRET, { expiresIn: 86400 });
+        db.User.findOne({ where: { email: req.body.email }, include: db.Auth })
+            .then(user => {
+                if (user && user.Auth.createKey) {
+                    return Promise.all([user.update(permission.filter(req.body)), user.Auth.update({ createKey })]).then(([user]) => user);
+                } else if (!user) {
+                    return db.User.create({ ...permission.filter(req.body), Auth: { createKey } }, { include: db.Auth });
+                } else res.status(409).send({ message: "There is already an account associated with that email" });
+            })
+            .then(user => user.setRoles([1, ...(req.body.roles || [])]))
+            .then(() => mail.sendMail({
+                from: '"Australian Shepherds Furever" <aussiesfurever@outlook.com>',
+                to: req.body.email,
+                subject: "Invitation to Australian Shepherds Furever",
+                text: `You have been invited to Australian Shepherds Furever!\nClick this link to create an account: http://localhost:3000/create-account?key=${createKey}`,
+                html: `You have been invited to Australian Shepherds Furever!<br /><a href="http://localhost:3000/create-account?key=${createKey}">Click here to create an account</a>`
+            }))
+            .then(info => {
+                console.log(info);
+                res.send({ message: "Email sent to create an account!" });
+            })
+            .catch(err => {
+                console.error(err);
+                res.status(500).send({ message: "Error creating and emailing user", error: err });
+            });
     } else return res.status(401).send({ message: "Not authorized to create a user" });
 });
 
