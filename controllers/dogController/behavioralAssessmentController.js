@@ -2,29 +2,23 @@ const db = require("../../models");
 const ac = require("../../helpers/ac");
 const router = require("express").Router();
 
-// show all BEHAVIORAL ASSESSMENTS, with correct ROLE permission
-router.get("/", (req, res) => {
-    const permission = ac.can(req.roles).readAny("BehavioralAssessment");
-    if (permission.granted) {
-
-    db.BehavioralAssessment
-      .findAll({where: req.query})
-      .then(behAssessments => res.json(behAssessments.map(behAssessment => permission.filter(behAssessment.toJSON()))))
-      .catch(err => {
-          console.error(err)
-          res.status(422).send({ message: "Error with request" })
-    });
-
-    } else return res.status(401).send({ message: "Not authorized to view Behavioral Assessments" });
-});
-
-// show one BEHAVIORAL ASSESSMENT, with correct ROLE permission
+// show all BEHAVIORAL ASSESSMENT for ONE dog, with correct ROLE permission
 router.get("/:id", (req, res) => {
-    const permission = ac.can(req.roles).readAny("BehavioralAssessment");
-    if (permission.granted) {
+    const permissionOwn = ac.can(req.roles).readOwn("BehavioralAssessment");
+    const permissionAny = ac.can(req.roles).readAny("BehavioralAssessment");
+    if (permissionOwn.granted || permissionAny.granted) {
+
         db.BehavioralAssessment
-        .findByPk(req.params.id)
-        .then(behAss => res.json(permission.filter(behAss.toJSON())))
+        .findByPk(req.params.id, {include: db.Dog})
+        .then(behAss => {
+            let behAssJson;
+            if (behAss.Dog.currentlyWithId === req.userId) {
+                behAssJson = permissionOwn.filter(behAss.toJSON())
+            } else if (permissionAny.granted) {
+                behAssJson = permissionAny.filter(behAss.toJSON())
+            } else return res.status(401).send({ message: "you can't view this dog's assessments" });
+            res.json(behAssJson);
+        })
         .catch(err => {
             console.error(err);
             res.status(422).send({ message: "Error with request" });
@@ -33,28 +27,49 @@ router.get("/:id", (req, res) => {
 });
 
 // create new BEHAVIORAL ASSESSMENT, with correct ROLE permission
-router.post("/new", (req, res) => {
-    const permission = ac.can(req.roles).createAny("BehavioralAssessment");
-    if (permission.granted) {
+router.post("/:id", (req, res) => {
+    const permissionOwn = ac.can(req.roles).createOwn("BehavioralAssessment");
+    const permissionAny = ac.can(req.roles).createAny("BehavioralAssessment");
+    db.Dog.findByPk(req.params.id)
+    .then(dog => {
+        if (permissionOwn.granted || permissionAny.granted) {
+            let behAssJson;
+            if (dog.currentlyWithId === req.userId) {
+                behAssJson = permissionOwn.filter(req.body)
+            } else if (permissionAny.granted) {
+                behAssJson = permissionAny.filter(req.body)
+            } else return res.status(401).send({ message: "you can't create assessments" })
+    
+        dog
+          .createBehavioralAssessment(behAssJson) 
+          .then(() => res.status(200).send({message: "Behavioral Assessment successfully created"}))
+          .catch(err => {
+            console.error(err)  
+            res.status(422).send({ message: "Error with request" })
+        });
+    
+        } else return res.status(401).send({ message: "Not authorized to create Behavioral Assessments" })
 
-    db.BehavioralAssessment
-      .create(req.body)
-      .then(behAss => res.json(permission.filter(behAss.toJSON())))
-      .catch(err => {
-        console.error(err)  
-        res.status(422).send({ message: "Error with request" })
-    });
-
-    } else return res.status(401).send({ message: "Not authorized to create Behavioral Assessments" });
+    })
 });
 
 // update BEHAVIORAL ASSESSMENT by id, with correct ROLE permission
 router.put("/:id", (req, res) => {
-    const permission = ac.can(req.roles).updateAny("BehavioralAssessment");
-    if (permission.granted) {
+    const permissionOwn = ac.can(req.roles).updateOwn("BehavioralAssessment");
+    const permissionAny = ac.can(req.roles).updateAny("BehavioralAssessment");
+    if (permissionOwn.granted || permissionAny.granted) {
+        
         db.BehavioralAssessment
-            .findByPk(req.params.id)
-            .then(behAss => behAss.update(permission.filter(req.body)))
+        .findByPk(req.params.id, {include: db.Dog})
+            .then(behAss => {
+                let behAssJson;
+                if (behAss.Dog.currentlyWithId === req.userId) {
+                    behAssJson = permissionOwn.filter(behAss.toJSON())
+                } else if (permissionAny.granted) {
+                    behAssJson = permissionAny.filter(behAss.toJSON())
+                } else return res.status(401).send({ message: "you can't update this dog's assessments" });
+                res.json(behAssJson);
+            })
             .then(() => res.sendStatus(200))
             .catch(err => {
                 console.error(err);
@@ -63,7 +78,7 @@ router.put("/:id", (req, res) => {
     } else return res.status(401).send({ message: "Not authorized to update Behavioral Assessments"});
 });
 
-// delete BEHAVIORAL ASSESSMENT by id, with correct ROLE permission
+// delete BEHAVIORAL ASSESSMENT by id, with SuperAdmin ONLY permission
 router.delete("/:id", (req, res) => {
     const permission = ac.can(req.roles).deleteAny("BehavioralAssessment");
     if (permission.granted) {
