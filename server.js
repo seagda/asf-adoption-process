@@ -22,14 +22,8 @@ app.use("/auth", require("./controllers/authController"));
 app.use("/api/user", require("./controllers/userController"))
 app.use("/api/dog", require("./controllers/dogController"));
 app.use("/api/address", require("./controllers/addressController"));
-app.use("/api/alert", require("./controllers/alertController"));
-app.use("/api/app-response", require("./controllers/appResponseController"));
-app.use("/api/dog/assess", require("./controllers/behavioralAssessmentController"));
-app.use("/api/dog/document", require("./controllers/documentController"));
-app.use("/api/user/event", require("./controllers/eventController"));
+app.use("/api/event", require("./controllers/eventController"));
 app.use("/api/contact", require("./controllers/extContactController"));
-app.use("/api/user/family", require("./controllers/familymemberController"));
-app.use("/api/user/reference", require("./controllers/referenceController"));
 app.use("/api/region", require("./controllers/regionController"));
 
 if (env === "production") {
