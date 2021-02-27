@@ -8,8 +8,8 @@ router.get("/", (req, res) => {
     if (permission.granted) {
 
     db.ExtContact
-      .findAll(req.query)
-      .then(extCont => res.json(permission.filter(extCont.toJSON())))
+    .findAll({where: req.query})
+      .then(extConts => res.json(extConts.map(extCont => permission.filter(extCont.toJSON()))))
       .catch(err => {
           console.error(err)
           res.status(422).send({ message: "Error with request" })

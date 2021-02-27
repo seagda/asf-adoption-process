@@ -9,8 +9,8 @@ router.get("/", (req, res) => {
     if (permission.granted) {
 
     db.Alert
-      .findAll(req.query)
-      .then(alerted => res.json(permission.filter(alerted.toJSON())))
+      .findAll({where: req.query})
+      .then(alerts => res.json(alerts.map(alert => permission.filter(alert.toJSON()))))
       .catch(err => {
           console.error(err)
           res.status(422).send({ message: "Error with request" })
