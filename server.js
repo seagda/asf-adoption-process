@@ -21,16 +21,11 @@ app.use("/api", require("./middleware/verifyToken"));
 app.use("/auth", require("./controllers/authController"));
 app.use("/api/user", require("./controllers/userController"))
 app.use("/api/dog", require("./controllers/dogController"));
-//app.use("/api/address", require("./controllers/addressController"));
-//app.use("/api/app-response", require("./controllers/appResponseController"));
-//app.use("/api/behavior-assess", require("./controllers/behavioralAssessmentController"));
-//app.use("/api/document", require("./controllers/documentController"));
-//app.use("/api/event", require("./controllers/eventController"));
-//app.use("/api/contact", require("./controllers/extContactController"));
+app.use("/api/address", require("./controllers/addressController"));
+app.use("/api/event", require("./controllers/eventController"));
+app.use("/api/contact", require("./controllers/extContactController"));
 app.use("/api/region", require("./controllers/regionController"));
 app.use("/api/app-question", require("./controllers/appQuestionController"));
-
-
 
 if (env === "production") {
     app.use(express.static("client/build"));
