@@ -8,8 +8,8 @@ router.get("/", (req, res) => {
     if (permission.granted) {
 
     db.Region
-      .findAll(req.query)
-      .then(region => res.json(permission.filter(region.toJSON())))
+      .findAll({where: req.query})
+        .then(regions => res.json(regions.map(region => permission.filter(region.toJSON()))))
       .catch(err => {
           console.error(err)
           res.status(422).send({ message: "Error with request" })

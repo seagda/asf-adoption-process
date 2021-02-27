@@ -9,8 +9,8 @@ router.get("/", (req, res) => {
     if (permission.granted) {
 
     db.Address
-      .findAll(req.query)
-      .then(address => res.json(permission.filter(address.toJSON())))
+      .findAll({where: req.query})
+      .then(addresses => res.json(addresses.map(address => permission.filter(address.toJSON()))))
       .catch(err => {
           console.error(err)
           res.status(422).send({ message: "Error with request" })

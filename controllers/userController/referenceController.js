@@ -9,8 +9,8 @@ router.get("/", (req, res) => {
     if (permission.granted) {
 
     db.Reference
-      .findAll(req.query)
-      .then(reference => res.json(permission.filter(reference.toJSON())))
+      .findAll({where: req.query})
+      .then(refs => res.json(refs.map(ref => permission.filter(ref.toJSON()))))
       .catch(err => {
           console.error(err)
           res.status(422).send({ message: "Error with request" })

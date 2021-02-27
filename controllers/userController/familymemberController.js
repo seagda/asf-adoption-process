@@ -9,8 +9,8 @@ router.get("/", (req, res) => {
     if (permission.granted) {
 
     db.Familymember
-      .findAll(req.query)
-      .then(fam => res.json(permission.filter(fam.toJSON())))
+    .findAll({where: req.query})
+      .then(fams => res.json(fams.map(fam => permission.filter(fam.toJSON()))))
       .catch(err => {
           console.error(err)
           res.status(422).send({ message: "Error with request" })
