@@ -3,7 +3,6 @@ import Grid from '@material-ui/core/Grid';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import QuickActions from "../components/QuickActions";
 import PieChartContainer from "../components/PieChartContainer";
-import LegendContainer from '../components/LegendContainer';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import MultiSelectChips from '../components/MultiSelectChips';
@@ -21,7 +20,7 @@ const useStyles=makeStyles(theme => ({
         },
         [theme.breakpoints.down("xs")]:{
             spacing: theme.spacing(2),
-            marginLeft: 0
+            marginLeft: 5
         }
     }
 }))
@@ -29,6 +28,11 @@ const useStyles=makeStyles(theme => ({
 export default function AdminDashboard(){
     const classes = useStyles();
 
+    const [selectedRegions, setRegion] = React.useState([]);
+
+    const handleRegionChange = (event) => {
+        setRegion(event.target.value);
+      };
     const regions = [
         'Midwest/South',
         'Mid-Atlantic',
@@ -55,13 +59,10 @@ export default function AdminDashboard(){
             </Grid>
             <Grid item xs={8} />
             <Grid item xs={4}>
-                <MultiSelectChips names={regions} title="Select Region"/>
+                <MultiSelectChips names={regions} title="Select Region" selectedOption={selectedRegions} onOptionChange={handleRegionChange}/>
             </Grid>
             <Grid item xs={12}>
                 <PieChartContainer/>
-            </Grid>
-            <Grid item xs={12}>
-                <LegendContainer/>
             </Grid>
         </Grid>
     )

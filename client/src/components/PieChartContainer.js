@@ -3,33 +3,8 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Grid from "@material-ui/core/Grid";
 import PieChart from "../components/PieChart";
 
-const useStyles = makeStyles(theme => ({
-    itemContainer: {
-        [theme.breakpoints.down("xs")]:{
-            justifyContent: "center",
-            alignItems: "center"
-        }
-    },
-    form: {
-        paddingRight: "3em",
-        [theme.breakpoints.down("sm")]:{
-            padding: "1em"
-        }
-    },
-    formItem: {
-        marginBottom: "2em"
-    },
-    picContainer: {
-        [theme.breakpoints.down("xs")]:{
-            justifyContent: "center",
-        }
-    }
-}))
-
-
-
 export default function PieChartContainer(){
-    const classes = useStyles();
+
     // update the numbers to grab the quantity from the database
     const dogStatus = [
         { status: 'Pending Intake', number: 12 },
@@ -51,14 +26,14 @@ export default function PieChartContainer(){
 
     return (
         <Grid container justify="space-evenly" style={{marginTop: "4em"}}>
-            <Grid item>
-                <PieChart data={{data: dogStatus}} />
+            <Grid item s={12} m={3} lg={3}>
+                <PieChart data={{data: dogStatus}} text={{text: "Total ASF Dogs"}}/>
             </Grid>
-            <Grid item>
-                <PieChart data={{data: fosterStatus}}/>
+            <Grid item s={12} m={3} lg={3}>
+                <PieChart data={{data: fosterStatus}} text={{text: "Total Fosters"}}/>
             </Grid>
-            <Grid item>
-                <PieChart data={{data: adopterStatus}} />
+            <Grid item s={12} m={3} lg={3}>
+                <PieChart data={{data: adopterStatus}} text={{text: "Total Adopters"}}/>
             </Grid>
         </Grid>
     )
