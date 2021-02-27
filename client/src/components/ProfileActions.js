@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ProfileActions(){
     const classes = useStyles();
-    const admin = true;
+    const admin = false;
 
     return(
         <Grid container justify="space-evenly" style={{marginTop: "4em"}}>

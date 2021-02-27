@@ -45,7 +45,7 @@ const useStyles=makeStyles(theme => ({
 
 export default function MyProfile(){
     const classes = useStyles();
-    const admin = true;
+    const admin = false;
 
     return(
         <Grid container className={classes.mainContainer}>

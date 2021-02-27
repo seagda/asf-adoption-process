@@ -30,7 +30,7 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-export default function ProfileBlock(){
+export default function ProfileBlock(props){
     const classes = useStyles();
 
     return (
@@ -41,22 +41,22 @@ export default function ProfileBlock(){
             </Grid>
             <Grid item className={classes.form}>
                 <Grid item container className={classes.formItem}>
-                    <Typography>Name</Typography>
+                    <Typography>Name: </Typography>
                 </Grid>
                 <Grid item container className={classes.formItem}>
-                     <Typography>Phone</Typography>
+                     <Typography>Phone: </Typography>
                 </Grid>
                 <Grid item container className={classes.formItem}>
-                     <Typography>Email</Typography>
+                     <Typography>Email: </Typography>
                 </Grid>
                 <Grid item container className={classes.formItem}>
-                    <Typography>City</Typography>
+                    <Typography>City: </Typography>
                 </Grid>
                 <Grid item container className={classes.formItem}>
-                     <Typography>State</Typography>
+                     <Typography>State: </Typography>
                  </Grid>
                 <Grid item container className={classes.formItem}>
-                     <Typography>About Me</Typography>
+                     <Typography>About Me: </Typography>
                 </Grid>
             </Grid>
         </Grid>
