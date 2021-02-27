@@ -23,7 +23,7 @@ const GreenCheckbox = withStyles({
 
 export default function HoldCheckbox(props) {
   const [state, setState] = React.useState({
-    checkedG: true
+    checkedG: false
   });
 
   const handleChange = (event) => {

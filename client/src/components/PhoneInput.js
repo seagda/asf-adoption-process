@@ -63,7 +63,7 @@ export default function PhoneInput(){
     const [values, setValues] = React.useState({
         textmask: '(1  )    -    ',
         numberformat: '1320',
-      });
+    });
     
       const handleChange = (event) => {
         setValues({

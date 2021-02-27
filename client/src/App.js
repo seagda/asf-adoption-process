@@ -17,6 +17,8 @@ import EditProfile from "./pages/EditProfile";
 import AdminDashboard from "./pages/AdminDashboard";
 
 export default function App() {
+    const admin = true;
+
     return (
         <ThemeProvider theme={theme}>
             <BrowserRouter>
