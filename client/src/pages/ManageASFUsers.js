@@ -1,6 +1,5 @@
 import React from 'react'
 import Grid from '@material-ui/core/Grid'
-import Input from '@material-ui/core/Input';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import TextField from '@material-ui/core/TextField';
@@ -9,6 +8,7 @@ import AddButton from '../components/AddButton'
 import MultiSelectChips from '../components/MultiSelectChips';
 import UserFlow from '../components/UserFlow';
 import UserTable from '../components/UserTable';
+import Hidden from '@material-ui/core/Hidden';
 
 const useStyles=makeStyles(theme => ({
     mainContainer: {
@@ -25,29 +25,23 @@ const useStyles=makeStyles(theme => ({
         spacing: theme.spacing(2),
         marginLeft: 5
     }
-},   flowContainer: {
-        width: 1000,
-        height: 100,
-    [theme.breakpoints.down("sm")]:{
-        hidden: true 
-    },
-    // [theme.breakpoints.down("xs")]:{
-    //     width: 300,
-    //     height: 100
-    // }
-},
+}
 }))
 
 export default function ManageASFUsers() {
     // set state of the mulitiselectchip
     const [selectedRegions, setRegion] = React.useState([]);
     const [selectedRoles, setRole] = React.useState([]);
+    const [searchUser, setUserSearch] = React.useState([]);
   
     const handleRegionChange = (event) => {
       setRegion(event.target.value);
     };
     const handleRoleChange = (event) => {
       setRole(event.target.value);
+    };
+    const handleUserSearch = (event) => {
+      setUserSearch(event.target.value);
     };
 
     const regions = [
@@ -77,7 +71,8 @@ export default function ManageASFUsers() {
         <Grid container className={classes.mainContainer}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                <Typography variant="h3" component="h4" gutterBottom align="center" color="primary">
+                {/* double check on prop to set searchUser state here */}
+                <Typography variant="h3" component="h4" gutterBottom align="center" color="primary" selectedOption={searchUser} onOptionChange={handleUserSearch}>
                     Manage ASF Users
                     <Divider />
                 </Typography>
@@ -100,13 +95,16 @@ export default function ManageASFUsers() {
                 <Grid item xs={12}>
                     <Divider />
                 </Grid>
-                <Grid item xs={12}>
-                    <div className={classes.flowContainer} /* style={{height: 100, width: 1000}} */>
+                <Grid item xs={3}/>
+                <Grid item xs={9}>
+                    <Hidden smDown>
+                    <div style={{height: 100, width: '70%'}} >
                         <UserFlow />
                     </div>
+                    </Hidden>
                 </Grid>
                 <Grid item xs={12}>
-                    <UserTable selectedRegions={selectedRegions} selectedRoles={selectedRoles}/>
+                    <UserTable selectedRegions={selectedRegions} selectedRoles={selectedRoles} searchUser={searchUser}/>
                 </Grid>
             </Grid>
         </Grid>

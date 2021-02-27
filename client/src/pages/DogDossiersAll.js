@@ -1,6 +1,5 @@
 import React from 'react'
 import Grid from '@material-ui/core/Grid'
-import Input from '@material-ui/core/Input';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import TextField from '@material-ui/core/TextField';
@@ -9,6 +8,7 @@ import AddButton from '../components/AddButton'
 import MultiSelectChips from '../components/MultiSelectChips';
 import DogAdoptionFlow from '../components/DogAdoptionFlow';
 import OverviewTable from '../components/OverviewTable';
+import Hidden from '@material-ui/core/Hidden';
 
 const useStyles=makeStyles(theme => ({
     mainContainer: {
@@ -25,22 +25,25 @@ const useStyles=makeStyles(theme => ({
             spacing: theme.spacing(2),
             marginLeft: 5
         }
-    },
-  
-    // chipSelectionWidth: {
-    //     [theme.breakpoints.down("md")]:{
-    //         width: 450
-    //     },
-    //     [theme.breakpoints.down("sm")]:{
-    //         width: 400
-    //     },
-    //     [theme.breakpoints.down("xs")]:{
-    //         width: 350
-    //     }
-    // }
+    }
 }))
 
 export default function DogDossiersAll() {
+
+    const [selectedRegions, setRegion] = React.useState([]);
+    const [selectedDogStatus, setDogStatus] = React.useState([]);
+    const [searchDog, setDogSearch] = React.useState([]);
+  
+    const handleRegionChange = (event) => {
+      setRegion(event.target.value);
+    };
+    const handleDogStatusChange = (event) => {
+      setDogStatus(event.target.value);
+    };
+    const handleDogSearch = (event) => {
+        setDogSearch(event.target.value);
+      };
+
     const regions = [
         'Midwest/South',
         'Mid-Atlantic',
@@ -68,7 +71,8 @@ export default function DogDossiersAll() {
         <Grid container className={classes.mainContainer}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                <Typography variant="h3" component="h4" gutterBottom align="center" color="primary">
+                {/* double check on prop to set searchUser state here */}
+                <Typography variant="h3" component="h4" gutterBottom align="center" color="primary" selectedOption={searchDog} onOptionChange={handleDogSearch}>
                     Dog Dossiers
                     <Divider />
                 </Typography>
@@ -83,22 +87,24 @@ export default function DogDossiersAll() {
                     </form>
                 </Grid>
                 <Grid item xs={12} s={12} m={6} lg={6}>
-                    <MultiSelectChips names={regions} title="Select Region"/>
+                    <MultiSelectChips names={regions} title="Select Region" selectedOption={selectedRegions} onOptionChange={handleRegionChange}/>
                 </Grid>
                 <Grid item xs={12} s={12} m={6} lg={6}>
-                    <MultiSelectChips names={dogStatus} title="Select Dog Status"/>
+                    <MultiSelectChips names={dogStatus} title="Select Dog Status" selectedOption={selectedDogStatus} onOptionChange={handleDogStatusChange} />
                 </Grid>
                 <Grid item xs={12}>
                     <Divider />
                 </Grid>
-                <Grid item xs={1} />
-                <Grid item xs={11}>
-                    <div /* className={classes.flowContainer} */ style={{height: 100, width: 1500}}>
+                <Grid item xs={2} />
+                <Grid item xs={10} justifyContent="center" >
+                    <Hidden smDown>
+                    <div style={{height: 100, width: '70%'}}>
                         <DogAdoptionFlow />
                     </div>
+                    </Hidden>
                 </Grid>
                 <Grid item xs={12}>
-                    <OverviewTable />
+                    <OverviewTable selectedRegions={selectedRegions} selectedDogStatus={selectedDogStatus} searchDog={searchDog}/>
                 </Grid>
             </Grid>
         </Grid>

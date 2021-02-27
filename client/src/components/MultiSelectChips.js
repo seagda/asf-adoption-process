@@ -14,12 +14,8 @@ import Chip from '@material-ui/core/Chip';
 const useStyles=makeStyles(theme => ({
     formControl: {
       margin: theme.spacing(1),
-      minWidth: 550,
-      maxWidth: 550,
-      [theme.breakpoints.down("xs")]:{
-          minWidth:350,
-          maxWidth: 350,
-      }
+      minWidth: '100%',
+      maxWidth: '100%',
       },
       chips: {
         display: 'flex',

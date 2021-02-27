@@ -21,17 +21,16 @@ import Switch from '@material-ui/core/Switch';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
 
-// function createData(name, calories, fat, carbs, protein) {
-//   return { name, calories, fat, carbs, protein };
-// }
-function createData(id, name, user, city, state, vetName, vetPhone) {
-  return { id, name, user, city, state, vetName, vetPhone };
+
+function createData(id, name, user, city, state, vetName, vetPhone, region, status) {
+  return { id, name, user, city, state, vetName, vetPhone, region, status };
 }
 
 const rows = [
-  createData(1, 'Bruce', 'Kathy Shaw', 'Austen', 'TX', 'Paul Simon', 235-222-4850),
-  createData(2, 'Sweet Dog', 'Kathy Shaw', 'Austen', 'TX', 'Paul Simon', 235-222-4850),
-  createData(3, 'Cat the Dog', 'Kathy Shaw', 'Austen', 'TX', 'Paul Simon', 235-222-4850),
+  createData(1, 'Bruce', 'Nancy', 'Sammamish', 'WA', 'Paul Simon', '235-222-4850', ['West Coast'], ['Foster Ready']),
+  createData(2, 'Sweet Dog', 'Kathryn','Santa Cruz', 'CA', 'McJagger', '235-222-7122', ['West Coast'], ['Adopted']),
+  createData(3, 'Cody', 'Boston', 'Jocelyn', 'MA', 'Miley Cyrus', '321-222-4850', ['Northeast'], ['Pending Intake']),
+
 ];
 
 function descendingComparator(a, b, orderBy) {
@@ -60,15 +59,16 @@ function stableSort(array, comparator) {
   return stabilizedThis.map((el) => el[0]);
 }
 
-//id, name, user, city, state, vetName, vetPhone
 const headCells = [
-  { id: 'id', numeric: true, disablePadding: true, label: 'Dog Id' },
+  { id: 'id', numeric: true, disablePadding: true, label: 'Id' },
   { id: 'name', numeric: false, disablePadding: false, label: 'Dog Name' },
-  { id: 'user', numeric: false, disablePadding: false, label: 'ASF User Assigned' },
+  { id: 'user', numeric: false, disablePadding: false, label: 'ASF User' },
   { id: 'city', numeric: false, disablePadding: false, label: 'City' },
   { id: 'state', numeric: false, disablePadding: false, label: 'State' },
   { id: 'vetName', numeric: false, disablePadding: false, label: 'Vet Name' },
   { id: 'vetPhone', numeric: false, disablePadding: false, label: 'Vet Phone' },
+  { id: 'region', numeric: false, disablePadding: false, label: 'Region' },
+  { id: 'status', numeric: false, disablePadding: false, label: 'Status' },
 ];
 
 function EnhancedTableHead(props) {
@@ -80,18 +80,18 @@ function EnhancedTableHead(props) {
   return (
     <TableHead>
       <TableRow>
-        <TableCell padding="checkbox">
-          <Checkbox
+        <TableCell /* padding="checkbox" */>
+          {/* <Checkbox
             indeterminate={numSelected > 0 && numSelected < rowCount}
             checked={rowCount > 0 && numSelected === rowCount}
             onChange={onSelectAllClick}
             inputProps={{ 'aria-label': 'select all desserts' }}
-          />
+          /> */}
         </TableCell>
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
-            align={headCell.numeric ? 'right' : 'left'}
+            // align={headCell.numeric ? 'right' : 'left'}
             padding={headCell.disablePadding ? 'none' : 'default'}
             sortDirection={orderBy === headCell.id ? order : false}
           >
@@ -164,7 +164,7 @@ const EnhancedTableToolbar = (props) => {
         </Typography>
       )}
 
-      {numSelected > 0 ? (
+      {/* {numSelected > 0 ? (
         <Tooltip title="Delete">
           <IconButton aria-label="delete">
             <DeleteIcon />
@@ -176,7 +176,7 @@ const EnhancedTableToolbar = (props) => {
             <FilterListIcon />
           </IconButton>
         </Tooltip>
-      )}
+      )} */}
     </Toolbar>
   );
 };
@@ -308,18 +308,22 @@ export default function OverviewTable() {
                       selected={isItemSelected}
                     >
                       <TableCell padding="checkbox">
-                        <Checkbox
+                        {/* <Checkbox
                           checked={isItemSelected}
                           inputProps={{ 'aria-labelledby': labelId }}
-                        />
+                        /> */}
                       </TableCell>
                       <TableCell component="th" id={labelId} scope="row" padding="none">
-                        {row.name}
+                        {row.id}
                       </TableCell>
-                      <TableCell align="right">{row.calories}</TableCell>
-                      <TableCell align="right">{row.fat}</TableCell>
-                      <TableCell align="right">{row.carbs}</TableCell>
-                      <TableCell align="right">{row.protein}</TableCell>
+                      <TableCell >{row.name}</TableCell>
+                      <TableCell >{row.user}</TableCell>
+                      <TableCell >{row.city}</TableCell>
+                      <TableCell >{row.state}</TableCell>
+                      <TableCell >{row.vetName}</TableCell>
+                      <TableCell >{row.vetPhone}</TableCell>
+                      <TableCell >{row.region}</TableCell>
+                      <TableCell >{row.status}</TableCell>
                     </TableRow>
                   );
                 })}

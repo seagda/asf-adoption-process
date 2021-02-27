@@ -21,18 +21,15 @@ import Switch from '@material-ui/core/Switch';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
 
-// function createData(name, calories, fat, carbs, protein) {
-//   return { name, calories, fat, carbs, protein };
-// }
+
 function createData(id, name, email, city, state, region, role) {
   return { id, name, email, city, state, region, role };
 }
 
 const rows = [
-  createData(1, 'Kathy Shaw', 'dogs12', 'Austen', 'TX', ['South West'], ['Regional Lead']),
-  createData(2, 'Kathy Shaw', 'dogs12', 'Austen', 'TX', ['North East'], ['Foster']),
-  // createData(2, 'Sweet Dog', 'Kathy Shaw', 'Austen', 'TX', 'Paul Simon', 235-222-4850),
-  // createData(3, 'Cat the Dog', 'Kathy Shaw', 'Austen', 'TX', 'Paul Simon', 235-222-4850),
+  createData(1, 'Kacey Musgraves', 'dogs12', 'Austen', 'TX', ['Texas'], ['Regional Lead']),
+  createData(2, 'Dwight Shroot', 'beets22', 'Scranton', 'PA', ['Northeast'], ['Foster']),
+  createData(3, 'Winston', 'newGirl99', 'Los Angeles', 'CA', ['West Coast'], ['Adopter', 'Foster'])
 ];
 
 function descendingComparator(a, b, orderBy) {
@@ -61,11 +58,9 @@ function stableSort(array, comparator) {
   return stabilizedThis.map((el) => el[0]);
 }
 
-//id, name, user, city, state, vetName, vetPhone
+// lable column headers
 const headCells = [
-  // { id: 'id', numeric: true, disablePadding: false, label: 'User Id' },
   { id: 'name', numeric: false, disablePadding: false, label: 'Name' },
-  // { id: 'phone', numeric: false, disablePadding: false, label: 'Phone' },
   { id: 'email', numeric: false, disablePadding: false, label: 'Email' },
   { id: 'city', numeric: false, disablePadding: false, label: 'City' },
   { id: 'state', numeric: false, disablePadding: false, label: 'State' },
@@ -82,13 +77,13 @@ function EnhancedTableHead(props) {
   return (
     <TableHead>
       <TableRow>
-        <TableCell padding="checkbox">
-          <Checkbox
+        <TableCell /* padding="checkbox" */>
+          {/* <Checkbox
             indeterminate={numSelected > 0 && numSelected < rowCount}
             checked={rowCount > 0 && numSelected === rowCount}
             onChange={onSelectAllClick}
             inputProps={{ 'aria-label': 'select all desserts' }}
-          />
+          /> */}
         </TableCell>
         {headCells.map((headCell) => (
           <TableCell
@@ -166,7 +161,7 @@ const EnhancedTableToolbar = (props) => {
         </Typography>
       )}
 
-      {numSelected > 0 ? (
+      {/* {numSelected > 0 ? (
         <Tooltip title="Delete">
           <IconButton aria-label="delete">
             <DeleteIcon />
@@ -178,7 +173,7 @@ const EnhancedTableToolbar = (props) => {
             <FilterListIcon />
           </IconButton>
         </Tooltip>
-      )}
+      )} */}
     </Toolbar>
   );
 };
@@ -310,15 +305,14 @@ export default function UserTable() {
                       selected={isItemSelected}
                     >
                       <TableCell padding="checkbox">
-                        <Checkbox
+                        {/* <Checkbox
                           checked={isItemSelected}
                           inputProps={{ 'aria-labelledby': labelId }}
-                        />
+                        /> */}
                       </TableCell>
                       <TableCell component="th" id={labelId} scope="row" padding="none">
-                        {row.id}
+                        {row.name}
                       </TableCell>
-                      <TableCell >{row.name}</TableCell>
                       <TableCell >{row.email}</TableCell>
                       <TableCell >{row.city}</TableCell>
                       <TableCell >{row.state}</TableCell>

@@ -1,12 +1,12 @@
 import * as React from 'react';
 import Paper from '@material-ui/core/Paper';
-// import { Animation } from '@devexpress/dx-react-chart';
 import {
   Chart,
   PieSeries,
-  Title
+  Title,
+  Legend
 } from '@devexpress/dx-react-chart-material-ui';
-
+import { Animation } from '@devexpress/dx-react-chart';
 
 export default class Demo extends React.PureComponent {
   constructor(props) {
@@ -27,10 +27,11 @@ export default class Demo extends React.PureComponent {
             valueField="number"
             argumentField="status"
           />
+           <Legend/>
           <Title
-          text="This is the greatest" />
+          text="fjdklfjklsajfkldkfdlkdsl;kfl;sd "/>
+          <Animation />
         </Chart>
-        {/* <Animation /> */}
       </Paper>
     );
   }

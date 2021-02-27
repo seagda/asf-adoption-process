@@ -10,15 +10,6 @@ const useStyles = makeStyles(theme => ({
             alignItems: "center"
         }
     },
-    form: {
-        paddingRight: "3em",
-        [theme.breakpoints.down("sm")]:{
-            padding: "1em"
-        }
-    },
-    formItem: {
-        marginBottom: "2em"
-    },
     picContainer: {
         [theme.breakpoints.down("xs")]:{
             justifyContent: "center",
