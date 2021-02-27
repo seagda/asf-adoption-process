@@ -40,9 +40,9 @@ router.post("/new", (req, res) => {
     if (permission.granted) {
 
     db.Address
-      .create(req.body)
-      .then(address => res.json(permission.filter(address.toJSON())))
-      .catch(err => {
+    .create(permission.filter(req.body))
+    .then(() => res.status(200).send({message: "Address successfully created"}))
+    .catch(err => {
         console.error(err)  
         res.status(422).send({ message: "Error with request" })
     });

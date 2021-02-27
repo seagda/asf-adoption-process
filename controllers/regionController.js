@@ -24,8 +24,8 @@ router.post("/new", (req, res) => {
     if (permission.granted) {
 
     db.Region
-      .create(req.body)
-      .then(region => res.json(permission.filter(region.toJSON())))
+      .create(permission.filter(req.body))
+      .then(() => res.status(200).send({message: "Region successfully created"}))
       .catch(err => {
         console.error(err)  
         res.status(500).send({ message: "Server error returned" })

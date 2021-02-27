@@ -40,8 +40,8 @@ router.post("/new", (req, res) => {
     if (permission.granted) {
 
     db.Familymember
-      .create(req.body)
-      .then(fam => res.json(permission.filter(fam.toJSON())))
+      .create(permission.filter(req.body))
+      .then(() => res.status(200).send({message: "Familymember successfully created"}))
       .catch(err => {
         console.error(err)  
         res.status(422).send({ message: "Error with request" })

@@ -14,8 +14,11 @@ module.exports = ac => {
         .createAny("AssessQuestion")
         .readAny("AssessQuestion")
         .updateAny("AssessQuestion")
+        .deleteAny("BehavioralAssessment")
+        .deleteAny("Document")
         .createAny("Region")
         .updateAny("Region")
         .deleteAny("Region")
+
         .updateAny("User")    
 };

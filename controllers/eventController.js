@@ -38,8 +38,8 @@ router.post("/new", (req, res) => {
     if (permission.granted) {
 
     db.Event
-      .create(req.body)
-      .then(evt => res.json(permission.filter(evt.toJSON())))
+      .create(permission.filter(req.body))
+      .then(() => res.status(200).send({message: "Event successfully created"}))
       .catch(err => {
         console.error(err)  
         res.status(422).send({ message: "Error with request" })

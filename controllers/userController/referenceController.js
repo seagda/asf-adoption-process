@@ -40,8 +40,8 @@ router.post("/new", (req, res) => {
     if (permission.granted) {
 
     db.Reference
-      .create(req.body)
-      .then(reference => res.json(permission.filter(reference.toJSON())))
+      .create(permission.filter(req.body))
+      .then(() => res.status(200).send({message: "Reference successfully created"}))
       .catch(err => {
         console.error(err)  
         res.status(422).send({ message: "Error with request" })

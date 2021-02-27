@@ -37,12 +37,12 @@ router.post("/new", (req, res) => {
     if (permission.granted) {
 
     db.ExtContact
-      .create(req.body)
-      .then(extCont => res.json(permission.filter(extCont.toJSON())))
-      .catch(err => {
-        console.error(err)  
-        res.status(422).send({ message: "Error with request" })
-    });
+        .create(permission.filter(req.body))
+        .then(() => res.status(200).send({message: "Contact successfully created"}))
+        .catch(err => {
+          console.error(err)  
+          res.status(422).send({ message: "Error with request" })
+        });
 
     } else return res.status(401).send({ message: "Not authorized to create External Contacts" });
 });

@@ -40,8 +40,8 @@ router.post("/new", (req, res) => {
     if (permission.granted) {
 
     db.Alert
-      .create(req.body)
-      .then(alerted => res.json(permission.filter(alerted.toJSON())))
+    .create(permission.filter(req.body))
+    .then(() => res.status(200).send({message: "Alert successfully created"}))
       .catch(err => {
         console.error(err)  
         res.status(422).send({ message: "Error with request" })
