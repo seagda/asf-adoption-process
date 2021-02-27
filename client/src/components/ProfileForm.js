@@ -2,6 +2,11 @@ import React from 'react';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Grid from "@material-ui/core/Grid";
 import TextField from '@material-ui/core/TextField';
+import Typography from "@material-ui/core/Typography";
+import Divider from "@material-ui/core/Divider";
+import Card from "@material-ui/core/Card";
+import CardActions from "@material-ui/core/CardActionArea";
+import CardContent from "@material-ui/core/CardContent";
 
 import PhoneInput from "../components/PhoneInput";
 import Image from "../components/Image";
@@ -9,6 +14,9 @@ import AddButton from "../components/AddButton";
 import EditButton from "../components/EditButton";
 import MultiLineText from "../components/MultiLineText";
 import SaveButton from "../components/SaveButton";
+import RoleTitles from "../components/RoleTitles";
+import MultiSelectChips from "../components/MultiSelectChips";
+import HoldCheckbox from "../components/HoldCheckbox";
 
 import ashley from "../assets/ashley.jpg";
 
@@ -17,7 +25,8 @@ const useStyles = makeStyles(theme => ({
         [theme.breakpoints.down("xs")]:{
             justifyContent: "center",
             alignItems: "center"
-        }
+        },
+        marginBottom: "5em"
     },
     form: {
         paddingRight: "3em",
@@ -31,14 +40,147 @@ const useStyles = makeStyles(theme => ({
     picContainer: {
         [theme.breakpoints.down("xs")]:{
             justifyContent: "center",
+        },
+        marginBottom: "2em"
+    },
+    references: {
+        [theme.breakpoints.down("xs")]:{
+            marginLeft: "5em"
         }
+    },
+    root: {
+        marginBottom: "1em"
     }
 }))
 
 export default function ProfileForm(){
     const classes = useStyles();
+    const admin = true;
+    const roles = [{role: "Adopter"}, {role: "Foster"}];
+    const names = ["Adopter", "Foster", "Regional", "Volunteer", "Rescuer", "Transporter", "Placement"]
+
+    const roleEdit = (
+        <Grid item container className={classes.itemContainer}>
+        <Grid container style={{marginTop: "1em"}}>
+            <Grid item>
+                <Typography variant="h4">Role Title</Typography>
+            </Grid>
+        </Grid>
+        <Grid container justify="space-between">
+            <Grid item style={{marginTop: "1em"}}>
+                {roles.map((role)=> (
+                    <RoleTitles
+                    label={role.role}
+                    />
+                ))}
+            </Grid>
+            <Grid item>
+                <MultiSelectChips names={names} title="Add Role(s)"/>
+            </Grid>
+        </Grid>
+    </Grid>
+    )
+
+    const capacity = (
+
+        <Grid container direction="row" justify={"space-between"} style={{marginBottom: "5em"}}>
+            <Grid item container xs={10} sm={6} md={6} lg={6} style={{marginTop: "3em"}} direction="column">
+                <Grid item>
+                    <Typography variant="h4">Capacity</Typography>
+                    <Divider/>
+                </Grid>
+                <Grid item container>
+                    <Grid item xs={6} sm={6} md={8} lg={6}>
+                        <Typography style={{marginTop: "1em"}}>Max Capacity:</Typography>
+                        <Typography style={{marginTop: "1.5em"}}>Dogs in care:</Typography>
+                        <Typography style={{marginTop: "2em"}}>Available space:</Typography>
+                    </Grid>
+                    <Grid item xs={6} sm={6} md={8} lg={6}>
+                        <form>
+                        <TextField type="number" style={{marginTop: "1em"}}></TextField>
+                        <TextField type="number" style={{marginTop: "1em"}}></TextField>
+                        <TextField type="number" style={{marginTop: "1em"}}></TextField>
+                        </form>
+                    </Grid>
+                </Grid>
+            </Grid>
+            <Grid item container xs={10} sm={6} md={6} lg={6} style={{marginTop: "3em"}} direction="column">
+                <Grid item>
+                <Typography variant="h4">Cares for:</Typography>
+                    <Divider/>
+                </Grid>
+                <Grid item container style={{marginTop: "3em"}}>
+                    <Grid item>
+                        <MultiSelectChips names={names} title="Select all that apply"/>
+                    </Grid>
+                </Grid>
+            </Grid>
+        </Grid>
+    )
+
+    const references = (
+        <Grid item container justify="space-evenly" className={classes.references}>
+            <Grid item style={{marginTop: "1em", marginBottom: "5em"}}> 
+                <Card className={classes.root}>
+                    <CardContent>
+                        <Typography variant="h5" component="h2">
+                            Reference #1
+                        </Typography>
+                        <form>
+                        <TextField variant="outlined" label="Name"/>
+                        <TextField variant="outlined" label="Phone"/>
+                        <TextField variant="outlined" label="Email"/>
+                        </form>
+                    </CardContent>
+                        {admin ? <CardContent><HoldCheckbox label="Contaced successfully"/></CardContent> : null}
+                        {admin ? <CardContent><HoldCheckbox label="Approved"/></CardContent> : null}
+                        {admin ? <CardContent>Notes:</CardContent> : null}
+                    <CardContent>
+                        {admin ? <form><MultiLineText label="New Notes"/><SaveButton toLink="" buttonText=""/></form> : null}
+                    </CardContent>
+                </Card>
+                <Card className={classes.root}>
+                    <CardContent>
+                        <Typography variant="h5" component="h2">
+                            Reference #2
+                        </Typography>
+                        <form>
+                        <TextField variant="outlined" label="Name"/>
+                        <TextField variant="outlined" label="Phone"/>
+                        <TextField variant="outlined" label="Email"/>
+                        </form>
+                    </CardContent>
+                        {admin ? <CardContent><HoldCheckbox label="Contaced successfully"/></CardContent> : null}
+                        {admin ? <CardContent><HoldCheckbox label="Approved"/></CardContent> : null}
+                        {admin ? <CardContent>Notes:</CardContent> : null}
+                    <CardContent>
+                        {admin ? <form><MultiLineText label="New Notes"/><SaveButton toLink="" buttonText=""/></form> : null}
+                    </CardContent>
+                </Card>
+                <Card className={classes.root}>
+                    <CardContent>
+                        <Typography variant="h5" component="h2">
+                            Reference #3
+                        </Typography>
+                        <form>
+                        <TextField variant="outlined" label="Name"/>
+                        <TextField variant="outlined" label="Phone"/>
+                        <TextField variant="outlined" label="Email"/>
+                        </form>
+                    </CardContent>
+                        {admin ? <CardContent><HoldCheckbox label="Contaced successfully"/></CardContent> : null}
+                        {admin ? <CardContent><HoldCheckbox label="Approved"/></CardContent> : null}
+                        {admin ? <CardContent>Notes:</CardContent> : null}
+                    <CardContent>
+                        {admin ? <form><MultiLineText label="New Notes"/><SaveButton toLink="" buttonText=""/></form> : null}
+                    </CardContent>
+                </Card>
+            </Grid>
+        </Grid>
+    )
 
     return (
+        <form>
         <Grid item container className={classes.itemContainer}>
         <Grid container justify="space-evenly" className={classes.picContainer}>
             <Grid item>
@@ -65,12 +207,20 @@ export default function ProfileForm(){
                     <Grid item container className={classes.formItem}>
                         <MultiLineText label="About"/>
                     </Grid>
-                    <Grid item container className={classes.formItem}>
-                        <SaveButton buttonText="Save Changes"/>
-                    </Grid>
                 </form>
             </Grid>
+            {admin ? roleEdit : null}
+        </Grid>
+        {capacity}
+        <Grid item>
+            <Typography variant="h4">References</Typography>
+            <Divider/>
+        </Grid>
+        {references}
+        <Grid item container className={classes.formItem} justify={"flex-end"}>
+            <SaveButton buttonText="Save Changes"/>
         </Grid>
     </Grid>
+    </form>
     )
 }

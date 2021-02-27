@@ -15,20 +15,21 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function RoleTitleView(){
+export default function AdminNotes(){
     const classes = useStyles();
+    const adminNotes = ["Looking like a viable candidate. Waiting to hear back from vet."]
 
     return(
         <Grid item container className={classes.itemContainer}>
             <Grid container>
                 <Grid item style={{marginTop: "3em"}}>
-                    <Typography variant="h4">Role Title(s)</Typography>
+                    <Typography variant="h4">Admin notes</Typography>
                     <Divider/>
                 </Grid>
             </Grid>
             <Grid container>
                 <Grid item style={{marginTop: "1em"}}>
-                    <Typography>Adopter, Foster</Typography>
+                    <Typography>{adminNotes}</Typography>
                 </Grid>
             </Grid>
         </Grid>

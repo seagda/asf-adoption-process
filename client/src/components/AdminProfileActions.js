@@ -24,21 +24,12 @@ export default function AdminProfileActions(){
         <React.Fragment>
             <Grid container justify="space-evenly" style={{marginTop: "4em"}}>
                 <Grid item>
-                    <ApplyButton toLink="/application" buttonText="Apply to help an aussie"/>
-                </Grid>
-                <Grid item>
-                    <EditButton toLink="/editprofile" buttonText="Edit Profile"/>
-                </Grid>
-                <Grid item>
                     <UpdateButton toLink="/" buttonText="Reset User Password"/>
                 </Grid>
                 <Grid item>
                     <HoldCheckbox label="Put me on hold"/>
                     <HoldCheckbox label="Mark User as inactive"/>
                 </Grid>
-            </Grid>
-            <Grid container justify="space-evenly" style={{marginTop: "1em"}}>
-                <SingleSelect/>
             </Grid>
         </React.Fragment>
     )
