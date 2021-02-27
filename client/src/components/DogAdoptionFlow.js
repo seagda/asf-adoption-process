@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import ReactFlow, { removeElements, addEdge } from 'react-flow-renderer';
 const onLoad = (reactFlowInstance) => reactFlowInstance.fitView();
-const onNodeMouseEnter = (event, node) => console.log('mouse enter:', node);
-const onNodeMouseMove = (event, node) => console.log('mouse move:', node);
-const onNodeMouseLeave = (event, node) => console.log('mouse leave:', node);
+// const onNodeMouseEnter = (event, node) => console.log('mouse enter:', node);
+// const onNodeMouseMove = (event, node) => console.log('mouse move:', node);
+// const onNodeMouseLeave = (event, node) => console.log('mouse leave:', node);
 const onNodeContextMenu = (event, node) => {
   event.preventDefault();
   console.log('context menu:', node);
@@ -127,9 +127,10 @@ const DogAdoptionFlow = () => {
       onConnect={onConnect}
       onLoad={onLoad}
       selectNodesOnDrag={false}
-      onNodeMouseEnter={onNodeMouseEnter}
-      onNodeMouseMove={onNodeMouseMove}
-      onNodeMouseLeave={onNodeMouseLeave}
+      nodesDraggable={false}
+      paneMoveable={false}
+      zoomOnScroll={false}
+      zoomOnPinch={false}
       onNodeContextMenu={onNodeContextMenu}
     >
     </ReactFlow>

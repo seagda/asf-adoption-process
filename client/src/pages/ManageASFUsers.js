@@ -55,8 +55,7 @@ export default function ManageASFUsers() {
                 </Grid>
                 <Grid item xs={10} />
                 <Grid item xs={2}>
-                    <AddButton buttonText="Add User" toLink="/Create-User" />
-                    
+                    <AddButton buttonText="Add User" toLink="/createUser" />
                 </Grid>
                 <Grid item xs={12}>
                      <form noValidate autoComplete="off">

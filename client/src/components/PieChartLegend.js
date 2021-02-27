@@ -1,6 +1,8 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
+import Typography from "@material-ui/core/Typography";
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -8,18 +10,22 @@ const useStyles = makeStyles((theme) => ({
     flexWrap: 'wrap',
     '& > *': {
       margin: theme.spacing(1),
-      width: theme.spacing(16),
-      height: theme.spacing(16),
+      width: theme.spacing(35),
+      height: theme.spacing(8),
     },
   },
 }));
 
-export default function PieChartLegend() {
+export default function PieChartLegend(props) {
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
-      <Paper elevation={0} />
+      <Paper elevation={4}>
+        <Typography>
+          {props.list}
+        </Typography>
+      </Paper>
     </div>
   );
 }

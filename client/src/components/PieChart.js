@@ -1,49 +1,36 @@
 import * as React from 'react';
 import Paper from '@material-ui/core/Paper';
+// import { Animation } from '@devexpress/dx-react-chart';
 import {
   Chart,
   PieSeries,
-  Title,
+  Title
 } from '@devexpress/dx-react-chart-material-ui';
 
-import { Animation } from '@devexpress/dx-react-chart';
 
-const data = [
-  { country: 'Russia', area: 12 },
-  { country: 'Canada', area: 7 },
-  { country: 'USA', area: 7 },
-  { country: 'China', area: 7 },
-  { country: 'Brazil', area: 6 },
-  { country: 'Australia', area: 5 },
-  { country: 'India', area: 2 },
-  { country: 'Others', area: 55 },
-];
 export default class Demo extends React.PureComponent {
   constructor(props) {
     super(props);
 
-    this.state = {
-      data,
-    };
+    this.state = props.data
   }
 
   render() {
-    const { data: chartData } = this.state;
+    const { data: data } = this.state;
 
     return (
       <Paper>
         <Chart
-          data={chartData}
+          data={data}
         >
           <PieSeries
-            valueField="area"
-            argumentField="country"
+            valueField="number"
+            argumentField="status"
           />
           <Title
-            text="Current Snap Shot of ASF"
-          />
-          <Animation />
+          text="This is the greatest" />
         </Chart>
+        {/* <Animation /> */}
       </Paper>
     );
   }

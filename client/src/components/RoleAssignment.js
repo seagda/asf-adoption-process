@@ -23,6 +23,13 @@ const useStyles = makeStyles(theme => ({
 export default function RoleAssignment(){
     const classes = useStyles();
 
+
+const names = [
+  'North East',
+  'Texas',
+  'Pacific North West'
+];
+
     return(
         <Grid item container className={classes.roleContainer}>
         <Grid container className={classes.roleItem}>
@@ -32,7 +39,7 @@ export default function RoleAssignment(){
         </Grid>
         <Grid container className={classes.roleItem}>
             <Grid item>
-                <MultiSelectChips className={classes.select}/>
+                <MultiSelectChips className={classes.select} names={names}/>
             </Grid>
             <MultiLineText label="Admin Notes"/>
         </Grid>

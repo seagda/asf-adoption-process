@@ -12,10 +12,18 @@ import OverviewTable from '../components/OverviewTable';
 
 const useStyles=makeStyles(theme => ({
     mainContainer: {
-        marginTop: "5em",
-        marginLeft: "20em", 
+        marginLeft: theme.spacing(35),
+        marginTop: theme.spacing(13),
+        width: "70%",
+        [theme.breakpoints.down("md")]:{
+            width: "80%"
+        },
+        [theme.breakpoints.down("sm")]:{
+            width: "100%"
+        },
         [theme.breakpoints.down("xs")]:{
-            marginLeft: "1em"
+            spacing: theme.spacing(2),
+            marginLeft: 0
         }
     }
 }))
@@ -46,27 +54,26 @@ export default function DogDossiersAll() {
     return (
         
         <Grid container className={classes.mainContainer}>
-            <Grid container xs={12} s={10} m={8} lg={8} spacing={2}>
-                <Grid item xs={12}>
+            <Grid container spacing={2}>
+                <Grid item xs={4} s={4} m={6} lg={12}>
                 <Typography variant="h3" component="h4" gutterBottom align="center" color="primary">
                     Dog Dossiers
                     <Divider />
                 </Typography>
                 </Grid>
-                <Grid item xs={10} />
-                <Grid item xs={2}>
+                <Grid item xs={0} s={0} m={8} lg={10}/>
+                <Grid item xs={12} s={8} m={4} lg={2}>
                     <AddButton buttonText="Add Dog" toLink="/addDog" />
-                    
                 </Grid>
-                <Grid item xs={12}  /* direction="row" justify="flex-end" alignItems="center" */>
+                <Grid item xs={12}>
                      <form noValidate autoComplete="off">
                         <TextField id="outlined-basic" label="Search" variant="outlined" fullWidth />
                     </form>
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs={12} s={12} m={6} lg={6}>
                     <MultiSelectChips names={regions} title="Select Region"/>
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs={12} s={12} m={6} lg={6}>
                     <MultiSelectChips names={dogStatus} title="Select Dog Status"/>
                 </Grid>
                 <Grid item xs={12}>

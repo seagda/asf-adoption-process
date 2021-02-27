@@ -33,8 +33,8 @@ export default function App() {
                     <Route path="/editprofile"><EditProfile/></Route>
                     <Route path="/application"><Application/></Route>
                     <Route path="/Admin-Dashboard"><AdminDashboard/></Route>
-                    <Route path="/Create-User"><CreateUser/></Route>
-                    {/* <Route path="/addDog"><DogDossier/></Route> */}
+                    <Route path="/createUser"><CreateUser/></Route>
+                    <Route path="/addDog"><DogDossier/></Route>
                 </Switch>
             </BrowserRouter>
         </ThemeProvider>

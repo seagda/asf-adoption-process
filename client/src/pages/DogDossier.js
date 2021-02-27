@@ -27,7 +27,6 @@ export default function DogDossier(){
 
     return(
         <Grid container className={classes.mainContainer}>
-            <div>hellloooo</div>
             <ProfileForm/>
         </Grid>
     )
