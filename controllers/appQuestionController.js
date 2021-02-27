@@ -5,7 +5,7 @@ const ac = require("../helpers/ac");
 const router = require("express").Router();
 
 // get application questions for a certain type of application
-router.get("/:typeId", (req, res) => {
+router.get("/:type", (req, res) => {
     const permission = ac.can(req.roles).readAny("AppQuestion");
     if (permission.granted) {
         db.AppQuestionCategory.findAll({
@@ -14,7 +14,7 @@ router.get("/:typeId", (req, res) => {
                 include: [
                     db.AppQuestionOption,
                     { model: db.AppQuestion, as: "DependsOnQuestion", include: db.AppQuestionOption },
-                    { model: db.AppType, where: { id: req.params.typeId } }]
+                    { model: db.AppType, where: { name: req.params.type } }]
             }
         })
             .then(categories => {
