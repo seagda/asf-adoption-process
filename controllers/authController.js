@@ -42,6 +42,7 @@ router.put("/signup/:token", (req, res) => {
             bcrypt.hash(req.body.password, 8)
         ])
             .then(([user, hash]) => {
+                if (!user) return res.status(401).send({ message: "Unauthorized!" });
                 const permission = ac.can(user.Roles.map(role => role.name)).updateOwn("User");
                 if (permission.granted) {
                     // update user with filtered request body
@@ -60,7 +61,7 @@ router.put("/signup/:token", (req, res) => {
 });
 
 router.post("/signin", (req, res) => db.User.findOne({ where: { email: req.body.email }, include: [db.Role, db.Auth] }).then(user => {
-    if (!user) return res.status(404).send({ message: "User not found." });
+    if (!user) return res.status(401).send({ message: "Unauthorized!" });
 
     bcrypt.compare(req.body.password, user.Auth.password).then(valid => {
         const roles = user.Roles.map(role => role.name);
