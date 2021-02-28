@@ -16,7 +16,7 @@ router.get("/", (req, res) => {
     const permission = ac.can(req.roles).readAny("User");
     if (permission.granted) {
         db.User.findAll({ include: [db.Address, db.Region, db.Role] })
-            .then(users => res.json(users.map(user => ({
+            .then(users => res.json(permission.filter(users.map(user => ({
                 id: user.id,
                 firstName: user.firstName,
                 lastName: user.lastName,
@@ -25,7 +25,7 @@ router.get("/", (req, res) => {
                 state: user.Address ? user.Address.state : "--",
                 regions: user.Regions,
                 roles: user.Roles.map(role => role.name).filter(role => role !== "user")
-            }))))
+            })))))
             .catch(err => {
                 console.error(err);
                 res.status(500).send({ message: "error getting users from the database" });
