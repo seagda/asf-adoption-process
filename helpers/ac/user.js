@@ -16,7 +16,7 @@ module.exports = ac => {
         .readOwn("Familymember")
         .updateOwn("Familymember")
         .deleteOwn("Familymember")
-        .readOwn("User", ["*", "!password", "!blocked", "!adminNotes"])
+        .readOwn("User", ["*", "!blocked", "!adminNotes"])
         .updateOwn("User", ["*", "!active", "!blocked", "!adminNotes","!maxCapacity", "!puppies","!adults","!seniors","!withBehaviorIssues", "!withMedicalIssues"])
         .createOwn("Reference")
         .readOwn("Reference")
