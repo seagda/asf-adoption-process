@@ -4,6 +4,7 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 
 import ProfileForm from "../components/ProfileForm";
 
+
 const useStyles=makeStyles(theme => ({
     mainContainer: {
         marginLeft: theme.spacing(35),
@@ -22,12 +23,14 @@ const useStyles=makeStyles(theme => ({
     }
 }))
 
-export default function DogDossier(){
-    const classes = useStyles();
 
-    return(
+export default function EditProfile() {
+    const classes = useStyles()
+
+    return (
         <Grid container className={classes.mainContainer}>
             <ProfileForm/>
         </Grid>
+       
     )
 }

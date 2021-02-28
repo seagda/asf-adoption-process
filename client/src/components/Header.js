@@ -22,6 +22,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from "@material-ui/core/Button";
 import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { NavLink, Link } from 'react-router-dom';
 
 import logo from "../assets/logo.svg";
 
@@ -66,13 +67,18 @@ const useStyles = makeStyles((theme) => ({
         height: "12em",
         [theme.breakpoints.down("md")]: {
             height: "10em"
-        }
+        },
+        marginLeft: "2em"
     },
     logoContainer: {
         alignItems: "center",
         "&:hover": {
             backgroundColor: "transparent"
         }
+    },
+    link: {
+        color: theme.palette.common.second,
+        textDecoration: "none"
     }
 }));
 
@@ -88,24 +94,24 @@ function ResponsiveDrawer(props) {
 
     const drawer = (
         <div>
-            <div className={classes.toolbar} />
-            <Button className={classes.logoContainer} disableRipple>
-                <img src={logo} className={classes.logo} />
-            </Button>
+            {/* <div className={classes.toolbar} /> */}
+            <NavLink to="/" className={classes.logoContainer}>
+                <img src={logo} className={classes.logo}/>
+            </NavLink>
             <List>
-                {['My Profile', 'My Dogs', 'My Settings', 'Logout'].map((text, index) => (
+                {['My-Profile', 'My-Dogs', 'My-Settings', 'Logout'].map((text, index) => (
                     <ListItem button key={text} className={classes.listItem}>
                         <ListItemIcon className={classes.listItem}>{index === 0 ? <PersonIcon /> : index === 1 ? <PetsIcon /> : index === 2 ? <SettingsIcon /> : <ExitToAppIcon />}</ListItemIcon>
-                        <ListItemText primary={text} />
+                        <NavLink className={classes.link} to={`/${text}`}>{`${text.replace("-", " ")}`}</NavLink>
                     </ListItem>
                 ))}
             </List>
             <Divider />
             <List>
-                {['Dog Dossiers', 'Manage ASF USers', 'ASF Settings'].map((text, index) => (
+                {['Dog-Dossiers', 'Manage-ASF-Users', 'ASF-Settings'].map((text, index) => (
                     <ListItem button key={text} className={classes.listItem}>
                         <ListItemIcon className={classes.listItem}>{index === 0 ? <DescriptionIcon /> : index === 1 ? <SupervisorAccountIcon /> : <PermDataSettingIcon />}</ListItemIcon>
-                        <ListItemText primary={text} />
+                        <NavLink className={classes.link} to={`/${text}`}>{`${text.replace("-", " ")}`}</NavLink>
                     </ListItem>
                 ))}
             </List>
@@ -130,11 +136,10 @@ function ResponsiveDrawer(props) {
                     </IconButton>
                     <Typography variant="h6" noWrap>
                         Responsive drawer
-          </Typography>
+                    </Typography>
                 </Toolbar>
             </AppBar>
             <nav className={classes.drawer} aria-label="mailbox folders">
-                {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
                 <Hidden smUp implementation="css">
                     <Drawer
                         container={container}
@@ -146,7 +151,7 @@ function ResponsiveDrawer(props) {
                             paper: classes.drawerPaper,
                         }}
                         ModalProps={{
-                            keepMounted: true, // Better open performance on mobile.
+                            keepMounted: true, 
                         }}
                     >
                         {drawer}
@@ -164,42 +169,9 @@ function ResponsiveDrawer(props) {
                     </Drawer>
                 </Hidden>
             </nav>
-            <main className={classes.content}>
-                <div className={classes.toolbar} />
-                <Typography paragraph>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-                    ut labore et dolore magna aliqua. Rhoncus dolor purus non enim praesent elementum
-                    facilisis leo vel. Risus at ultrices mi tempus imperdiet. Semper risus in hendrerit
-                    gravida rutrum quisque non tellus. Convallis convallis tellus id interdum velit laoreet id
-                    donec ultrices. Odio morbi quis commodo odio aenean sed adipiscing. Amet nisl suscipit
-                    adipiscing bibendum est ultricies integer quis. Cursus euismod quis viverra nibh cras.
-                    Metus vulputate eu scelerisque felis imperdiet proin fermentum leo. Mauris commodo quis
-                    imperdiet massa tincidunt. Cras tincidunt lobortis feugiat vivamus at augue. At augue eget
-                    arcu dictum varius duis at consectetur lorem. Velit sed ullamcorper morbi tincidunt. Lorem
-                    donec massa sapien faucibus et molestie ac.
-        </Typography>
-                <Typography paragraph>
-                    Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper eget nulla
-                    facilisi etiam dignissim diam. Pulvinar elementum integer enim neque volutpat ac
-                    tincidunt. Ornare suspendisse sed nisi lacus sed viverra tellus. Purus sit amet volutpat
-                    consequat mauris. Elementum eu facilisis sed odio morbi. Euismod lacinia at quis risus sed
-                    vulputate odio. Morbi tincidunt ornare massa eget egestas purus viverra accumsan in. In
-                    hendrerit gravida rutrum quisque non tellus orci ac. Pellentesque nec nam aliquam sem et
-                    tortor. Habitant morbi tristique senectus et. Adipiscing elit duis tristique sollicitudin
-                    nibh sit. Ornare aenean euismod elementum nisi quis eleifend. Commodo viverra maecenas
-                    accumsan lacus vel facilisis. Nulla posuere sollicitudin aliquam ultrices sagittis orci a.
-        </Typography>
-            </main>
+           
         </div>
     );
 }
-
-ResponsiveDrawer.propTypes = {
-    /**
-     * Injected by the documentation to work in an iframe.
-     * You won't need it on your project.
-     */
-    window: PropTypes.func,
-};
 
 export default ResponsiveDrawer;
