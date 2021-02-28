@@ -101,7 +101,23 @@ router.post("/", (req, res) => {
 // TODO: update Own or Any DOG by id, with correct ROLE permission
 
 router.put("/:id", (req, res) => {
-
+    const permissionOwn = ac.can(req.roles).updateOwn("Dog");
+    const permissionAny = ac.can(req.roles).updateAny("Dog");
+    if (permissionOwn.granted || permissionAny.granted) {
+        db.Dog.findByPk(req.params.id)
+            .then(dog => {
+                let updates;
+                if (dog.currentlyWithId === req.userId) updates = permissionOwn.filter(req.body);
+                else if (permissionAny.granted) updates = permissionAny.filter(req.body);
+                else return res.status(403).send({ message: "Not authorized to update this dog" });
+                return dog.update(updates);
+            })
+            .then(() => res.sendStatus(200))
+            .catch(err => {
+                console.error(err);
+                res.status(500).send({ message: "Internal server error" });
+            });
+    } else res.status(403).send({ message: "Not authorized to update dogs" });
 });
 
 // TODO: rename Own or Any DOG by id, update AliasTable with correct ROLE permission
