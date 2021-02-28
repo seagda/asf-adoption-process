@@ -74,6 +74,9 @@ router.post("/signin", (req, res) => db.User.findOne({ where: { email: req.body.
     }).catch(err => handleErr(err, res));
 }).catch(err => handleErr(err, res)));
 
+// access control grants object for client to use to determine which fields to show
+router.get("/permissions", (req, res) => res.json(ac.getGrants()));
+
 function handleErr(err, res) {
     console.error(err);
     res.status(500).send({ message: err.message });
