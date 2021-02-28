@@ -7,7 +7,7 @@ module.exports = ac => {
         .readOwn("Alert")
         .updateOwn("Alert")   
         .readAny("AppQuestion")
-        .createOwn("AppResponse")
+        .createOwn("AppResponse", ["*", "!AppStatus", "!AppStatusId"])
         .readOwn("AppResponse")
         .readAny("AppType")
         .createOwn("Familymember")
