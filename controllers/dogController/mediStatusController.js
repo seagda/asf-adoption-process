@@ -16,14 +16,14 @@ router.get("/:id", (req, res) => {
                 medStatJson = permissionOwn.filter(medStat.toJSON())
             } else if (permissionAny.granted) {
                 medStatJson = permissionAny.filter(medStat.toJSON())
-            } else return res.status(401).send({ message: "you can't view this dog's medical status" });
+            } else return res.status(403).send({ message: "you can't view this dog's medical status" });
             res.json(medStatJson);
         })
         .catch(err => {
             console.error(err);
             res.status(422).send({ message: "Error with request" });
         });
-    } else return res.status(401).send({ message: "Not authorized to view MediStatus" });
+    } else return res.status(403).send({ message: "Not authorized to view MediStatus" });
 });
 
 // create new MediStatus, with correct ROLE permission
@@ -38,7 +38,7 @@ router.post("/:id", (req, res) => {
                 medStatJson = permissionOwn.filter(req.body)
             } else if (permissionAny.granted) {
                 medStatJson = permissionAny.filter(req.body)
-            } else return res.status(401).send({ message: "you can't create assessments" })
+            } else return res.status(403).send({ message: "you can't create assessments" })
     
         dog
           .createMediStatus(medStatJson) 
@@ -48,7 +48,7 @@ router.post("/:id", (req, res) => {
             res.status(422).send({ message: "Error with request" })
         });
     
-        } else return res.status(401).send({ message: "Not authorized to create Behavioral Assessments" })
+        } else return res.status(403).send({ message: "Not authorized to create Behavioral Assessments" })
 
     })
 });
@@ -66,7 +66,7 @@ router.put("/:id", (req, res) => {
                     medStatJson = permissionOwn.filter(medStat.toJSON())
                 } else if (permissionAny.granted) {
                     medStatJson = permissionAny.filter(medStat.toJSON())
-                } else return res.status(401).send({ message: "you can't update this dog's assessments" });
+                } else return res.status(403).send({ message: "you can't update this dog's assessments" });
                 res.json(medStatJson);
             })
             .then(() => res.sendStatus(200))
@@ -74,7 +74,7 @@ router.put("/:id", (req, res) => {
                 console.error(err);
                 res.status(422).send({ message: "Error with request" })
             });
-    } else return res.status(401).send({ message: "Not authorized to update Medical Status"});
+    } else return res.status(403).send({ message: "Not authorized to update Medical Status"});
 });
 
 module.exports = router;
