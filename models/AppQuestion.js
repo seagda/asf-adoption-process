@@ -1,18 +1,24 @@
 module.exports = (sequelize, DataTypes) => {
     const AppQuestion = sequelize.define("AppQuestion", {
+        position: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            defaultValue: 1
+        },
         name: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: false,
+            unique: true
         },
-        question: {
+        title: {
             type: DataTypes.STRING,
             allowNull: false
         },
-        responseFormat: {
-            type: DataTypes.ENUM("boolean", "text", "number", "url", "selection"),
+        type: {
+            type: DataTypes.ENUM("boolean", "text", "number", "url", "radiogroup"),
             allowNull: false
         },
-        required: {
+        isRequired: {
             type: DataTypes.BOOLEAN,
             defaultValue: true
         },
@@ -24,7 +30,7 @@ module.exports = (sequelize, DataTypes) => {
         db.AppQuestionCategory.hasMany(AppQuestion);
         AppQuestion.belongsTo(db.AppQuestionCategory);
 
-        AppQuestion.hasOne(AppQuestion, { foreignKey: "dependsOnQuestion" });
+        AppQuestion.belongsTo(AppQuestion, { as: "DependsOnQuestion", foreignKey: "dependsOnQuestionId" });
     };
 
     return AppQuestion;

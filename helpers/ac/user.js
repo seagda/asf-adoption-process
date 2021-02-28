@@ -9,7 +9,7 @@ module.exports = ac => {
         .readAny("AppQuestion")
         .createOwn("AppResponse")
         .readOwn("AppResponse")
-        .readAny("AppTypes")
+        .readAny("AppType")
         .createOwn("Familymember")
         .readOwn("Event")
         .readOwn("ExtContact")
