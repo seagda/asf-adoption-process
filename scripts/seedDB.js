@@ -89,3 +89,28 @@ db.Role.destroy({ where: {} }).then(() =>
             process.exit(1);
         })
 );
+
+const appStatusSeeds = [{
+    name: "Application Recieved"
+}, {
+    name: "Background Check Complete"
+}, {
+    name: "Reference Check Complete"
+}, {
+    name: "Approved"
+}];
+
+const dogStatusSeeds = [{
+    name: "Pending Intake"
+}, {
+    name: "Foster Ready"
+}, {
+    name: "In Foster"
+}, {
+    name: "Adoption Ready"
+}, {
+    name: "Adopted"
+}];
+
+db.AppStatus.bulkCreate(appStatusSeeds).then(console.log).catch(console.error);
+db.DogStatus.bulkCreate(dogStatusSeeds).then(console.log).catch(console.error);
