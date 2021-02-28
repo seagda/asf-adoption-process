@@ -1,17 +1,19 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import QuickActionsAdmin from "../components/QuickActionsAdmin";
+import QuickActionsFoster from "../components/QuickActionsFoster";
 import PieChartContainer from "../components/PieChartContainer";
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import MultiSelectChips from '../components/MultiSelectChips';
 import AvatarList from '../components/AvatarList';
+import BasicList from '../components/BasicList';
+import MediaCard from '../components/MediaCard';
 
 const useStyles=makeStyles(theme => ({
     mainContainer: {
         marginLeft: theme.spacing(35),
-        marginTop: theme.spacing(13),
+        marginTop: theme.spacing(20),
         width: "70%",
         [theme.breakpoints.down("md")]:{
             width: "80%"
@@ -26,55 +28,39 @@ const useStyles=makeStyles(theme => ({
     }
 }))
 
-export default function AdminDashboard(){
+export default function FosterDashboard(){
     const classes = useStyles();
 
-    const [selectedRegions, setRegion] = React.useState([]);
-
-    const handleRegionChange = (event) => {
-        setRegion(event.target.value);
-      };
-    const regions = [
-        'Midwest/South',
-        'Mid-Atlantic',
-        'Mississippi Valley',
-        'West Coast',
-        'Great Lakes',
-        'Plains States',
-        'Rocky Mountain',
-        'Southeast',
-        'Northeast',
-        'Texas'
-      ];
-
     return(
-        <Grid container className={classes.mainContainer}>
+        <Grid container className={classes.mainContainer} justify="space-evenly" spacing={4}>
             <Grid item xs={12}>
                 <Typography variant="h3" component="h4" gutterBottom align="center" color="primary">
-                    Admin Dashboard
+                    Foster Dashboard
                     <Divider />
                 </Typography>
             </Grid>
             <Grid item xs={12}>
-                <QuickActionsAdmin/>
+                <QuickActionsFoster/>
             </Grid>
-            <Grid item xs={8} />
-            <Grid item xs={4}>
-                <MultiSelectChips names={regions} title="Select Region" selectedOption={selectedRegions} onOptionChange={handleRegionChange}/>
+            <Grid item xs={3}>
+                <MediaCard/>
             </Grid>
-            <Grid item xs={12}>
-                <PieChartContainer/>
+            <Grid item xs={3}>
+                <MediaCard/>
+            </Grid>
+            <Grid item xs={3}>
+                <MediaCard/>
             </Grid>
             <Grid item xs={6}>
                  <Typography variant="h5" component="h4" gutterBottom align="center" color="primary">
-                    ASF Team Members
+                    Alerts
                     <Divider />
                 </Typography>
-                <AvatarList/>
+                <BasicList/>
             </Grid>
             <Grid item xs={6}>
                 <Typography variant="h5" component="h4" gutterBottom align="center" color="primary">
-                    Dog Dossiers Recently Updated
+                    Approved Adopters
                     <Divider />
                 </Typography>
                 <AvatarList />

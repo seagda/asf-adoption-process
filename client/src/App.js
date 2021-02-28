@@ -15,6 +15,7 @@ import ManageASFUsers from "./pages/ManageASFUsers";
 import ASFSettings from "./pages/ASFSettings";
 import EditProfile from "./pages/EditProfile";
 import AdminDashboard from "./pages/AdminDashboard";
+import FosterDashboard from "./pages/FosterDashboard";
 
 export default function App() {
     const admin = true;
@@ -35,6 +36,7 @@ export default function App() {
                     <Route path="/editprofile"><EditProfile/></Route>
                     <Route path="/application"><Application/></Route>
                     <Route path="/Admin-Dashboard"><AdminDashboard/></Route>
+                    <Route path="/Foster-Dashboard"><FosterDashboard/></Route>
                     <Route path="/createUser"><CreateUser/></Route>
                     <Route path="/addDog"><DogDossier/></Route>
                 </Switch>
