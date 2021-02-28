@@ -1,12 +1,15 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { useState, useEffect } from "react";
 import QuickActionsAdmin from "../components/QuickActionsAdmin";
 import PieChartContainer from "../components/PieChartContainer";
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import MultiSelectChips from '../components/MultiSelectChips';
 import AvatarList from '../components/AvatarList';
+import TeamAPI from '../utils/Team';
+
 
 const useStyles=makeStyles(theme => ({
     mainContainer: {
@@ -28,7 +31,25 @@ const useStyles=makeStyles(theme => ({
 
 export default function AdminDashboard(){
     const classes = useStyles();
+// api call for employee data to display
+const [team, setTeamState] = useState([])
 
+  useEffect(() => {
+    loadTeam()
+  }, [])
+
+  function loadTeam() {
+      console.log(TeamAPI.getTeam())
+    TeamAPI.getTeam()
+      .then(res => {
+        setTeamState(res)
+        console.log(res)
+      }
+      )
+      .catch(err => console.log(err));
+  };
+
+// region select drop down
     const [selectedRegions, setRegion] = React.useState([]);
 
     const handleRegionChange = (event) => {
@@ -70,7 +91,7 @@ export default function AdminDashboard(){
                     ASF Team Members
                     <Divider />
                 </Typography>
-                <AvatarList/>
+                <AvatarList />
             </Grid>
             <Grid item xs={6}>
                 <Typography variant="h5" component="h4" gutterBottom align="center" color="primary">

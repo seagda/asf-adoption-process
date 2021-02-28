@@ -21,17 +21,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function AlignItemsList() {
+export default function AvatarList(props) {
   const classes = useStyles();
 
   return (
     <List className={classes.root}>
       <ListItem alignItems="flex-start">
         <ListItemAvatar>
-          <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+          <Avatar alt={props.name} src={props.image} />
         </ListItemAvatar>
         <ListItemText
-          primary="Brunch this weekend?"
+          primary={props.name}
           secondary={
             <React.Fragment>
               <Typography
@@ -40,15 +40,17 @@ export default function AlignItemsList() {
                 className={classes.inline}
                 color="textPrimary"
               >
-                Ali Connors
+                {props.role}
+                {props.city}
+                {props.email}
               </Typography>
-              {" — I'll be in your neighborhood doing errands this…"}
+              {/* {" — I'll be in your neighborhood doing errands this…"} */}
             </React.Fragment>
           }
         />
       </ListItem>
       <Divider variant="inset" component="li" />
-      <ListItem alignItems="flex-start">
+      {/* <ListItem alignItems="flex-start">
         <ListItemAvatar>
           <Avatar alt="Travis Howard" src="/static/images/avatar/2.jpg" />
         </ListItemAvatar>
@@ -90,7 +92,7 @@ export default function AlignItemsList() {
             </React.Fragment>
           }
         />
-      </ListItem>
+      </ListItem> */}
     </List>
   );
 }
