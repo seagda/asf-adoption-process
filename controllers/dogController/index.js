@@ -126,7 +126,15 @@ router.put("/:id", (req, res) => {
 // TODO: delete DOG by id, with SuperAdmin ONLY permission
 
 router.delete("/archive/:id", (req, res) => {
-
+    const permissionAny = ac.can(req.roles).deleteAny("Dog");
+    if (permissionAny.granted) db.findByPk(req.params.id)
+        .then(dog => dog.destroy())
+        .then(() => res.status(200).send({ message: "Successfully archived" }))
+        .catch(err => {
+            console.error(err);
+            res.status(500).send({ message: "Internal server error" });
+        });
+    else return res.status(403).send({ message: "Not authorized to archive dogs" });
 });
 
 
