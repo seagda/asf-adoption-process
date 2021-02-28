@@ -11,6 +11,8 @@ import SaveButton from "../components/SaveButton";
 import DogStatusEdit from "../components/DogStatusEdit";
 import IntakeDetailsEdit from "../components/IntakeDetailsEdit";
 import BehaviorForm from "../components/BehaviorForm";
+import HealthRecordEdit from "../components/HealthRecordEdit";
+import RecordCards from "../components/RecordCards";
 
 import dog from "../assets/Cool_Dog.png";
 
@@ -102,6 +104,8 @@ export default function ProfileForm(){
         <DogStatusEdit/>
         <IntakeDetailsEdit/>
         <BehaviorForm/>
+        <HealthRecordEdit/>
+        <RecordCards/>
         
         <Grid item container className={classes.formItem} justify={"flex-end"}>
             <SaveButton buttonText="Save Changes"/>
