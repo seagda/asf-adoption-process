@@ -1,5 +1,10 @@
 module.exports = (sequelize, DataTypes) => {
     const AppQuestion = sequelize.define("AppQuestion", {
+        position: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            defaultValue: 1
+        },
         name: {
             type: DataTypes.STRING,
             allowNull: false,

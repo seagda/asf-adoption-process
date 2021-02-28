@@ -9,6 +9,7 @@ router.get("/:type/questions", (req, res) => {
     const permission = ac.can(req.roles).readAny("AppQuestion");
     if (permission.granted) {
         db.AppQuestionCategory.findAll({
+            order: [[db.AppQuestion, "position"]],
             include: {
                 model: db.AppQuestion,
                 include: [
@@ -23,7 +24,7 @@ router.get("/:type/questions", (req, res) => {
                     type: "panel",
                     name: `panel${category.id}`,
                     questions: category.AppQuestions.map(appQuestion => {
-                        const question = (({ name, title, type, isRequired }) => ({ name, title, type, isRequired }))(appQuestion);
+                        const question = (({ name, title, type, isRequired, position }) => ({ name, title, type, isRequired, position }))(appQuestion);
                         // number and url types are actually subtypes of text
                         if (question.type === "number" || question.type === "url") {
                             question.inputType = question.type;
