@@ -110,8 +110,11 @@ router.put("/:id", (req, res) => {
                 if (dog.currentlyWithId === req.userId) updates = permissionOwn.filter(req.body);
                 else if (permissionAny.granted) updates = permissionAny.filter(req.body);
                 else return res.status(403).send({ message: "Not authorized to update this dog" });
-                return dog.update(updates);
+                const promises = [dog, updates];
+                if (updates.name && updates.name !== dog.name) promises[2] = dog.createDogAlias({ name: dog.name });
+                return Promise.all(promises);
             })
+            .then(([dog, updates, alias]) => dog.update(updates))
             .then(() => res.sendStatus(200))
             .catch(err => {
                 console.error(err);
@@ -119,14 +122,6 @@ router.put("/:id", (req, res) => {
             });
     } else res.status(403).send({ message: "Not authorized to update dogs" });
 });
-
-// TODO: rename Own or Any DOG by id, update AliasTable with correct ROLE permission
-
-router.put("rename/:id", (req, res) => {
-    //TODO: first findbyPK for that dog, then dog.name gets inserted into the dog_alias table, then update dog.name by calling dog.update and passing new object with name key
-
-});
-
 
 // TODO: delete DOG by id, with SuperAdmin ONLY permission
 
