@@ -71,7 +71,7 @@ router.post("/signin", (req, res) => db.User.findOne({ where: { email: req.body.
             roles,
             accessToken: jwt.sign({ id: user.id, roles }, process.env.SECRET, { expiresIn: 86400 })
         });
-        else return res.status(401).send({ accessToken: null, message: "Invalid Password!" });
+        else return res.status(401).send({ accessToken: null, message: "Unauthorized!" });
     }).catch(err => handleErr(err, res));
 }).catch(err => handleErr(err, res)));
 
