@@ -24,7 +24,7 @@ function TextMaskCustom(props) {
         showMask
       />
     );
-  }
+}
   
   TextMaskCustom.propTypes = {
       inputRef: PropTypes.func.isRequired,

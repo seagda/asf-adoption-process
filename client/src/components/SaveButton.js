@@ -21,6 +21,7 @@ export default function SaveButton(props) {
         color="secondary"
         className={classes.button}
         startIcon={<SaveIcon />}
+        type="submit"
       >
           {`${props.buttonText}`}
       </Button>
