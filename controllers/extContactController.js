@@ -15,7 +15,7 @@ router.get("/", (req, res) => {
           res.status(422).send({ message: "Error with request" })
     });
 
-    } else return res.status(401).send({ message: "Not authorized to view External Contacts" });
+    } else return res.status(403).send({ message: "Not authorized to view External Contacts" });
 });
 
 // show one EXT_CONTACT, with correct ROLE permission
@@ -28,7 +28,7 @@ router.get("/:id", (req, res) => {
             console.error(err);
             res.status(422).send({ message: "Error with data request" });
         });
-    } else return res.status(401).send({ message: "Not authorized to view External Contacts" });
+    } else return res.status(403).send({ message: "Not authorized to view External Contacts" });
 });
 
 // create new EXT_CONTACT, with correct ROLE permission
@@ -44,7 +44,7 @@ router.post("/new", (req, res) => {
           res.status(422).send({ message: "Error with request" })
         });
 
-    } else return res.status(401).send({ message: "Not authorized to create External Contacts" });
+    } else return res.status(403).send({ message: "Not authorized to create External Contacts" });
 });
 
 // update EXT_CONTACT by id, with correct ROLE permission
@@ -59,7 +59,7 @@ router.put("/:id", (req, res) => {
                 console.error(err);
                 res.status(422).send({ message: "Error with request" })
             });
-    } else return res.status(401).send({ message: "Not authorized to update an External Contact"});
+    } else return res.status(403).send({ message: "Not authorized to update an External Contact"});
 });
 
 // delete EXT_CONTACT by id, with correct ROLE permission
@@ -75,6 +75,6 @@ router.delete("/:id", (req, res) => {
                 console.error(err);
               res.status(422).send({ message: "Error with request" })
         });
-    } else return res.status(401).send({ message: "Not authorized to delete an External Contact"});
+    } else return res.status(403).send({ message: "Not authorized to delete an External Contact"});
 });
 module.exports = router;

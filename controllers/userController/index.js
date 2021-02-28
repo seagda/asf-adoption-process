@@ -20,7 +20,7 @@ router.get("/", (req, res) => {
             console.error(err);
             res.status(500).send({ message: "Server error finding this user" });
         });
-    } else return res.status(401).send({ message: "whoops we broke something, everyone should have readOwn user" });
+    } else return res.status(403).send({ message: "whoops we broke something, everyone should have readOwn user" });
 });
 
 // edit own user data
@@ -34,7 +34,7 @@ router.put("/", (req, res) => {
                 console.error(err);
                 res.sendStatus(500);
             });
-    } else return res.status(401).send({ message: "whoops we broke something, everyone should have updateOwn user" });
+    } else return res.status(403).send({ message: "whoops we broke something, everyone should have updateOwn user" });
 });
 
 // Create user route for an admin
@@ -69,7 +69,7 @@ router.post("/new", (req, res) => {
                 console.error(err);
                 res.status(500).send({ message: "Error creating and emailing user", error: err });
             });
-    } else return res.status(401).send({ message: "Not authorized to create a user" });
+    } else return res.status(403).send({ message: "Not authorized to create a user" });
 });
 
 // view user profile by id
@@ -80,7 +80,7 @@ router.get("/:id", (req, res) => {
             console.error(err);
             res.status(500).send({ message: "Database error" });
         });
-    } else return res.status(401).send({ message: "Not authorized to view this user" });
+    } else return res.status(403).send({ message: "Not authorized to view this user" });
 });
 
 // edit user by id
@@ -94,7 +94,7 @@ router.put("/:id", (req, res) => {
                 console.error(err);
                 res.status(500).send({ message: "Database error" });
             });
-    } else return res.status(401).send({ message: "Not authorized to edit this user" });
+    } else return res.status(403).send({ message: "Not authorized to edit this user" });
 });
 
 

@@ -15,7 +15,7 @@ router.get("/", (req, res) => {
           res.status(422).send({ message: "Error with request" })
     });
 
-    } else return res.status(401).send({ message: "Not authorized to view AppResponse" });
+    } else return res.status(403).send({ message: "Not authorized to view AppResponse" });
 });
 
 // show one APP RESPONSE, with correct ROLE permission
@@ -28,7 +28,7 @@ router.get("/:id", (req, res) => {
             console.error(err);
             res.status(422).send({ message: "Error with request" });
         });
-    } else return res.status(401).send({ message: "Not authorized to view AppResponses" });
+    } else return res.status(403).send({ message: "Not authorized to view AppResponses" });
 });
 
 // create new APP RESPONSE, with correct ROLE permission
@@ -44,7 +44,7 @@ router.post("/new", (req, res) => {
         res.status(422).send({ message: "Error with request" })
     });
 
-    } else return res.status(401).send({ message: "Not authorized to create an AppResponse" });
+    } else return res.status(403).send({ message: "Not authorized to create an AppResponse" });
 });
 
 // update APP RESPONSE by id, with correct ROLE permission
@@ -59,7 +59,7 @@ router.put("/:id", (req, res) => {
                 console.error(err);
                 res.status(422).send({ message: "Error with request" })
             });
-    } else return res.status(401).send({ message: "Not authorized update an AppResponse"});
+    } else return res.status(403).send({ message: "Not authorized update an AppResponse"});
 });
 // delete APP RESPONSE by id, with correct ROLE permission
 router.delete("/:id", (req, res) => {
@@ -74,7 +74,7 @@ router.delete("/:id", (req, res) => {
                 console.error(err);
               res.status(422).send({ message: "Error with request" })
         });
-    } else return res.status(401).send({ message: "Not authorized to delete an AppResponse"});
+    } else return res.status(403).send({ message: "Not authorized to delete an AppResponse"});
 });
 
 module.exports = router;

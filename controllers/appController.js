@@ -13,7 +13,7 @@ router.get("/types", (req, res) => {
             console.error(err);
             res.status(500).send({ message: "Database error" });
         });
-    else res.status(401).send({ message: "Not authorized to view application types" });
+    else res.status(403).send({ message: "Not authorized to view application types" });
 });
 
 // get application questions for a certain type of application
@@ -58,7 +58,7 @@ router.get("/:type/questions", (req, res) => {
                 console.error(err);
                 res.status(500).send({ message: "Database access error" });
             });
-    } else res.status(401).send({ message: "Not authorized to view application questions" });
+    } else res.status(403).send({ message: "Not authorized to view application questions" });
 });
 
 module.exports = router;

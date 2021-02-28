@@ -16,7 +16,7 @@ router.get("/", (req, res) => {
           res.status(422).send({ message: "Error with request" })
     });
 
-    } else return res.status(401).send({ message: "Not authorized to view Addresses" });
+    } else return res.status(403).send({ message: "Not authorized to view Addresses" });
 });
 
 
@@ -31,7 +31,7 @@ router.get("/:id", (req, res) => {
             console.error(err);
             res.status(422).send({ message: "Error with request" });
         });
-    } else return res.status(401).send({ message: "Not authorized to view Addresses" });
+    } else return res.status(403).send({ message: "Not authorized to view Addresses" });
 });
 
 // create new ADDRESS, with correct ROLE permission
@@ -47,7 +47,7 @@ router.post("/new", (req, res) => {
         res.status(422).send({ message: "Error with request" })
     });
 
-    } else return res.status(401).send({ message: "Not authorized to create an Address" });
+    } else return res.status(403).send({ message: "Not authorized to create an Address" });
 });
 
 // update ADDRESS by id, with correct ROLE permission
@@ -62,7 +62,7 @@ router.put("/:id", (req, res) => {
                 console.error(err);
                 res.status(422).send({ message: "Error with request" })
             });
-    } else return res.status(401).send({ message: "Not authorized to update an Address"});
+    } else return res.status(403).send({ message: "Not authorized to update an Address"});
 });
 
 // delete ADDRESS by id, with correct ROLE permission
@@ -78,7 +78,7 @@ router.delete("/:id", (req, res) => {
                 console.error(err);
               res.status(422).send({ message: "Error with request" })
         });
-    } else return res.status(401).send({ message: "Not authorized to delete an Address"});
+    } else return res.status(403).send({ message: "Not authorized to delete an Address"});
 });
 
 module.exports = router;

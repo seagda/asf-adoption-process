@@ -16,7 +16,7 @@ router.get("/", (req, res) => {
           res.status(422).send({ message: "Error with request" })
     });
 
-    } else return res.status(401).send({ message: "Not authorized to view Familymembers" });
+    } else return res.status(403).send({ message: "Not authorized to view Familymembers" });
 });
 
 
@@ -31,7 +31,7 @@ router.get("/:id", (req, res) => {
             console.error(err);
             res.status(422).send({ message: "Error with request" });
         });
-    } else return res.status(401).send({ message: "Not authorized to view Familymembers" });
+    } else return res.status(403).send({ message: "Not authorized to view Familymembers" });
 });
 
 // create new Familymember, with correct ROLE permission
@@ -47,7 +47,7 @@ router.post("/new", (req, res) => {
         res.status(422).send({ message: "Error with request" })
     });
 
-    } else return res.status(401).send({ message: "Not authorized to create an Familymember" });
+    } else return res.status(403).send({ message: "Not authorized to create an Familymember" });
 });
 
 // update Familymember by id, with correct ROLE permission
@@ -62,7 +62,7 @@ router.put("/:id", (req, res) => {
                 console.error(err);
                 res.status(422).send({ message: "Error with request" })
             });
-    } else return res.status(401).send({ message: "Not authorized to update a Familymember"});
+    } else return res.status(403).send({ message: "Not authorized to update a Familymember"});
 });
 
 // delete Familymember by id, with correct ROLE permission
@@ -78,7 +78,7 @@ router.delete("/:id", (req, res) => {
                 console.error(err);
               res.status(422).send({ message: "Error with request" })
         });
-    } else return res.status(401).send({ message: "Not authorized to delete an Familymember"});
+    } else return res.status(403).send({ message: "Not authorized to delete an Familymember"});
 });
 
 module.exports = router;

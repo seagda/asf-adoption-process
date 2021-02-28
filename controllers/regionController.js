@@ -15,7 +15,7 @@ router.get("/", (req, res) => {
           res.status(422).send({ message: "Error with request" })
     });
 
-    } else return res.status(401).send({ message: "Not authorized to view Region" });
+    } else return res.status(403).send({ message: "Not authorized to view Region" });
 });
 
 // create a new REGION, if user's ROLE has correct permission
@@ -31,7 +31,7 @@ router.post("/new", (req, res) => {
         res.status(500).send({ message: "Server error returned" })
     });
 
-    } else return res.status(401).send({ message: "Not authorized to create a Region" });
+    } else return res.status(403).send({ message: "Not authorized to create a Region" });
 });
 
 // update an existing REGION, if user's ROLE has correct permission
@@ -46,7 +46,7 @@ router.put("/:id", (req, res) => {
                 console.error(err);
                 res.status(422).send({ message: "Error with request" })
             });
-    } else return res.status(401).send({ message: "Not authorized update a Region"});
+    } else return res.status(403).send({ message: "Not authorized update a Region"});
 });
 
 // delete a REGION, if user's ROLE has correct permission
@@ -62,7 +62,7 @@ router.delete("/:id", (req, res) => {
                 console.error(err)
                 res.status(422).send({ message: "Error with request"})
             });
-    } else return res.status(401).send({ message: "Not authorized to delete a Region"});
+    } else return res.status(403).send({ message: "Not authorized to delete a Region"});
 });
 
 module.exports = router;

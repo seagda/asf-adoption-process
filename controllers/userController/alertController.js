@@ -16,7 +16,7 @@ router.get("/", (req, res) => {
           res.status(422).send({ message: "Error with request" })
     });
 
-    } else return res.status(401).send({ message: "Not authorized to view Alerts" });
+    } else return res.status(403).send({ message: "Not authorized to view Alerts" });
 });
 
 
@@ -31,7 +31,7 @@ router.get("/:id", (req, res) => {
             console.error(err);
             res.status(422).send({ message: "Error with request" });
         });
-    } else return res.status(401).send({ message: "Not authorized to view Alerts" });
+    } else return res.status(403).send({ message: "Not authorized to view Alerts" });
 });
 
 // create new Alert, with correct ROLE permission
@@ -47,7 +47,7 @@ router.post("/new", (req, res) => {
         res.status(422).send({ message: "Error with request" })
     });
 
-    } else return res.status(401).send({ message: "Not authorized to create an Alert" });
+    } else return res.status(403).send({ message: "Not authorized to create an Alert" });
 });
 
 // update Alert by id, with correct ROLE permission
@@ -62,7 +62,7 @@ router.put("/:id", (req, res) => {
                 console.error(err);
                 res.status(422).send({ message: "Error with request" })
             });
-    } else return res.status(401).send({ message: "Not authorized to update an Alert"});
+    } else return res.status(403).send({ message: "Not authorized to update an Alert"});
 });
 
 // delete Alert by id, with correct ROLE permission
@@ -78,7 +78,7 @@ router.delete("/:id", (req, res) => {
                 console.error(err);
               res.status(422).send({ message: "Error with request" })
         });
-    } else return res.status(401).send({ message: "Not authorized to delete an Alert"});
+    } else return res.status(403).send({ message: "Not authorized to delete an Alert"});
 });
 
 module.exports = router;
