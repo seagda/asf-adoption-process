@@ -5,7 +5,7 @@ module.exports = ac => {
         .readAny("Alert")
         .readAny("AppResponse")
         .updateAny("AppResponse")
-        .readAny("User")
+        .readAny("User", "!blocked", "!adminNotes")
         .createAny("ExtContact")
         .readAny("ExtContact")
         .updateAny("ExtContact")

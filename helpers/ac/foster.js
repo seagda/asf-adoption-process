@@ -1,6 +1,6 @@
 module.exports = ac => {
     ac.grant("adopter").grant("foster").extend("adopter")
-        .readAny("User")
+        .readAny("User", "!blocked", "!adminNotes")
         .readAny("AppResponse")
         .createAny("BehavorialAssessment")
         .readAny("BehavorialAssessment")
