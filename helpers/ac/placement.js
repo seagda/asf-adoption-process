@@ -2,7 +2,6 @@ module.exports = ac => {
     ac.grant("user").grant("placement").extend("user")
         .readAny("Dog")
         .updateAny("Dog")
-        .readAny("Alert")
         .readAny("AppResponse")
         .updateAny("AppResponse")
         .readAny("User", "!blocked", "!adminNotes")
