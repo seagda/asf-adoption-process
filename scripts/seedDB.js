@@ -69,13 +69,13 @@ db.Role.destroy({ where: {} }).then(() =>
             db.User.destroy({ where: {} }).then(() =>
                 db.User.bulkCreate(userSeed, { include: [db.Auth, db.Role] })
                     .then((usersData) => {
-                        usersData[0].addRole(1);
-                        usersData[1].addRole(2);
-                        usersData[2].addRole(3);
-                        usersData[3].addRole(4);
-                        usersData[4].addRole(5);
-                        usersData[5].addRole(6);
-                        usersData[6].addRole(7);
+                        usersData[0].addRoles([1]);
+                        usersData[1].addRoles([1, 2]);
+                        usersData[2].addRoles([1, 3]);
+                        usersData[3].addRoles([1, 4]);
+                        usersData[4].addRoles([1, 5]);
+                        usersData[5].addRoles([1, 6]);
+                        usersData[6].addRoles([1, 7]);
                         console.log(usersData.length + " records inserted!");
                     })
                     .catch((err) => {
