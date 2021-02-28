@@ -63,10 +63,12 @@ router.post("/signin", (req, res) => db.User.findOne({ where: { email: req.body.
     if (!user) return res.status(404).send({ message: "User not found." });
 
     bcrypt.compare(req.body.password, user.Auth.password).then(valid => {
+        const roles = user.Roles.map(role => role.name);
         if (valid) res.status(200).send({
             id: user.id,
             email: user.email,
-            accessToken: jwt.sign({ id: user.id, roles: user.Roles.map(role => role.name) }, process.env.SECRET, { expiresIn: 86400 })
+            roles,
+            accessToken: jwt.sign({ id: user.id, roles }, process.env.SECRET, { expiresIn: 86400 })
         });
         else return res.status(401).send({ accessToken: null, message: "Invalid Password!" });
     }).catch(err => handleErr(err, res));
