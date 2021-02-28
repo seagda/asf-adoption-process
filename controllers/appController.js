@@ -4,6 +4,18 @@ const ac = require("../helpers/ac");
 
 const router = require("express").Router();
 
+// get list of application types
+router.get("/types", (req, res) => {
+    const permission = ac.can(req.roles).readAny("AppType");
+    if (permission.granted) db.AppType.findAll()
+        .then(types => res.json(types))
+        .catch(err => {
+            console.error(err);
+            res.status(500).send({ message: "Database error" });
+        });
+    else res.status(401).send({ message: "Not authorized to view application types" });
+});
+
 // get application questions for a certain type of application
 router.get("/:type/questions", (req, res) => {
     const permission = ac.can(req.roles).readAny("AppQuestion");
