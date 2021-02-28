@@ -83,8 +83,19 @@ router.get("/:id", (req, res) => {
 
 // TODO: create new DOG, with correct ROLE permission
 
-router.post("/new", (req, res) => {
-
+router.post("/", (req, res) => {
+    // TODO: createOwn dog permission for owner surrender
+    // Check for permission to create dog
+    const permissionAny = ac.can(req.roles).createAny("Dog");
+    if (permissionAny.granted) {
+        db.Dog.create(permissionAny.filter(req.body))
+            // TODO: logic for origin and currentlywith
+            .then(dog => res.status(200).send({ id: dog.id }))
+            .catch(err => {
+                console.error(err);
+                res.status(500).send({ message: "Database error" });
+            });
+    } else return res.status(403).send({ message: "Not authorized to add a dog" });
 });
 
 // TODO: update Own or Any DOG by id, with correct ROLE permission
