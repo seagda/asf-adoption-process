@@ -11,8 +11,8 @@ router.use("/app-response", require("./appResponseController"));
 router.use("/family", require("./familymemberController"));
 router.use("/reference", require("./referenceController"));
 
-// root get route is own user data
-router.get("/", (req, res) => {
+// get own user data
+router.get("/me", (req, res) => {
     // everyone has this permission but we check to get the filter
     const permission = ac.can(req.roles).readOwn("User");
     if (permission.granted) {
@@ -24,7 +24,7 @@ router.get("/", (req, res) => {
 });
 
 // edit own user data
-router.put("/", (req, res) => {
+router.put("/me", (req, res) => {
     const permission = ac.can(req.roles).updateOwn("User");
     if (permission.granted) {
         db.User.findByPk(req.userId)
