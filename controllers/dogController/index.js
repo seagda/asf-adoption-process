@@ -81,15 +81,15 @@ router.get("/:id", (req, res) => {
     } else return res.status(403).send({ message: "Not authorized to view dogs" });
 });
 
-// TODO: create new DOG, with correct ROLE permission
+// create new DOG, with correct ROLE permission
 
 router.post("/", (req, res) => {
     // TODO: createOwn dog permission for owner surrender
     // Check for permission to create dog
     const permissionAny = ac.can(req.roles).createAny("Dog");
     if (permissionAny.granted) {
-        db.Dog.create(permissionAny.filter(req.body))
-            // TODO: logic for origin and currentlywith
+        db.Dog.create(permissionAny.filter(req.body), { include: { model: db.ExtContact, as: "origin" } })
+            // currentlyWith always starts null
             .then(dog => res.status(200).send({ id: dog.id }))
             .catch(err => {
                 console.error(err);
