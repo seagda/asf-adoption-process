@@ -32,7 +32,6 @@ const useStyles=makeStyles(theme => ({
         }
     },
     form: {
-        paddingRight: "3em",
         [theme.breakpoints.down("sm")]:{
             padding: "1em"
         }
@@ -54,15 +53,18 @@ const useStyles=makeStyles(theme => ({
     }
 }))
 
-export default function Login(){
+export default function SignUp(){
     const classes = useStyles();
 
+    const [firstName, setFirstName] = useState();
+    const [lastName, setlastName] = useState();
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
+    const [phone, setPhone] = useState();
 
     const handleSubmit = e => {
         e.preventDefault();
-        console.log(email, password)
+        console.log(firstName, lastName, email, password, phone)
     }
 
     return(
@@ -73,16 +75,25 @@ export default function Login(){
                     <Grid item>
                         <div className={classes.form}>
                             <Grid item container className={classes.formItem}>
-                                <TextField type="email" variant="outlined" label="Email" onChange={e => setEmail(e.target.value)}/>
+                                <TextField variant="outlined" label="First Name" onChange={e => setFirstName(e.target.value)}/>
                             </Grid>
                             <Grid item container className={classes.formItem}>
-                                <TextField variant="outlined" type="password" label="Password" onChange={e => setPassword(e.target.value)}/>
+                                <TextField variant="outlined" label="Last Name" onChange={e => setlastName(e.target.value)}/>
+                            </Grid>
+                            <Grid item container className={classes.formItem}>
+                                <TextField variant="outlined" label="Email" onChange={e => setEmail(e.target.value)}/>
+                            </Grid>
+                            <Grid item container className={classes.formItem}>
+                                <TextField variant="outlined" label="Password" onChange={e => setPassword(e.target.value)}/>
+                            </Grid>
+                            <Grid item container className={classes.formItem}>
+                                <TextField variant="outlined" type="number" label="Phone" onChange={e => setPhone(e.target.value)}/>
                             </Grid>
                         </div>
                     </Grid>
         
                     <Grid item container className={classes.formItem} justify={"center"}>
-                        <Button type="submit" color="secondary" variant="contained">Login</Button>
+                        <Button type="submit" color="secondary" variant="contained">Sign Up</Button>
                     </Grid>
                 </Grid>
             </form>

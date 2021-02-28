@@ -18,6 +18,8 @@ import AdminDashboard from "./pages/AdminDashboard";
 import FosterDashboard from "./pages/FosterDashboard";
 import DogProfileView from "./pages/DogProfileView";
 import DogProfileEdit from "./pages/DogProfileEdit";
+import SignUp from "./pages/SignUp";
+import Home from "./pages/Home";
 
 export default function App() {
     const admin = true;
@@ -27,7 +29,7 @@ export default function App() {
             <BrowserRouter>
                 <ResponsiveDrawer/>
                 <Switch>
-                    <Route exact path="/"><Login /></Route>
+                    <Route exact path="/"><Home /></Route>
                     <Route path="/My-Profile"><MyProfile/></Route>
                     <Route path="/My-Dogs"><MyDogs/></Route>
                     <Route path="/Settings" />
@@ -43,6 +45,8 @@ export default function App() {
                     <Route path="/addDog"><DogDossier/></Route>
                     <Route path="/dogView"><DogProfileView/></Route>
                     <Route path="/dogEdit"><DogProfileEdit/></Route>
+                    <Route exact path="/signin"><Login /></Route>
+                    <Route path="/signup"><SignUp/></Route>
                 </Switch>
             </BrowserRouter>
         </ThemeProvider>
