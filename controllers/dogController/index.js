@@ -47,7 +47,7 @@ router.get("/", (req, res) => {
                 res.json(dogRes);
             });   
 
-    } else return res.status(401).send({ message: "Not authorized to view dogs" });
+    } else return res.status(403).send({ message: "Not authorized to view dogs" });
 });
 
 // show one DOG, with correct ROLE permission
@@ -67,7 +67,7 @@ router.get("/:id", (req, res) => {
             dogJson = permissionOwn.filter(dog.toJSON())
         } else if (permissionAny.granted) {
             dogJson = permissionAny.filter(dog.toJSON())
-        } else return res.status(401).send({ message: "you can't view this dog" });
+        } else return res.status(403).send({ message: "you can't view this dog" });
 
       if (dogJson.currentlyWithId) {
         dogJson.city = dogJson.User.Address.city;
@@ -80,7 +80,7 @@ router.get("/:id", (req, res) => {
       res.json(dogToSend);
     });
 
-  } else return res.status(401).send({ message: "Not authorized to view dogs" });
+  } else return res.status(403).send({ message: "Not authorized to view dogs" });
 });
 
 // TODO: create new DOG, with correct ROLE permission
