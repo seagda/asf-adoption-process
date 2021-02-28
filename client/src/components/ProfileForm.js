@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect, Component} from 'react';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Grid from "@material-ui/core/Grid";
 import TextField from '@material-ui/core/TextField';
@@ -7,6 +7,8 @@ import Divider from "@material-ui/core/Divider";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActionArea";
 import CardContent from "@material-ui/core/CardContent";
+import FormControl from "@material-ui/core/FormControl";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
 
 import PhoneInput from "../components/PhoneInput";
 import Image from "../components/Image";
@@ -49,7 +51,11 @@ const useStyles = makeStyles(theme => ({
         }
     },
     root: {
-        marginBottom: "1em"
+        marginBottom: "1em",
+        '& .MuiTextField-root': {
+            margin: theme.spacing(1),
+            width: '25ch',
+        }
     }
 }))
 
@@ -58,6 +64,32 @@ export default function ProfileForm(){
     const admin = true;
     const roles = [{role: "Adopter"}, {role: "Foster"}];
     const names = ["Adopter", "Foster", "Regional", "Volunteer", "Rescuer", "Transporter", "Placement"]
+
+    const [fullName, setFullName] = useState();
+    const [userEmail, setuserEmail] = useState();
+    const [city, setCity] = useState();
+    const [location, setLocation] = useState();
+    const [about, setAbout] = useState(" ");
+    const [max, setMax] = useState(0);
+    const [current, setCurrent] = useState(0);
+    const [available, setAvailable] = useState(0);
+    const [ref1Name, setRef1Name] = useState();
+    const [ref1Phone, setRef1Phone] = useState();
+    const [ref1Email, setRef1Email] = useState();
+    const [ref1Notes, setRef1Notes] = useState();
+    const [ref2Name, setRef2Name] = useState();
+    const [ref2Phone, setRef2Phone] = useState();
+    const [ref2Email, setRef2Email] = useState();
+    const [ref2Notes, setRef2Notes] = useState();
+    const [ref3Name, setRef3Name] = useState();
+    const [ref3Phone, setRef3Phone] = useState();
+    const [ref3Email, setRef3Email] = useState();
+    const [ref3Notes, setRef3Notes] = useState();
+
+    const handleSubmit = e => {
+        e.preventDefault();
+        console.log(fullName, userEmail, city, location, about, max, current, available, ref1Name, ref1Phone, ref1Email, ref1Notes, ref2Name, ref2Phone, ref2Email, ref2Notes, ref3Name, ref3Phone, ref3Email, ref3Notes)
+    }
 
     const roleEdit = (
         <Grid item container className={classes.itemContainer}>
@@ -96,11 +128,11 @@ export default function ProfileForm(){
                         <Typography style={{marginTop: "2em"}}>Available space:</Typography>
                     </Grid>
                     <Grid item xs={6} sm={6} md={8} lg={6}>
-                        <form>
-                        <TextField type="number" style={{marginTop: "1em"}}></TextField>
-                        <TextField type="number" style={{marginTop: "1em"}}></TextField>
-                        <TextField type="number" style={{marginTop: "1em"}}></TextField>
-                        </form>
+                        <div>
+                        <TextField type="number" style={{marginTop: "1em"}} onChange={e => setMax(e.target.value)}></TextField>
+                        <TextField type="number" style={{marginTop: "1em"}} onChange={e => setCurrent(e.target.value)}></TextField>
+                        <TextField type="number" style={{marginTop: "1em"}} onChange={e => setAvailable(e.target.value)}></TextField>
+                        </div>
                     </Grid>
                 </Grid>
             </Grid>
@@ -126,17 +158,17 @@ export default function ProfileForm(){
                         <Typography variant="h5" component="h2">
                             Reference #1
                         </Typography>
-                        <form>
-                        <TextField variant="outlined" label="Name"/>
-                        <TextField variant="outlined" label="Phone"/>
-                        <TextField variant="outlined" label="Email"/>
-                        </form>
+                        <div>
+                        <TextField variant="outlined" label="Name" onChange={e => setRef1Name(e.target.value)}/>
+                        <TextField variant="outlined" label="Phone" onChange={e => setRef1Phone(e.target.value)}/>
+                        <TextField variant="outlined" label="Email" onChange={e => setRef1Email(e.target.value)}/>
+                        </div>
                     </CardContent>
                         {admin ? <CardContent><HoldCheckbox label="Contaced successfully"/></CardContent> : null}
                         {admin ? <CardContent><HoldCheckbox label="Approved"/></CardContent> : null}
                         {admin ? <CardContent>Notes:</CardContent> : null}
                     <CardContent>
-                        {admin ? <form><MultiLineText label="New Notes"/><SaveButton toLink="" buttonText=""/></form> : null}
+                        {admin ? <div><TextField rows={4} multiline variant="outlined" label="New notes" onChange={e => setRef1Notes(e.target.value)}/></div> : null}
                     </CardContent>
                 </Card>
                 <Card className={classes.root}>
@@ -144,17 +176,17 @@ export default function ProfileForm(){
                         <Typography variant="h5" component="h2">
                             Reference #2
                         </Typography>
-                        <form>
-                        <TextField variant="outlined" label="Name"/>
-                        <TextField variant="outlined" label="Phone"/>
-                        <TextField variant="outlined" label="Email"/>
-                        </form>
+                        <div>
+                        <TextField variant="outlined" label="Name" onChange={e => setRef2Name(e.target.value)}/>
+                        <TextField variant="outlined" label="Phone" onChange={e => setRef2Phone(e.target.value)}/>
+                        <TextField variant="outlined" label="Email" onChange={e => setRef2Email(e.target.value)}/>
+                        </div>
                     </CardContent>
                         {admin ? <CardContent><HoldCheckbox label="Contaced successfully"/></CardContent> : null}
                         {admin ? <CardContent><HoldCheckbox label="Approved"/></CardContent> : null}
                         {admin ? <CardContent>Notes:</CardContent> : null}
                     <CardContent>
-                        {admin ? <form><MultiLineText label="New Notes"/><SaveButton toLink="" buttonText=""/></form> : null}
+                        {admin ? <div><TextField rows={4} multiline variant="outlined" label="New notes" onChange={e => setRef2Notes(e.target.value)}/></div> : null}
                     </CardContent>
                 </Card>
                 <Card className={classes.root}>
@@ -162,17 +194,17 @@ export default function ProfileForm(){
                         <Typography variant="h5" component="h2">
                             Reference #3
                         </Typography>
-                        <form>
-                        <TextField variant="outlined" label="Name"/>
-                        <TextField variant="outlined" label="Phone"/>
-                        <TextField variant="outlined" label="Email"/>
-                        </form>
+                        <div>
+                        <TextField variant="outlined" label="Name" onChange={e => setRef3Name(e.target.value)}/>
+                        <TextField variant="outlined" label="Phone" onChange={e => setRef3Phone(e.target.value)}/>
+                        <TextField variant="outlined" label="Email" onChange={e => setRef3Email(e.target.value)}/>
+                        </div>
                     </CardContent>
                         {admin ? <CardContent><HoldCheckbox label="Contaced successfully"/></CardContent> : null}
                         {admin ? <CardContent><HoldCheckbox label="Approved"/></CardContent> : null}
                         {admin ? <CardContent>Notes:</CardContent> : null}
                     <CardContent>
-                        {admin ? <form><MultiLineText label="New Notes"/><SaveButton toLink="" buttonText=""/></form> : null}
+                        {admin ? <div><TextField rows={4} multiline variant="outlined" label="New notes" onChange={e => setRef3Notes(e.target.value)}/></div> : null}
                     </CardContent>
                 </Card>
             </Grid>
@@ -180,7 +212,7 @@ export default function ProfileForm(){
     )
 
     return (
-        <form>
+        <form onSubmit={handleSubmit}>
         <Grid item container className={classes.itemContainer}>
         <Grid container justify="space-evenly" className={classes.picContainer}>
             <Grid item>
@@ -188,26 +220,26 @@ export default function ProfileForm(){
                 <EditButton buttonText="Change Photo" toLink="/"/>
             </Grid>
             <Grid item>
-                <form className={classes.form}>
+                <div className={classes.form}>
                     <Grid item container className={classes.formItem}>
-                        <TextField variant="outlined" label="Name"/>
+                        <TextField variant="outlined" label="Name" onChange={e => setFullName(e.target.value)}/>
                     </Grid>
                     <Grid item container className={classes.formItem}>
                         <PhoneInput/>
                     </Grid>
                     <Grid item container className={classes.formItem}>
-                        <TextField variant="outlined" label="Email"/>
+                        <TextField variant="outlined" label="Email" onChange={e => setuserEmail(e.target.value)}/>
                     </Grid>
                     <Grid item container className={classes.formItem}>
-                        <TextField variant="outlined" label="City"/>
+                        <TextField variant="outlined" label="City" onChange={e => setCity(e.target.value)}/>
                     </Grid>
                     <Grid item container className={classes.formItem}>
-                        <TextField variant="outlined" label="State"/>
+                        <TextField variant="outlined" label="State" onChange={e => setLocation(e.target.value)}/>
                     </Grid>
                     <Grid item container className={classes.formItem}>
-                        <MultiLineText label="About"/>
+                        <TextField rows={4} multiline variant="outlined" label="About" onChange={e => setAbout(e.target.value)}/>
                     </Grid>
-                </form>
+                </div>
             </Grid>
             {admin ? roleEdit : null}
         </Grid>
