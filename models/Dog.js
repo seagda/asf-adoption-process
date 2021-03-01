@@ -3,8 +3,8 @@ module.exports = (sequelize, DataTypes, Model) => {
         static associate(db) {
             Dog.hasOne(db.DogPhoto, { foreignKey: { name: "profilePhoto", allowNull: true } });
 
-            db.ExtContact.hasMany(Dog, { as: "origin", foreignKey: { name: "originId", allowNull: true } });
-            Dog.belongsTo(db.ExtContact, { as: "origin", foreignKey: { name: "originId", allowNull: true } });
+            db.ExtContact.hasMany(Dog, { as: "origin", foreignKey: { name: "originId", allowNull: false } });
+            Dog.belongsTo(db.ExtContact, { as: "origin", foreignKey: { name: "originId", allowNull: false } });
 
             db.User.hasMany(Dog, { as: "currentlyWith", foreignKey: "currentlyWithId" });
             Dog.belongsTo(db.User, { as: "currentlyWith", foreignKey: "currentlyWithId" });
