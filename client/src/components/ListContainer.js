@@ -7,7 +7,9 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(2),
     width: '100%',
     maxWidth: '90%',
-    backgroundColor: theme.palette.background.paper,
+    flex: "wrap",
+    direction: "row"
+    // backgroundColor: theme.palette.background.paper,
   },
   inline: {
     display: 'inline',

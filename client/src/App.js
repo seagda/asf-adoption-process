@@ -20,6 +20,7 @@ import DogProfileView from "./pages/DogProfileView";
 import DogProfileEdit from "./pages/DogProfileEdit";
 import SignUp from "./pages/SignUp";
 import Home from "./pages/Home";
+import Settings from "./pages/Settings";
 
 export default function App() {
     const admin = true;
@@ -31,8 +32,8 @@ export default function App() {
                 <Switch>
                     <Route exact path="/"><Home /></Route>
                     <Route path="/My-Profile"><MyProfile/></Route>
-                    <Route path="/My-Dogs"><FosterDashboard/></Route>
-                    <Route path="/Settings" />
+                    <Route path="/My-Dashboard"><FosterDashboard/></Route>
+                    <Route path="/Settings"><Settings/></Route>
                     <Route path="/Logout" />
                     <Route path="/Dog-Dossiers"><DogDossiersAll /></Route>
                     <Route path="/Manage-ASF-Users"><ManageASFUsers/></Route>
@@ -48,6 +49,7 @@ export default function App() {
                     <Route path="/signup"><SignUp/></Route>
                     <Route path="/signup"><SignUp/></Route>
                     <Route path="/ASF-Admin-Settings"><AdminDashboard/></Route>
+                    <Route path="/My-Settings"><Settings/></Route>
                 </Switch>
             </BrowserRouter>
         </ThemeProvider>

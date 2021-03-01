@@ -99,7 +99,7 @@ function ResponsiveDrawer(props) {
                 <img src={logo} className={classes.logo}/>
             </NavLink>
             <List>
-                {['My-Profile', 'My-Dogs', 'My-Settings', 'Logout'].map((text, index) => (
+                {['My-Dashboard', 'My-Profile', 'My-Settings', 'Logout'].map((text, index) => (
                     <ListItem button key={text} className={classes.listItem}>
                         <ListItemIcon className={classes.listItem}>{index === 0 ? <PersonIcon /> : index === 1 ? <PetsIcon /> : index === 2 ? <SettingsIcon /> : <ExitToAppIcon />}</ListItemIcon>
                         <NavLink className={classes.link} to={`/${text}`}>{`${text.replace("-", " ")}`}</NavLink>
