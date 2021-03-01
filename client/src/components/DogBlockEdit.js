@@ -88,12 +88,6 @@ export default function ProfileForm(){
     const classes = useStyles();
     const repeat = true;
 
-    document.addEventListener('mousewheel', function(event) {
-        if (window.document.activeElement.type === 'number') {
-          event.preventDefault()
-        }
-      })
-
     const [dogIntakeData, setDogIntakeData] = useState({
         name: "",
         dob: null,
@@ -150,6 +144,14 @@ export default function ProfileForm(){
         })
     }
     
+    const [origins, setOrigins] = useState([])
+
+    useEffect(()=>{
+        API.getExtContact().then(res =>{
+            setOrigins(res.data)
+            console.log(res.data)
+        })
+    }, [])
 
     const handleDogIntakeFormSubmit = event =>{
         event.preventDefault();
