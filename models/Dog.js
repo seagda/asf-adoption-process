@@ -1,5 +1,12 @@
 module.exports = (sequelize, DataTypes, Model) => {
     class Dog extends Model {
+        getLocation() {
+            if (this.currentlyWithId) {
+                return this.getCurrentlyWith({ include: "Address" }).then(currentlyWith => currentlyWith.Address);
+            }
+            return this.getOrigin({ include: "Address" }).then(origin => origin.Address);
+        }
+
         static associate(db) {
             Dog.hasOne(db.DogPhoto, { foreignKey: { name: "profilePhoto", allowNull: true } });
 
