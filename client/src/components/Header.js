@@ -78,7 +78,9 @@ const useStyles = makeStyles((theme) => ({
     },
     link: {
         color: theme.palette.common.second,
-        textDecoration: "none"
+        textDecoration: "none",
+        fontWeight: 900,
+        fontSize: "1.15em"
     }
 }));
 
@@ -134,9 +136,7 @@ function ResponsiveDrawer(props) {
                     >
                         <MenuIcon />
                     </IconButton>
-                    {/* <Typography variant="h6" noWrap>
-                        Responsive drawer
-                    </Typography> */}
+                    <Typography variant="h6" noWrap></Typography>
                 </Toolbar>
             </AppBar>
             <nav className={classes.drawer} aria-label="mailbox folders">

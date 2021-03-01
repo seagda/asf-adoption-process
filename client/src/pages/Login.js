@@ -59,26 +59,10 @@ const useStyles=makeStyles(theme => ({
 export default function Login(){
     const classes = useStyles();
 
-    // const [email, setEmail] = useState();
-    // const [password, setPassword] = useState();
-
-    // const handleSubmit = e => {
-    //     e.preventDefault();
-    //     console.log(email, password)
-    // }
-
     const [loginFormData, setLoginFormData] = useState({
         email: "",
         password: ""
     })
-    // const [currentUser, setCurrentUser] = useState()
-
-    // useEffect(() =>{
-    //     API.getCurrentUser().then(res =>{
-    //         console.log(res.data);
-    //         setCurrentUser(res.data.user)
-    //     })
-    // }, [])
 
     const loginInputChange = event =>{
         const {name, value} = event.target
@@ -100,6 +84,7 @@ export default function Login(){
             window.location ="/My-Profile"
         }).catch(err =>{
             alert("login failed")
+            console.log(err.message)
         })
     }
 
