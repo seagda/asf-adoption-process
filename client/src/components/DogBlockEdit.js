@@ -153,7 +153,7 @@ export default function ProfileForm(){
 
     const handleDogIntakeFormSubmit = event =>{
         event.preventDefault();
-        API.createDog(dogIntakeData, isPurebredData, isBlockedData).then(res =>{
+        API.createDog(dogIntakeData, isPurebredData, isBlockedData, sizeData).then(res =>{
             console.log(res.data)
             setDogIntakeData({
                 name: "",
