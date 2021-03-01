@@ -15,6 +15,6 @@ module.exports = (sequelize, DataTypes) => {
             createKeyOrOther() {
                 if (this.createKey && (this.password || this.fbId || this.gId)) throw new Error("Must remove createKey to add other auth");
             }
-        }, underscored: true
+        }, paranoid: false
     });
 };

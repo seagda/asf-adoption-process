@@ -2,7 +2,7 @@ module.exports = (sequelize, DataTypes) => {
     const DogHistory = sequelize.define("DogHistory", {
         dateFrom: DataTypes.DATEONLY,
         dateTo: DataTypes.DATEONLY
-    }, { underscored: true, paranoid: true });
+    });
 
     DogHistory.associate = db => {
         db.Dog.hasMany(DogHistory);

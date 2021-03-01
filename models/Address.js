@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
         state: { type: DataTypes.STRING, allowNull: false },
         city: { type: DataTypes.STRING, allowNull: false },
         zip5: { type: DataTypes.STRING, allowNull: false }
-    }, { underscored: true, paranoid: true });
+    });
     return Address;
 };
 
