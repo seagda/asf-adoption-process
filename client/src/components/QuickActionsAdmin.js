@@ -21,15 +21,15 @@ export default function QuickActionsAdmin(){
     const classes = useStyles();
 
     return (
-        <Grid container justify="space-evenly" style={{marginTop: "4em"}}>
+        <Grid container justify="space-evenly" style={{marginTop: "2em"}}>
             <Grid item>
-                <ApplyButton toLink="/application" buttonText="Approve Pending Intake"/>
+                <ApplyButton toLink="/Dog-Dossiers" buttonText="Approve Pending Intake"/>
             </Grid>
             <Grid item>
-                <ApplyButton toLink="/application" buttonText="Approve a Foster"/>
+                <ApplyButton toLink="/Manage-ASF-Users" buttonText="Approve a Foster"/>
             </Grid>
             <Grid item>
-                <ApplyButton toLink="/application" buttonText="Approve an Adopter"/>
+                <ApplyButton toLink="/Manage-ASF-Users" buttonText="Approve an Adopter"/>
             </Grid>
         </Grid>
     )
