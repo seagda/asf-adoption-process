@@ -84,39 +84,43 @@ export default function ProfileForm(){
     //   console.log(size)
     // };
 
-    // const [name, setName] = useState();
-    // const [dob, setDob] = useState();
-    // const [gender, setGender] = useState();
-    // const [about, setAbout] = useState();
-    // const [microchipId, setMicrochipId] = useState(0);
-    // const [isPurebred, setIsPurebred] = useState(false);
-    // const [secondaryBreed, setSecondayBreed] = useState();
-    // const [pullCost, setPullCost] = useState(0);
-    // const [behaviorialIssues, setBehaviorialIssues] = useState();
-    // const [medicalIssues, setMedicalIssues] = useState();
-    // const [weight, setWeight] = useState(0)
-    // const [coat, setCoat] = useState();
-    // const [blocked, setBlocked] = useState(false);
-
     const [dogIntakeData, setDogIntakeData] = useState({
         name: "",
-        dob: "",
+        dob: null,
         gender: "",
         microchipId: 0,
-        // isPurebred: false,
         secondaryBreed: "",
         pullCost: 0,
         behaviorialIssues: "",
         medicalIssues: "",
         weight: 1,
         coat: "",
+        asfId: 1
         // blocked: false
     })
 
-    // const handleSubmit = e => {
-    //     e.preventDefault();
-    //     console.log(name, dob, gender, size, about, microchipId, isPurebred, secondaryBreed, pullCost, behaviorialIssues, medicalIssues, weight, coat, blocked)
-    // }
+
+    const [isPurebredData, setIsPurebredData] = useState({
+        isPurebred: false
+    });
+    const handlePurebredChange = (event) => {
+      const {name, value} = event.target
+      setIsPurebredData({
+          ...isPurebredData,
+          [name]: value
+      })
+    };
+
+    const [isBlockedData, setIsBlockedData] = useState({
+        blocked: false
+    });
+    const handleBlockedChange = (event) => {
+      const {name, value} = event.target
+      setIsPurebredData({
+          ...isBlockedData,
+          [name]: value
+      })
+    };
 
     const createDogInputChange = event =>{
         const {name, value} = event.target
@@ -125,28 +129,33 @@ export default function ProfileForm(){
             [name]: value
         })
     }
-
-  
     
 
     const handleDogIntakeFormSubmit = event =>{
         event.preventDefault();
-        API.createDog(dogIntakeData).then(res =>{
+        API.createDog(dogIntakeData, isPurebredData, isBlockedData).then(res =>{
             console.log(res.data)
             setDogIntakeData({
                 name: "",
-                dob: "",
+                dob: null,
                 gender: "",
                 microchipId: 0,
-                // isPurebred: false,
                 secondaryBreed: "",
                 pullCost: 0,
                 behaviorialIssues: "",
                 medicalIssues: "",
                 weight: 1,
                 coat: "",
+                asfId: 1
                 // blocked: false
             })
+            setIsPurebredData({
+                isPurebred: false
+            })
+            setIsBlockedData({
+                blocked: false
+            })
+            window.location = "/My-Dogs"
         }).catch(err=>{
             console.error(err)
             alert("Create dog failed")
@@ -207,25 +216,25 @@ export default function ProfileForm(){
             </Grid>
         </Grid>
         <Grid container justify="space-evenly">
-            {/* <Grid item style={{marginTop: "1em"}}>
+            <Grid item style={{marginTop: "1em"}}>
                 <div>
                     <FormControl variant="outlined" className={classes.formControl}>
                     <InputLabel id="isPurebred">Purebred?</InputLabel>
                     <Select
                     labelId="isPurebred"
                     id="isPurebred"
-                    onChange={createDogInputChange}
-                    value={dogIntakeData.isPurebred}
+                    onChange={handlePurebredChange}
+                    value={isPurebredData.isPurebred}
                     name="isPurebred"
                     label="Select Status"
                     >
-                    <MenuItem value={true}>Yes</MenuItem>
-                    <MenuItem value={false}>No</MenuItem>
+                    <MenuItem value="true">Yes</MenuItem>
+                    <MenuItem value="false">No</MenuItem>
                     </Select>
                     </FormControl>
 
                 </div>
-            </Grid> */}
+            </Grid>
             <Grid item style={{marginTop: "1em"}}>
                 <TextField variant="outlined" label="Secondary Breed" onChange={createDogInputChange} value={dogIntakeData.secondaryBreed} name="secondaryBreed"/>
             </Grid>
@@ -254,24 +263,24 @@ export default function ProfileForm(){
             <Grid item style={{marginTop: "1em"}}>
                 <TextField variant="outlined" label="Behavioral Issues" onChange={createDogInputChange} value={dogIntakeData.behaviorialIssues} name="behaviorialIssues"/>
             </Grid>
-            {/* <Grid item style={{marginTop: "1em"}}>
+            <Grid item style={{marginTop: "1em"}}>
                 <div>
                     <FormControl variant="outlined" className={classes.formControl}>
                     <InputLabel id="blocked">Blocked?</InputLabel>
                     <Select
                     labelId="blocked"
                     id="blocked"
-                    onChange={createDogInputChange}
-                    value={dogIntakeData.blocked}
+                    onChange={handleBlockedChange}
+                    value={isBlockedData.blocked}
                     name="blocked"
                     label="Is blocked?"
                     >
-                    <MenuItem value={true}>Yes</MenuItem>
+                    <MenuItem value="true">Yes</MenuItem>
                     <MenuItem value={false}>No</MenuItem>
                     </Select>
                     </FormControl>
                 </div>
-            </Grid> */}
+            </Grid>
             {/* <Grid item style={{marginTop: "1em"}}>
                 <SingleSelect title="Current Location"/>
             </Grid>
@@ -331,10 +340,10 @@ export default function ProfileForm(){
                     <Grid item container className={classes.formItem}>
                         <TextField variant="outlined" label="Name" onChange={createDogInputChange} value={dogIntakeData.name} name="name"/>
                     </Grid>
-                    {/* <Grid item container className={classes.formItem} direction="column">
+                    <Grid item container className={classes.formItem} direction="column">
                         <InputLabel id="birthday">Date of birth</InputLabel>
                         <TextField type="date" variant="outlined" labelId="birthday" onChange={createDogInputChange} value={dogIntakeData.dob} name="dob"/>
-                    </Grid> */}
+                    </Grid>
                     <Grid item container className={classes.formItem}>
                         <TextField variant="outlined" label="Gender" onChange={createDogInputChange} value={dogIntakeData.gender} name="gender"/>
                     </Grid>
@@ -361,6 +370,9 @@ export default function ProfileForm(){
                     </Grid> */}
                     <Grid item container className={classes.formItem}>
                         <TextField type="number" variant="outlined" label="Microchip ID" onChange={createDogInputChange} value={dogIntakeData.microchipId} name="microchipId"/>
+                    </Grid>
+                    <Grid item container className={classes.formItem}>
+                        <TextField type="number" variant="outlined" label="ASF ID" onChange={createDogInputChange} value={dogIntakeData.asfId} name="asfId"/>
                     </Grid>
                     {/* <Grid item container className={classes.formItem}>
                         <TextField rows={4} multiline variant="outlined" label="About" onChange={e => setAbout(e.target.value)}/>

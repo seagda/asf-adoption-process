@@ -42,7 +42,6 @@ export default function App() {
                     <Route path="/Admin-Dashboard"><AdminDashboard/></Route>
                     <Route path="/Foster-Dashboard"><FosterDashboard/></Route>
                     <Route path="/createUser"><CreateUser/></Route>
-                    <Route path="/addDog"><DogDossier/></Route>
                     <Route path="/dogView"><DogProfileView/></Route>
                     <Route path="/createdog"><DogProfileEdit/></Route>
                     <Route path="/signin"><Login /></Route>

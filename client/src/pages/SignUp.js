@@ -96,6 +96,7 @@ export default function SignUp(){
                 password: "",
                 phone: 1
             })
+            window.location = "/signin"
         }).catch(err =>{
             alert("signup failed")
         })

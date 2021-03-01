@@ -97,10 +97,7 @@ export default function Login(){
                 password: ""
             })
             localStorage.setItem("x-access-token", res.data.accessToken)
-            // API.getCurrentUser().then(res =>{
-            //     console.log(res.data)
-            //     setCurrentUser(res.data.user)
-            // })
+            window.location ="/My-Profile"
         }).catch(err =>{
             alert("login failed")
         })
