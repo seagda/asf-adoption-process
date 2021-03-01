@@ -98,6 +98,8 @@ const appStatusSeeds = [{
     name: "Reference Check Complete"
 }, {
     name: "Approved"
+}, {
+    name: "Auto Rejected"
 }];
 
 const dogStatusSeeds = [{
