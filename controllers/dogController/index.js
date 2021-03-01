@@ -123,6 +123,7 @@ router.put("/:id", (req, res) => {
                 else return res.status(403).send({ message: "Not authorized to update this dog" });
                 const promises = [dog, updates];
                 if (updates.name && updates.name !== dog.name) promises[2] = dog.createDogAlias({ name: dog.name });
+                if (updates.DogStatusId && updates.DogStatusId !== dog.DogStatusId) generateStatusAlerts(dog);
                 return Promise.all(promises);
             })
             .then(([dog, updates, alias]) => dog.update(updates))
@@ -148,5 +149,19 @@ router.delete("/archive/:id", (req, res) => {
     else return res.status(403).send({ message: "Not authorized to archive dogs" });
 });
 
+function generateStatusAlerts(dog) {
+    dog.getRegion().then(Region => {
+        const or = [
+            { "$Roles.id$": 7 },
+            { [db.Sequelize.Op.and]: [{ "$Regions.id$": Region.id }, { "$Roles.id$": 6 }] }
+        ];
+        if (dog.DogStatusId === 2) or.push({ [db.Sequelize.Op.and]: [{ "$Regions.id$": Region.id }, { "$Roles.id$": 4 }] });
+        return db.User.findAll({
+            where: {
+                [db.Sequelize.Op.or]: or
+            }, include: [db.Region, db.Role]
+        });
+    }).then(console.log).catch(console.error);
+}
 
 module.exports = router;
