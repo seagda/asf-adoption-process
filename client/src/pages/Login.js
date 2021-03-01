@@ -100,6 +100,7 @@ export default function Login(){
             window.location ="/My-Profile"
         }).catch(err =>{
             alert("login failed")
+            console.log(err.message)
         })
     }
 
