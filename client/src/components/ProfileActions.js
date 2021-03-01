@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ProfileActions(){
     const classes = useStyles();
-    const admin = false;
+    const admin = true;
 
     return(
         <Grid container justify="space-evenly" style={{marginTop: "4em"}}>
@@ -27,17 +27,17 @@ export default function ProfileActions(){
                 {admin ? null : <ApplyButton toLink="/application" buttonText="Apply to adopt an aussie"/>}
             </Grid>
             <Grid item>
-                {admin ? <EditButton toLink="/editprofile" buttonText="Edit User"/> : <EditButton toLink="/editprofile" buttonText="Edit Profile"/>}
+                {admin ? <EditButton toLink="/editprofile" buttonText="Edit Profile"/> : <EditButton toLink="/editprofile" buttonText="Edit Profile"/>}
             </Grid>
             <Grid item>
-                {admin ? <UpdateButton toLink="/" buttonText="Update User Password"/> : <UpdateButton toLink="/" buttonText="Update Password"/>}
+                {admin ? <UpdateButton toLink="/" buttonText="Update Password"/> : <UpdateButton toLink="/" buttonText="Update Password"/>}
             </Grid>
             <Grid item>
-                {admin ? <ContactButton toLink="/" buttonText="Contact User"/> : <ContactButton toLink="/" buttonText="Contact Admin"/>}
+                {/* {admin ? <ContactButton toLink="/" buttonText="Contact"/> : <ContactButton toLink="/" buttonText="Contact Admin"/>} */}
             </Grid>
             <Grid item>
                 <HoldCheckbox label="Put me on hold"/>
-                {admin ? <HoldCheckbox label="Mark User as inactive"/> : null}
+                {/* {admin ? <HoldCheckbox label="Mark User as inactive"/> : null} */}
             </Grid>
         </Grid>
     )

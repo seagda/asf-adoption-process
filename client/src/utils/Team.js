@@ -47,42 +47,10 @@ export default {getTeam() {
       },
       {
         "id": 6,
-        "name": "Doug Funnie",
-        "image": "https://vignette1.wikia.nocookie.net/doug/images/3/3b/Doug001.gif/revision/latest?cb=20110807170511",
-        "role": "Student",
-        "city": "Bluffington",
-        "email": "dogs12@gmail.com"
-      },
-      {
-        "id": 7,
         "name": "Bugs Bunny",
         "image": "https://vignette2.wikia.nocookie.net/deathbattlefanon/images/2/2b/Bugs_Bunny.png/revision/latest?cb=20151206010607",
         "role": "Looney Toon",
         "city": "A Rabbit Burrow",
-        "email": "dogs12@gmail.com"
-      },
-      {
-        "id": 8,
-        "name": "Johnny Bravo",
-        "image": "http://vignette3.wikia.nocookie.net/p__/images/9/9a/Johnny_Bravo.png/revision/latest?cb=20131031233339&path-prefix=protagonist",
-        "role": "Ladies Man",
-        "city": "Aron City",
-        "email": "dogs12@gmail.com"
-      },
-      {
-        "id": 9,
-        "name": "Tommy Pickles",
-        "image": "https://vignette4.wikia.nocookie.net/uncyclopedia/images/e/e4/Tommy_Pickles.png/revision/latest?cb=20110530102641",
-        "role": "Adventurer",
-        "city": "California",
-        "email": "dogs12@gmail.com"
-      },
-      {
-        "id": 10,
-        "name": "Rocko",
-        "image": "http://vignette3.wikia.nocookie.net/rockosmodernlife/images/9/9e/Rockos-modern-life-4e582a8f06a41.png/revision/latest?cb=20130522173416",
-        "role": "Cashier",
-        "city": "O-Town, California",
         "email": "dogs12@gmail.com"
       }
   ])},100)

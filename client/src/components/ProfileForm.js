@@ -65,8 +65,10 @@ export default function ProfileForm(){
     const roles = [{role: "Adopter"}, {role: "Foster"}];
     const names = ["Adopter", "Foster", "Regional", "Volunteer", "Rescuer", "Transporter", "Placement"]
 
-    const [fullName, setFullName] = useState();
+    const [firstName, setFirstName] = useState();
+    const [lastName, setLastName] = useState();
     const [userEmail, setuserEmail] = useState();
+    const [userPhone, setUserPhone] = useState();
     const [city, setCity] = useState();
     const [location, setLocation] = useState();
     const [about, setAbout] = useState(" ");
@@ -88,7 +90,7 @@ export default function ProfileForm(){
 
     const handleSubmit = e => {
         e.preventDefault();
-        console.log(fullName, userEmail, city, location, about, max, current, available, ref1Name, ref1Phone, ref1Email, ref1Notes, ref2Name, ref2Phone, ref2Email, ref2Notes, ref3Name, ref3Phone, ref3Email, ref3Notes)
+        console.log(firstName, lastName, userEmail, userPhone, city, location, about, max, current, available, ref1Name, ref1Phone, ref1Email, ref1Notes, ref2Name, ref2Phone, ref2Email, ref2Notes, ref3Name, ref3Phone, ref3Email, ref3Notes)
     }
 
     const roleEdit = (
@@ -160,7 +162,7 @@ export default function ProfileForm(){
                         </Typography>
                         <div>
                         <TextField variant="outlined" label="Name" onChange={e => setRef1Name(e.target.value)}/>
-                        <TextField variant="outlined" label="Phone" onChange={e => setRef1Phone(e.target.value)}/>
+                        <TextField type="number" variant="outlined" label="Phone" onChange={e => setRef1Phone(e.target.value)}/>
                         <TextField variant="outlined" label="Email" onChange={e => setRef1Email(e.target.value)}/>
                         </div>
                     </CardContent>
@@ -178,7 +180,7 @@ export default function ProfileForm(){
                         </Typography>
                         <div>
                         <TextField variant="outlined" label="Name" onChange={e => setRef2Name(e.target.value)}/>
-                        <TextField variant="outlined" label="Phone" onChange={e => setRef2Phone(e.target.value)}/>
+                        <TextField type="number" variant="outlined" label="Phone" onChange={e => setRef2Phone(e.target.value)}/>
                         <TextField variant="outlined" label="Email" onChange={e => setRef2Email(e.target.value)}/>
                         </div>
                     </CardContent>
@@ -196,7 +198,7 @@ export default function ProfileForm(){
                         </Typography>
                         <div>
                         <TextField variant="outlined" label="Name" onChange={e => setRef3Name(e.target.value)}/>
-                        <TextField variant="outlined" label="Phone" onChange={e => setRef3Phone(e.target.value)}/>
+                        <TextField type="number" variant="outlined" label="Phone" onChange={e => setRef3Phone(e.target.value)}/>
                         <TextField variant="outlined" label="Email" onChange={e => setRef3Email(e.target.value)}/>
                         </div>
                     </CardContent>
@@ -222,13 +224,16 @@ export default function ProfileForm(){
             <Grid item>
                 <div className={classes.form}>
                     <Grid item container className={classes.formItem}>
-                        <TextField variant="outlined" label="Name" onChange={e => setFullName(e.target.value)}/>
+                        <TextField variant="outlined" label="First Name" onChange={e => setFirstName(e.target.value)}/>
                     </Grid>
                     <Grid item container className={classes.formItem}>
-                        <PhoneInput/>
+                        <TextField variant="outlined" label="Last Name" onChange={e => setLastName(e.target.value)}/>
                     </Grid>
                     <Grid item container className={classes.formItem}>
-                        <TextField variant="outlined" label="Email" onChange={e => setuserEmail(e.target.value)}/>
+                        <TextField type="number" variant="outlined" label="Phone" onChange={e => setUserPhone(e.target.value)}/>
+                    </Grid>
+                    <Grid item container className={classes.formItem}>
+                        <TextField type="email" variant="outlined" label="Email" onChange={e => setuserEmail(e.target.value)}/>
                     </Grid>
                     <Grid item container className={classes.formItem}>
                         <TextField variant="outlined" label="City" onChange={e => setCity(e.target.value)}/>

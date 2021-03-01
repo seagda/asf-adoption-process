@@ -8,13 +8,16 @@ import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import MultiSelectChips from '../components/MultiSelectChips';
 import AvatarList from '../components/AvatarList';
+import BasicList from '../components/BasicList';
+import ListContainer from '../components/ListContainer';
 import TeamAPI from '../utils/Team';
+import AlertAPI from '../utils/Alerts';
 
 
 const useStyles=makeStyles(theme => ({
     mainContainer: {
         marginLeft: theme.spacing(35),
-        marginTop: theme.spacing(13),
+        marginTop: theme.spacing(12),
         width: "70%",
         [theme.breakpoints.down("md")]:{
             width: "80%"
@@ -32,22 +35,40 @@ const useStyles=makeStyles(theme => ({
 export default function AdminDashboard(){
     const classes = useStyles();
 // api call for employee data to display
-const [team, setTeamState] = useState([])
+    const [team, setTeamState] = useState([])
 
-  useEffect(() => {
-    loadTeam()
-  }, [])
+    useEffect(() => {
+        loadTeam()
+    }, [])
 
-  function loadTeam() {
-      console.log(TeamAPI.getTeam())
-    TeamAPI.getTeam()
-      .then(res => {
-        setTeamState(res)
+    function loadTeam() {
+        
+        TeamAPI.getTeam()
+        .then(res => {
+            setTeamState(res)
+            console.log(res)
+        }
+        )
+        .catch(err => console.log(err));
+    };
+
+    // api call for alert data to display
+    const [alerts, setAlertState] = useState([])
+
+    useEffect(() => {
+        loadAlerts()
+    }, [])
+
+    function loadAlerts() {
+        
+    AlertAPI.getAlerts()
+        .then(res => {
+        setAlertState(res)
         console.log(res)
-      }
-      )
-      .catch(err => console.log(err));
-  };
+        }
+        )
+        .catch(err => console.log(err));
+    };
 
 // region select drop down
     const [selectedRegions, setRegion] = React.useState([]);
@@ -79,26 +100,42 @@ const [team, setTeamState] = useState([])
             <Grid item xs={12}>
                 <QuickActionsAdmin/>
             </Grid>
-            <Grid item xs={8} />
-            <Grid item xs={4}>
+            <Grid item m={8} lg={8} />
+            <Grid item xs={12} s={12} m={4} lg={4}>
                 <MultiSelectChips names={regions} title="Select Region" selectedOption={selectedRegions} onOptionChange={handleRegionChange}/>
             </Grid>
             <Grid item xs={12}>
                 <PieChartContainer/>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={12} s={12} m={6} lg={6} style={{marginTop: "2em"}}>
                  <Typography variant="h5" component="h4" gutterBottom align="center" color="primary">
                     ASF Team Members
                     <Divider />
                 </Typography>
-                <AvatarList />
+                {team.length ? (
+                <ListContainer>
+                    {team.map(teamMember =>{
+                        return (
+                            <AvatarList name={teamMember.name} image={teamMember.image} role={teamMember.role} city={teamMember.city} email={teamMember.email}/>
+                        )
+                    })}    
+                </ListContainer>
+                ):(<p>Currently no data to display</p>)}
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={12} s={12} m={6} lg={6} style={{marginTop: "2em"}}>
                 <Typography variant="h5" component="h4" gutterBottom align="center" color="primary">
-                    Dog Dossiers Recently Updated
+                    My Alerts
                     <Divider />
                 </Typography>
-                <AvatarList />
+                {alerts.length ? (
+                <ListContainer>
+                    {alerts.map(alert =>{
+                        return (
+                            <BasicList name={alert.name} image={alert.image} dueDate={alert.dueDate} dogName={alert.dogName}/>
+                        )
+                    })}    
+                </ListContainer>
+                ):(<p>Currently no data to display</p>)}
             </Grid>
         </Grid>
     )

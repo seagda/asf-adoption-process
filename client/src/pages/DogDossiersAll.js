@@ -79,7 +79,7 @@ export default function DogDossiersAll() {
                 </Grid>
                 <Grid item xs={4} s={4} m={8} lg={10}/>
                 <Grid item xs={8} s={8} m={4} lg={2}>
-                    <AddButton buttonText="Add Dog" toLink="/addDog" />
+                    <AddButton buttonText="Add Dog" toLink="/createdog" />
                 </Grid>
                 <Grid item xs={12}>
                      <form noValidate autoComplete="off">
@@ -95,10 +95,10 @@ export default function DogDossiersAll() {
                 <Grid item xs={12}>
                     <Divider />
                 </Grid>
-                <Grid item xs={2} />
-                <Grid item xs={10} justifyContent="center" >
+                <Grid item xs={1} />
+                <Grid item xs={11} justifyContent="center" >
                     <Hidden smDown>
-                    <div style={{height: 100, width: '70%'}}>
+                    <div style={{height: 120, width: '80%'}}>
                         <DogAdoptionFlow />
                     </div>
                     </Hidden>

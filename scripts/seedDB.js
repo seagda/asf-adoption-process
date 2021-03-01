@@ -68,40 +68,30 @@ const userSeed = [
 ];
 
 // Clear the roles table, then use bulkCreate to insert above
-db.Role.destroy({ where: {} }).then(() =>
-    db.Role.bulkCreate(roleSeed)
-        .then((data) => {
-            console.log(data.length + " records inserted!");
-            // Clear the USERS table, then use bulkCreate to insert above
-            db.User.destroy({ where: {} }).then(() =>
-                db.User.bulkCreate(userSeed, { include: [db.Auth, db.Role] })
-                    .then((usersData) => {
-                        usersData[0].addRoles([1]);
-                        usersData[1].addRoles([1, 2]);
-                        usersData[2].addRoles([1, 3]);
-                        usersData[3].addRoles([1, 4]);
-                        usersData[4].addRoles([1, 5]);
-                        usersData[5].addRoles([1, 6]);
-                        usersData[6].addRoles([1, 7]);
-                        usersData[7].addRoles([1, 8]);
-                        console.log(usersData.length + " records inserted!");
-                    })
-                    .catch((err) => {
-                        console.error(err);
-                        process.exit(1);
-                    })
-            );
-        })
-        .catch((err) => {
-            console.error(err);
-            process.exit(1);
-        })
-);
+db.Role.bulkCreate(roleSeed).then((data) => {
+    console.log(data.length + " records inserted!");
+    // Clear the USERS table, then use bulkCreate to insert above
+    return db.User.bulkCreate(userSeed, { include: [db.Auth, db.Role] })
+}).then((usersData) => {
+    usersData[0].addRoles([1]);
+    usersData[1].addRoles([1, 2]);
+    usersData[2].addRoles([1, 3]);
+    usersData[3].addRoles([1, 4]);
+    usersData[4].addRoles([1, 5]);
+    usersData[5].addRoles([1, 6]);
+    usersData[6].addRoles([1, 7]);
+    usersData[7].addRoles([1, 8]);
+    console.log(usersData.length + " records inserted!");
+}).catch((err) => {
+    console.error(err);
+    process.exit(1);
+});
 
-const appStatusSeeds = [{
-    name: "Application Recieved"
-}, { name: "Background Check Complete" }, 
-   { name: "Reference Check Complete" }, 
+
+const appStatusSeeds = [
+   { name: "Application Received"}, 
+   { name: "Background Check Complete"}, 
+   { name: "Reference Check Complete"}, 
    { name: "Approved" }, 
    { name: "Auto Rejected" },
    { name: "Rejected" }

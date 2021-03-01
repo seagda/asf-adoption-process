@@ -10,6 +10,8 @@
     "client": "cd client && npm run start",
     "install": "cd client && npm install",
     "build": "cd client && npm run build",
+    "force-sync": "echo \"This will permanently delete all information currently in the database\" && echo \"You will probably want to npm run seed afterwards\" && cli-confirm \"Are you sure you want to do this?\" && node scripts/forceSync.js",
+    "seed": "node scripts/seedDB.js",
     "heroku-postbuild": "npm run build"
   },
   "repository": {
@@ -27,6 +29,7 @@
     "accesscontrol": "^2.2.1",
     "axios": "^0.21.1",
     "bcrypt": "^5.0.0",
+    "cli-confirm": "^1.0.1",
     "express": "^4.17.1",
     "if-env": "^1.0.4",
     "jsonwebtoken": "^8.5.1",

@@ -9,17 +9,17 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles(theme => ({
-  marginLeft: theme.spacing(20),
-  marginTop: theme.spacing(4),
+  margin: theme.spacing(20),
+  
   root: {
     maxWidth: "90%",
-  },
-  media: {
-    height: 300,
-  },
+    minWidth: "70%",
+    marginTop: theme.spacing(2),
+    flex: "wrap"
+  }
 }));
 
-export default function MediaCard() {
+export default function MediaCard(props) {
   const classes = useStyles();
 
   return (
@@ -27,23 +27,23 @@ export default function MediaCard() {
       <CardActionArea>
         <CardMedia
           className={classes.media}
-          image="https://place-puppy.com/300x300"
-          title="Contemplative Reptile"
+          component="img"
+          alt={props.name}
+          height="100%"
+          image={props.image}
+          title={props.name}
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
-            Bruce
-          </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-            Loves long walks and fetch. Rescued in 2015.
+            {props.name}
           </Typography>
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <Button size="small" color="primary">
+        <Button size="small" color="primary" to={props.dossierLink}>
           Update Profile
         </Button>
-        <Button size="small" color="primary">
+        <Button size="small" color="primary" to={props.assessmentLink}>
           Add Behavior Assessment
         </Button>
       </CardActions>

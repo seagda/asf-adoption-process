@@ -1,11 +1,11 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
 
-import API from "../utils/API";
+import API from '../utils/API';
 
 const useStyles=makeStyles(theme => ({
     mainContainer: {
@@ -34,7 +34,6 @@ const useStyles=makeStyles(theme => ({
         }
     },
     form: {
-        paddingRight: "3em",
         [theme.breakpoints.down("sm")]:{
             padding: "1em"
         }
@@ -56,54 +55,69 @@ const useStyles=makeStyles(theme => ({
     }
 }))
 
-export default function Login(){
+export default function SignUp(){
     const classes = useStyles();
 
-    const [loginFormData, setLoginFormData] = useState({
+    const [signupFormData, setSignupFormData] = useState({
+        firstName: "",
+        lastName: "",
         email: "",
-        password: ""
+        password: "",
+        phone: 1
     })
 
-    const loginInputChange = event =>{
+    const signupInputChange = event =>{
         const {name, value} = event.target
-        setLoginFormData({
-            ...loginFormData,
+        setSignupFormData({
+            ...signupFormData,
             [name]: value
         })
     }
 
-    const handleLoginFormSubmit = event =>{
+    const handleSignupFormSubmit = event =>{
         event.preventDefault();
-        API.login(loginFormData).then(res =>{
+        API.signup(signupFormData).then(res =>{
             console.log(res.data)
-            setLoginFormData({
+            setSignupFormData({
+                firstName: "",
+                lastName: "",
                 email: "",
-                password: ""
+                password: "",
+                phone: 1
             })
-            localStorage.setItem("x-access-token", res.data.accessToken)
-            window.location ="/My-Profile"
+            window.location = "/signin"
         }).catch(err =>{
-            alert("login failed")
-            console.log(err.message)
+            alert("signup failed")
         })
     }
 
     return(
         <Grid container className={classes.mainContainer}>
             <Paper>
-            <form onSubmit={handleLoginFormSubmit}>
+            <form onSubmit={handleSignupFormSubmit}>
                 <Grid item container className={classes.itemContainer}>
-                    <Grid item className={classes.form}>
+                    <Grid item>
+                        <div className={classes.form}>
                             <Grid item container className={classes.formItem}>
-                                <TextField type="email" variant="outlined" label="Email" onChange={loginInputChange} value={loginFormData.email} name="email"/>
+                                <TextField variant="outlined" label="First Name" onChange={signupInputChange} value={signupFormData.firstName} name="firstName"/>
                             </Grid>
                             <Grid item container className={classes.formItem}>
-                                <TextField variant="outlined" type="password" label="Password" onChange={loginInputChange} value={loginFormData.password} name="password"/>
+                                <TextField variant="outlined" label="Last Name" onChange={signupInputChange} value={signupFormData.lastName} name="lastName"/>
                             </Grid>
+                            <Grid item container className={classes.formItem}>
+                                <TextField type="email" variant="outlined" label="Email" onChange={signupInputChange} value={signupFormData.email} name="email"/>
+                            </Grid>
+                            <Grid item container className={classes.formItem}>
+                                <TextField type="password" variant="outlined" label="Password" onChange={signupInputChange} value={signupFormData.password} name="password"/>
+                            </Grid>
+                            <Grid item container className={classes.formItem}>
+                                <TextField variant="outlined" type="number" label="Phone" onChange={signupInputChange} value={signupFormData.phone} name="phone"/>
+                            </Grid>
+                        </div>
                     </Grid>
         
                     <Grid item container className={classes.formItem} justify={"center"}>
-                        <Button type="submit" color="secondary" variant="contained">Login</Button>
+                        <Button type="submit" color="secondary" variant="contained">Sign Up</Button>
                     </Grid>
                 </Grid>
             </form>

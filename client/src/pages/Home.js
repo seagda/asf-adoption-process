@@ -1,10 +1,8 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import SaveButton from "../components/SaveButton";
-
-import DogBlockEdit from "../components/DogBlockEdit";
-import DogStatusEdit from "../components/DogStatusEdit";
+import Button from "@material-ui/core/Button";
+import {NavLink} from "react-router-dom";
 
 const useStyles=makeStyles(theme => ({
     mainContainer: {
@@ -12,6 +10,7 @@ const useStyles=makeStyles(theme => ({
         marginTop: theme.spacing(13),
         marginBottom: "5em",
         width: "70%",
+        justifyContent: "space-evenly",
         [theme.breakpoints.down("md")]:{
             width: "80%"
         },
@@ -20,7 +19,7 @@ const useStyles=makeStyles(theme => ({
         },
         [theme.breakpoints.down("xs")]:{
             spacing: theme.spacing(2),
-            marginLeft: "3em"
+            marginLeft: "3.5em"
         }
     },
     formItem: {
@@ -28,13 +27,21 @@ const useStyles=makeStyles(theme => ({
     }
 }))
 
-export default function DogProfileEdit(){
+export default function Home(){
     const classes = useStyles();
 
     return(
         <Grid container className={classes.mainContainer}>
-            <DogBlockEdit/>
-            {/* <DogStatusEdit/> */}
+            <Grid item>
+                <NavLink style={{textDecoration: "none"}} to="/signin">
+                    <Button color="secondary" variant="contained">Login</Button>
+                </NavLink>
+            </Grid>
+            <Grid item>
+                <NavLink style={{textDecoration: "none"}} to="/signup">
+                    <Button color="secondary" variant="contained">Sign Up</Button>
+                </NavLink>
+            </Grid>
         </Grid>
     )
 }
