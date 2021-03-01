@@ -108,7 +108,7 @@ function ResponsiveDrawer(props) {
             </List>
             <Divider />
             <List>
-                {['Dog-Dossiers', 'Manage-ASF-Users', 'ASF-Settings'].map((text, index) => (
+                {['Dog-Dossiers', 'Manage-ASF-Users', 'ASF-Admin-Settings'].map((text, index) => (
                     <ListItem button key={text} className={classes.listItem}>
                         <ListItemIcon className={classes.listItem}>{index === 0 ? <DescriptionIcon /> : index === 1 ? <SupervisorAccountIcon /> : <PermDataSettingIcon />}</ListItemIcon>
                         <NavLink className={classes.link} to={`/${text}`}>{`${text.replace("-", " ")}`}</NavLink>

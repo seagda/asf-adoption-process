@@ -19,7 +19,7 @@ export default function ListContainer({children}) {
 
   return (
     <div className={classes.root}>
-        <ul>{children}</ul>
+        {children}
     </div>
   )
 }
