@@ -1,9 +1,11 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
+
+import API from "../utils/API";
 
 const useStyles=makeStyles(theme => ({
     mainContainer: {
@@ -57,28 +59,65 @@ const useStyles=makeStyles(theme => ({
 export default function Login(){
     const classes = useStyles();
 
-    const [email, setEmail] = useState();
-    const [password, setPassword] = useState();
+    // const [email, setEmail] = useState();
+    // const [password, setPassword] = useState();
 
-    const handleSubmit = e => {
-        e.preventDefault();
-        console.log(email, password)
+    // const handleSubmit = e => {
+    //     e.preventDefault();
+    //     console.log(email, password)
+    // }
+
+    const [loginFormData, setLoginFormData] = useState({
+        email: "",
+        password: ""
+    })
+    // const [currentUser, setCurrentUser] = useState()
+
+    // useEffect(() =>{
+    //     API.getCurrentUser().then(res =>{
+    //         console.log(res.data);
+    //         setCurrentUser(res.data.user)
+    //     })
+    // }, [])
+
+    const loginInputChange = event =>{
+        const {name, value} = event.target
+        setLoginFormData({
+            ...loginFormData,
+            [name]: value
+        })
+    }
+
+    const handleLoginFormSubmit = event =>{
+        event.preventDefault();
+        API.login(loginFormData).then(res =>{
+            console.log(res.data)
+            setLoginFormData({
+                email: "",
+                password: ""
+            })
+            localStorage.setItem("accessToken", res.data.accessToken)
+            // API.getCurrentUser().then(res =>{
+            //     console.log(res.data)
+            //     setCurrentUser(res.data.user)
+            // })
+        }).catch(err =>{
+            alert("login failed")
+        })
     }
 
     return(
         <Grid container className={classes.mainContainer}>
             <Paper>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleLoginFormSubmit}>
                 <Grid item container className={classes.itemContainer}>
-                    <Grid item>
-                        <div className={classes.form}>
+                    <Grid item className={classes.form}>
                             <Grid item container className={classes.formItem}>
-                                <TextField type="email" variant="outlined" label="Email" onChange={e => setEmail(e.target.value)}/>
+                                <TextField type="email" variant="outlined" label="Email" onChange={loginInputChange} value={loginFormData.email} name="email"/>
                             </Grid>
                             <Grid item container className={classes.formItem}>
-                                <TextField variant="outlined" type="password" label="Password" onChange={e => setPassword(e.target.value)}/>
+                                <TextField variant="outlined" type="password" label="Password" onChange={loginInputChange} value={loginFormData.password} name="password"/>
                             </Grid>
-                        </div>
                     </Grid>
         
                     <Grid item container className={classes.formItem} justify={"center"}>

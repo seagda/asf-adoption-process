@@ -5,6 +5,8 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
 
+import API from '../utils/API';
+
 const useStyles=makeStyles(theme => ({
     mainContainer: {
         marginLeft: theme.spacing(35),
@@ -56,38 +58,70 @@ const useStyles=makeStyles(theme => ({
 export default function SignUp(){
     const classes = useStyles();
 
-    const [firstName, setFirstName] = useState();
-    const [lastName, setlastName] = useState();
-    const [email, setEmail] = useState();
-    const [password, setPassword] = useState();
-    const [phone, setPhone] = useState();
+    // const [firstName, setFirstName] = useState();
+    // const [lastName, setlastName] = useState();
+    // const [email, setEmail] = useState();
+    // const [password, setPassword] = useState();
+    // const [phone, setPhone] = useState();
 
-    const handleSubmit = e => {
-        e.preventDefault();
-        console.log(firstName, lastName, email, password, phone)
+    const [signupFormData, setSignupFormData] = useState({
+        firstName: "",
+        lastName: "",
+        email: "",
+        password: "",
+        phone: 1
+    })
+
+    // const handleSubmit = e => {
+    //     e.preventDefault();
+    //     console.log(firstName, lastName, email, password, phone)
+    // }
+
+    const signupInputChange = event =>{
+        const {name, value} = event.target
+        setSignupFormData({
+            ...signupFormData,
+            [name]: value
+        })
+    }
+
+    const handleSignupFormSubmit = event =>{
+        event.preventDefault();
+        API.signup(signupFormData).then(res =>{
+            console.log(res.data)
+            setSignupFormData({
+                firstName: "",
+                lastName: "",
+                email: "",
+                password: "",
+                phone: 1
+            })
+        }).catch(err =>{
+            alert("signup failed")
+        })
     }
 
     return(
         <Grid container className={classes.mainContainer}>
             <Paper>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSignupFormSubmit}>
                 <Grid item container className={classes.itemContainer}>
                     <Grid item>
                         <div className={classes.form}>
                             <Grid item container className={classes.formItem}>
-                                <TextField variant="outlined" label="First Name" onChange={e => setFirstName(e.target.value)}/>
+                                <TextField variant="outlined" label="First Name" onChange={signupInputChange} value={signupFormData.firstName} name="firstName"/>
                             </Grid>
                             <Grid item container className={classes.formItem}>
-                                <TextField variant="outlined" label="Last Name" onChange={e => setlastName(e.target.value)}/>
+                                <TextField variant="outlined" label="Last Name" onChange={signupInputChange} value={signupFormData.lastName} name="lastName"/>
                             </Grid>
                             <Grid item container className={classes.formItem}>
-                                <TextField variant="outlined" label="Email" onChange={e => setEmail(e.target.value)}/>
+                                <TextField type="email" variant="outlined" label="Email" onChange={signupInputChange} value={signupFormData.email} name="email"/>
                             </Grid>
                             <Grid item container className={classes.formItem}>
-                                <TextField variant="outlined" label="Password" onChange={e => setPassword(e.target.value)}/>
+                                <TextField type="password" variant="outlined" label="Password" onChange={signupInputChange} value={signupFormData.password} name="password"/>
                             </Grid>
                             <Grid item container className={classes.formItem}>
-                                <TextField variant="outlined" type="number" label="Phone" onChange={e => setPhone(e.target.value)}/>
+                                <TextField variant="outlined" type="number" label="Phone" onChange={signupInputChange} value={signupFormData.phone} name="phone"/>
                             </Grid>
                         </div>
                     </Grid>
