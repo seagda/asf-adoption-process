@@ -10,6 +10,7 @@
     "client": "cd client && npm run start",
     "install": "cd client && npm install",
     "build": "cd client && npm run build",
+    "force-sync": "cli-confirm \"This will permanently delete all information currently in the database\nYou will probably want to npm run seed afterwards\nAre you sure you want to do this?\" && node scripts/forceSync.js",
     "seed": "node scripts/seedDB.js",
     "heroku-postbuild": "npm run build"
   },
