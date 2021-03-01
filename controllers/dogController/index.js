@@ -109,7 +109,7 @@ router.post("/", (req, res) => {
     } else return res.status(403).send({ message: "Not authorized to add a dog" });
 });
 
-// TODO: update Own or Any DOG by id, with correct ROLE permission
+// update Own or Any DOG by id, with correct ROLE permission
 
 router.put("/:id", (req, res) => {
     const permissionOwn = ac.can(req.roles).updateOwn("Dog");
@@ -135,7 +135,7 @@ router.put("/:id", (req, res) => {
     } else res.status(403).send({ message: "Not authorized to update dogs" });
 });
 
-// TODO: delete DOG by id, with SuperAdmin ONLY permission
+// delete DOG by id, with SuperAdmin ONLY permission
 
 router.delete("/archive/:id", (req, res) => {
     const permissionAny = ac.can(req.roles).deleteAny("Dog");
@@ -155,13 +155,26 @@ function generateStatusAlerts(dog) {
             { "$Roles.id$": 7 },
             { [db.Sequelize.Op.and]: [{ "$Regions.id$": Region.id }, { "$Roles.id$": 6 }] }
         ];
-        if (dog.DogStatusId === 2) or.push({ [db.Sequelize.Op.and]: [{ "$Regions.id$": Region.id }, { "$Roles.id$": 4 }] });
-        return db.User.findAll({
+  // Add alert for FOSTER READY, goes to Fosters in Region 
+        if (dog.DogStatusId === 2) or.push({ [db.Sequelize.Op.and]: [{ "$Regions.id$": Region.id }, { "$Roles.id$": 4 }] })
+  // Add alert for ALMOST ADOPTION READY, goes to PLACEMENT, ADOPTERS in REGION
+        else if (dog.DogStatusId === 4) {
+            or.push({ [db.Sequelize.Op.and]: [{ "$Regions.id$": Region.id }, { "$Roles.id$": 5 }] })
+            or.push({ [db.Sequelize.Op.and]: [{ "$Regions.id$": Region.id }, { "$Roles.id$": 3 }] })
+  // Add alert for ADOPTION READY, goes to PLACEMENT, ADOPTERS in REGION
+        } else if (dog.DogStatusId === 4) {
+            or.push({ [db.Sequelize.Op.and]: [{ "$Regions.id$": Region.id }, { "$Roles.id$": 5 }] })
+            or.push({ [db.Sequelize.Op.and]: [{ "$Regions.id$": Region.id }, { "$Roles.id$": 3 }] })
+        }
+
+        return Promise.all([db.User.findAll({
             where: {
                 [db.Sequelize.Op.or]: or
             }, include: [db.Region, db.Role]
-        });
-    }).then(console.log).catch(console.error);
+        }),
+        dog.getDogStatus()
+    ]);
+    }).then(([users, DogStatus]) => users.forEach(user=> user.createAlert({message: `${dog.name} is ${DogStatus.name}`, aboutDogId:dog.id }))).catch(console.error);
 }
 
 module.exports = router;
