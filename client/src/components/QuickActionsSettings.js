@@ -19,19 +19,19 @@ export default function QuickActionsSettings(){
 
     return (
         <Grid container className={classes.itemContainer}>
-            <Grid item xs={6} s={4}>
+            <Grid item xs={12} s={4} m={3}>
                 <SettingsButton toLink="/" buttonText="Edit Profile" variant="outlined" />
             </Grid>
-            <Grid item xs={6} s={4}>
+            <Grid item xs={12} s={4} m={3}>
                 <SettingsButton toLink="/" buttonText="Security"/>
             </Grid>
-            <Grid item xs={6} s={4}>
+            <Grid item xs={12} s={4} m={3}>
                 <SettingsButton toLink="/" buttonText="Personalization"/>
             </Grid>
-            <Grid item xs={6} s={4}>
+            <Grid item xs={12} s={4} m={3}>
                 <SettingsButton toLink="/" buttonText="People and Sharing"/>
             </Grid>
-            <Grid item xs={6} s={4}>
+            <Grid item xs={12} s={4} m={3}>
                 <SettingsButton toLink="/" buttonText="Manage Alerts"/>
             </Grid>
         </Grid>
