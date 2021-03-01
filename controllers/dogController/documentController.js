@@ -16,14 +16,14 @@ router.get("/:id", (req, res) => {
                 docJson = permissionOwn.filter(doc.toJSON())
             } else if (permissionAny.granted) {
                 docJson = permissionAny.filter(doc.toJSON())
-            } else return res.status(401).send({ message: "you can't view this dog's assessments" });
+            } else return res.status(403).send({ message: "you can't view this dog's assessments" });
             res.json(docJson);
         })
         .catch(err => {
             console.error(err);
             res.status(422).send({ message: "Error with request" });
         });
-    } else return res.status(401).send({ message: "Not authorized to view DOCUMENTs" });
+    } else return res.status(403).send({ message: "Not authorized to view DOCUMENTs" });
 });
 
 // create new DOCUMENT, with correct ROLE permission
@@ -38,7 +38,7 @@ router.post("/:id", (req, res) => {
                 docJson = permissionOwn.filter(req.body)
             } else if (permissionAny.granted) {
                 docJson = permissionAny.filter(req.body)
-            } else return res.status(401).send({ message: "you can't create assessments" })
+            } else return res.status(403).send({ message: "you can't create assessments" })
     
         dog
           .createDocument(docJson) 
@@ -48,7 +48,7 @@ router.post("/:id", (req, res) => {
             res.status(422).send({ message: "Error with request" })
         });
     
-        } else return res.status(401).send({ message: "Not authorized to create DOCUMENTs" })
+        } else return res.status(403).send({ message: "Not authorized to create DOCUMENTs" })
 
     })
 });
@@ -67,7 +67,7 @@ router.put("/:id", (req, res) => {
                     docJson = permissionOwn.filter(doc.toJSON())
                 } else if (permissionAny.granted) {
                     docJson = permissionAny.filter(doc.toJSON())
-                } else return res.status(401).send({ message: "you can't update this dog's assessments" });
+                } else return res.status(403).send({ message: "you can't update this dog's assessments" });
                 res.json(docJson);
             })
             .then(() => res.sendStatus(200))
@@ -75,7 +75,7 @@ router.put("/:id", (req, res) => {
                 console.error(err);
                 res.status(422).send({ message: "Error with request" })
             });
-    } else return res.status(401).send({ message: "Not authorized to update DOCUMENTs"});
+    } else return res.status(403).send({ message: "Not authorized to update DOCUMENTs"});
 });
 
 // delete DOCUMENT by id, with SuperAdmin ONLY permission
@@ -91,7 +91,7 @@ router.delete("/:id", (req, res) => {
                 console.error(err);
               res.status(422).send({ message: "Error with request" })
         });
-    } else return res.status(401).send({ message: "Not authorized to delete DOCUMENTs"});
+    } else return res.status(403).send({ message: "Not authorized to delete DOCUMENTs"});
 });
 
 

@@ -6,6 +6,12 @@ router.use("/assess", require("./behavioralAssessmentController"));
 router.use("/document", require("./documentController"));
 router.use("/medi-status", require("./mediStatusController"));
 
+router.use((req, res, next) => {
+    console.log(req);
+    console.log("hello from me too")
+    next();
+})
+
 // show all DOGS, with correct ROLE permission
 router.get("/", (req, res) => {
     const permissionAny = ac.can(req.roles).readAny("Dog");
@@ -81,15 +87,16 @@ router.get("/:id", (req, res) => {
     } else return res.status(403).send({ message: "Not authorized to view dogs" });
 });
 
-// TODO: create new DOG, with correct ROLE permission
+// create new DOG, with correct ROLE permission
 
 router.post("/", (req, res) => {
     // TODO: createOwn dog permission for owner surrender
     // Check for permission to create dog
     const permissionAny = ac.can(req.roles).createAny("Dog");
+    console.log("Hello");
     if (permissionAny.granted) {
-        db.Dog.create(permissionAny.filter(req.body))
-            // TODO: logic for origin and currentlywith
+        db.Dog.create(permissionAny.filter(req.body), { include: { model: db.ExtContact, as: "origin" } })
+            // currentlyWith always starts null
             .then(dog => res.status(200).send({ id: dog.id }))
             .catch(err => {
                 console.error(err);
@@ -101,21 +108,40 @@ router.post("/", (req, res) => {
 // TODO: update Own or Any DOG by id, with correct ROLE permission
 
 router.put("/:id", (req, res) => {
-
+    const permissionOwn = ac.can(req.roles).updateOwn("Dog");
+    const permissionAny = ac.can(req.roles).updateAny("Dog");
+    if (permissionOwn.granted || permissionAny.granted) {
+        db.Dog.findByPk(req.params.id)
+            .then(dog => {
+                let updates;
+                if (dog.currentlyWithId === req.userId) updates = permissionOwn.filter(req.body);
+                else if (permissionAny.granted) updates = permissionAny.filter(req.body);
+                else return res.status(403).send({ message: "Not authorized to update this dog" });
+                const promises = [dog, updates];
+                if (updates.name && updates.name !== dog.name) promises[2] = dog.createDogAlias({ name: dog.name });
+                return Promise.all(promises);
+            })
+            .then(([dog, updates, alias]) => dog.update(updates))
+            .then(() => res.sendStatus(200))
+            .catch(err => {
+                console.error(err);
+                res.status(500).send({ message: "Internal server error" });
+            });
+    } else res.status(403).send({ message: "Not authorized to update dogs" });
 });
-
-// TODO: rename Own or Any DOG by id, update AliasTable with correct ROLE permission
-
-router.put("rename/:id", (req, res) => {
-    //TODO: first findbyPK for that dog, then dog.name gets inserted into the dog_alias table, then update dog.name by calling dog.update and passing new object with name key
-
-});
-
 
 // TODO: delete DOG by id, with SuperAdmin ONLY permission
 
 router.delete("/archive/:id", (req, res) => {
-
+    const permissionAny = ac.can(req.roles).deleteAny("Dog");
+    if (permissionAny.granted) db.findByPk(req.params.id)
+        .then(dog => dog.destroy())
+        .then(() => res.status(200).send({ message: "Successfully archived" }))
+        .catch(err => {
+            console.error(err);
+            res.status(500).send({ message: "Internal server error" });
+        });
+    else return res.status(403).send({ message: "Not authorized to archive dogs" });
 });
 
 
