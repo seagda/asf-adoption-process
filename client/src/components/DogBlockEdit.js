@@ -63,12 +63,18 @@ const useStyles = makeStyles(theme => ({
     },
     formControl: {
         margin: theme.spacing(1),
-        minWidth: 175,
+        minWidth: 300,
         // fullWidth: true
     },
     selectEmpty: {
         marginTop: theme.spacing(2),
         labelWidth: 10
+    },
+    largeTextfield: {
+        minWidth: "60em",
+        [theme.breakpoints.down("sm")]:{
+            minWidth: "20em"
+        }
     }
 }))
 
@@ -92,7 +98,7 @@ export default function ProfileForm(){
 
 
     const [isPurebredData, setIsPurebredData] = useState({
-        isPurebred: null
+        isPurebred: false
     });
     const handlePurebredChange = (event) => {
       const {name, value} = event.target
@@ -107,7 +113,7 @@ export default function ProfileForm(){
     });
     const handleBlockedChange = (event) => {
       const {name, value} = event.target
-      setIsPurebredData({
+      setIsBlockedData({
           ...isBlockedData,
           [name]: value
       })
@@ -155,6 +161,9 @@ export default function ProfileForm(){
             })
             setIsBlockedData({
                 blocked: false
+            })
+            setSizedata({
+                size: ""
             })
             window.location = "/My-Dogs"
         }).catch(err=>{
@@ -248,19 +257,19 @@ export default function ProfileForm(){
             <Grid item style={{marginTop: "1em"}}>
                 <div>
                     <FormControl variant="outlined" className={classes.formControl}>
-                    <InputLabel id="isPurebred">Size</InputLabel>
+                    <InputLabel id="size">Size</InputLabel>
                     <Select
-                    labelId="isPurebred"
-                    id="isPurebred"
+                    labelId="size"
+                    id="size"
                     onChange={handleSizeChange}
                     value={sizeData.size}
-                    name="isPurebred"
-                    label="Select Status"
+                    name="size"
+                    label="Size"
                     >
                     <MenuItem value="mini">Mini</MenuItem>
                     <MenuItem value="small">Small</MenuItem>
                     <MenuItem value="medium">Medium</MenuItem>
-                    <MenuItem value="false">Large</MenuItem>
+                    <MenuItem value="large">Large</MenuItem>
                     </Select>
                     </FormControl>
 
@@ -337,8 +346,8 @@ export default function ProfileForm(){
             <Grid item style={{marginTop: "1em"}}>
                 <SingleSelect title="Has Medical Issues"/>
             </Grid> */}
-            <Grid item style={{marginTop: "1em"}}>
-                <TextField label="Medical Details" style={{minWidth: "60em"}} rows={6} multiline variant="outlined" onChange={createDogInputChange} value={dogIntakeData.medicalIssues} name="medicalIssues"/>
+            <Grid item container style={{marginTop: "1em"}} justify="center">
+                <TextField className={classes.largeTextfield} label="Medical Details" rows={6} multiline variant="outlined" onChange={createDogInputChange} value={dogIntakeData.medicalIssues} name="medicalIssues"/>
             </Grid>
         </Grid>
         <Grid container>
