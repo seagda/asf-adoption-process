@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes, Model) => {
     class Dog extends Model {
-        getLocation() {
+        getAddress() {
             if (this.currentlyWithId) {
                 return this.getCurrentlyWith({ include: "Address" }).then(currentlyWith => currentlyWith.Address);
             }
