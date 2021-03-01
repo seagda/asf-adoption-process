@@ -88,7 +88,7 @@ router.post("/", (req, res) => {
     // Check for permission to create dog
     const permissionAny = ac.can(req.roles).createAny("Dog");
     if (permissionAny.granted) {
-        db.Dog.create(permissionAny.filter(req.body), { include: { model: db.ExtContact, as: "origin" } })
+        db.Dog.create(permissionAny.filter(req.body), { include: { model: db.ExtContact, as: "origin", include: db.Address } })
             // currentlyWith always starts null
             .then(dog => res.status(200).send({ id: dog.id }))
             .catch(err => {
