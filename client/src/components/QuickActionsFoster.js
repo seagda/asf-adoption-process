@@ -23,13 +23,13 @@ export default function QuickActionsFoster(){
     return (
         <Grid container justify="space-evenly" style={{marginTop: "1em"}}>
             <Grid item>
-                <ApplyButton toLink="/application" buttonText="Add Behavior Assessment"/>
+                <ApplyButton toLink="/createdog" buttonText="Add Behavior Assessment"/>
             </Grid>
             <Grid item>
-                <ApplyButton toLink="/application" buttonText="Edit My Profile and Capacity"/>
+                <ApplyButton toLink="/editprofile" buttonText="Edit My Profile and Capacity"/>
             </Grid>
             <Grid item>
-                <ApplyButton toLink="/application" buttonText="ASF Team Directory"/>
+                <ApplyButton toLink="/Manage-ASF-Users" buttonText="ASF Team Directory"/>
             </Grid>
         </Grid>
     )

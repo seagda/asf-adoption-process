@@ -41,22 +41,22 @@ export default function ProfileBlock(props){
             </Grid>
             <Grid item className={classes.form}>
                 <Grid item container className={classes.formItem}>
-                    <Typography>Name: </Typography>
+                    <Typography>Name: Betsy Best</Typography>
                 </Grid>
                 <Grid item container className={classes.formItem}>
-                     <Typography>Phone: </Typography>
+                     <Typography>Phone: 805-345-2781</Typography>
                 </Grid>
                 <Grid item container className={classes.formItem}>
-                     <Typography>Email: </Typography>
+                     <Typography>Email: bestbets@gmail.com</Typography>
                 </Grid>
                 <Grid item container className={classes.formItem}>
-                    <Typography>City: </Typography>
+                    <Typography>City: Camarillo</Typography>
                 </Grid>
                 <Grid item container className={classes.formItem}>
-                     <Typography>State: </Typography>
+                     <Typography>State: CA</Typography>
                  </Grid>
                 <Grid item container className={classes.formItem}>
-                     <Typography>About Me: </Typography>
+                     <Typography>About Me: Passionate about animal rescue!</Typography>
                 </Grid>
             </Grid>
         </Grid>
