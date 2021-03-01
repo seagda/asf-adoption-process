@@ -77,4 +77,20 @@ router.delete("/:id", (req, res) => {
     } else return res.status(403).send({ message: "Not authorized to delete an AppResponse"});
 });
 
+// Create alerts for AppResponses
+function generateStatusAlerts(appResp) {
+    appResp.getRegion().then(Region => {
+        const or = [];
+
+    //TODO: Add Alert for APP RECEIVED
+    //TODO: Add Alert for BACKGROUND COMPLETE
+    //TODO: Add Alert for REF COMPLETE
+    //TODO: Add Alert for APPROVED
+    //TODO: Add Alert for AUTO REJECTED
+    //TODO: Add Alert for REJECTED
+
+    }).then(([users, AppStatus]) => users.forEach(user=> user.createAlert({message: `${dog.name} is ${AppStatus.name}`, aboutDogId:dog.id })))
+      .catch(console.error);
+};
+
 module.exports = router;
