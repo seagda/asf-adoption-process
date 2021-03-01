@@ -96,7 +96,7 @@ export default function Login(){
                 email: "",
                 password: ""
             })
-            localStorage.setItem("accessToken", res.data.accessToken)
+            localStorage.setItem("x-access-token", res.data.accessToken)
             // API.getCurrentUser().then(res =>{
             //     console.log(res.data)
             //     setCurrentUser(res.data.user)

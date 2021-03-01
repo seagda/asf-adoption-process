@@ -9,7 +9,7 @@ const API = {
         return axios.post(`/auth/signup`, userData)
     },
     createDog: function(dogData){
-        return axios.post(`/api/dog`, dogData)
+        return axios.post(`/api/dog/`, dogData, {headers: {"x-access-token": localStorage.getItem("x-access-token")}})
     }
 }
 

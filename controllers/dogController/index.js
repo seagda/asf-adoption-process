@@ -6,6 +6,12 @@ router.use("/assess", require("./behavioralAssessmentController"));
 router.use("/document", require("./documentController"));
 router.use("/medi-status", require("./mediStatusController"));
 
+router.use((req, res, next) => {
+    console.log(req);
+    console.log("hello from me too")
+    next();
+})
+
 // show all DOGS, with correct ROLE permission
 router.get("/", (req, res) => {
     const permissionAny = ac.can(req.roles).readAny("Dog");
@@ -87,6 +93,7 @@ router.post("/", (req, res) => {
     // TODO: createOwn dog permission for owner surrender
     // Check for permission to create dog
     const permissionAny = ac.can(req.roles).createAny("Dog");
+    console.log("Hello");
     if (permissionAny.granted) {
         db.Dog.create(permissionAny.filter(req.body), { include: { model: db.ExtContact, as: "origin" } })
             // currentlyWith always starts null

@@ -126,6 +126,9 @@ export default function ProfileForm(){
         })
     }
 
+  
+    
+
     const handleDogIntakeFormSubmit = event =>{
         event.preventDefault();
         API.createDog(dogIntakeData).then(res =>{
@@ -145,6 +148,7 @@ export default function ProfileForm(){
                 // blocked: false
             })
         }).catch(err=>{
+            console.error(err)
             alert("Create dog failed")
         })
     }
@@ -327,10 +331,10 @@ export default function ProfileForm(){
                     <Grid item container className={classes.formItem}>
                         <TextField variant="outlined" label="Name" onChange={createDogInputChange} value={dogIntakeData.name} name="name"/>
                     </Grid>
-                    <Grid item container className={classes.formItem} direction="column">
+                    {/* <Grid item container className={classes.formItem} direction="column">
                         <InputLabel id="birthday">Date of birth</InputLabel>
                         <TextField type="date" variant="outlined" labelId="birthday" onChange={createDogInputChange} value={dogIntakeData.dob} name="dob"/>
-                    </Grid>
+                    </Grid> */}
                     <Grid item container className={classes.formItem}>
                         <TextField variant="outlined" label="Gender" onChange={createDogInputChange} value={dogIntakeData.gender} name="gender"/>
                     </Grid>

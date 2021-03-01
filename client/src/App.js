@@ -44,7 +44,7 @@ export default function App() {
                     <Route path="/createUser"><CreateUser/></Route>
                     <Route path="/addDog"><DogDossier/></Route>
                     <Route path="/dogView"><DogProfileView/></Route>
-                    <Route path="/api/dog"><DogProfileEdit/></Route>
+                    <Route path="/createdog"><DogProfileEdit/></Route>
                     <Route path="/signin"><Login /></Route>
                     <Route path="/signup"><SignUp/></Route>
                 </Switch>
