@@ -1,5 +1,5 @@
 module.exports = ac => {
-    ac.grant("adopter").extend("user")
+    ac.grant("user").grant("adopter").extend("user")
         .updateOwn("Dog", ["*", "!DogStatus", "!DogStatusId"])
         .createOwn("ExtContact")
         .readOwn("ExtContact")

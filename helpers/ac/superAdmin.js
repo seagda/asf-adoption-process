@@ -1,7 +1,8 @@
 module.exports = ac => {
-    ac.grant("superAdmin").extend("regional")
+    ac.grant("regional").grant("superAdmin").extend("regional")
+        .createAny("Alert")
         .readAny("Alert")
-        .updateAny("Alert")  
+        .deleteAny("Alert")
         .createAny("AppQuestion")
         .readAny("AppQuestion")
         .updateAny("AppQuestion")

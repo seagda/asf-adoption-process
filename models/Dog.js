@@ -1,9 +1,36 @@
-module.exports = (sequelize, DataTypes) => {
-    const Dog = sequelize.define("Dog", {
+module.exports = (sequelize, DataTypes, Model) => {
+    class Dog extends Model {
+        getAddress() {
+            if (this.currentlyWithId) return this.getCurrentlyWith({ include: "Address" }).then(currentlyWith => currentlyWith.Address);
+            return this.getOrigin({ include: "Address" }).then(origin => origin.Address);
+        }
+
+        getRegion() {
+            if (this.currentlyWithId) return this.getCurrentlyWith({ include: "Region" }).then(currentlyWith => currentlyWith.Address);
+            return this.getOrigin({ include: "Region" }).then(origin => origin.Region);
+        }
+
+        static associate(db) {
+            Dog.hasOne(db.DogPhoto, { foreignKey: { name: "profilePhoto", allowNull: true } });
+
+            db.ExtContact.hasMany(Dog, { as: "origin", foreignKey: { name: "originId", allowNull: false } });
+            Dog.belongsTo(db.ExtContact, { as: "origin", foreignKey: { name: "originId", allowNull: false } });
+
+            db.User.hasMany(Dog, { as: "currentlyWith", foreignKey: "currentlyWithId" });
+            Dog.belongsTo(db.User, { as: "currentlyWith", foreignKey: "currentlyWithId" });
+
+            db.MicrochipMfg.hasMany(Dog);
+            Dog.belongsTo(db.MicrochipMfg);
+
+            db.DogStatus.hasMany(Dog);
+            Dog.belongsTo(db.DogStatus);
+        }
+    }
+
+    Dog.init({
         asfId: {
             type: DataTypes.INTEGER,
-            unique: true,
-            allowNull: false
+            unique: true
         },
         name: {
             type: DataTypes.STRING,
@@ -24,23 +51,7 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.BOOLEAN,
             defaultValue: false
         }
-    }, { underscored: true, paranoid: true });
-
-    Dog.associate = db => {
-        Dog.hasOne(db.DogPhoto, { foreignKey: { name: "profilePhoto", allowNull: true } });
-
-        db.ExtContact.hasMany(Dog, { as: "origin", foreignKey: { name: "originId", allowNull: true } });
-        Dog.belongsTo(db.ExtContact, { as: "origin", foreignKey: { name: "originId", allowNull: true } });
-
-        db.User.hasMany(Dog, { as: "currentlyWith", foreignKey: "currentlyWithId" });
-        Dog.belongsTo(db.User, { as: "currentlyWith", foreignKey: "currentlyWithId" });
-
-        db.MicrochipMfg.hasMany(Dog);
-        Dog.belongsTo(db.MicrochipMfg);
-
-        db.DogStatus.hasMany(Dog);
-        Dog.belongsTo(db.DogStatus);
-    };
+    }, { sequelize });
 
     return Dog;
 }

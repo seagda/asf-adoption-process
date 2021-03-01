@@ -51,7 +51,7 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.BOOLEAN,
             defaultValue: false
         }
-    }, { underscored: true });
+    });
 
     User.associate = db => {
         User.belongsTo(db.Address);

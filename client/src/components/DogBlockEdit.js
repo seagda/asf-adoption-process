@@ -11,6 +11,7 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import API from "../utils/API";
+import NumberFormat from 'react-number-format';
 
 import Image from "../components/Image";
 import EditButton from "../components/EditButton";
@@ -42,6 +43,11 @@ const useStyles = makeStyles(theme => ({
     },
     formItem: {
         marginBottom: "1em"
+    },
+    numberItem: {
+        marginBottom: "1em",
+        minHeight: 60,
+        maxWidth: 200
     },
     picContainer: {
         [theme.breakpoints.down("xs")]:{
@@ -81,6 +87,12 @@ const useStyles = makeStyles(theme => ({
 export default function ProfileForm(){
     const classes = useStyles();
     const repeat = true;
+
+    document.addEventListener('mousewheel', function(event) {
+        if (window.document.activeElement.type === 'number') {
+          event.preventDefault()
+        }
+      })
 
     const [dogIntakeData, setDogIntakeData] = useState({
         name: "",
@@ -378,7 +390,8 @@ export default function ProfileForm(){
                     <Grid item container className={classes.formItem}>
                         <TextField variant="outlined" label="Gender" onChange={createDogInputChange} value={dogIntakeData.gender} name="gender"/>
                     </Grid>
-                    <Grid item container className={classes.formItem}>
+                    <Grid item container className={classes.numberItem}>
+                        {/* <NumberFormat placeholder="Microchip ID" variant="outlined" onChange={createDogInputChange} value={dogIntakeData.microchipId} name="microchipId"/> */}
                         <TextField type="number" variant="outlined" label="Microchip ID" onChange={createDogInputChange} value={dogIntakeData.microchipId} name="microchipId"/>
                     </Grid>
                     <Grid item container className={classes.formItem}>

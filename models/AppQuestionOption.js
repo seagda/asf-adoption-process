@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false
         }
-    }, { underscored: true, paranoid: true });
+    });
 
     AppQuestionOption.associate = db => {
         db.AppQuestion.hasMany(AppQuestionOption);

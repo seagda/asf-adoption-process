@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.BOOLEAN,
             defaultValue: false
         }
-    }, { underscored: true });
+    }, { paranoid: false });
 
     RolePermission.associate = db => {
         db.Role.hasMany(RolePermission);
