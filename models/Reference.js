@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         dateContacted: DataTypes.DATEONLY,
         notes: DataTypes.STRING
-    }, { underscored: true, paranoid: true });
+    });
 
     Reference.associate = db => {
         Reference.belongsTo(db.User);

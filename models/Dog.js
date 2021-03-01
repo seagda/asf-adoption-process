@@ -51,7 +51,7 @@ module.exports = (sequelize, DataTypes, Model) => {
             type: DataTypes.BOOLEAN,
             defaultValue: false
         }
-    }, { sequelize, underscored: true, paranoid: true });
+    }, { sequelize });
 
     return Dog;
 }

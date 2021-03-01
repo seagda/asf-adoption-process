@@ -2,7 +2,7 @@ module.exports = (sequelize, DataTypes) => {
     const Event = sequelize.define("Event", {
         time: { type: DataTypes.DATE, allowNull: false },
         desc: { type: DataTypes.STRING, allowNull: false }
-    }, { underscored: true, paranoid: true });
+    });
 
     Event.associate = db => {
         Event.belongsTo(db.Address);
