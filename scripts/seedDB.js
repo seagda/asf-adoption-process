@@ -81,7 +81,7 @@ db.Role.bulkCreate(roleSeed).then((data) => {
 
 
 const appStatusSeeds = [{
-    name: "Application Recieved"
+    name: "Application Received"
 }, {
     name: "Background Check Complete"
 }, {
