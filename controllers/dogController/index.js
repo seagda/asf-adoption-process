@@ -11,38 +11,49 @@ router.get("/", (req, res) => {
     const permissionAny = ac.can(req.roles).readAny("Dog");
     const permissionOwn = ac.can(req.roles).readOwn("Dog");
     if (permissionAny.granted) {
-        db.Dog.findAll({ include: [{ model: db.User, include: db.Address }, { model: db.ExtContact, include: db.Address }] }).then(dogs => {
+        db.Dog.findAll({
+            include: [
+                { model: db.User, as: "currentlyWith", include: db.Address },
+                { model: db.ExtContact, as: "origin", include: db.Address }]
+        }).then(dogs => {
             const dogRes = dogs.map(dog => {
                 const dogJson = permissionAny.filter(dog.toJSON());
                 if (dogJson.currentlyWithId) {
-                    dogJson.city = dogJson.User.Address.city;
-                    dogJson.state = dogJson.User.Address.state;
+                    dogJson.city = dogJson.currentlyWith.Address.city;
+                    dogJson.state = dogJson.currentlyWith.Address.state;
                 } else {
-                    dogJson.city = dogJson.ExtContact.Address.city;
-                    dogJson.state = dogJson.ExtContact.Address.state;
+                    dogJson.city = dogJson.origin.Address.city;
+                    dogJson.state = dogJson.origin.Address.state;
                 }
-                const { User, ExtContact, ...dogToSend } = dogJson;
+                const { currentlyWith, origin, ...dogToSend } = dogJson;
                 return dogToSend;
             });
-            console.log(dogRes);
             res.json(dogRes);
+        }).catch(err => {
+            console.error(err);
+            res.sendStatus(500);
         });
     } else if (permissionOwn.granted) {
-        db.Dog.findAll({ include: [{ model: db.User, where: { id: req.userId }, include: db.Address }, { model: db.ExtContact, include: db.Address }] }).then(dogs => {
+        db.Dog.findAll({
+            include: [{ model: db.User, as: "currentlyWith", where: { id: req.userId }, include: db.Address },
+            { model: db.ExtContact, as: "origin", include: db.Address }]
+        }).then(dogs => {
             const dogRes = dogs.map(dog => {
                 const dogJson = permissionOwn.filter(dog.toJSON());
                 if (dogJson.currentlyWithId) {
-                    dogJson.city = dogJson.User.Address.city;
-                    dogJson.state = dogJson.User.Address.state;
+                    dogJson.city = dogJson.currentlyWith.Address.city;
+                    dogJson.state = dogJson.currentlyWith.Address.state;
                 } else {
-                    dogJson.city = dogJson.ExtContact.Address.city;
-                    dogJson.state = dogJson.ExtContact.Address.state;
+                    dogJson.city = dogJson.origin.Address.city;
+                    dogJson.state = dogJson.origin.Address.state;
                 }
-                const { User, ExtContact, ...dogToSend } = dogJson;
+                const { currentlyWith, origin, ...dogToSend } = dogJson;
                 return dogToSend;
             });
-            console.log(dogRes);
             res.json(dogRes);
+        }).catch(err => {
+            console.error(err);
+            res.sendStatus(500);
         });
 
     } else return res.status(403).send({ message: "Not authorized to view dogs" });
@@ -56,8 +67,8 @@ router.get("/:id", (req, res) => {
     if (permissionOwn.granted || permissionAny.granted) {
         db.Dog.findByPk(req.params.id, {
             include: [
-                { model: db.User, include: db.Address },
-                { model: db.ExtContact, include: db.Address },
+                { model: db.User, as: "currentlyWith", include: db.Address },
+                { model: db.ExtContact, as: "currentlyWith", include: db.Address },
             ],
         }).then(dog => {
             let dogJson;
@@ -68,13 +79,13 @@ router.get("/:id", (req, res) => {
             } else return res.status(403).send({ message: "you can't view this dog" });
 
             if (dogJson.currentlyWithId) {
-                dogJson.city = dogJson.User.Address.city;
-                dogJson.state = dogJson.User.Address.state;
+                dogJson.city = dogJson.currentlyWith.Address.city;
+                dogJson.state = dogJson.currentlyWith.Address.state;
             } else {
-                dogJson.city = dogJson.ExtContact.Address.city;
-                dogJson.state = dogJson.ExtContact.Address.state;
+                dogJson.city = dogJson.origin.Address.city;
+                dogJson.state = dogJson.origin.Address.state;
             }
-            const { User, ExtContact, ...dogToSend } = dogJson;
+            const { currentlyWith, origin, ...dogToSend } = dogJson;
             res.json(dogToSend);
         });
 
