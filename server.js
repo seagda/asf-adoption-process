@@ -32,4 +32,4 @@ if (env === "production") {
     app.get("/*", (req, res) => res.sendFile(path.join(__dirname, "./client/build/index.html")));
 }
 
-db.sequelize.sync({ force: process.env.FORCE_SYNC }).then(() => app.listen(PORT, () => console.log(`API Server now listening on PORT ${PORT}`))); 
+db.sequelize.sync().then(() => app.listen(PORT, () => console.log(`API Server now listening on PORT ${PORT}`))); 
