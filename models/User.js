@@ -1,8 +1,13 @@
 module.exports = (sequelize, DataTypes, Model) => {
     class User extends Model {
-        // get dogs user has adopted
-        getAdopted() {
-            return this.getCurrentlyWith({ include: sequelize.models.DogStatus, where: { "$DogStatus.name$": "Adopted" } });
+        // get dogs by status
+        getDogsByStatus(DogStatus) {
+            return this.getCurrentlyWith({ include: sequelize.models.DogStatus, where: { "$DogStatus.name$": DogStatus } });
+        }
+
+        // get dogs by status
+        getDogsByStatusId(DogStatusId) {
+            return this.getCurrentlyWith({ where: { statusId: DogStatusId } });
         }
 
         getAvailableCapacity() {
