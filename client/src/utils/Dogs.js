@@ -33,20 +33,20 @@ export default {getDogs() {
         "dossierLink": "link",
         "assessmentLink": "link"
       },
-      {
-        "id": 5,
-        "name": "Courage",
-        "image": "https://place-puppy.com/300x300",
-        "dossierLink": "link",
-        "assessmentLink": "link"
-      },
-      {
-        "id": 6,
-        "name": "Doug Funnie",
-        "image": "https://place-puppy.com/300x300",
-        "dossierLink": "link",
-        "assessmentLink": "link"
-      }
+      // {
+      //   "id": 5,
+      //   "name": "Courage",
+      //   "image": "https://place-puppy.com/300x300",
+      //   "dossierLink": "link",
+      //   "assessmentLink": "link"
+      // },
+      // {
+      //   "id": 6,
+      //   "name": "Doug Funnie",
+      //   "image": "https://place-puppy.com/300x300",
+      //   "dossierLink": "link",
+      //   "assessmentLink": "link"
+      // }
   ])},100)
   })
   

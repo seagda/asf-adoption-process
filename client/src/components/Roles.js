@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Roles(){
     const classes = useStyles();
-    const roles = [{role: "Adopter"}, {role: "Foster"}]
+    const roles = [{role: "Super Admin"}]
 
     return(
         <Grid item container className={classes.itemContainer}>

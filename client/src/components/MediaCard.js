@@ -9,11 +9,13 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles(theme => ({
-  marginLeft: theme.spacing(20),
-  marginTop: theme.spacing(2),
-  marginTop: theme.spacing(4),
+  margin: theme.spacing(20),
+  
   root: {
-    maxWidth: "80%",
+    maxWidth: "90%",
+    minWidth: "70%",
+    marginTop: theme.spacing(2),
+    flex: "wrap"
   }
 }));
 

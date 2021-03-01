@@ -78,7 +78,9 @@ const useStyles = makeStyles((theme) => ({
     },
     link: {
         color: theme.palette.common.second,
-        textDecoration: "none"
+        textDecoration: "none",
+        fontWeight: 900,
+        fontSize: "1.15em"
     }
 }));
 
@@ -99,8 +101,8 @@ function ResponsiveDrawer(props) {
                 <img src={logo} className={classes.logo}/>
             </NavLink>
             <List>
-                {['My-Profile', 'My-Dogs', 'My-Settings', 'Logout'].map((text, index) => (
-                    <ListItem button key={text} className={classes.listItem}>
+                {['My-Dashboard', 'My-Profile', 'My-Settings', 'Logout'].map((text, index) => (
+                    <ListItem button key={text} className={classes.listItem} onClick={() => setMobileOpen(false)}>
                         <ListItemIcon className={classes.listItem}>{index === 0 ? <PersonIcon /> : index === 1 ? <PetsIcon /> : index === 2 ? <SettingsIcon /> : <ExitToAppIcon />}</ListItemIcon>
                         <NavLink className={classes.link} to={`/${text}`}>{`${text.replace("-", " ")}`}</NavLink>
                     </ListItem>
@@ -108,8 +110,8 @@ function ResponsiveDrawer(props) {
             </List>
             <Divider />
             <List>
-                {['Dog-Dossiers', 'Manage-ASF-Users', 'ASF-Settings'].map((text, index) => (
-                    <ListItem button key={text} className={classes.listItem}>
+                {['Dog-Dossiers', 'Manage-ASF-Users', 'ASF-Admin-Settings'].map((text, index) => (
+                    <ListItem button key={text} className={classes.listItem} onClick={() => setMobileOpen(false)}>
                         <ListItemIcon className={classes.listItem}>{index === 0 ? <DescriptionIcon /> : index === 1 ? <SupervisorAccountIcon /> : <PermDataSettingIcon />}</ListItemIcon>
                         <NavLink className={classes.link} to={`/${text}`}>{`${text.replace("-", " ")}`}</NavLink>
                     </ListItem>
@@ -134,9 +136,7 @@ function ResponsiveDrawer(props) {
                     >
                         <MenuIcon />
                     </IconButton>
-                    {/* <Typography variant="h6" noWrap>
-                        Responsive drawer
-                    </Typography> */}
+                    <Typography variant="h6" noWrap></Typography>
                 </Toolbar>
             </AppBar>
             <nav className={classes.drawer} aria-label="mailbox folders">

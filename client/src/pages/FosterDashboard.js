@@ -29,11 +29,11 @@ const useStyles=makeStyles(theme => ({
             marginLeft: 5
         }
     }, 
-    ListContainer: {
-        flexWrap: "wrap"
-    },
-    MediaCard: {
-        flexWrap: "wrap"
+    cardContainer: {
+        flexGrow: '1', 
+        padding: theme.spacing(3),
+        flexWrap: "wrap",
+        direction: "row"
     }
 }))
 
@@ -97,24 +97,32 @@ export default function FosterDashboard(){
         <Grid container className={classes.mainContainer} justify="space-evenly" spacing={4}>
             <Grid item xs={12}>
                 <Typography variant="h3" component="h4" gutterBottom align="center" color="primary">
-                    Foster Dashboard
+                    My Dashboard
                     <Divider />
                 </Typography>
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12} s={10}>
+                <Typography variant="h5" component="h6" gutterBottom color="primary">
+                    Quick Actions
+                    <Divider />
+                </Typography>
                 <QuickActionsFoster/>
             </Grid>
-            <Grid item xs={12} container className={classes.cardContainer}>
+            <Grid item xs={12} s={10}>
+                <Typography variant="h5" component="h6" gutterBottom color="primary">
+                    My Dogs
+                    <Divider />
+                </Typography>
             {dogs.length ? (
-                <ListContainer>
-                    {dogs.map(dog =>{
-                        return (
-                            <Grid item xs={12} s={12} m={6} lg={3}>
-                                <MediaCard name={dog.name} image={dog.image} dossierLink={dog.dossierLink} assessmentLink={dog.assessmentLink} />
-                            </Grid>
-                        )
-                    })}    
-                </ListContainer>
+                <Grid container className={classes.cardContainer} justify="center">
+                        {dogs.map(dog =>{
+                            return (
+                                <Grid item xs={10} s={10} m={6} lg={3}>
+                                    <MediaCard name={dog.name} image={dog.image} dossierLink={dog.dossierLink} assessmentLink={dog.assessmentLink} />
+                                </Grid>
+                            )
+                        })}    
+                </Grid>
                 ):(<p>Currently no data to display</p>)}
             </Grid>
             <Grid item xs={12} s={12} m={6} lg={6} style={{marginTop: "2em"}}>

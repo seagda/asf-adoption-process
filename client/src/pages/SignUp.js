@@ -58,12 +58,6 @@ const useStyles=makeStyles(theme => ({
 export default function SignUp(){
     const classes = useStyles();
 
-    // const [firstName, setFirstName] = useState();
-    // const [lastName, setlastName] = useState();
-    // const [email, setEmail] = useState();
-    // const [password, setPassword] = useState();
-    // const [phone, setPhone] = useState();
-
     const [signupFormData, setSignupFormData] = useState({
         firstName: "",
         lastName: "",
@@ -71,11 +65,6 @@ export default function SignUp(){
         password: "",
         phone: 1
     })
-
-    // const handleSubmit = e => {
-    //     e.preventDefault();
-    //     console.log(firstName, lastName, email, password, phone)
-    // }
 
     const signupInputChange = event =>{
         const {name, value} = event.target
