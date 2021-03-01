@@ -79,7 +79,7 @@ export default function DogDossiersAll() {
                 </Grid>
                 <Grid item xs={4} s={4} m={8} lg={10}/>
                 <Grid item xs={8} s={8} m={4} lg={2}>
-                    <AddButton buttonText="Add Dog" toLink="/addDog" />
+                    <AddButton buttonText="Add Dog" toLink="/createdog" />
                 </Grid>
                 <Grid item xs={12}>
                      <form noValidate autoComplete="off">

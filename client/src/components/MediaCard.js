@@ -13,22 +13,21 @@ const useStyles = makeStyles(theme => ({
   marginTop: theme.spacing(2),
   marginTop: theme.spacing(4),
   root: {
-    maxWidth: "30%",
-    display:"flex"
-  },
-  media: {
-    height: "300",
-  },
+    maxWidth: "80%",
+  }
 }));
 
 export default function MediaCard(props) {
   const classes = useStyles();
 
   return (
-    <Card className={classes.root} /* xs={12} lg={3} */>
+    <Card className={classes.root}>
       <CardActionArea>
         <CardMedia
-          // className={classes.media}
+          className={classes.media}
+          component="img"
+          alt={props.name}
+          height="100%"
           image={props.image}
           title={props.name}
         />

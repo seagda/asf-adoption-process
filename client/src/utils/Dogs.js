@@ -15,35 +15,35 @@ export default {getDogs() {
       {
         "id": 2,
         "name": "Sweet Dog",
-        "image": "https://dog.ceo/api/breeds/image/random",
+        "image": "https://place-puppy.com/300x300",
         "dossierLink": "/dogView",
         "assessmentLink": "/dogEdit"
       },
       {
         "id": 3,
         "name": "Cody",
-        "image": "https://dog.ceo/api/breeds/image/random",
+        "image": "https://place-puppy.com/300x300",
         "dossierLink": "link",
         "assessmentLink": "link"
       },
       {
         "id": 4,
         "name": "Dexter",
-        "image": "https://dog.ceo/api/breeds/image/random",
+        "image": "https://place-puppy.com/300x300",
         "dossierLink": "link",
         "assessmentLink": "link"
       },
       {
         "id": 5,
         "name": "Courage",
-        "image": "https://dog.ceo/api/breeds/image/random",
+        "image": "https://place-puppy.com/300x300",
         "dossierLink": "link",
         "assessmentLink": "link"
       },
       {
         "id": 6,
         "name": "Doug Funnie",
-        "image": "https://dog.ceo/api/breeds/image/random",
+        "image": "https://place-puppy.com/300x300",
         "dossierLink": "link",
         "assessmentLink": "link"
       }

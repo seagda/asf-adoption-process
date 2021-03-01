@@ -10,6 +10,7 @@ import BasicList from '../components/BasicList';
 import MediaCard from '../components/MediaCard';
 import DogAPI from '../utils/Dogs';
 import AlertAPI from '../utils/Alerts';
+import TeamAPI from '../utils/Team';
 import ListContainer from '../components/ListContainer';
 
 const useStyles=makeStyles(theme => ({
@@ -27,6 +28,12 @@ const useStyles=makeStyles(theme => ({
             spacing: theme.spacing(2),
             marginLeft: 5
         }
+    }, 
+    ListContainer: {
+        flexWrap: "wrap"
+    },
+    MediaCard: {
+        flexWrap: "wrap"
     }
 }))
 
@@ -34,40 +41,57 @@ export default function FosterDashboard(){
     const classes = useStyles();
 
     // api call for employee data to display
-const [dogs, setDogState] = useState([])
+    const [dogs, setDogState] = useState([])
 
-useEffect(() => {
-  loadDogs()
-}, [])
+    useEffect(() => {
+    loadDogs()
+    }, [])
 
-function loadDogs() {
-   
-  DogAPI.getDogs()
-    .then(res => {
-      setDogState(res)
-      console.log(res)
-    }
-    )
-    .catch(err => console.log(err));
-};
+    function loadDogs() {
+    
+    DogAPI.getDogs()
+        .then(res => {
+        setDogState(res)
+        console.log(res)
+        }
+        )
+        .catch(err => console.log(err));
+    };
 
-  // api call for alert data to display
-  const [alerts, setAlertState] = useState([])
+    // api call for alert data to display
+    const [alerts, setAlertState] = useState([])
 
-  useEffect(() => {
-      loadAlerts()
-  }, [])
+    useEffect(() => {
+        loadAlerts()
+    }, [])
 
-  function loadAlerts() {
-      
-  AlertAPI.getAlerts()
-      .then(res => {
-      setAlertState(res)
-      console.log(res)
-      }
-      )
-      .catch(err => console.log(err));
-  };
+    function loadAlerts() {
+        
+    AlertAPI.getAlerts()
+        .then(res => {
+        setAlertState(res)
+        console.log(res)
+        }
+        )
+        .catch(err => console.log(err));
+    };
+
+  const [team, setTeamState] = useState([])
+
+    useEffect(() => {
+        loadTeam()
+    }, [])
+
+    function loadTeam() {
+        
+        TeamAPI.getTeam()
+        .then(res => {
+            setTeamState(res)
+            console.log(res)
+        }
+        )
+        .catch(err => console.log(err));
+    };
 
     return(
         <Grid container className={classes.mainContainer} justify="space-evenly" spacing={4}>
@@ -80,30 +104,48 @@ function loadDogs() {
             <Grid item xs={12}>
                 <QuickActionsFoster/>
             </Grid>
-            <Grid item xs={12} >
+            <Grid item xs={12} container className={classes.cardContainer}>
             {dogs.length ? (
                 <ListContainer>
                     {dogs.map(dog =>{
                         return (
-                            <MediaCard xs={12} lg={3} name={dog.name} image={dog.image} dossierLink={dog.dossierLink} assessmentLink={dog.assessmentLink} />
+                            <Grid item xs={12} s={12} m={6} lg={3}>
+                                <MediaCard name={dog.name} image={dog.image} dossierLink={dog.dossierLink} assessmentLink={dog.assessmentLink} />
+                            </Grid>
                         )
                     })}    
                 </ListContainer>
                 ):(<p>Currently no data to display</p>)}
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={12} s={12} m={6} lg={6} style={{marginTop: "2em"}}>
                  <Typography variant="h5" component="h4" gutterBottom align="center" color="primary">
-                    Alerts
+                    Approved ASF Adopters
                     <Divider />
                 </Typography>
-                <BasicList/>
+                {team.length ? (
+                <ListContainer>
+                    {team.map(teamMember =>{
+                        return (
+                            <AvatarList name={teamMember.name} image={teamMember.image} email={teamMember.email}/>
+                        )
+                    })}    
+                </ListContainer>
+                ):(<p>Currently no data to display</p>)}
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={12} s={12} m={6} lg={6} style={{marginTop: "2em"}}>
                 <Typography variant="h5" component="h4" gutterBottom align="center" color="primary">
-                    Approved Adopters
+                    My Alerts
                     <Divider />
                 </Typography>
-                <AvatarList />
+                {alerts.length ? (
+                <ListContainer>
+                    {alerts.map(alert =>{
+                        return (
+                            <BasicList name={alert.name} image={alert.image} dueDate={alert.dueDate} dogName={alert.dogName}/>
+                        )
+                    })}    
+                </ListContainer>
+                ):(<p>Currently no data to display</p>)}
             </Grid>
         </Grid>
     )

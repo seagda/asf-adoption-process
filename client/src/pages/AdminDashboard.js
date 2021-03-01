@@ -35,22 +35,22 @@ const useStyles=makeStyles(theme => ({
 export default function AdminDashboard(){
     const classes = useStyles();
 // api call for employee data to display
-const [team, setTeamState] = useState([])
+    const [team, setTeamState] = useState([])
 
-  useEffect(() => {
-    loadTeam()
-  }, [])
+    useEffect(() => {
+        loadTeam()
+    }, [])
 
-  function loadTeam() {
-     
-    TeamAPI.getTeam()
-      .then(res => {
-        setTeamState(res)
-        console.log(res)
-      }
-      )
-      .catch(err => console.log(err));
-  };
+    function loadTeam() {
+        
+        TeamAPI.getTeam()
+        .then(res => {
+            setTeamState(res)
+            console.log(res)
+        }
+        )
+        .catch(err => console.log(err));
+    };
 
     // api call for alert data to display
     const [alerts, setAlertState] = useState([])
