@@ -9,6 +9,7 @@ const roleSeed = [
     { name: "placement" },
     { name: "regional" },
     { name: "superAdmin" },
+    { name: "admin" },
     { name: "transporter" },
     { name: "volunteer" }
 ];
@@ -56,6 +57,12 @@ const userSeed = [
         lastName: "SuperAdmin",
         email: "testsuperadmin@asf.com",
         Auth: { password: "$2b$10$uAQmJIsVslJrbd8e7XS2V.LurYkNygMsmHDPD6Agi9wmN9Gw0HZIe" }
+    },
+    {
+        firstName: "Test",
+        lastName: "Admin",
+        email: "testadmin@asf.com",
+        Auth: { password: "$2b$10$uAQmJIsVslJrbd8e7XS2V.LurYkNygMsmHDPD6Agi9wmN9Gw0HZIe" }
     }
 
 ];
@@ -73,6 +80,7 @@ db.Role.bulkCreate(roleSeed).then((data) => {
     usersData[4].addRoles([1, 5]);
     usersData[5].addRoles([1, 6]);
     usersData[6].addRoles([1, 7]);
+    usersData[7].addRoles([1, 8]);
     console.log(usersData.length + " records inserted!");
 }).catch((err) => {
     console.error(err);
@@ -80,29 +88,23 @@ db.Role.bulkCreate(roleSeed).then((data) => {
 });
 
 
-const appStatusSeeds = [{
-    name: "Application Received"
-}, {
-    name: "Background Check Complete"
-}, {
-    name: "Reference Check Complete"
-}, {
-    name: "Approved"
-}, {
-    name: "Auto Rejected"
-}];
+const appStatusSeeds = [
+   { name: "Application Received"}, 
+   { name: "Background Check Complete"}, 
+   { name: "Reference Check Complete"}, 
+   { name: "Approved" }, 
+   { name: "Auto Rejected" },
+   { name: "Rejected" }
+];
 
-const dogStatusSeeds = [{
-    name: "Pending Intake"
-}, {
-    name: "Foster Ready"
-}, {
-    name: "In Foster"
-}, {
-    name: "Adoption Ready"
-}, {
-    name: "Adopted"
-}];
+const dogStatusSeeds = [
+   { name: "Pending Intake" }, 
+   { name: "Foster Ready" }, 
+   { name: "In Foster" }, 
+   { name: "Almost Adoption Ready" }, 
+   { name: "Adoption Ready" }, 
+   { name: "Adopted" }
+];
 
 db.AppStatus.bulkCreate(appStatusSeeds).then(console.log).catch(console.error);
 db.DogStatus.bulkCreate(dogStatusSeeds).then(console.log).catch(console.error);
