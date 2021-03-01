@@ -76,14 +76,6 @@ export default function ProfileForm(){
     const classes = useStyles();
     const repeat = true;
 
-    // const [status, setStatus] = useState('');
-    // const [size, setSize] = useState();
-    // const handleStatusChange = (event) => {
-    //   setStatus(event.target.value);
-    //   setSize(event.target.value);
-    //   console.log(size)
-    // };
-
     const [dogIntakeData, setDogIntakeData] = useState({
         name: "",
         dob: null,
@@ -96,12 +88,11 @@ export default function ProfileForm(){
         weight: 1,
         coat: "",
         asfId: 1
-        // blocked: false
     })
 
 
     const [isPurebredData, setIsPurebredData] = useState({
-        isPurebred: false
+        isPurebred: null
     });
     const handlePurebredChange = (event) => {
       const {name, value} = event.target
@@ -118,6 +109,17 @@ export default function ProfileForm(){
       const {name, value} = event.target
       setIsPurebredData({
           ...isBlockedData,
+          [name]: value
+      })
+    };
+
+    const [sizeData, setSizedata] = useState({
+        size: ""
+    });
+    const handleSizeChange = (event) => {
+      const {name, value} = event.target
+      setSizedata({
+          ...sizeData,
           [name]: value
       })
     };
@@ -147,7 +149,6 @@ export default function ProfileForm(){
                 weight: 1,
                 coat: "",
                 asfId: 1
-                // blocked: false
             })
             setIsPurebredData({
                 isPurebred: false
@@ -236,13 +237,34 @@ export default function ProfileForm(){
                 </div>
             </Grid>
             <Grid item style={{marginTop: "1em"}}>
-                <TextField variant="outlined" label="Secondary Breed" onChange={createDogInputChange} value={dogIntakeData.secondaryBreed} name="secondaryBreed"/>
+                <TextField className={classes.formControl} variant="outlined" label="Secondary Breed" onChange={createDogInputChange} value={dogIntakeData.secondaryBreed} name="secondaryBreed"/>
             </Grid>
             <Grid item style={{marginTop: "1em"}}>
-                <TextField variant="outlined" label="Coat Color" onChange={createDogInputChange} value={dogIntakeData.coat} name="coat"/>
+                <TextField className={classes.formControl} variant="outlined" label="Coat Color" onChange={createDogInputChange} value={dogIntakeData.coat} name="coat"/>
             </Grid>
             <Grid item style={{marginTop: "1em"}}>
-                <TextField type="number" variant="outlined" label="weight" onChange={createDogInputChange} value={dogIntakeData.weight} name="weight"/>
+                <TextField className={classes.formControl} type="number" variant="outlined" label="weight" onChange={createDogInputChange} value={dogIntakeData.weight} name="weight"/>
+            </Grid>
+            <Grid item style={{marginTop: "1em"}}>
+                <div>
+                    <FormControl variant="outlined" className={classes.formControl}>
+                    <InputLabel id="isPurebred">Size</InputLabel>
+                    <Select
+                    labelId="isPurebred"
+                    id="isPurebred"
+                    onChange={handleSizeChange}
+                    value={sizeData.size}
+                    name="isPurebred"
+                    label="Select Status"
+                    >
+                    <MenuItem value="mini">Mini</MenuItem>
+                    <MenuItem value="small">Small</MenuItem>
+                    <MenuItem value="medium">Medium</MenuItem>
+                    <MenuItem value="false">Large</MenuItem>
+                    </Select>
+                    </FormControl>
+
+                </div>
             </Grid>
         </Grid>
     </Grid>
@@ -258,10 +280,10 @@ export default function ProfileForm(){
         </Grid>
         <Grid container justify="space-evenly">
             <Grid item style={{marginTop: "1em"}}>
-                <TextField type="number" variant="outlined" label="Pull Cost" onChange={createDogInputChange} value={dogIntakeData.pullCost} name="pullCost"/>
+                <TextField className={classes.formControl} type="number" variant="outlined" label="Pull Cost" onChange={createDogInputChange} value={dogIntakeData.pullCost} name="pullCost"/>
             </Grid>
             <Grid item style={{marginTop: "1em"}}>
-                <TextField variant="outlined" label="Behavioral Issues" onChange={createDogInputChange} value={dogIntakeData.behaviorialIssues} name="behaviorialIssues"/>
+                <TextField className={classes.formControl} variant="outlined" label="Behavioral Issues" onChange={createDogInputChange} value={dogIntakeData.behaviorialIssues} name="behaviorialIssues"/>
             </Grid>
             <Grid item style={{marginTop: "1em"}}>
                 <div>
@@ -276,7 +298,7 @@ export default function ProfileForm(){
                     label="Is blocked?"
                     >
                     <MenuItem value="true">Yes</MenuItem>
-                    <MenuItem value={false}>No</MenuItem>
+                    <MenuItem value="false">No</MenuItem>
                     </Select>
                     </FormControl>
                 </div>
@@ -316,7 +338,7 @@ export default function ProfileForm(){
                 <SingleSelect title="Has Medical Issues"/>
             </Grid> */}
             <Grid item style={{marginTop: "1em"}}>
-                <TextField rows={4} multiline variant="outlined" onChange={createDogInputChange} value={dogIntakeData.medicalIssues} name="medicalIssues"/>
+                <TextField label="Medical Details" style={{minWidth: "60em"}} rows={6} multiline variant="outlined" onChange={createDogInputChange} value={dogIntakeData.medicalIssues} name="medicalIssues"/>
             </Grid>
         </Grid>
         <Grid container>
@@ -333,7 +355,7 @@ export default function ProfileForm(){
         <Grid container justify="space-evenly" className={classes.picContainer}>
             <Grid item>
                 <Image alt={"cool dog"} pic={dog} />
-                <EditButton buttonText="Change Photo" toLink="/"/>
+                <EditButton buttonText="Change Photo" toLink=""/>
             </Grid>
             <Grid item>
                 <div className={classes.form}>
@@ -347,27 +369,6 @@ export default function ProfileForm(){
                     <Grid item container className={classes.formItem}>
                         <TextField variant="outlined" label="Gender" onChange={createDogInputChange} value={dogIntakeData.gender} name="gender"/>
                     </Grid>
-                    {/* <Grid item container className={classes.formItem}>
-                    <div>
-                            <FormControl variant="outlined" className={classes.formControl}>
-                            <InputLabel id="size">Size</InputLabel>
-                            <Select
-                            labelId="size"
-                            id="size"
-                            onChange={createDogInputChange}
-                            value={dogIntakeData.size}
-                            name="size"
-                            label="Select Status"
-                            >
-                            <MenuItem value="mini">Mini</MenuItem>
-                            <MenuItem value="small">Small</MenuItem>
-                            <MenuItem value="medium">Medium</MenuItem>
-                            <MenuItem value="large">Large</MenuItem>
-                            </Select>
-                            </FormControl>
-
-                        </div>
-                    </Grid> */}
                     <Grid item container className={classes.formItem}>
                         <TextField type="number" variant="outlined" label="Microchip ID" onChange={createDogInputChange} value={dogIntakeData.microchipId} name="microchipId"/>
                     </Grid>
