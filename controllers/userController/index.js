@@ -11,8 +11,30 @@ router.use("/app-response", require("./appResponseController"));
 router.use("/family", require("./familymemberController"));
 router.use("/reference", require("./referenceController"));
 
-// root get route is own user data
+// get all users
 router.get("/", (req, res) => {
+    const permission = ac.can(req.roles).readAny("User");
+    if (permission.granted) {
+        db.User.findAll({ include: [db.Address, db.Region, db.Role] })
+            .then(users => res.json(permission.filter(users.map(user => ({
+                id: user.id,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                email: user.email,
+                city: user.Address ? user.Address.city : "No Address",
+                state: user.Address ? user.Address.state : "--",
+                regions: user.Regions,
+                roles: user.Roles.map(role => role.name).filter(role => role !== "user")
+            })))))
+            .catch(err => {
+                console.error(err);
+                res.status(500).send({ message: "error getting users from the database" });
+            });
+    } else return res.status(403).send({ message: "not authorized to view all users" });
+});
+
+// get own user data
+router.get("/me", (req, res) => {
     // everyone has this permission but we check to get the filter
     const permission = ac.can(req.roles).readOwn("User");
     if (permission.granted) {
@@ -24,7 +46,7 @@ router.get("/", (req, res) => {
 });
 
 // edit own user data
-router.put("/", (req, res) => {
+router.put("/me", (req, res) => {
     const permission = ac.can(req.roles).updateOwn("User");
     if (permission.granted) {
         db.User.findByPk(req.userId)
