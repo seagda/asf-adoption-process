@@ -3,6 +3,8 @@ module.exports = ac => {
         .createAny("Address")
         .readAny("Address")
         .updateAny("Address")
+        .readAny("AppResponse")
+        .updateAny("AppResponse")
         .createAny("User")
         .readAny("User")
         .readAny("Region")
