@@ -1,5 +1,9 @@
 module.exports = (sequelize, DataTypes, Model) => {
     class User extends Model {
+        getAvailableCapacity() {
+            return sequelize.models.Dog.count({ where: { currentlyWithId: this.id } }).then(count => this.maxCapacity - count);
+        }
+
         static associate(db) {
             User.belongsTo(db.Address);
 
