@@ -30,8 +30,7 @@ module.exports = (sequelize, DataTypes, Model) => {
     Dog.init({
         asfId: {
             type: DataTypes.INTEGER,
-            unique: true,
-            allowNull: false
+            unique: true
         },
         name: {
             type: DataTypes.STRING,
