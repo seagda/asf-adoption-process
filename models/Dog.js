@@ -5,6 +5,11 @@ module.exports = (sequelize, DataTypes, Model) => {
             return this.getOrigin({ include: "Address" }).then(origin => origin.Address);
         }
 
+        getRegion() {
+            if (this.currentlyWithId) return this.getCurrentlyWith({ include: "Region" }).then(currentlyWith => currentlyWith.Address);
+            return this.getOrigin({ include: "Region" }).then(origin => origin.Region);
+        }
+
         static associate(db) {
             Dog.hasOne(db.DogPhoto, { foreignKey: { name: "profilePhoto", allowNull: true } });
 
