@@ -1,5 +1,22 @@
-module.exports = (sequelize, DataTypes) => {
-    const User = sequelize.define("User", {
+module.exports = (sequelize, DataTypes, Model) => {
+    class User extends Model {
+        static associate(db) {
+            User.belongsTo(db.Address);
+
+            User.belongsTo(db.Auth, { foreignKey: { allowNull: false } });
+            db.Auth.hasOne(User, { foreignKey: { allowNull: false } });
+
+            User.belongsToMany(db.Role, { through: "UsersRoles" });
+            db.Role.belongsToMany(User, { through: "UsersRoles" });
+
+            User.belongsToMany(db.Region, { through: "UsersRegions" });
+            db.Region.belongsToMany(User, { through: "UsersRegions" });
+
+            User.hasMany(db.Alert, { foreignKey: { name: "toUserId", allowNull: false } });
+        }
+    }
+
+    User.init({
         email: {
             type: DataTypes.STRING,
             validate: { isEmail: true },
@@ -51,22 +68,7 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.BOOLEAN,
             defaultValue: false
         }
-    });
-
-    User.associate = db => {
-        User.belongsTo(db.Address);
-
-        User.belongsTo(db.Auth, { foreignKey: { allowNull: false } });
-        db.Auth.hasOne(User, { foreignKey: { allowNull: false } });
-
-        User.belongsToMany(db.Role, { through: "UsersRoles" });
-        db.Role.belongsToMany(User, { through: "UsersRoles" });
-
-        User.belongsToMany(db.Region, { through: "UsersRegions" });
-        db.Region.belongsToMany(User, { through: "UsersRegions" });
-
-        User.hasMany(db.Alert, { foreignKey: { name: "toUserId", allowNull: false } });
-    };
+    }, { sequelize });
 
     return User;
 };
