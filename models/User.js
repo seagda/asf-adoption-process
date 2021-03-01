@@ -1,5 +1,10 @@
 module.exports = (sequelize, DataTypes, Model) => {
     class User extends Model {
+        // get dogs user has adopted
+        getAdopted() {
+            return this.getCurrentlyWith({ include: sequelize.models.DogStatus, where: { "$DogStatus.name$": "Adopted" } });
+        }
+
         getAvailableCapacity() {
             return sequelize.models.Dog.count({ where: { currentlyWithId: this.id } }).then(count => this.maxCapacity - count);
         }
