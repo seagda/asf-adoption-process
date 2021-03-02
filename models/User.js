@@ -23,8 +23,11 @@ module.exports = (sequelize, DataTypes, Model) => {
             User.belongsToMany(db.Role, { through: "UsersRoles" });
             db.Role.belongsToMany(User, { through: "UsersRoles" });
 
-            User.belongsToMany(db.Region, { through: "UsersRegions" });
-            db.Region.belongsToMany(User, { through: "UsersRegions" });
+            User.belongsToMany(db.Region, { as: "AssignedRegions", through: "AssignedUsersRegions" });
+            db.Region.belongsToMany(User, { as: "AssignedRegions", through: "AssignedUsersRegions" });
+
+            db.Region.hasMany(User, { as: "ResidesInRegion", foreignKey: "ResidesInRegionId" });
+            User.belongsTo(db.Region, { as: "ResidesInRegion", foreignKey: "ResidesInRegionId" });
 
             User.hasMany(db.Alert, { foreignKey: { name: "toUserId", allowNull: false } });
         }
