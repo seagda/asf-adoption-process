@@ -130,17 +130,32 @@ export default function ProfileForm(){
       })
     };
 
+    const [caresForSeniorsData, setCaresForSeniorsData] = useState({});
+    const handleSeniorsChange = (event) => {
+      const {name, value} = event.target
+      setCaresForSeniorsData({
+          ...caresForSeniorsData,
+          [name]: value
+      })
+    };
+
     const handleUserIntakeFormSubmit = event =>{
         event.preventDefault();
         API.createUser({...userIntakeData,
             ...isActiveData,
             ...isBlockedData,
             ...caresForPuppiesData,
-            ...caresForAdultsData
+            ...caresForAdultsData,
+            ...caresForSeniorsData
         })
         .then(res =>{
             console.log(res.data)
             setUserIntakeData({})
+            setIsActiveData({})
+            setIsBlockedData({})
+            setCaresForPuppiesData({})
+            setCaresForAdultsData({})
+            setCaresForSeniorsData({})
         }).catch(err=>{
             console.error(err.response.data.message)
             alert("Create dog failed")
@@ -320,7 +335,9 @@ export default function ProfileForm(){
                     <Select
                     labelId="seniors"
                     id="seniors"
-                    name="seniors"
+                    onChange={handleSeniorsChange}
+                    value={caresForSeniorsData.seniors}
+                    name="active"
                     label="Seniors?"
                     >
                     <MenuItem value="true">Yes</MenuItem>
