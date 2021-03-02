@@ -94,6 +94,15 @@ export default function ProfileForm(){
         })
     }
 
+    const [isActiveData, setIsActiveData] = useState({});
+    const handleActiveChange = (event) => {
+      const {name, value} = event.target
+      setIsActiveData({
+          ...isActiveData,
+          [name]: value
+      })
+    };
+
     const handleUserIntakeFormSubmit = event =>{
         event.preventDefault();
         API.createUser({...userIntakeData})
@@ -145,6 +154,8 @@ export default function ProfileForm(){
                     <Select
                     labelId="active"
                     id="active"
+                    onChange={handleActiveChange}
+                    value={isActiveData.active}
                     name="active"
                     label="Is active?"
                     >
