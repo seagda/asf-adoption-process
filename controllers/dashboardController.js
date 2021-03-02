@@ -9,12 +9,12 @@ router.get("/", (req, res) => {
     const dashboardPromises = [];
     const permissionAnyDog = ac.can(req.roles).readAny("Dog");
     if (permissionAnyDog.granted) {
-        dashboardPromises[0] = db.Dog.count({ include: db.DogStatus, group: ["DogStatusId"] });
+        dashboardPromises[0] = db.Dog.count({ include: db.DogStatus, group: ["DogStatusId", "DogStatus.name"] });
     }
     Promise.all(dashboardPromises)
         .then(([DogStatusCounts]) => {
             console.log(DogStatusCounts);
-            res.json({DogStatusCounts});
+            res.json({ DogStatusCounts });
         })
         .catch(console.error);
 });
