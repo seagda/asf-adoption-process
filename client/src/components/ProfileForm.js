@@ -112,6 +112,15 @@ export default function ProfileForm(){
       })
     };
 
+    const [caresForPuppiesData, setCaresForPuppiesData] = useState({});
+    const hanldePuppiesChange = (event) => {
+      const {name, value} = event.target
+      setCaresForPuppiesData({
+          ...caresForPuppiesData,
+          [name]: value
+      })
+    };
+
     const handleUserIntakeFormSubmit = event =>{
         event.preventDefault();
         API.createUser({...userIntakeData})
@@ -255,6 +264,8 @@ export default function ProfileForm(){
                     <Select
                     labelId="puppies"
                     id="puppies"
+                    onChange={hanldePuppiesChange}
+                    value={caresForPuppiesData.puppies}
                     name="puppies"
                     label="Puppies?"
                     >
