@@ -86,6 +86,13 @@ export default function ProfileForm(){
     const names = ["Adopter", "Foster", "Regional", "Volunteer", "Rescuer", "Transporter", "Placement"]
 
     const [userIntakeData, setUserIntakeData] = useState({})
+    const createUserInputChange = event =>{
+        const {name,value}
+        setUserIntakeData({
+            ...userIntakeData,
+            [name]: value
+        })
+    }
 
     const handleUserIntakeFormSubmit = event =>{
         event.preventDefault();
@@ -394,7 +401,7 @@ export default function ProfileForm(){
     )
 
     return (
-        <form>
+        <form onSubmit={handleUserIntakeFormSubmit}>
         <Grid item container className={classes.itemContainer}>
         <Grid container justify="space-evenly" className={classes.picContainer}>
             <Grid item>
@@ -404,7 +411,7 @@ export default function ProfileForm(){
             <Grid item>
                 <div className={classes.form}>
                     <Grid item container className={classes.formItem}>
-                        <TextField variant="outlined" label="First Name"/>
+                        <TextField variant="outlined" label="First Name" onChange={createUserInputChange} value={userIntakeData.firstName} name="firstName"/>
                     </Grid>
                     <Grid item container className={classes.formItem}>
                         <TextField variant="outlined" label="Last Name"/>
