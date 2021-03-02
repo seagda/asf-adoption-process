@@ -46,13 +46,13 @@ router.get("/", (req, res) => {
         .then(([Alerts, dogStatusCounts, totalMaxCapacity, totalDogsInOurCare, pendingAppCounts, fosters, adopters, myDogs]) => {
             const fostersWithSpace = fosters.filter(foster => foster.currentlyWith.length < foster.maxCapacity);
             const fosterCounts = [
-                { status: "Pending Applications", number: pendingAppCounts.find(appCount => appCount.name === "foster").count },
+                { status: "Pending Applications", number: (pendingAppCounts.find(appCount => appCount.name === "foster") || { count: 0 }).count },
                 { status: "Available Fosters", number: fostersWithSpace.length },
                 { status: "Full Fosters", number: fosters.length - fostersWithSpace.length }
             ];
             const adoptersWithSpace = adopters.filter(adopter => adopter.currentlyWith.length < adopter.maxCapacity);
             const adopterCounts = [
-                { status: "Pending Applications", number: pendingAppCounts.find(appCount => appCount.name === "adopter").count },
+                { status: "Pending Applications", number: (pendingAppCounts.find(appCount => appCount.name === "adopter") || { count: 0 }).count },
                 { status: "Available Adopters", number: adoptersWithSpace.length },
                 { status: "Full Adopters", number: adopters.length - adoptersWithSpace.length }
             ];
