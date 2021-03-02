@@ -38,7 +38,7 @@ module.exports = (sequelize, DataTypes, Model) => {
         },
         gender: DataTypes.ENUM("male", "female"),
         dob: DataTypes.DATEONLY,
-        microchipId: DataTypes.INTEGER,
+        microchipId: DataTypes.STRING,
         isPurebred: DataTypes.BOOLEAN,
         secondaryBreed: DataTypes.STRING,
         pullCost: DataTypes.INTEGER,
