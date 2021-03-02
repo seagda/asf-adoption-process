@@ -9,6 +9,7 @@ router.get("/", (req, res) => {
     const permissionOwnAlerts = ac.can(req.roles).readOwn("Alert");
     const permissionAnyDog = ac.can(req.roles).readAny("Dog");
     const permissionAnyAppResponse = ac.can(req.roles).readAny("AppResponse");
+    const permissionAnyUser = ac.can(req.roles).readAny("User");
     const permissionOwnDog = ac.can(req.roles).readOwn("Dog");
     db.User.findByPk(req.userId)
         .then(user => {
@@ -32,19 +33,37 @@ router.get("/", (req, res) => {
                 //     // dashboardPromises[1] = db.AppResponse.findAll({include: [db.AppStatus]})
                 //     db.User.findByPk(3).then(user => user.getDogsByStatus("Adopted")).then(console.log) */
             }
+            if (permissionAnyUser.granted) {
+                dashboardPromises[5] = db.User.findAll({ include: [{ association: "currentlyWith" }, { model: db.Role, where: { id: STATIC_IDS.ROLES.FOSTER } }] });
+                dashboardPromises[6] = db.User.findAll({ include: [{ association: "currentlyWith" }, { model: db.Role, where: { id: STATIC_IDS.ROLES.ADOPTER } }] });
+            }
             if (permissionOwnDog.granted) {
-                dashboardPromises[5] = user.getCurrentlyWith({ order: ["DogStatusId"] });
+                dashboardPromises[7] = user.getCurrentlyWith({ order: ["DogStatusId"] });
             }
 
             return Promise.all(dashboardPromises);
         })
-        .then(([Alerts, dogStatusCounts, totalMaxCapacity, totalDogsInOurCare, pendingAppCounts, myDogs]) => {
+        .then(([Alerts, dogStatusCounts, totalMaxCapacity, totalDogsInOurCare, pendingAppCounts, fosters, adopters, myDogs]) => {
+            const fostersWithSpace = fosters.filter(foster => foster.currentlyWith.length < foster.maxCapacity);
+            const fosterCounts = {
+                pending: pendingAppCounts.find(appCount => appCount.name === "foster").count,
+                available: fostersWithSpace.length,
+                full: fosters.length - fostersWithSpace.length
+            }
+            const adoptersWithSpace = adopters.filter(adopter => adopter.currentlyWith.length < adopter.maxCapacity);
+            const adopterCounts = {
+                pending: pendingAppCounts.find(appCount => appCount.name === "adopter").count,
+                available: adoptersWithSpace.length,
+                full: adopters.length - adoptersWithSpace.length
+            }
             res.json({
                 alerts: permissionOwnAlerts.filter(Alerts),
-                dogStatusCounts: permissionAnyDog.filter(dogStatusCounts),
+                dogStatusCounts: dogStatusCounts,
                 totalMaxCapacity,
                 totalDogsInOurCare,
                 pendingAppCounts: pendingAppCounts,
+                fosterCounts,
+                adopterCounts,
                 myDogs: permissionOwnDog.filter(myDogs)
             });
         })
