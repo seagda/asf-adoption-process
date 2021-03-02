@@ -34,12 +34,12 @@ router.get("/:id", (req, res) => {
 });
 
 // create new APP RESPONSE, with correct ROLE permission
-router.post("/new", (req, res) => {
-    const permission = ac.can(req.roles).createAny("AppResponse");
+router.post("/", (req, res) => {
+    const permission = ac.can(req.roles).createOwn("AppResponse");
     if (permission.granted) {
 
         db.AppResponse
-            .create(permission.filter(req.body))
+            .create({ ...permission.filter(req.body), UserId: req.userId })
             .then(() => res.status(200).send({ message: "Application successfully created" }))
             .catch(err => {
                 console.error(err)
