@@ -76,6 +76,18 @@ const useStyles = makeStyles(theme => ({
         [theme.breakpoints.down("sm")]: {
             marginLeft: "2.5em"
         }
+    },
+    seniorContainer: {
+        marginTop: "3em",
+        [theme.breakpoints.down("xs")]: {
+            marginTop: "1em"
+        }
+    },
+    seniorItem: {
+        marginTop: "4.25em",
+        [theme.breakpoints.down("xs")]: {
+            marginTop: "0.5em"
+        }
     }
 }))
 
@@ -362,8 +374,8 @@ export default function ProfileForm(){
                     </Grid>
                 </Grid>
             </Grid>
-            <Grid item container xs={10} sm={6} md={6} lg={6} style={{marginTop: "3em"}} direction="column">
-                <Grid item container style={{marginTop: "4.25em"}}>
+            <Grid item container xs={10} sm={6} md={6} lg={6} className={classes.seniorContainer} direction="column">
+                <Grid item container className={classes.seniorItem}>
                     <Grid item style={{marginTop: "1em"}}>
                     <div>
                     <FormControl variant="outlined" className={classes.formControl}>
