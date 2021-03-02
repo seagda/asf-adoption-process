@@ -22,11 +22,16 @@ router.get("/", (req, res) => {
 
 // show one APP RESPONSE, with correct ROLE permission
 router.get("/:id", (req, res) => {
-    const permission = ac.can(req.roles).readAny("AppResponse");
-    if (permission.granted) {
+    const permissionAny = ac.can(req.roles).readAny("AppResponse");
+    const permissionOwn = ac.can(req.roles).readOwn("AppResponse");
+    if (permissionAny.granted || permissionOwn.granted) {
         db.AppResponse
             .findByPk(req.params.id)
-            .then(appResp => res.json(permission.filter(appResp.toJSON()))).catch(err => {
+            .then(appResp => {
+                if (appResp.UserId == req.userId) res.json(permissionOwn.filter(appResp.toJSON()));
+                else if (permissionAny.granted) res.json(permissionAny.filter(appResp.toJSON()));
+                else return res.status(403).send({ message: "Not authorized to view this application response" });
+            }).catch(err => {
                 console.error(err);
                 res.status(422).send({ message: "Error with request" });
             });
