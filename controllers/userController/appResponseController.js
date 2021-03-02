@@ -93,7 +93,7 @@ function generateStatusAlerts(appResp) {
         ];
 
     //Add Alert for REFERENCES COMPLETE
-    if (appResp.AppStatusId === sId.APP_STATUS.REF_COMPLETE) {
+    if (appResp.AppStatusId === sId.APP_STATUS.REF_CHECKED) {
         or.push({ [db.Sequelize.Op.and]: [{ ResidesInRegionId: Region.id }, { "$Roles.id$": sId.ROLES.ADMIN }] })
         or.push({ [db.Sequelize.Op.and]: [{ ResidesInRegionId: Region.id }, { "$Roles.id$": sId.ROLES.SUPERADMIN }] })
     }
