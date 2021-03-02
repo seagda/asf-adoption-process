@@ -94,6 +94,10 @@ function ResponsiveDrawer(props) {
         setMobileOpen(!mobileOpen);
     };
 
+    const handleLogout = () =>{
+        localStorage.setItem("user", "")
+    }
+
     const drawer = (
         <div>
             {/* <div className={classes.toolbar} /> */}
@@ -107,9 +111,9 @@ function ResponsiveDrawer(props) {
                         <NavLink className={classes.link} to={`/${text}`}>{`${text.replace("-", " ")}`}</NavLink>
                     </ListItem>
                 ))}
-                <ListItem button className={classes.listItem} onClick={() => setMobileOpen(false)}>
+                <ListItem button className={classes.listItem} onClick={() => {setMobileOpen(false); handleLogout()}}>
                     <ListItemIcon className={classes.listItem}><ExitToAppIcon /></ListItemIcon>
-                    <NavLink className={classes.link} to={""}>Logout</NavLink>
+                    <NavLink className={classes.link} to={"/"}>Logout</NavLink>
                 </ListItem>
             </List>
             <Divider />
