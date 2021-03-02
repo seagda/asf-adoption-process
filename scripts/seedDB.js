@@ -245,6 +245,6 @@ const dogSeed = [
     {originId:6, asfId: 2513, name: "Reina", gender: "female", dob: "2016-05-01", isPureBred: false, secondaryBreed: "german shepherd", pullCost:200, behaviorIssues:false, medicalIssues: false, size: "medium", weight: 50, coat: "tri-color" },
     {originId:7, currentlyWithId:17, asfId: 2514, name: "Titan", gender: "male", dob: "2010-11-01", isPureBred: true, pullCost:200, behaviorIssues:false, medicalIssues: false, size: "large", weight:67.78, coat: "black" },
     {originId:10, currentlyWithId:15, asfId: 2515, name: "Billie", gender: "female", dob: "2020-12-01", microchipId:"5966", isPureBred: false, secondaryBreed: "pit", pullCost:200, behaviorIssues:true, medicalIssues: false, size: "large", weight: 70, coat: "blue merle" }
-];
+]; 
 
 db.Dog.bulkCreate(dogSeed);
