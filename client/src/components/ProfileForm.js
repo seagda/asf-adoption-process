@@ -113,7 +113,7 @@ export default function ProfileForm(){
     };
 
     const [caresForPuppiesData, setCaresForPuppiesData] = useState({});
-    const hanldePuppiesChange = (event) => {
+    const handlePuppiesChange = (event) => {
       const {name, value} = event.target
       setCaresForPuppiesData({
           ...caresForPuppiesData,
@@ -121,9 +121,23 @@ export default function ProfileForm(){
       })
     };
 
+    const [caresForAdultsData, setCaresForAdultsData] = useState({});
+    const handleAdultsChange = (event) => {
+      const {name, value} = event.target
+      setCaresForAdultsData({
+          ...caresForAdultsData,
+          [name]: value
+      })
+    };
+
     const handleUserIntakeFormSubmit = event =>{
         event.preventDefault();
-        API.createUser({...userIntakeData})
+        API.createUser({...userIntakeData,
+            ...isActiveData,
+            ...isBlockedData,
+            ...caresForPuppiesData,
+            ...caresForAdultsData
+        })
         .then(res =>{
             console.log(res.data)
             setUserIntakeData({})
@@ -264,7 +278,7 @@ export default function ProfileForm(){
                     <Select
                     labelId="puppies"
                     id="puppies"
-                    onChange={hanldePuppiesChange}
+                    onChange={handlePuppiesChange}
                     value={caresForPuppiesData.puppies}
                     name="puppies"
                     label="Puppies?"
@@ -284,6 +298,8 @@ export default function ProfileForm(){
                     <Select
                     labelId="adults"
                     id="adults"
+                    onChange={handleAdultsChange}
+                    value={caresForAdultsData.adults}
                     name="adults"
                     label="Adults?"
                     >
