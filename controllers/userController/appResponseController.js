@@ -55,6 +55,7 @@ router.put("/:id", (req, res) => {
     if (permission.granted) {
         db.AppResponse
             .findByPk(req.params.id)
+            // TODO: make sure app status has actually changed before sending alerts
             .then(appResp => appResp.update(permission.filter(req.body))
                 .then(() => generateStatusAlerts(appResp)))
             .then(() => {
