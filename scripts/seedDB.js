@@ -68,8 +68,9 @@ const userSeed = [
 ];
 
 // Clear the roles table, then use bulkCreate to insert above
-db.Role.bulkCreate(roleSeed).then((data) => {
-    console.log(data.length + " records inserted!");
+db.Role.bulkCreate(roleSeed)
+       .then((data) => {
+        console.log(data.length + " records inserted!");
     // Clear the USERS table, then use bulkCreate to insert above
     return db.User.bulkCreate(userSeed, { include: [db.Auth, db.Role] })
 }).then((usersData) => {
@@ -87,8 +88,27 @@ db.Role.bulkCreate(roleSeed).then((data) => {
     process.exit(1);
 });
 
+// Seed the REGIONS table
+const regionSeed = [
+    { name: "Midwest/South" },
+    { name: "Mid-Atlantic" },
+    { name: "Mississippi Valley" },
+    { name: "Great Lakes" },
+    { name: "Plains States" },
+    { name: "Rocky Mountain" },
+    { name: "Southeast" },
+    { name: "Northern New England" },
+    { name: "Southern New England" },
+    { name: "Northeast" },
+    { name: "West Coast" },
+    { name: "Pacific Northwest" },
+    { name: "West Texas" },
+    { name: "South Texas" },
+    { name: "North Texas" },
+    { name: "East Texas" }
+];
 
-const appStatusSeeds = [
+const appStatusSeed = [
    { name: "Application Received"}, 
    { name: "Background Check Complete"}, 
    { name: "Reference Check Complete"}, 
@@ -97,7 +117,7 @@ const appStatusSeeds = [
    { name: "Declined" }
 ];
 
-const dogStatusSeeds = [
+const dogStatusSeed = [
    { name: "Pending Intake" }, 
    { name: "Foster Ready" }, 
    { name: "In Foster" }, 
@@ -106,5 +126,6 @@ const dogStatusSeeds = [
    { name: "Adopted" }
 ];
 
-db.AppStatus.bulkCreate(appStatusSeeds).then(console.log).catch(console.error);
-db.DogStatus.bulkCreate(dogStatusSeeds).then(console.log).catch(console.error);
+db.AppStatus.bulkCreate(appStatusSeed).then(console.log).catch(console.error);
+db.DogStatus.bulkCreate(dogStatusSeed).then(console.log).catch(console.error);
+db.Region.bulkCreate(regionSeed).then(console.log).catch(console.error);
