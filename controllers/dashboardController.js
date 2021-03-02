@@ -19,9 +19,10 @@ router.get("/", (req, res) => {
             if (permissionAnyDog.granted) {
                 dashboardPromises[1] = db.Dog.count({ include: db.DogStatus, group: ["DogStatusId", "DogStatus.name"] });
                 dashboardPromises[2] = db.User.sum("maxCapacity");
+                dashboardPromises[3] = db.Dog.count({ where: { currentlyWithId: { [db.Sequelize.Op.not]: null } } });
             }
             if (permissionAnyAppResponse.granted) {
-                dashboardPromises[3] = db.AppResponse.count({ where: { AppStatusId: { [db.Sequelize.Op.lt]: STATIC_IDS.APP_STATUS.APPROVED } }, include: db.AppType, group: ["AppTypeId", "AppType.name"] });
+                dashboardPromises[4] = db.AppResponse.count({ where: { AppStatusId: { [db.Sequelize.Op.lt]: STATIC_IDS.APP_STATUS.APPROVED } }, include: db.AppType, group: ["AppTypeId", "AppType.name"] });
                 // none of this works the way I want it to, if at all:
                 /* // dashboardPromises[1]
                 db.AppType.findAll({ include: { model: db.AppResponse, where: { AppStatusId: STATIC_IDS.APP_STATUS.APPROVED }, include: db.User } }).then()
@@ -32,16 +33,17 @@ router.get("/", (req, res) => {
                 //     db.User.findByPk(3).then(user => user.getDogsByStatus("Adopted")).then(console.log) */
             }
             if (permissionOwnDog.granted) {
-                dashboardPromises[4] = user.getCurrentlyWith({ order: ["DogStatusId"] });
+                dashboardPromises[5] = user.getCurrentlyWith({ order: ["DogStatusId"] });
             }
 
             return Promise.all(dashboardPromises);
         })
-        .then(([Alerts, dogStatusCounts, totalMaxCapacity, pendingAppCounts, myDogs]) => {
+        .then(([Alerts, dogStatusCounts, totalMaxCapacity, totalDogsInOurCare, pendingAppCounts, myDogs]) => {
             res.json({
                 alerts: permissionOwnAlerts.filter(Alerts),
                 dogStatusCounts: permissionAnyDog.filter(dogStatusCounts),
                 totalMaxCapacity,
+                totalDogsInOurCare,
                 pendingAppCounts: permissionAnyAppResponse.filter(pendingAppCounts),
                 myDogs: permissionOwnDog.filter(myDogs)
             });
