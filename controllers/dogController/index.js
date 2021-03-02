@@ -60,6 +60,13 @@ router.get("/", (req, res) => {
     } else return res.status(403).send({ message: "Not authorized to view dogs" });
 });
 
+router.get("/status", (req, res) => {
+    db.DogStatus.findAll().then(statuses => res.json(statuses)).catch(err => {
+        console.error(err);
+        res.status(500).send({ message: "something is broken" });
+    });
+});
+
 // show one DOG, with correct ROLE permission
 
 router.get("/:id", (req, res) => {
@@ -165,13 +172,13 @@ function generateStatusAlerts(dog) {
             or.push({ [db.Sequelize.Op.and]: [{ ResidesInRegionId: Region.id }, { "$Roles.id$": sId.ROLES.PLACEMENT }] })
             or.push({ [db.Sequelize.Op.and]: [{ ResidesInRegionId: Region.id }, { "$Roles.id$": sId.ROLES.ADOPTER }] })
 
-        // Add alert for ADOPTION READY, goes to PLACEMENT, ADOPTERS in REGION
+            // Add alert for ADOPTION READY, goes to PLACEMENT, ADOPTERS in REGION
         } else if (dog.DogStatusId === sId.DOG_STATUS.READY_TO_ADOPT) {
             or.push({ [db.Sequelize.Op.and]: [{ ResidesInRegionId: Region.id }, { "$Roles.id$": sId.ROLES.PLACEMENT }] })
             or.push({ [db.Sequelize.Op.and]: [{ ResidesInRegionId: Region.id }, { "$Roles.id$": sId.ROLES.ADOPTER }] })
             or.push({ [db.Sequelize.Op.and]: [{ ResidesInRegionId: Region.id }, { "$Roles.id$": sId.ROLES.SUPERADMIN }] })
 
-        // Add alert for ADOPTED, goes to SuperAdmin
+            // Add alert for ADOPTED, goes to SuperAdmin
         } else if (dog.DogStatusId === sId.DOG_STATUS.ADOPTED) or.push({ [db.Sequelize.Op.and]: [{ ResidesInRegionId: Region.id }, { "$Roles.id$": sId.ROLES.SUPERADMIN }] });
 
         return Promise.all([db.User.findAll({
