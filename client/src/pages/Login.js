@@ -80,11 +80,7 @@ export default function Login(){
                 email: "",
                 password: ""
             })
-<<<<<<< HEAD
             localStorage.setItem("user", JSON.stringify(res.data))
-=======
-            localStorage.setItem("user", res.data)
->>>>>>> hs-dashboards-part5
             window.location ="/My-Profile"
         }).catch(err =>{
             alert("login failed")
