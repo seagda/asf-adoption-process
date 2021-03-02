@@ -45,13 +45,24 @@ export default function DogDossiersAll() {
     }, [])
 
     function loadDogs() {
-    
-    API.getDogDossiersAll()
-        .then(res => {
-        setDogState(res)
-        console.log(res)
-        })
-        .catch(err => console.log(err));
+        API.getDogDossiersAll()
+            .then(res => {
+            setDogState(res)
+            console.log(res)
+            })
+            .catch(err => console.log(err));
+        API.getRegions()
+            .then(res => {
+            setRegion(res)
+            console.log(res)
+            })
+            .catch(err => console.log(err));
+        API.getDogStatus()
+            .then(res => {
+            setDogStatus(res)
+            console.log(res)
+            })
+            .catch(err => console.log(err));
     };
   
     const handleRegionChange = (event) => {

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from "react";
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
@@ -9,6 +9,7 @@ import MultiSelectChips from '../components/MultiSelectChips';
 import UserFlow from '../components/UserFlow';
 import UserTable from '../components/UserTable';
 import Hidden from '@material-ui/core/Hidden';
+import API from '../utils/API';
 
 const useStyles=makeStyles(theme => ({
     mainContainer: {
@@ -29,11 +30,47 @@ const useStyles=makeStyles(theme => ({
 }))
 
 export default function ManageASFUsers() {
-    // set state of the mulitiselectchip
+    const [error, setError] = useState("");
     const [selectedRegions, setRegion] = React.useState([]);
+    const [regions, setRegionList] = React.useState([]);
+    const [roles, setRoleList] = React.useState([
+        'adopter',
+        'foster',
+        'regional lead',
+        'transport',
+        'volunteer',
+      ]);
     const [selectedRoles, setRole] = React.useState([]);
     const [searchUser, setUserSearch] = React.useState([]);
-  
+    const [users, setUserState] = useState([])
+
+    useEffect(() => {
+        loadUsers()
+        }, [])
+    
+        function loadUsers() {
+            API.getUsersAll()
+                .then(res => {
+                setUserState(res)
+                console.log(res)
+                })
+                .catch(err => console.log(err));
+
+            API.getRegions()
+                .then(res => {
+                setRegionList(res)
+                console.log(res)
+                })
+                .catch(err => console.log(err));
+
+            // API.getRoles()
+            //     .then(res => {
+            //     setRoleList(res)
+            //     console.log(res)
+            //     })
+            //     .catch(err => console.log(err));
+        };
+
     const handleRegionChange = (event) => {
       setRegion(event.target.value);
     };
@@ -44,26 +81,26 @@ export default function ManageASFUsers() {
       setUserSearch(event.target.value);
     };
 
-    const regions = [
-        'Midwest/South',
-        'Mid-Atlantic',
-        'Mississippi Valley',
-        'West Coast',
-        'Great Lakes',
-        'Plains States',
-        'Rocky Mountain',
-        'Southeast',
-        'Northeast',
-        'Texas'
-      ];
+    // const regions = [
+    //     'Midwest/South',
+    //     'Mid-Atlantic',
+    //     'Mississippi Valley',
+    //     'West Coast',
+    //     'Great Lakes',
+    //     'Plains States',
+    //     'Rocky Mountain',
+    //     'Southeast',
+    //     'Northeast',
+    //     'Texas'
+    //   ];
 
-    const roles = [
-        'Adopter',
-        'Foster',
-        'Regional Lead',
-        'Transport',
-        'Volunteer',
-      ];
+    // const roles = [
+    //     'Adopter',
+    //     'Foster',
+    //     'Regional Lead',
+    //     'Transport',
+    //     'Volunteer',
+    //   ];
 
     const classes = useStyles()
     return (
@@ -104,7 +141,19 @@ export default function ManageASFUsers() {
                     </Hidden>
                 </Grid>
                 <Grid item xs={12}>
-                    <UserTable selectedRegions={selectedRegions} selectedRoles={selectedRoles} searchUser={searchUser}/>
+                <UserTable rows={users.filter( (user) => {
+                        if (!selectedRegions.includes(user.ResidesInRegion)) {
+                            return false;
+                        } 
+                        if (!selectedRoles.some( (role) => user.Roles.includes(role))) {
+                            return false; 
+                        }
+                        if (!(parseInt(searchUser) === user.id || user.name.includes(searchUser))) {
+                            return false; 
+                        }
+                        return true;
+
+                    })}/>
                 </Grid>
             </Grid>
         </Grid>
