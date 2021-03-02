@@ -14,7 +14,7 @@ router.get("/", (req, res) => {
             .then(appResps => res.json(appResps.map(appResp => permission.filter(appResp.toJSON()))))
             .catch(err => {
                 console.error(err)
-                res.status(422).send({ message: "Error with request" })
+                res.status(400).send({ message: "Error with request" })
             });
 
     } else return res.status(403).send({ message: "Not authorized to view AppResponse" });
@@ -33,7 +33,7 @@ router.get("/:id", (req, res) => {
                 else return res.status(403).send({ message: "Not authorized to view this application response" });
             }).catch(err => {
                 console.error(err);
-                res.status(422).send({ message: "Error with request" });
+                res.status(400).send({ message: "Error with request" });
             });
     } else return res.status(403).send({ message: "Not authorized to view AppResponses" });
 });
@@ -48,7 +48,7 @@ router.post("/", (req, res) => {
             .then(() => res.status(200).send({ message: "Application successfully created" }))
             .catch(err => {
                 console.error(err)
-                res.status(422).send({ message: "Error with request" })
+                res.status(400).send({ message: "Error with request" })
             });
 
     } else return res.status(403).send({ message: "Not authorized to create an AppResponse" });
@@ -68,7 +68,7 @@ router.put("/:id", (req, res) => {
             })
             .catch(err => {
                 console.error(err);
-                res.status(422).send({ message: "Error with request" })
+                res.status(400).send({ message: "Error with request" })
             });
     } else return res.status(403).send({ message: "Not authorized update an AppResponse" });
 });
@@ -84,7 +84,7 @@ router.delete("/:id", (req, res) => {
             })
             .catch(err => {
                 console.error(err);
-                res.status(422).send({ message: "Error with request" })
+                res.status(400).send({ message: "Error with request" })
             });
     } else return res.status(403).send({ message: "Not authorized to delete an AppResponse" });
 });
