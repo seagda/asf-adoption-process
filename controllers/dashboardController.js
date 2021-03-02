@@ -67,7 +67,10 @@ router.get("/", (req, res) => {
                 myDogs: permissionOwnDog.filter(myDogs)
             });
         })
-        .catch(console.error);
+        .catch(err => {
+            console.error(err);
+            res.status(500).send({ message: "Tell John to check the server logs" });
+        });
 });
 
 module.exports = router;
