@@ -361,12 +361,11 @@ export default function ProfileForm(){
                     {origins.map((origin)=>(
                         <MenuItem value={origin.id}>{origin.fullName}</MenuItem>
                     ))}
-                    {/* <MenuItem value="true">Internal</MenuItem> */}
                     </Select>
                     </FormControl>
                 </Grid>
                 <Grid item>
-                    <Button variant="contained" color="secondary" onClick={()=>setContactFormVis("")}>Add external contact</Button>
+                    <Button variant="contained" color="secondary" onClick={()=>setContactFormVis("visible")}>Add external contact</Button>
                 </Grid>
             </Grid>
             <React.Fragment>

@@ -9,6 +9,7 @@ import CardActions from "@material-ui/core/CardActionArea";
 import CardContent from "@material-ui/core/CardContent";
 import FormControl from "@material-ui/core/FormControl";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
+import InputLabel from "@material-ui/core/InputLabel";
 
 import PhoneInput from "../components/PhoneInput";
 import Image from "../components/Image";
@@ -114,6 +115,8 @@ export default function ProfileForm(){
         </Grid>
     </Grid>
     )
+
+    const status
 
     const capacity = (
 
@@ -230,19 +233,14 @@ export default function ProfileForm(){
                         <TextField variant="outlined" label="Last Name" onChange={e => setLastName(e.target.value)}/>
                     </Grid>
                     <Grid item container className={classes.formItem}>
-                        <TextField type="number" variant="outlined" label="Phone" onChange={e => setUserPhone(e.target.value)}/>
+                        <TextField variant="outlined" label="Phone" onChange={e => setUserPhone(e.target.value)}/>
                     </Grid>
                     <Grid item container className={classes.formItem}>
                         <TextField type="email" variant="outlined" label="Email" onChange={e => setuserEmail(e.target.value)}/>
                     </Grid>
-                    <Grid item container className={classes.formItem}>
-                        <TextField variant="outlined" label="City" onChange={e => setCity(e.target.value)}/>
-                    </Grid>
-                    <Grid item container className={classes.formItem}>
-                        <TextField variant="outlined" label="State" onChange={e => setLocation(e.target.value)}/>
-                    </Grid>
-                    <Grid item container className={classes.formItem}>
-                        <TextField rows={4} multiline variant="outlined" label="About" onChange={e => setAbout(e.target.value)}/>
+                    <Grid item container className={classes.formItem} direction="column">
+                        <InputLabel id="birthday">Date of birth</InputLabel>
+                        <TextField type="date" variant="outlined" labelId="birthday" name="dob"/>
                     </Grid>
                 </div>
             </Grid>

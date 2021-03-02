@@ -31,7 +31,7 @@ export default function CreateUser() {
     return (
         <Grid container className={classes.mainContainer}>
             <ProfileForm/>
-            <RoleAssignment/>
+            {/* <RoleAssignment/> */}
         </Grid>
        
     )
