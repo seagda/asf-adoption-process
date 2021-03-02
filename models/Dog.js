@@ -38,7 +38,7 @@ module.exports = (sequelize, DataTypes, Model) => {
         },
         gender: DataTypes.ENUM("male", "female"),
         dob: DataTypes.DATEONLY,
-        microchipId: DataTypes.INTEGER,
+        microchipId: DataTypes.STRING,
         isPurebred: DataTypes.BOOLEAN,
         secondaryBreed: DataTypes.STRING,
         pullCost: DataTypes.INTEGER,
@@ -46,7 +46,7 @@ module.exports = (sequelize, DataTypes, Model) => {
         medicalIssues: DataTypes.STRING,
         size: DataTypes.ENUM("mini", "small", "medium", "large"),
         weight: DataTypes.DECIMAL,
-        coat: DataTypes.STRING,
+        coat: DataTypes.ENUM("blue merle","red merle","red","tri-color","black","brown"),
         blocked: {
             type: DataTypes.BOOLEAN,
             defaultValue: false
