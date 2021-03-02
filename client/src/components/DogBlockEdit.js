@@ -94,22 +94,12 @@ export default function ProfileForm(){
     })
 
     const [dogIntakeData, setDogIntakeData] = useState({
-        name: "",
-        dob: null,
-        gender: "",
-        microchipId: 0,
-        secondaryBreed: "",
-        pullCost: 0,
-        behaviorialIssues: "",
-        medicalIssues: "",
-        weight: 1,
-        coat: "",
-        asfId: 1
+
     })
 
 
     const [isPurebredData, setIsPurebredData] = useState({
-        isPurebred: false
+
     });
     const handlePurebredChange = (event) => {
       const {name, value} = event.target
@@ -120,7 +110,7 @@ export default function ProfileForm(){
     };
 
     const [isBlockedData, setIsBlockedData] = useState({
-        blocked: false
+
     });
     const handleBlockedChange = (event) => {
       const {name, value} = event.target
@@ -132,7 +122,7 @@ export default function ProfileForm(){
 
     // origin type selector 
     const [originContactData, setOriginContactData] = useState({
-        originId: 0
+
     });
     const handleOriginContact = (event) => {
       const {name, value} = event.target
@@ -143,7 +133,7 @@ export default function ProfileForm(){
     };
 
     const [sizeData, setSizedata] = useState({
-        size: ""
+
     });
     const handleSizeChange = (event) => {
       const {name, value} = event.target
@@ -175,36 +165,21 @@ export default function ProfileForm(){
 
     const handleDogIntakeFormSubmit = event =>{
         event.preventDefault();
-        API.createDog(dogIntakeData, isPurebredData, isBlockedData, sizeData, originContactData).then(res =>{
+        API.createDog({...dogIntakeData, 
+            ...isPurebredData, 
+            ...isBlockedData, 
+            ...sizeData, 
+            ...originContactData})
+            .then(res =>{
             console.log(res.data)
-            setDogIntakeData({
-                name: "",
-                dob: null,
-                gender: "",
-                microchipId: 0,
-                secondaryBreed: "",
-                pullCost: 0,
-                behaviorialIssues: "",
-                medicalIssues: "",
-                weight: 1,
-                coat: "",
-                asfId: 1
-            })
-            setIsPurebredData({
-                isPurebred: false
-            })
-            setIsBlockedData({
-                blocked: false
-            })
-            setSizedata({
-                size: ""
-            })
-            setOriginContactData({
-                originId: 0
-            })
+            setDogIntakeData({})
+            setIsPurebredData({})
+            setIsBlockedData({})
+            setSizedata({})
+            setOriginContactData({})
             window.location = "/My-Dogs"
         }).catch(err=>{
-            console.error(err)
+            console.error(err.response.data.message)
             alert("Create dog failed")
         })
     }
