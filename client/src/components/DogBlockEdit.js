@@ -93,14 +93,10 @@ export default function ProfileForm(){
         visibility: "hidden"
     })
 
-    const [dogIntakeData, setDogIntakeData] = useState({
-
-    })
+    const [dogIntakeData, setDogIntakeData] = useState({})
 
 
-    const [isPurebredData, setIsPurebredData] = useState({
-
-    });
+    const [isPurebredData, setIsPurebredData] = useState({});
     const handlePurebredChange = (event) => {
       const {name, value} = event.target
       setIsPurebredData({
@@ -109,21 +105,9 @@ export default function ProfileForm(){
       })
     };
 
-    const [isBlockedData, setIsBlockedData] = useState({
-
-    });
-    const handleBlockedChange = (event) => {
-      const {name, value} = event.target
-      setIsBlockedData({
-          ...isBlockedData,
-          [name]: value
-      })
-    };
 
     // origin type selector 
-    const [originContactData, setOriginContactData] = useState({
-
-    });
+    const [originContactData, setOriginContactData] = useState({});
     const handleOriginContact = (event) => {
       const {name, value} = event.target
       setOriginContactData({
@@ -132,9 +116,7 @@ export default function ProfileForm(){
       })
     };
 
-    const [sizeData, setSizedata] = useState({
-
-    });
+    const [sizeData, setSizedata] = useState({});
     const handleSizeChange = (event) => {
       const {name, value} = event.target
       setSizedata({
@@ -167,14 +149,12 @@ export default function ProfileForm(){
         event.preventDefault();
         API.createDog({...dogIntakeData, 
             ...isPurebredData, 
-            ...isBlockedData, 
             ...sizeData, 
             ...originContactData})
             .then(res =>{
             console.log(res.data)
             setDogIntakeData({})
             setIsPurebredData({})
-            setIsBlockedData({})
             setSizedata({})
             setOriginContactData({})
             window.location = "/My-Dogs"
@@ -305,24 +285,6 @@ export default function ProfileForm(){
             </Grid>
             <Grid item style={{marginTop: "1em"}}>
                 <TextField className={classes.formControl} variant="outlined" label="Behavioral Issues" onChange={createDogInputChange} value={dogIntakeData.behaviorialIssues} name="behaviorialIssues"/>
-            </Grid>
-            <Grid item style={{marginTop: "1em"}}>
-                <div>
-                    <FormControl variant="outlined" className={classes.formControl}>
-                    <InputLabel id="blocked">Blocked?</InputLabel>
-                    <Select
-                    labelId="blocked"
-                    id="blocked"
-                    onChange={handleBlockedChange}
-                    value={isBlockedData.blocked}
-                    name="blocked"
-                    label="Is blocked?"
-                    >
-                    <MenuItem value="true">Yes</MenuItem>
-                    <MenuItem value="false">No</MenuItem>
-                    </Select>
-                    </FormControl>
-                </div>
             </Grid>
             <Grid item container style={{marginTop: "1em"}} align="center" direction="column">
                 <Grid item>
