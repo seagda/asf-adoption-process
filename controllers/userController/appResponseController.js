@@ -1,6 +1,8 @@
 const db = require("../../models");
 const ac = require("../../helpers/ac");
 const router = require("express").Router();
+const sId = require("../../scripts/staticIds");
+
 
 // show all APP RESPONSES, with correct ROLE permission
 router.get("/", (req, res) => {
@@ -78,18 +80,34 @@ router.delete("/:id", (req, res) => {
 });
 
 // Create alerts for AppResponses
+
 function generateStatusAlerts(appResp) {
     appResp.getRegion().then(Region => {
-        const or = [];
+        const or = [ {id:appResp.userId},
+            { [db.Sequelize.Op.and]: [{ "$Regions.id$": Region.id }, { "$Roles.id$": sId.ROLES.PLACEMENT }] },
+            { [db.Sequelize.Op.and]: [{ "$Regions.id$": Region.id }, { "$Roles.id$": sId.ROLES.REGIONAL }] }
+        ];
 
-    //TODO: Add Alert for APP RECEIVED
-    //TODO: Add Alert for BACKGROUND COMPLETE
     //TODO: Add Alert for REF COMPLETE
-    //TODO: Add Alert for APPROVED
-    //TODO: Add Alert for AUTO REJECTED
-    //TODO: Add Alert for REJECTED
+    if (appResp.AppStatusId === sId.APP_STATUS.REF_COMPLETE) {
+        or.push({ [db.Sequelize.Op.and]: [{ "$Regions.id$": Region.id }, { "$Roles.id$": sId.ROLES.ADMIN }] })
+        or.push({ [db.Sequelize.Op.and]: [{ "$Regions.id$": Region.id }, { "$Roles.id$": sId.ROLES.SUPERADMIN }] })
+    }
 
-    }).then(([users, AppStatus]) => users.forEach(user=> user.createAlert({message: `${dog.name} is ${AppStatus.name}`, aboutDogId:dog.id })))
+    // Add Alert for APPROVED
+
+    else if (appResp.AppStatusId === sId.APP_STATUS.APPROVED) {
+        or.push({ [db.Sequelize.Op.and]: [{ "$Regions.id$": Region.id }, { "$Roles.id$": sId.ROLES.ADMIN }] })
+        or.push({ [db.Sequelize.Op.and]: [{ "$Regions.id$": Region.id }, { "$Roles.id$": sId.ROLES.SUPERADMIN }] })
+    }; 
+    return Promise.all([db.User.findAll({
+        where: {
+            [db.Sequelize.Op.or]: or
+        }, include: [db.Region, db.Role]
+    }),
+    appResp.getAppStatus()
+    ]);
+    }).then(([users, AppStatus]) => users.forEach(user=> user.createAlert({message: `${AppStatus.name} for ${user.name}`, aboutUserId:user.id })))
       .catch(console.error);
 };
 
