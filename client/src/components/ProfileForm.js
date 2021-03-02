@@ -164,13 +164,29 @@ export default function ProfileForm(){
                     </FormControl>
                 </div>
             </Grid>
+            <Grid item style={{marginTop: "1em"}}>
+                <div>
+                    <FormControl variant="outlined" className={classes.formControl}>
+                    <InputLabel id="hold">On Hold?</InputLabel>
+                    <Select
+                    labelId="hold"
+                    id="hold"
+                    name="hold"
+                    label="On hold?"
+                    >
+                    <MenuItem value="true">Yes</MenuItem>
+                    <MenuItem value="false">No</MenuItem>
+                    </Select>
+                    </FormControl>
+                </div>
+            </Grid>
         </Grid>
     </Grid>
     )
 
     const capacity = (
-
-        <Grid container direction="row" justify={"space-between"} style={{marginBottom: "5em"}}>
+        <Grid item container className={classes.itemContainer}>
+            <Grid container direction="row" justify={"space-between"}>
             <Grid item container xs={10} sm={6} md={6} lg={6} style={{marginTop: "3em"}} direction="column">
                 <Grid item>
                     <Typography variant="h4">Capacity</Typography>
@@ -184,7 +200,7 @@ export default function ProfileForm(){
                     </Grid>
                     <Grid item xs={6} sm={6} md={8} lg={6}>
                         <div>
-                        <TextField type="number" style={{marginTop: "0.5em"}} name="maxCapacity" value="maxCapacity"></TextField>
+                        <TextField variant="outlined" type="number" style={{marginTop: "0.5em"}} name="maxCapacity" value="maxCapacity"></TextField>
                         {/* <TextField type="number" style={{marginTop: "1em"}}></TextField>
                         <TextField type="number" style={{marginTop: "1em"}}></TextField> */}
                         </div>
@@ -192,6 +208,8 @@ export default function ProfileForm(){
                 </Grid>
             </Grid>
         </Grid>
+        </Grid>
+
     )
 
     const caresFor = (
@@ -276,69 +294,89 @@ export default function ProfileForm(){
                     </Grid>
                 </Grid>
             </Grid>
+            <Grid item container xs={10} sm={6} md={6} lg={6} style={{marginTop: "1em"}} direction="column">
+                <Grid item container style={{marginTop: "1em"}}>
+                    <Grid item>
+                    <div>
+                    <FormControl variant="outlined" className={classes.formControl}>
+                    <InputLabel id="withMedicalIssues">Medical Issues?</InputLabel>
+                    <Select
+                    labelId="withMedicalIssues"
+                    id="withMedicalIssues"
+                    name="withMedicalIssues"
+                    label="Medical Issues?"
+                    >
+                    <MenuItem value="true">Yes</MenuItem>
+                    <MenuItem value="false">No</MenuItem>
+                    </Select>
+                    </FormControl>
+                    </div>
+                    </Grid>
+                </Grid>
+            </Grid>
     </Grid>
     )
 
-    const references = (
-        <Grid item container justify="space-evenly" className={classes.references}>
-            <Grid item style={{marginTop: "1em", marginBottom: "5em"}}> 
-                <Card className={classes.root}>
-                    <CardContent>
-                        <Typography variant="h5" component="h2">
-                            Reference #1
-                        </Typography>
-                        <div>
-                        <TextField variant="outlined" label="Name" onChange={e => setRef1Name(e.target.value)}/>
-                        <TextField type="number" variant="outlined" label="Phone" onChange={e => setRef1Phone(e.target.value)}/>
-                        <TextField variant="outlined" label="Email" onChange={e => setRef1Email(e.target.value)}/>
-                        </div>
-                    </CardContent>
-                        {admin ? <CardContent><HoldCheckbox label="Contaced successfully"/></CardContent> : null}
-                        {admin ? <CardContent><HoldCheckbox label="Approved"/></CardContent> : null}
-                        {admin ? <CardContent>Notes:</CardContent> : null}
-                    <CardContent>
-                        {admin ? <div><TextField rows={4} multiline variant="outlined" label="New notes" onChange={e => setRef1Notes(e.target.value)}/></div> : null}
-                    </CardContent>
-                </Card>
-                <Card className={classes.root}>
-                    <CardContent>
-                        <Typography variant="h5" component="h2">
-                            Reference #2
-                        </Typography>
-                        <div>
-                        <TextField variant="outlined" label="Name" onChange={e => setRef2Name(e.target.value)}/>
-                        <TextField type="number" variant="outlined" label="Phone" onChange={e => setRef2Phone(e.target.value)}/>
-                        <TextField variant="outlined" label="Email" onChange={e => setRef2Email(e.target.value)}/>
-                        </div>
-                    </CardContent>
-                        {admin ? <CardContent><HoldCheckbox label="Contaced successfully"/></CardContent> : null}
-                        {admin ? <CardContent><HoldCheckbox label="Approved"/></CardContent> : null}
-                        {admin ? <CardContent>Notes:</CardContent> : null}
-                    <CardContent>
-                        {admin ? <div><TextField rows={4} multiline variant="outlined" label="New notes" onChange={e => setRef2Notes(e.target.value)}/></div> : null}
-                    </CardContent>
-                </Card>
-                <Card className={classes.root}>
-                    <CardContent>
-                        <Typography variant="h5" component="h2">
-                            Reference #3
-                        </Typography>
-                        <div>
-                        <TextField variant="outlined" label="Name" onChange={e => setRef3Name(e.target.value)}/>
-                        <TextField type="number" variant="outlined" label="Phone" onChange={e => setRef3Phone(e.target.value)}/>
-                        <TextField variant="outlined" label="Email" onChange={e => setRef3Email(e.target.value)}/>
-                        </div>
-                    </CardContent>
-                        {admin ? <CardContent><HoldCheckbox label="Contaced successfully"/></CardContent> : null}
-                        {admin ? <CardContent><HoldCheckbox label="Approved"/></CardContent> : null}
-                        {admin ? <CardContent>Notes:</CardContent> : null}
-                    <CardContent>
-                        {admin ? <div><TextField rows={4} multiline variant="outlined" label="New notes" onChange={e => setRef3Notes(e.target.value)}/></div> : null}
-                    </CardContent>
-                </Card>
-            </Grid>
-        </Grid>
-    )
+    // const references = (
+    //     <Grid item container justify="space-evenly" className={classes.references}>
+    //         <Grid item style={{marginTop: "1em", marginBottom: "5em"}}> 
+    //             <Card className={classes.root}>
+    //                 <CardContent>
+    //                     <Typography variant="h5" component="h2">
+    //                         Reference #1
+    //                     </Typography>
+    //                     <div>
+    //                     <TextField variant="outlined" label="Name" onChange={e => setRef1Name(e.target.value)}/>
+    //                     <TextField type="number" variant="outlined" label="Phone" onChange={e => setRef1Phone(e.target.value)}/>
+    //                     <TextField variant="outlined" label="Email" onChange={e => setRef1Email(e.target.value)}/>
+    //                     </div>
+    //                 </CardContent>
+    //                     {admin ? <CardContent><HoldCheckbox label="Contaced successfully"/></CardContent> : null}
+    //                     {admin ? <CardContent><HoldCheckbox label="Approved"/></CardContent> : null}
+    //                     {admin ? <CardContent>Notes:</CardContent> : null}
+    //                 <CardContent>
+    //                     {admin ? <div><TextField rows={4} multiline variant="outlined" label="New notes" onChange={e => setRef1Notes(e.target.value)}/></div> : null}
+    //                 </CardContent>
+    //             </Card>
+    //             <Card className={classes.root}>
+    //                 <CardContent>
+    //                     <Typography variant="h5" component="h2">
+    //                         Reference #2
+    //                     </Typography>
+    //                     <div>
+    //                     <TextField variant="outlined" label="Name" onChange={e => setRef2Name(e.target.value)}/>
+    //                     <TextField type="number" variant="outlined" label="Phone" onChange={e => setRef2Phone(e.target.value)}/>
+    //                     <TextField variant="outlined" label="Email" onChange={e => setRef2Email(e.target.value)}/>
+    //                     </div>
+    //                 </CardContent>
+    //                     {admin ? <CardContent><HoldCheckbox label="Contaced successfully"/></CardContent> : null}
+    //                     {admin ? <CardContent><HoldCheckbox label="Approved"/></CardContent> : null}
+    //                     {admin ? <CardContent>Notes:</CardContent> : null}
+    //                 <CardContent>
+    //                     {admin ? <div><TextField rows={4} multiline variant="outlined" label="New notes" onChange={e => setRef2Notes(e.target.value)}/></div> : null}
+    //                 </CardContent>
+    //             </Card>
+    //             <Card className={classes.root}>
+    //                 <CardContent>
+    //                     <Typography variant="h5" component="h2">
+    //                         Reference #3
+    //                     </Typography>
+    //                     <div>
+    //                     <TextField variant="outlined" label="Name" onChange={e => setRef3Name(e.target.value)}/>
+    //                     <TextField type="number" variant="outlined" label="Phone" onChange={e => setRef3Phone(e.target.value)}/>
+    //                     <TextField variant="outlined" label="Email" onChange={e => setRef3Email(e.target.value)}/>
+    //                     </div>
+    //                 </CardContent>
+    //                     {admin ? <CardContent><HoldCheckbox label="Contaced successfully"/></CardContent> : null}
+    //                     {admin ? <CardContent><HoldCheckbox label="Approved"/></CardContent> : null}
+    //                     {admin ? <CardContent>Notes:</CardContent> : null}
+    //                 <CardContent>
+    //                     {admin ? <div><TextField rows={4} multiline variant="outlined" label="New notes" onChange={e => setRef3Notes(e.target.value)}/></div> : null}
+    //                 </CardContent>
+    //             </Card>
+    //         </Grid>
+    //     </Grid>
+    // )
 
     return (
         <form onSubmit={handleSubmit}>
@@ -373,11 +411,11 @@ export default function ProfileForm(){
         </Grid>
         {capacity}
         {caresFor}
-        <Grid item>
+        {/* <Grid item>
             <Typography variant="h4">References</Typography>
             <Divider/>
         </Grid>
-        {references}
+        {references} */}
         <Grid item container className={classes.formItem} justify={"flex-end"}>
             <SaveButton buttonText="Save Changes"/>
         </Grid>

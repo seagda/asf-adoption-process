@@ -80,7 +80,7 @@ export default function Login(){
                 email: "",
                 password: ""
             })
-            localStorage.setItem("x-access-token", res.data.accessToken)
+            localStorage.setItem("user", res.data)
             window.location ="/My-Profile"
         }).catch(err =>{
             alert("login failed")

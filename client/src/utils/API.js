@@ -1,5 +1,8 @@
 const axios = require("axios")
 
+function getHeaders(){
+    return {headers: {"x-access-token": localStorage.getItem("user").accessToken}}
+}
 
 const API = {
     login: function(userData){
@@ -9,15 +12,15 @@ const API = {
         return axios.post(`/auth/signup`, userData)
     },
     createDog: function(dogData){
-        return axios.post(`/api/dog`, dogData, {headers: {"x-access-token": localStorage.getItem("x-access-token")}})
+        return axios.post(`/api/dog`, dogData, getHeaders())
     }, 
 
     // example get request
     getDogDossiersAll: function() {
-        return axios.get("/api/dog", {headers: {"x-access-token": localStorage.getItem("x-access-token")}})
+        return axios.get("/api/dog", getHeaders())
     },
     getExtContact: function(){
-        return axios.get(`/api/contact`, {headers: {"x-access-token": localStorage.getItem("x-access-token")}})
+        return axios.get(`/api/contact`, getHeaders())
     }
 }
 
