@@ -103,6 +103,15 @@ export default function ProfileForm(){
       })
     };
 
+    const [isBlockedData, setIsBlockedData] = useState({});
+    const handleBlockedChange = (event) => {
+      const {name, value} = event.target
+      setIsBlockedData({
+          ...isBlockedData,
+          [name]: value
+      })
+    };
+
     const handleUserIntakeFormSubmit = event =>{
         event.preventDefault();
         API.createUser({...userIntakeData})
@@ -172,6 +181,8 @@ export default function ProfileForm(){
                     <Select
                     labelId="blocked"
                     id="blocked"
+                    onChange={handleBlockedChange}
+                    value={isBlockedData.blocked}
                     name="blocked"
                     label="Is blocked?"
                     >
