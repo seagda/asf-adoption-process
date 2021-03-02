@@ -4,6 +4,8 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
+import Typography from "@material-ui/core/Typography";
+import Divider from "@material-ui/core/Divider";
 
 import API from '../utils/API';
 
@@ -34,6 +36,7 @@ const useStyles=makeStyles(theme => ({
         }
     },
     form: {
+        justifyContent: "space-evenly",
         [theme.breakpoints.down("sm")]:{
             padding: "1em"
         }
@@ -52,6 +55,9 @@ const useStyles=makeStyles(theme => ({
             margin: theme.spacing(1),
             width: '25ch',
         }
+    },
+    addressItem: {
+        minWidth: 250
     }
 }))
 
@@ -63,7 +69,7 @@ export default function SignUp(){
         lastName: "",
         email: "",
         password: "",
-        phone: 1
+        phone: ""
     })
 
     const signupInputChange = event =>{
@@ -83,7 +89,7 @@ export default function SignUp(){
                 lastName: "",
                 email: "",
                 password: "",
-                phone: 1
+                phone: ""
             })
             window.location = "/signin"
         }).catch(err =>{
@@ -93,27 +99,55 @@ export default function SignUp(){
 
     return(
         <Grid container className={classes.mainContainer}>
+            <Grid item container>
+                <Grid item>
+                    <Typography variant="h3" component="h4" gutterBottom align="center" color="primary">
+                        Sign up
+                    <Divider />
+                    </Typography>
+                </Grid>
+            </Grid>
             <Paper>
             <form onSubmit={handleSignupFormSubmit}>
                 <Grid item container className={classes.itemContainer}>
-                    <Grid item>
-                        <div className={classes.form}>
-                            <Grid item container className={classes.formItem}>
+                    <Grid item container className={classes.form}>
+                        {/* <div className={classes.form}> */}
+                            <Grid item className={classes.formItem}>
                                 <TextField variant="outlined" label="First Name" onChange={signupInputChange} value={signupFormData.firstName} name="firstName"/>
                             </Grid>
-                            <Grid item container className={classes.formItem}>
+                            <Grid item className={classes.formItem}>
                                 <TextField variant="outlined" label="Last Name" onChange={signupInputChange} value={signupFormData.lastName} name="lastName"/>
                             </Grid>
-                            <Grid item container className={classes.formItem}>
+                            <Grid item className={classes.formItem}>
                                 <TextField type="email" variant="outlined" label="Email" onChange={signupInputChange} value={signupFormData.email} name="email"/>
                             </Grid>
-                            <Grid item container className={classes.formItem}>
+                            <Grid item className={classes.formItem}>
                                 <TextField type="password" variant="outlined" label="Password" onChange={signupInputChange} value={signupFormData.password} name="password"/>
                             </Grid>
-                            <Grid item container className={classes.formItem}>
-                                <TextField variant="outlined" type="number" label="Phone" onChange={signupInputChange} value={signupFormData.phone} name="phone"/>
+                            <Grid item className={classes.formItem}>
+                                <TextField variant="outlined" label="Phone" onChange={signupInputChange} value={signupFormData.phone} name="phone"/>
                             </Grid>
-                        </div>
+                        {/* </div> */}
+                    </Grid>
+                    
+                    <Grid item container style={{marginLeft: "1em"}} align="flext-start">
+                        <Grid item>
+                            <Typography variant="h7">Address</Typography>
+                        </Grid>
+                    </Grid>
+                    <Grid item container className={classes.form}>
+                            <Grid item className={classes.formItem}>
+                                <TextField className={classes.addressItem} variant="outlined" label="Street"/>
+                            </Grid>
+                            <Grid item className={classes.formItem}>
+                                <TextField className={classes.addressItem} variant="outlined" label="City"/>
+                            </Grid>
+                            <Grid item className={classes.formItem}>
+                                <TextField className={classes.addressItem} variant="outlined" label="State"/>
+                            </Grid>
+                            <Grid item className={classes.formItem}>
+                                <TextField className={classes.addressItem} variant="outlined" label="Zip"/>
+                            </Grid>
                     </Grid>
         
                     <Grid item container className={classes.formItem} justify={"center"}>
