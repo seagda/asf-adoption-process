@@ -153,28 +153,28 @@ function generateStatusAlerts(dog) {
     dog.getRegion().then(Region => {
         const or = [
             { "$Roles.id$": 7 },
-            { [db.Sequelize.Op.and]: [{ "$Regions.id$": Region.id }, { "$Roles.id$": 6 }] }
+            { [db.Sequelize.Op.and]: [{ ResidesInRegionId: Region.id }, { "$Roles.id$": 6 }] }
         ];
-  // Add alert for FOSTER READY, goes to Fosters in Region 
-        if (dog.DogStatusId === 2) or.push({ [db.Sequelize.Op.and]: [{ "$Regions.id$": Region.id }, { "$Roles.id$": 4 }] })
-  // Add alert for ALMOST ADOPTION READY, goes to PLACEMENT, ADOPTERS in REGION
+        // Add alert for FOSTER READY, goes to Fosters in Region 
+        if (dog.DogStatusId === 2) or.push({ [db.Sequelize.Op.and]: [{ ResidesInRegionId: Region.id }, { "$Roles.id$": 4 }] })
+        // Add alert for ALMOST ADOPTION READY, goes to PLACEMENT, ADOPTERS in REGION
         else if (dog.DogStatusId === 4) {
-            or.push({ [db.Sequelize.Op.and]: [{ "$Regions.id$": Region.id }, { "$Roles.id$": 5 }] })
-            or.push({ [db.Sequelize.Op.and]: [{ "$Regions.id$": Region.id }, { "$Roles.id$": 3 }] })
-  // Add alert for ADOPTION READY, goes to PLACEMENT, ADOPTERS in REGION
+            or.push({ [db.Sequelize.Op.and]: [{ ResidesInRegionId: Region.id }, { "$Roles.id$": 5 }] })
+            or.push({ [db.Sequelize.Op.and]: [{ ResidesInRegionId: Region.id }, { "$Roles.id$": 3 }] })
+            // Add alert for ADOPTION READY, goes to PLACEMENT, ADOPTERS in REGION
         } else if (dog.DogStatusId === 4) {
-            or.push({ [db.Sequelize.Op.and]: [{ "$Regions.id$": Region.id }, { "$Roles.id$": 5 }] })
-            or.push({ [db.Sequelize.Op.and]: [{ "$Regions.id$": Region.id }, { "$Roles.id$": 3 }] })
+            or.push({ [db.Sequelize.Op.and]: [{ ResidesInRegionId: Region.id }, { "$Roles.id$": 5 }] })
+            or.push({ [db.Sequelize.Op.and]: [{ ResidesInRegionId: Region.id }, { "$Roles.id$": 3 }] })
         }
 
         return Promise.all([db.User.findAll({
             where: {
                 [db.Sequelize.Op.or]: or
-            }, include: [db.Region, db.Role]
+            }, include: db.Role
         }),
         dog.getDogStatus()
-    ]);
-    }).then(([users, DogStatus]) => users.forEach(user=> user.createAlert({message: `${dog.name} is ${DogStatus.name}`, aboutDogId:dog.id }))).catch(console.error);
+        ]);
+    }).then(([users, DogStatus]) => users.forEach(user => user.createAlert({ message: `${dog.name} is ${DogStatus.name}`, aboutDogId: dog.id }))).catch(console.error);
 }
 
 module.exports = router;
