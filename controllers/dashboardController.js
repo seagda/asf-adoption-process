@@ -45,23 +45,23 @@ router.get("/", (req, res) => {
         })
         .then(([Alerts, dogStatusCounts, totalMaxCapacity, totalDogsInOurCare, pendingAppCounts, fosters, adopters, myDogs]) => {
             const fostersWithSpace = fosters.filter(foster => foster.currentlyWith.length < foster.maxCapacity);
-            const fosterCounts = {
-                pending: pendingAppCounts.find(appCount => appCount.name === "foster").count,
-                available: fostersWithSpace.length,
-                full: fosters.length - fostersWithSpace.length
-            }
+            const fosterCounts = [
+                { status: "Pending Applications", number: pendingAppCounts.find(appCount => appCount.name === "foster").count },
+                { status: "Available Fosters", number: fostersWithSpace.length },
+                { status: "Full Fosters", number: fosters.length - fostersWithSpace.length }
+            ];
             const adoptersWithSpace = adopters.filter(adopter => adopter.currentlyWith.length < adopter.maxCapacity);
-            const adopterCounts = {
-                pending: pendingAppCounts.find(appCount => appCount.name === "adopter").count,
-                available: adoptersWithSpace.length,
-                full: adopters.length - adoptersWithSpace.length
-            }
+            const adopterCounts = [
+                { status: "Pending Applications", number: pendingAppCounts.find(appCount => appCount.name === "adopter").count },
+                { status: "Available Adopters", number: adoptersWithSpace.length },
+                { status: "Full Adopters", number: adopters.length - adoptersWithSpace.length }
+            ];
             res.json({
                 alerts: permissionOwnAlerts.filter(Alerts),
-                dogStatusCounts: dogStatusCounts,
+                dogStatusCounts: dogStatusCounts.map(statusCount => ({ status: statusCount.name, number: statusCount.count })),
                 totalMaxCapacity,
                 totalDogsInOurCare,
-                pendingAppCounts: pendingAppCounts,
+                pendingAppCounts,
                 fosterCounts,
                 adopterCounts,
                 myDogs: permissionOwnDog.filter(myDogs)

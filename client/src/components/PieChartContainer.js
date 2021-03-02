@@ -3,9 +3,12 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Grid from "@material-ui/core/Grid";
 import PieChart from "../components/PieChart";
 
-export default function PieChartContainer(){
+export default function PieChartContainer(props){
 
     // update the numbers to grab the quantity from the database
+
+    // no need for this - look at the controller for the object details and the server for the route 
+    // line 34 pass in the data: object that matches the controller being passed in as props 
     const dogStatus = [
         { status: 'Pending Intake', number: 12 },
         { status: 'Foster Ready', number: 7 },

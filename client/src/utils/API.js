@@ -1,7 +1,13 @@
 const axios = require("axios")
 
+<<<<<<< HEAD
 function getHeaders(){
     return {headers: {"x-access-token": JSON.parse(localStorage.getItem("user")).accessToken}}
+=======
+function getHeaders() {
+    return {headers: {"x-access-token": localStorage.getItem("user").accessToken}};
+    
+>>>>>>> hs-dashboards-part5
 }
 
 const API = {
@@ -24,6 +30,15 @@ const API = {
     },
     getExtContact: function(){
         return axios.get(`/api/contact`, getHeaders())
+<<<<<<< HEAD
+=======
+    },
+    getRegions: function(){
+        return axios.get(`/api/region`, getHeaders())
+    },
+    getDogStatus: function(){
+        return axios.get(`/api/dog/status`, getHeaders())
+>>>>>>> hs-dashboards-part5
     }
 }
 
