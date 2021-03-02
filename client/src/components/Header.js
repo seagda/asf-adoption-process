@@ -101,12 +101,16 @@ function ResponsiveDrawer(props) {
                 <img src={logo} className={classes.logo}/>
             </NavLink>
             <List>
-                {['My-Dashboard', 'My-Profile', 'My-Settings', 'Logout'].map((text, index) => (
+                {['My-Dashboard', 'My-Profile', 'My-Settings'].map((text, index) => (
                     <ListItem button key={text} className={classes.listItem} onClick={() => setMobileOpen(false)}>
-                        <ListItemIcon className={classes.listItem}>{index === 0 ? <PersonIcon /> : index === 1 ? <PetsIcon /> : index === 2 ? <SettingsIcon /> : <ExitToAppIcon />}</ListItemIcon>
+                        <ListItemIcon className={classes.listItem}>{index === 0 ? <PersonIcon /> : index === 1 ? <PetsIcon /> : <SettingsIcon /> }</ListItemIcon>
                         <NavLink className={classes.link} to={`/${text}`}>{`${text.replace("-", " ")}`}</NavLink>
                     </ListItem>
                 ))}
+                <ListItem button className={classes.listItem} onClick={() => setMobileOpen(false)}>
+                    <ListItemIcon className={classes.listItem}><ExitToAppIcon /></ListItemIcon>
+                    <NavLink className={classes.link} to={""}>Logout</NavLink>
+                </ListItem>
             </List>
             <Divider />
             <List>
