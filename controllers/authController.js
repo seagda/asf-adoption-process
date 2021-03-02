@@ -6,21 +6,23 @@ const ac = require("../helpers/ac");
 const router = require("express").Router();
 
 router.post("/signup", (req, res) => {
-    if (!(req.body.email && req.body.password && req.body.firstName && req.body.lastName && req.body.phone))
-        return res.status(400).send({ message: "Signup request must have an email, password, first name, last name, and phone" });
+    if (!(req.body.email && req.body.password && req.body.firstName && req.body.lastName && req.body.phone && req.body.Address))
+        return res.status(400).send({ message: "Signup request must have an email, password, first name, last name, phone, and address" });
 
     bcrypt.hash(req.body.password, 8)
         .then(hash => {
             const newUser = {
+                ...req.body,
                 email: req.body.email,
                 firstName: req.body.firstName,
                 lastName: req.body.lastName,
                 phone: req.body.phone,
                 photoUrl: req.body.photoUrl,
+                Address: req.body.Address,
                 Auth: { password: hash }
             };
 
-            return db.User.create(newUser, { include: db.Auth });
+            return db.User.create(newUser, { include: [db.Auth, db.Address] });
         })
         .then(user => user.addRole(1))
         .then(() => res.send({ message: "User was registered succesfully!" }))
