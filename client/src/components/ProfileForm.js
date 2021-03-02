@@ -301,7 +301,7 @@ export default function ProfileForm(){
                     </Grid>
                     <Grid item xs={6} sm={6} md={8} lg={6}>
                         <div>
-                        <TextField variant="outlined" type="number" style={{marginTop: "0.5em"}} name="maxCapacity" value="maxCapacity"></TextField>
+                        <TextField variant="outlined" type="number" style={{marginTop: "0.5em"}} onChange={createUserInputChange} value={userIntakeData.maxCapacity} name="maxCapacity"></TextField>
                         {/* <TextField type="number" style={{marginTop: "1em"}}></TextField>
                         <TextField type="number" style={{marginTop: "1em"}}></TextField> */}
                         </div>
@@ -499,7 +499,7 @@ export default function ProfileForm(){
         </Grid>
         <Grid container>
             <Grid item container style={{marginTop: "1em"}} justify="center">
-                <TextField className={classes.largeTextfield} label="Admin Notes" rows={6} multiline variant="outlined" name="adminNotes"/>
+                <TextField className={classes.largeTextfield} label="Admin Notes" rows={6} multiline variant="outlined" onChange={createUserInputChange} value={userIntakeData.adminNotes} name="adminNotes"/>
             </Grid>
         </Grid>
     </Grid>
