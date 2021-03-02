@@ -238,6 +238,44 @@ export default function ProfileForm(){
                     </Grid>
                 </Grid>
             </Grid>
+            <Grid item container xs={10} sm={6} md={6} lg={6} style={{marginTop: "3em"}} direction="column">
+                <Grid item container style={{marginTop: "4.25em"}}>
+                    <Grid item style={{marginTop: "1em"}}>
+                    <div>
+                    <FormControl variant="outlined" className={classes.formControl}>
+                    <InputLabel id="seniors">Seniors?</InputLabel>
+                    <Select
+                    labelId="seniors"
+                    id="seniors"
+                    name="seniors"
+                    label="Seniors?"
+                    >
+                    <MenuItem value="true">Yes</MenuItem>
+                    <MenuItem value="false">No</MenuItem>
+                    </Select>
+                    </FormControl>
+                    </div>
+                    </Grid>
+                </Grid>
+                <Grid item container style={{marginTop: "1em"}}>
+                    <Grid item style={{marginTop: "1em"}}>
+                    <div>
+                    <FormControl variant="outlined" className={classes.formControl}>
+                    <InputLabel id="withBehaviorIssues">Behaviorial Issues?</InputLabel>
+                    <Select
+                    labelId="withBehaviorIssues"
+                    id="withBehaviorIssues"
+                    name="withBehaviorIssues"
+                    label="With behaviorial issues?"
+                    >
+                    <MenuItem value="true">Yes</MenuItem>
+                    <MenuItem value="false">No</MenuItem>
+                    </Select>
+                    </FormControl>
+                    </div>
+                    </Grid>
+                </Grid>
+            </Grid>
     </Grid>
     )
 
