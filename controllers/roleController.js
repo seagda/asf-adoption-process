@@ -7,3 +7,5 @@ router.get("/", (req, res) => {
         res.status(500).send({ message: "something is broken" });
     });
 });
+
+module.exports = router;
