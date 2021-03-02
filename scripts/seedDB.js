@@ -229,22 +229,22 @@ db.Role.bulkCreate(roleSeed)
 // Seed the DOG table with 12 dogs
 
 const dogSeed = [
-    {originId:1, asfId: 2500, name: "Odin", gender: "male", dob: "2020-12-01", microchipId:256556, isPureBred: true, pullCost:200, behaviorIssues: true, medicalIssues: false, size: "mini", weight:20.5, coat: "red" },
-    {originId:2, currentlyWithId:18, asfId: 2501, name: "Patches", gender: "male", dob: "2016-05-01", microchipId:8645556, isPureBred: false, secondaryBreed: "border collie", pullCost:200, behaviorIssues: false, medicalIssues: false, size: "small", weight:40.2, coat: "blue merle" },
-    {originId:3, asfId: 2502, name: "Misty", gender: "female", dob: "2017-08-01", microchipId:4666, isPureBred:true,  pullCost:200, behaviorIssues:false, medicalIssues: false, size: "medium", weight:50, coat: "black" },
-    {originId:4, asfId: 2503, name: "Hercules", gender: "male", dob: "2010-11-01", microchipId:523214, isPureBred: false, secondaryBreed: "pit", pullCost:200, behaviorIssues: true, medicalIssues: false, size: "large", weight:66.8, coat: "black" },
+    {originId:1, asfId: 2500, name: "Odin", gender: "male", dob: "2020-12-01", microchipId:"256556", isPureBred: true, pullCost:200, behaviorIssues: true, medicalIssues: false, size: "mini", weight:20.5, coat: "red" },
+    {originId:2, currentlyWithId:18, asfId: 2501, name: "Patches", gender: "male", dob: "2016-05-01", microchipId:"8645556", isPureBred: false, secondaryBreed: "border collie", pullCost:200, behaviorIssues: false, medicalIssues: false, size: "small", weight:40.2, coat: "blue merle" },
+    {originId:3, asfId: 2502, name: "Misty", gender: "female", dob: "2017-08-01", microchipId:"4666", isPureBred:true,  pullCost:200, behaviorIssues:false, medicalIssues: false, size: "medium", weight:50, coat: "black" },
+    {originId:4, asfId: 2503, name: "Hercules", gender: "male", dob: "2010-11-01", microchipId:"523214", isPureBred: false, secondaryBreed: "pit", pullCost:200, behaviorIssues: true, medicalIssues: false, size: "large", weight:66.8, coat: "black" },
     {originId:5,currentlyWithId:14, asfId: 2504, name: "Abby", gender: "female", dob: "2020-12-01", isPureBred: true, pullCost:200, behaviorIssues: true, medicalIssues: false, size: "mini", weight:22, coat: "tri-color" },
     {originId:6, asfId: 2505, name: "Kaitie", gender: "female", dob: "2016-05-01", isPureBred: false, secondaryBreed: "border Collie", pullCost:200, behaviorIssues: false, medicalIssues: false, size: "medium", weight:50.6, coat: "red" },
     {originId:7,currentlyWith:17, asfId: 2506, name: "Bindi", gender: "female", dob: "2017-08-01", isPureBred: true, pullCost:200, behaviorIssues: false, medicalIssues: false, size: "small", weight: 38, coat: "red" },
-    {originId:8, asfId: 2507, name: "George", gender: "male", dob: "2017-08-01", microchipId:82665, isPureBred: false, secondaryBreed: "retriever", pullCost:200, behaviorIssues:true, medicalIssues: false, size: "small", weight:40.2, coat: "tri-color" },
+    {originId:8, asfId: 2507, name: "George", gender: "male", dob: "2017-08-01", microchipId:"82665", isPureBred: false, secondaryBreed: "retriever", pullCost:200, behaviorIssues:true, medicalIssues: false, size: "small", weight:40.2, coat: "tri-color" },
     {originId:1,currentlyWithId:15, asfId: 2508, name: "Maya", gender: "female", dob: "2016-05-01", isPureBred: true, pullCost:200, behaviorIssues:true, medicalIssues: false, size: "mini", weight:25, coat: "red merle" },
-    {originId:2, asfId: 2509, name: "Tonni", gender: "female", dob: "2017-08-01", microchipId:822636, isPureBred: false, secondaryBreed: "retriever", pullCost:200, behaviorIssues:false, medicalIssues: false, size: "medium", weight: 45.2, coat: "red merle" },
-    {originId:3,currentlyWithId:14, asfId: 2510, name: "Champ", gender: "male", dob: "2020-12-01", microchipId:522555, isPureBred: true, pullCost:200, behaviorIssues:true, medicalIssues: false, size: "small", weight:40.2, coat: "tri-color" },
-    {originId:4, asfId: 2511, name: "Gabrielle", gender: "female", dob: "2010-11-01", microchipId:56566, isPureBred: false, secondaryBreed: "border collie", pullCost:200, behaviorIssues:true, medicalIssues: false, size: "medium", weight:55.3, coat: "black" },
-    {originId:5,currentlyWithId:16, asfId: 2512, name: "Xena", gender: "female", dob: "2010-11-01", microchipId:5363, isPureBred: true, pullCost:200, behaviorIssues:true, medicalIssues: false, size: "mini", weight:19, coat: "blue merle" },
+    {originId:2, asfId: 2509, name: "Tonni", gender: "female", dob: "2017-08-01", microchipId:"822636", isPureBred: false, secondaryBreed: "retriever", pullCost:200, behaviorIssues:false, medicalIssues: false, size: "medium", weight: 45.2, coat: "red merle" },
+    {originId:3,currentlyWithId:14, asfId: 2510, name: "Champ", gender: "male", dob: "2020-12-01", microchipId:"522555", isPureBred: true, pullCost:200, behaviorIssues:true, medicalIssues: false, size: "small", weight:40.2, coat: "tri-color" },
+    {originId:4, asfId: 2511, name: "Gabrielle", gender: "female", dob: "2010-11-01", microchipId:"56566", isPureBred: false, secondaryBreed: "border collie", pullCost:200, behaviorIssues:true, medicalIssues: false, size: "medium", weight:55.3, coat: "black" },
+    {originId:5,currentlyWithId:16, asfId: 2512, name: "Xena", gender: "female", dob: "2010-11-01", microchipId:"53637889", isPureBred: true, pullCost:200, behaviorIssues:true, medicalIssues: false, size: "mini", weight:19, coat: "blue merle" },
     {originId:6, asfId: 2513, name: "Reina", gender: "female", dob: "2016-05-01", isPureBred: false, secondaryBreed: "german shepherd", pullCost:200, behaviorIssues:false, medicalIssues: false, size: "medium", weight: 50, coat: "tri-color" },
     {originId:7, currentlyWithId:17, asfId: 2514, name: "Titan", gender: "male", dob: "2010-11-01", isPureBred: true, pullCost:200, behaviorIssues:false, medicalIssues: false, size: "large", weight:67.78, coat: "black" },
-    {originId:10, currentlyWithId:15, asfId: 2515, name: "Billie", gender: "female", dob: "2020-12-01", microchipId:5966, isPureBred: false, secondaryBreed: "pit", pullCost:200, behaviorIssues:true, medicalIssues: false, size: "large", weight: 70, coat: "blue merle" }
+    {originId:10, currentlyWithId:15, asfId: 2515, name: "Billie", gender: "female", dob: "2020-12-01", microchipId:"5966", isPureBred: false, secondaryBreed: "pit", pullCost:200, behaviorIssues:true, medicalIssues: false, size: "large", weight: 70, coat: "blue merle" }
 ];
 
 db.Dog.bulkCreate(dogSeed);
