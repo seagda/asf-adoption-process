@@ -139,6 +139,15 @@ export default function ProfileForm(){
       })
     };
 
+    const [withMedIssuesData, setWithMedIssuesData] = useState({});
+    const handleMedIssuesChange = (event) => {
+      const {name, value} = event.target
+      setWithMedIssuesData({
+          ...withMedIssuesData,
+          [name]: value
+      })
+    };
+
     const handleUserIntakeFormSubmit = event =>{
         event.preventDefault();
         API.createUser({...userIntakeData,
@@ -146,7 +155,8 @@ export default function ProfileForm(){
             ...isBlockedData,
             ...caresForPuppiesData,
             ...caresForAdultsData,
-            ...caresForSeniorsData
+            ...caresForSeniorsData,
+            ...withMedIssuesData
         })
         .then(res =>{
             console.log(res.data)
@@ -156,6 +166,7 @@ export default function ProfileForm(){
             setCaresForPuppiesData({})
             setCaresForAdultsData({})
             setCaresForSeniorsData({})
+            setWithMedIssuesData({})
         }).catch(err=>{
             console.error(err.response.data.message)
             alert("Create dog failed")
@@ -375,6 +386,8 @@ export default function ProfileForm(){
                     <Select
                     labelId="withMedicalIssues"
                     id="withMedicalIssues"
+                    onChange={handleMedIssuesChange}
+                    value={withMedIssuesData.withMedicalIssues}
                     name="withMedicalIssues"
                     label="Medical Issues?"
                     >
