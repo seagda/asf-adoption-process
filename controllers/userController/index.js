@@ -15,7 +15,7 @@ router.use("/reference", require("./referenceController"));
 router.get("/", (req, res) => {
     const permission = ac.can(req.roles).readAny("User");
     if (permission.granted) {
-        db.User.findAll({ include: [db.Address, db.Region, db.Role] })
+        db.User.findAll({ include: [db.Address, { association: "ResidesInRegion" }, db.Role] })
             .then(users => res.json(permission.filter(users.map(user => ({
                 id: user.id,
                 firstName: user.firstName,
@@ -23,7 +23,7 @@ router.get("/", (req, res) => {
                 email: user.email,
                 city: user.Address ? user.Address.city : "No Address",
                 state: user.Address ? user.Address.state : "--",
-                regions: user.Regions,
+                region: user.ResidesInRegion.name,
                 roles: user.Roles.map(role => role.name).filter(role => role !== "user")
             })))))
             .catch(err => {
