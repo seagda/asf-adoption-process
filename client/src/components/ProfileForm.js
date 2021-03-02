@@ -64,6 +64,17 @@ const useStyles = makeStyles(theme => ({
         margin: theme.spacing(1),
         minWidth: 300,
         // fullWidth: true
+    },
+    largeTextfield: {
+        minWidth: "60em",
+        [theme.breakpoints.down("sm")]:{
+            minWidth: "20em"
+        }
+    },
+    marginFix: {
+        [theme.breakpoints.down("sm")]: {
+            marginLeft: "2.5em"
+        }
     }
 }))
 
@@ -124,7 +135,7 @@ export default function ProfileForm(){
     )
 
     const userStatus = (
-        <Grid item container className={classes.itemContainer}>
+        <Grid item container className={classes.itemContainer, classes.marginFix}>
         <Grid container style={{marginTop: "1em"}}>
             <Grid item>
                 <Typography variant="h4">Status</Typography>
@@ -185,7 +196,7 @@ export default function ProfileForm(){
     )
 
     const capacity = (
-        <Grid item container className={classes.itemContainer}>
+        <Grid item container className={classes.itemContainer, classes.marginFix}>
             <Grid container direction="row" justify={"space-between"}>
             <Grid item container xs={10} sm={6} md={6} lg={6} style={{marginTop: "3em"}} direction="column">
                 <Grid item>
@@ -378,6 +389,22 @@ export default function ProfileForm(){
     //     </Grid>
     // )
 
+    const adminNotes = (
+        <Grid item container className={classes.itemContainer, classes.marginFix}>
+        <Grid container>
+            <Grid item style={{marginTop: "3em"}}>
+                <Typography variant="h4">Admin Notes</Typography>
+                <Divider/>
+            </Grid>
+        </Grid>
+        <Grid container>
+            <Grid item container style={{marginTop: "1em"}} justify="center">
+                <TextField className={classes.largeTextfield} label="Admin Notes" rows={6} multiline variant="outlined" name="adminNotes"/>
+            </Grid>
+        </Grid>
+    </Grid>
+    )
+
     return (
         <form onSubmit={handleSubmit}>
         <Grid item container className={classes.itemContainer}>
@@ -416,6 +443,7 @@ export default function ProfileForm(){
             <Divider/>
         </Grid>
         {references} */}
+        {adminNotes}
         <Grid item container className={classes.formItem} justify={"flex-end"}>
             <SaveButton buttonText="Save Changes"/>
         </Grid>
