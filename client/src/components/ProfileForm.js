@@ -87,7 +87,7 @@ export default function ProfileForm(){
 
     const [userIntakeData, setUserIntakeData] = useState({})
     const createUserInputChange = event =>{
-        const {name,value}
+        const {name,value} = event.target
         setUserIntakeData({
             ...userIntakeData,
             [name]: value
@@ -414,17 +414,17 @@ export default function ProfileForm(){
                         <TextField variant="outlined" label="First Name" onChange={createUserInputChange} value={userIntakeData.firstName} name="firstName"/>
                     </Grid>
                     <Grid item container className={classes.formItem}>
-                        <TextField variant="outlined" label="Last Name"/>
+                        <TextField variant="outlined" label="Last Name" onChange={createUserInputChange} value={userIntakeData.lastName} name="lastName"/>
                     </Grid>
                     <Grid item container className={classes.formItem}>
-                        <TextField variant="outlined" label="Phone"/>
+                        <TextField variant="outlined" label="Phone" onChange={createUserInputChange} value={userIntakeData.phone} name="phone"/>
                     </Grid>
                     <Grid item container className={classes.formItem}>
-                        <TextField type="email" variant="outlined" label="Email"/>
+                        <TextField type="email" variant="outlined" label="Email" onChange={createUserInputChange} value={userIntakeData.email} name="email"/>
                     </Grid>
                     <Grid item container className={classes.formItem} direction="column">
                         <InputLabel id="birthday">Date of birth</InputLabel>
-                        <TextField type="date" variant="outlined" labelId="birthday" name="dob"/>
+                        <TextField type="date" variant="outlined" labelId="birthday" onChange={createUserInputChange} value={userIntakeData.dob} name="dob"/>
                     </Grid>
                 </div>
             </Grid>
