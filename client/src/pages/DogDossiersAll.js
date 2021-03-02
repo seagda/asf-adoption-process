@@ -33,11 +33,20 @@ const useStyles=makeStyles(theme => ({
 
 export default function DogDossiersAll() {
     const [error, setError] = useState("");
+    
     const [selectedRegions, setRegion] = React.useState([]);
+    const [regions, setRegionList] = React.useState([]);
+    
     const [selectedDogStatus, setDogStatus] = React.useState([]);
+    const [dogStatusList, setDogStatusList] = React.useState([
+            'Pending Intake',
+            'Foster Ready',
+            'In Foster',
+            'Adoption Ready',
+            'Adopted',
+          ]);
+   
     const [searchDog, setDogSearch] = React.useState("");
-
-    // api call for dog data to display
     const [dogs, setDogState] = useState([])
 
     useEffect(() => {
@@ -47,22 +56,24 @@ export default function DogDossiersAll() {
     function loadDogs() {
         API.getDogDossiersAll()
             .then(res => {
-            setDogState(res)
+            setDogState(res.data)
             console.log(res)
             })
             .catch(err => console.log(err));
+
         API.getRegions()
             .then(res => {
-            setRegion(res)
+            setRegionList(res.data)
             console.log(res)
             })
             .catch(err => console.log(err));
-        API.getDogStatus()
-            .then(res => {
-            setDogStatus(res)
-            console.log(res)
-            })
-            .catch(err => console.log(err));
+
+        // API.getDogStatus()
+        //     .then(res => {
+        //     setDogStatusList(res.data)
+        //     console.log(res)
+        //     })
+        //     .catch(err => console.log(err));
     };
   
     const handleRegionChange = (event) => {
@@ -75,34 +86,12 @@ export default function DogDossiersAll() {
       setDogSearch(event.target.value);
     };
 
-    const regions = [
-        'Midwest/South',
-        'Mid-Atlantic',
-        'Mississippi Valley',
-        'West Coast',
-        'Great Lakes',
-        'Plains States',
-        'Rocky Mountain',
-        'Southeast',
-        'Northeast',
-        'Texas'
-      ];
-
-    const dogStatus = [
-        'Pending Intake',
-        'Foster Ready',
-        'In Foster',
-        'Adoption Ready',
-        'Adopted',
-      ];
-
     const classes = useStyles()
     return (
         
         <Grid container className={classes.mainContainer}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                {/* double check on prop to set searchUser state here */}
                 <Typography variant="h3" component="h4" gutterBottom align="center" color="primary">
                     Dog Dossiers
                     <Divider />
@@ -116,10 +105,10 @@ export default function DogDossiersAll() {
                     <SearchBar searchDog={searchDog} handleDogStatusChange={handleSearchInputChange}/>
                 </Grid>
                 <Grid item xs={12} s={12} m={6} lg={6}>
-                    <MultiSelectChips names={regions} title="Select Region" selectedOption={selectedRegions} onOptionChange={handleRegionChange}/>
+                    <MultiSelectChips names={regions.map( (region) => region.name)} title="Select Region" selectedOption={selectedRegions} onOptionChange={handleRegionChange}/>
                 </Grid>
                 <Grid item xs={12} s={12} m={6} lg={6}>
-                    <MultiSelectChips names={dogStatus} title="Select Dog Status" selectedOption={selectedDogStatus} onOptionChange={handleDogStatusChange} />
+                    <MultiSelectChips names={dogStatusList} title="Select Dog Status" selectedOption={selectedDogStatus} onOptionChange={handleDogStatusChange} />
                 </Grid>
                 <Grid item xs={12}>
                     <Divider />

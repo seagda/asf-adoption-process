@@ -31,8 +31,11 @@ const useStyles=makeStyles(theme => ({
 
 export default function ManageASFUsers() {
     const [error, setError] = useState("");
+    
     const [selectedRegions, setRegion] = React.useState([]);
     const [regions, setRegionList] = React.useState([]);
+    
+    const [selectedRoles, setRole] = React.useState([]);
     const [roles, setRoleList] = React.useState([
         'adopter',
         'foster',
@@ -40,7 +43,7 @@ export default function ManageASFUsers() {
         'transport',
         'volunteer',
       ]);
-    const [selectedRoles, setRole] = React.useState([]);
+    
     const [searchUser, setUserSearch] = React.useState([]);
     const [users, setUserState] = useState([])
 
@@ -81,34 +84,12 @@ export default function ManageASFUsers() {
       setUserSearch(event.target.value);
     };
 
-    // const regions = [
-    //     'Midwest/South',
-    //     'Mid-Atlantic',
-    //     'Mississippi Valley',
-    //     'West Coast',
-    //     'Great Lakes',
-    //     'Plains States',
-    //     'Rocky Mountain',
-    //     'Southeast',
-    //     'Northeast',
-    //     'Texas'
-    //   ];
-
-    // const roles = [
-    //     'Adopter',
-    //     'Foster',
-    //     'Regional Lead',
-    //     'Transport',
-    //     'Volunteer',
-    //   ];
-
     const classes = useStyles()
     return (
         
         <Grid container className={classes.mainContainer}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                {/* double check on prop to set searchUser state here */}
                 <Typography variant="h3" component="h4" gutterBottom align="center" color="primary" selectedOption={searchUser} onOptionChange={handleUserSearch}>
                     Manage ASF Users
                     <Divider />

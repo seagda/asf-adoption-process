@@ -18,7 +18,6 @@ const API = {
         return axios.post(`/api/user/new`, userData, getHeaders())
     },
 
-    // example get request
     getDogDossiersAll: function() {
         return axios.get("/api/dog", getHeaders())
     },
@@ -28,9 +27,15 @@ const API = {
     getRegions: function(){
         return axios.get(`/api/region`, getHeaders())
     },
-    getDogStatus: function(){
-        return axios.get(`/api/dog/status`, getHeaders())
-    }
+    // getDogStatus: function(){
+    //     return axios.get(`/api/dog/status`, getHeaders())
+    // },
+    // getRoles: function(){
+    //     return axios.get(`/api/role`, getHeaders())
+    // },
+    // getUsersAll: function(){
+    //     return axios.get(`/api/user/`, getHeaders())
+    // }
 }
 
 export default API;
