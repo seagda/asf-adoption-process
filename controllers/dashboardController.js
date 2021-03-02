@@ -44,7 +44,7 @@ router.get("/", (req, res) => {
                 dogStatusCounts: permissionAnyDog.filter(dogStatusCounts),
                 totalMaxCapacity,
                 totalDogsInOurCare,
-                pendingAppCounts: permissionAnyAppResponse.filter(pendingAppCounts),
+                pendingAppCounts: pendingAppCounts,
                 myDogs: permissionOwnDog.filter(myDogs)
             });
         })
