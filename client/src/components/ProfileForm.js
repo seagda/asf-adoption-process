@@ -157,6 +157,15 @@ export default function ProfileForm(){
       })
     };
 
+    const [onHoldData, setOnHoldData] = useState({});
+    const handleHoldChange = (event) => {
+      const {name, value} = event.target
+      setOnHoldData({
+          ...onHoldData,
+          [name]: value
+      })
+    };
+
     const handleUserIntakeFormSubmit = event =>{
         event.preventDefault();
         API.createUser({...userIntakeData,
@@ -166,7 +175,8 @@ export default function ProfileForm(){
             ...caresForAdultsData,
             ...caresForSeniorsData,
             ...withMedIssuesData,
-            ...withBehaviorIssuesData
+            ...withBehaviorIssuesData,
+            ...onHoldData
         })
         .then(res =>{
             console.log(res.data)
@@ -178,6 +188,7 @@ export default function ProfileForm(){
             setCaresForSeniorsData({})
             setWithMedIssuesData({})
             setWithBehaviorIssuesData({})
+            setOnHoldData({})
         }).catch(err=>{
             console.error(err.response.data.message)
             alert("Create dog failed")
@@ -259,6 +270,8 @@ export default function ProfileForm(){
                     <Select
                     labelId="hold"
                     id="hold"
+                    onChange={handleHoldChange}
+                    value={onHoldData.hold}
                     name="hold"
                     label="On hold?"
                     >
