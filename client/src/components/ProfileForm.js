@@ -12,6 +12,7 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
+import API from "../utils/API";
 
 import PhoneInput from "../components/PhoneInput";
 import Image from "../components/Image";
@@ -84,33 +85,20 @@ export default function ProfileForm(){
     const roles = [{role: "Adopter"}, {role: "Foster"}];
     const names = ["Adopter", "Foster", "Regional", "Volunteer", "Rescuer", "Transporter", "Placement"]
 
-    const [firstName, setFirstName] = useState();
-    const [lastName, setLastName] = useState();
-    const [userEmail, setuserEmail] = useState();
-    const [userPhone, setUserPhone] = useState();
-    const [city, setCity] = useState();
-    const [location, setLocation] = useState();
-    const [about, setAbout] = useState(" ");
-    const [max, setMax] = useState(0);
-    const [current, setCurrent] = useState(0);
-    const [available, setAvailable] = useState(0);
-    const [ref1Name, setRef1Name] = useState();
-    const [ref1Phone, setRef1Phone] = useState();
-    const [ref1Email, setRef1Email] = useState();
-    const [ref1Notes, setRef1Notes] = useState();
-    const [ref2Name, setRef2Name] = useState();
-    const [ref2Phone, setRef2Phone] = useState();
-    const [ref2Email, setRef2Email] = useState();
-    const [ref2Notes, setRef2Notes] = useState();
-    const [ref3Name, setRef3Name] = useState();
-    const [ref3Phone, setRef3Phone] = useState();
-    const [ref3Email, setRef3Email] = useState();
-    const [ref3Notes, setRef3Notes] = useState();
+    const [userIntakeData, setUserIntakeData] = useState({})
 
-    const handleSubmit = e => {
-        e.preventDefault();
-        console.log(firstName, lastName, userEmail, userPhone, city, location, about, max, current, available, ref1Name, ref1Phone, ref1Email, ref1Notes, ref2Name, ref2Phone, ref2Email, ref2Notes, ref3Name, ref3Phone, ref3Email, ref3Notes)
+    const handleUserIntakeFormSubmit = event =>{
+        event.preventDefault();
+        API.createUser({...userIntakeData})
+        .then(res =>{
+            console.log(res.data)
+            setUserIntakeData({})
+        }).catch(err=>{
+            console.error(err.response.data.message)
+            alert("Create dog failed")
+        })
     }
+
 
     const roleEdit = (
         <Grid item container className={classes.itemContainer}>
@@ -406,7 +394,7 @@ export default function ProfileForm(){
     )
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form>
         <Grid item container className={classes.itemContainer}>
         <Grid container justify="space-evenly" className={classes.picContainer}>
             <Grid item>
@@ -416,16 +404,16 @@ export default function ProfileForm(){
             <Grid item>
                 <div className={classes.form}>
                     <Grid item container className={classes.formItem}>
-                        <TextField variant="outlined" label="First Name" onChange={e => setFirstName(e.target.value)}/>
+                        <TextField variant="outlined" label="First Name"/>
                     </Grid>
                     <Grid item container className={classes.formItem}>
-                        <TextField variant="outlined" label="Last Name" onChange={e => setLastName(e.target.value)}/>
+                        <TextField variant="outlined" label="Last Name"/>
                     </Grid>
                     <Grid item container className={classes.formItem}>
-                        <TextField variant="outlined" label="Phone" onChange={e => setUserPhone(e.target.value)}/>
+                        <TextField variant="outlined" label="Phone"/>
                     </Grid>
                     <Grid item container className={classes.formItem}>
-                        <TextField type="email" variant="outlined" label="Email" onChange={e => setuserEmail(e.target.value)}/>
+                        <TextField type="email" variant="outlined" label="Email"/>
                     </Grid>
                     <Grid item container className={classes.formItem} direction="column">
                         <InputLabel id="birthday">Date of birth</InputLabel>
