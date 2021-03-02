@@ -55,7 +55,10 @@ router.put("/:id", (req, res) => {
     if (permission.granted) {
         db.AppResponse
             .findByPk(req.params.id)
-            .then(appResp => appResp.update(permission.filter(req.body)))
+            .then(appResp => {
+                appResp.update(permission.filter(req.body));
+                generateStatusAlerts(appResp);
+            })
             .then(() => res.sendStatus(200))
             .catch(err => {
                 console.error(err);
@@ -83,23 +86,24 @@ router.delete("/:id", (req, res) => {
 
 function generateStatusAlerts(appResp) {
     appResp.getRegion().then(Region => {
-        const or = [ {id:appResp.userId},
-            { [db.Sequelize.Op.and]: [{ "$Regions.id$": Region.id }, { "$Roles.id$": sId.ROLES.PLACEMENT }] },
-            { [db.Sequelize.Op.and]: [{ "$Regions.id$": Region.id }, { "$Roles.id$": sId.ROLES.REGIONAL }] }
+        const or = [ 
+            {id:appResp.userId},
+            { [db.Sequelize.Op.and]: [{ ResidesInRegionId: Region.id }, { "$Roles.id$": sId.ROLES.PLACEMENT }] },
+            { [db.Sequelize.Op.and]: [{ ResidesInRegionId: Region.id }, { "$Roles.id$": sId.ROLES.REGIONAL }] }
         ];
 
-    //TODO: Add Alert for REF COMPLETE
+    //Add Alert for REFERENCES COMPLETE
     if (appResp.AppStatusId === sId.APP_STATUS.REF_COMPLETE) {
-        or.push({ [db.Sequelize.Op.and]: [{ "$Regions.id$": Region.id }, { "$Roles.id$": sId.ROLES.ADMIN }] })
-        or.push({ [db.Sequelize.Op.and]: [{ "$Regions.id$": Region.id }, { "$Roles.id$": sId.ROLES.SUPERADMIN }] })
+        or.push({ [db.Sequelize.Op.and]: [{ ResidesInRegionId: Region.id }, { "$Roles.id$": sId.ROLES.ADMIN }] })
+        or.push({ [db.Sequelize.Op.and]: [{ ResidesInRegionId: Region.id }, { "$Roles.id$": sId.ROLES.SUPERADMIN }] })
     }
 
     // Add Alert for APPROVED
-
     else if (appResp.AppStatusId === sId.APP_STATUS.APPROVED) {
-        or.push({ [db.Sequelize.Op.and]: [{ "$Regions.id$": Region.id }, { "$Roles.id$": sId.ROLES.ADMIN }] })
-        or.push({ [db.Sequelize.Op.and]: [{ "$Regions.id$": Region.id }, { "$Roles.id$": sId.ROLES.SUPERADMIN }] })
+        or.push({ [db.Sequelize.Op.and]: [{ ResidesInRegionId: Region.id }, { "$Roles.id$": sId.ROLES.ADMIN }] })
+        or.push({ [db.Sequelize.Op.and]: [{ ResidesInRegionId: Region.id }, { "$Roles.id$": sId.ROLES.SUPERADMIN }] })
     }; 
+
     return Promise.all([db.User.findAll({
         where: {
             [db.Sequelize.Op.or]: or

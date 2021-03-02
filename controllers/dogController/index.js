@@ -1,6 +1,7 @@
 const db = require("../../models");
 const ac = require("../../helpers/ac");
 const router = require("express").Router();
+const sId = require("../../scripts/staticIds");
 
 router.use("/assess", require("./behavioralAssessmentController"));
 router.use("/document", require("./documentController"));
@@ -149,23 +150,29 @@ router.delete("/archive/:id", (req, res) => {
     else return res.status(403).send({ message: "Not authorized to archive dogs" });
 });
 
+// Generate ALERTS
+
 function generateStatusAlerts(dog) {
     dog.getRegion().then(Region => {
         const or = [
-            { "$Roles.id$": 7 },
-            { [db.Sequelize.Op.and]: [{ ResidesInRegionId: Region.id }, { "$Roles.id$": 6 }] }
+            { "$Roles.id$": sId.ROLES.ADMIN },
+            { [db.Sequelize.Op.and]: [{ ResidesInRegionId: Region.id }, { "$Roles.id$": sId.ROLES.REGIONAL }] }
         ];
         // Add alert for FOSTER READY, goes to Fosters in Region 
-        if (dog.DogStatusId === 2) or.push({ [db.Sequelize.Op.and]: [{ ResidesInRegionId: Region.id }, { "$Roles.id$": 4 }] })
+        if (dog.DogStatusId === sId.DOG_STATUS.FOSTER_READY) or.push({ [db.Sequelize.Op.and]: [{ ResidesInRegionId: Region.id }, { "$Roles.id$": sId.ROLES.FOSTER }] })
         // Add alert for ALMOST ADOPTION READY, goes to PLACEMENT, ADOPTERS in REGION
-        else if (dog.DogStatusId === 4) {
-            or.push({ [db.Sequelize.Op.and]: [{ ResidesInRegionId: Region.id }, { "$Roles.id$": 5 }] })
-            or.push({ [db.Sequelize.Op.and]: [{ ResidesInRegionId: Region.id }, { "$Roles.id$": 3 }] })
-            // Add alert for ADOPTION READY, goes to PLACEMENT, ADOPTERS in REGION
-        } else if (dog.DogStatusId === 4) {
-            or.push({ [db.Sequelize.Op.and]: [{ ResidesInRegionId: Region.id }, { "$Roles.id$": 5 }] })
-            or.push({ [db.Sequelize.Op.and]: [{ ResidesInRegionId: Region.id }, { "$Roles.id$": 3 }] })
-        }
+        else if (dog.DogStatusId === sId.DOG_STATUS.ALMOST_READY) {
+            or.push({ [db.Sequelize.Op.and]: [{ ResidesInRegionId: Region.id }, { "$Roles.id$": sId.ROLES.PLACEMENT }] })
+            or.push({ [db.Sequelize.Op.and]: [{ ResidesInRegionId: Region.id }, { "$Roles.id$": sId.ROLES.ADOPTER }] })
+
+        // Add alert for ADOPTION READY, goes to PLACEMENT, ADOPTERS in REGION
+        } else if (dog.DogStatusId === sId.DOG_STATUS.READY_TO_ADOPT) {
+            or.push({ [db.Sequelize.Op.and]: [{ ResidesInRegionId: Region.id }, { "$Roles.id$": sId.ROLES.PLACEMENT }] })
+            or.push({ [db.Sequelize.Op.and]: [{ ResidesInRegionId: Region.id }, { "$Roles.id$": sId.ROLES.ADOPTER }] })
+            or.push({ [db.Sequelize.Op.and]: [{ ResidesInRegionId: Region.id }, { "$Roles.id$": sId.ROLES.SUPERADMIN }] })
+
+        // Add alert for ADOPTED, goes to SuperAdmin
+        } else if (dog.DogStatusId === sId.DOG_STATUS.ADOPTED) or.push({ [db.Sequelize.Op.and]: [{ ResidesInRegionId: Region.id }, { "$Roles.id$": sId.ROLES.SUPERADMIN }] });
 
         return Promise.all([db.User.findAll({
             where: {

@@ -27,9 +27,9 @@ const STATIC_IDS =
         PENDING:1,
         FOSTER_READY:2,
         IN_FOSTER:3,
-        APPROVED:4,
-        AUTO_REJECT:5,
-        ASF_DECLINE:6
+        ALMOST_READY:4,
+        READY_TO_ADOPT:5,
+        ADOPTED:6
     }}
 
 module.exports = STATIC_IDS;
