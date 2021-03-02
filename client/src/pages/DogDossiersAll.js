@@ -1,14 +1,17 @@
-import React from 'react'
+
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
+import React, { useState, useEffect } from "react";
 import AddButton from '../components/AddButton'
 import MultiSelectChips from '../components/MultiSelectChips';
 import DogAdoptionFlow from '../components/DogAdoptionFlow';
 import OverviewTable from '../components/OverviewTable';
+import SearchBar from '../components/SearchBar';
 import Hidden from '@material-ui/core/Hidden';
+import API from '../utils/API';
 
 const useStyles=makeStyles(theme => ({
     mainContainer: {
@@ -29,10 +32,27 @@ const useStyles=makeStyles(theme => ({
 }))
 
 export default function DogDossiersAll() {
-
+    const [error, setError] = useState("");
     const [selectedRegions, setRegion] = React.useState([]);
     const [selectedDogStatus, setDogStatus] = React.useState([]);
-    const [searchDog, setDogSearch] = React.useState([]);
+    const [searchDog, setDogSearch] = React.useState("");
+
+    // api call for dog data to display
+    const [dogs, setDogState] = useState([])
+
+    useEffect(() => {
+    loadDogs()
+    }, [])
+
+    function loadDogs() {
+    
+    API.getDogDossiersAll()
+        .then(res => {
+        setDogState(res)
+        console.log(res)
+        })
+        .catch(err => console.log(err));
+    };
   
     const handleRegionChange = (event) => {
       setRegion(event.target.value);
@@ -40,9 +60,9 @@ export default function DogDossiersAll() {
     const handleDogStatusChange = (event) => {
       setDogStatus(event.target.value);
     };
-    const handleDogSearch = (event) => {
-        setDogSearch(event.target.value);
-      };
+    const handleSearchInputChange = (event) => {
+      setDogSearch(event.target.value);
+    };
 
     const regions = [
         'Midwest/South',
@@ -72,7 +92,7 @@ export default function DogDossiersAll() {
             <Grid container spacing={2}>
                 <Grid item xs={12}>
                 {/* double check on prop to set searchUser state here */}
-                <Typography variant="h3" component="h4" gutterBottom align="center" color="primary" selectedOption={searchDog} onOptionChange={handleDogSearch}>
+                <Typography variant="h3" component="h4" gutterBottom align="center" color="primary">
                     Dog Dossiers
                     <Divider />
                 </Typography>
@@ -82,9 +102,7 @@ export default function DogDossiersAll() {
                     <AddButton buttonText="Add Dog" toLink="/createdog" />
                 </Grid>
                 <Grid item xs={12}>
-                     <form noValidate autoComplete="off">
-                        <TextField id="outlined-basic" label="Search" variant="outlined" fullWidth />
-                    </form>
+                    <SearchBar searchDog={searchDog} handleDogStatusChange={handleSearchInputChange}/>
                 </Grid>
                 <Grid item xs={12} s={12} m={6} lg={6}>
                     <MultiSelectChips names={regions} title="Select Region" selectedOption={selectedRegions} onOptionChange={handleRegionChange}/>
@@ -104,7 +122,19 @@ export default function DogDossiersAll() {
                     </Hidden>
                 </Grid>
                 <Grid item xs={12}>
-                    <OverviewTable selectedRegions={selectedRegions} selectedDogStatus={selectedDogStatus} searchDog={searchDog}/>
+                    <OverviewTable rows={dogs.filter( (dog) => {
+                        if (!selectedRegions.includes(dog.Region)) {
+                            return false;
+                        } 
+                        if (!selectedDogStatus.includes(dog.DogStatus)) {
+                            return false; 
+                        }
+                        if (!(parseInt(searchDog) === dog.id || dog.name.includes(searchDog))) {
+                            return false; 
+                        }
+                        return true;
+
+                    })}/>
                 </Grid>
             </Grid>
         </Grid>

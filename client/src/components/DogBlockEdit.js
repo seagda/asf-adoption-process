@@ -12,6 +12,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import API from "../utils/API";
 import NumberFormat from 'react-number-format';
+import Button from "@material-ui/core/Button";
 
 import Image from "../components/Image";
 import EditButton from "../components/EditButton";
@@ -88,11 +89,9 @@ export default function ProfileForm(){
     const classes = useStyles();
     const repeat = true;
 
-    document.addEventListener('mousewheel', function(event) {
-        if (window.document.activeElement.type === 'number') {
-          event.preventDefault()
-        }
-      })
+    const [contactFormVis, setContactFormVis] = useState({
+        visibility: "hidden"
+    })
 
     const [dogIntakeData, setDogIntakeData] = useState({
         name: "",
@@ -131,6 +130,18 @@ export default function ProfileForm(){
       })
     };
 
+    // origin type selector 
+    const [originContactData, setOriginContactData] = useState({
+        originId: 0
+    });
+    const handleOriginContact = (event) => {
+      const {name, value} = event.target
+      setOriginContactData({
+          ...originContactData,
+          [name]: value
+      })
+    };
+
     const [sizeData, setSizedata] = useState({
         size: ""
     });
@@ -150,10 +161,18 @@ export default function ProfileForm(){
         })
     }
     
+    const [origins, setOrigins] = useState([])
+
+    useEffect(()=>{
+        API.getExtContact().then(res =>{
+            setOrigins(res.data)
+            console.log(res.data)
+        })
+    }, [])
 
     const handleDogIntakeFormSubmit = event =>{
         event.preventDefault();
-        API.createDog(dogIntakeData, isPurebredData, isBlockedData).then(res =>{
+        API.createDog(dogIntakeData, isPurebredData, isBlockedData, sizeData, originContactData).then(res =>{
             console.log(res.data)
             setDogIntakeData({
                 name: "",
@@ -176,6 +195,9 @@ export default function ProfileForm(){
             })
             setSizedata({
                 size: ""
+            })
+            setOriginContactData({
+                originId: 0
             })
             window.location = "/My-Dogs"
         }).catch(err=>{
@@ -324,6 +346,52 @@ export default function ProfileForm(){
                     </FormControl>
                 </div>
             </Grid>
+            <Grid item container style={{marginTop: "1em"}} align="center" direction="column">
+                <Grid item>
+                    <FormControl variant="outlined" className={classes.formControl}>
+                    <InputLabel id="originId">Dog Origin</InputLabel>
+                    <Select
+                    labelId="originId"
+                    id="originId"
+                    onChange={handleOriginContact}
+                    value={originContactData.originId}
+                    name="originId"
+                    label="Dog Origin"
+                    >
+                    {origins.map((origin)=>(
+                        <MenuItem value={origin.id}>{origin.fullName}</MenuItem>
+                    ))}
+                    </Select>
+                    </FormControl>
+                </Grid>
+                <Grid item>
+                    <Button variant="contained" color="secondary" onClick={()=>setContactFormVis("visible")}>Add external contact</Button>
+                </Grid>
+            </Grid>
+            <React.Fragment>
+                <Grid item style={{marginTop: "3em"}}>
+                    <Typography variant="h5">External Contact</Typography>
+                    <Divider/>
+                </Grid>
+                <Grid item container style={{marginTop: "1em"}}>
+                    <Grid item container justify="space-evenly">
+                        <TextField variant="outlined" label="Name" style={{marginTop: "1em"}}/>
+                        <TextField variant="outlined" label="Email" style={{marginTop: "1em"}}/>
+                        <TextField variant="outlined" label="Phone" style={{marginTop: "1em"}}/>
+                        <TextField variant="outlined" label="Type" style={{marginTop: "1em"}}/>
+                    </Grid>
+                </Grid>
+                    <Grid item container direction="column" style={{marginTop: "2em"}} xs={10} sm={10} md={6} lg={6}>
+                        <Typography>Address:</Typography>
+                        <TextField label="Street"/>
+                        <TextField label="City"/>
+                        <TextField label="State"/>
+                        <TextField label="Zip"/>
+                    </Grid>
+            </React.Fragment>
+            {/* <Grid item style={{marginTop: "1em"}}>
+                <Button variant="contained" color="secondary">Add external contact</Button>
+            </Grid> */}
             {/* <Grid item style={{marginTop: "1em"}}>
                 <SingleSelect title="Current Location"/>
             </Grid>

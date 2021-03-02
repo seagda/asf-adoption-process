@@ -9,6 +9,9 @@ import CardActions from "@material-ui/core/CardActionArea";
 import CardContent from "@material-ui/core/CardContent";
 import FormControl from "@material-ui/core/FormControl";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
+import InputLabel from "@material-ui/core/InputLabel";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
 
 import PhoneInput from "../components/PhoneInput";
 import Image from "../components/Image";
@@ -56,6 +59,11 @@ const useStyles = makeStyles(theme => ({
             margin: theme.spacing(1),
             width: '25ch',
         }
+    },
+    formControl: {
+        margin: theme.spacing(1),
+        minWidth: 300,
+        // fullWidth: true
     }
 }))
 
@@ -115,6 +123,51 @@ export default function ProfileForm(){
     </Grid>
     )
 
+    const userStatus = (
+        <Grid item container className={classes.itemContainer}>
+        <Grid container style={{marginTop: "1em"}}>
+            <Grid item>
+                <Typography variant="h4">Status</Typography>
+                <Divider/>
+            </Grid>
+        </Grid>
+        <Grid container justify="space-between">
+            <Grid item style={{marginTop: "1em"}}>
+                <div>
+                    <FormControl variant="outlined" className={classes.formControl}>
+                    <InputLabel id="active">Active?</InputLabel>
+                    <Select
+                    labelId="active"
+                    id="active"
+                    name="active"
+                    label="Is active?"
+                    >
+                    <MenuItem value="true">Yes</MenuItem>
+                    <MenuItem value="false">No</MenuItem>
+                    </Select>
+                    </FormControl>
+                </div>
+            </Grid>
+            <Grid item style={{marginTop: "1em"}}>
+                <div>
+                    <FormControl variant="outlined" className={classes.formControl}>
+                    <InputLabel id="blocked">Blocked?</InputLabel>
+                    <Select
+                    labelId="blocked"
+                    id="blocked"
+                    name="blocked"
+                    label="Is blocked?"
+                    >
+                    <MenuItem value="true">Yes</MenuItem>
+                    <MenuItem value="false">No</MenuItem>
+                    </Select>
+                    </FormControl>
+                </div>
+            </Grid>
+        </Grid>
+    </Grid>
+    )
+
     const capacity = (
 
         <Grid container direction="row" justify={"space-between"} style={{marginBottom: "5em"}}>
@@ -126,30 +179,104 @@ export default function ProfileForm(){
                 <Grid item container>
                     <Grid item xs={6} sm={6} md={8} lg={6}>
                         <Typography style={{marginTop: "1em"}}>Max Capacity:</Typography>
-                        <Typography style={{marginTop: "1.5em"}}>Dogs in care:</Typography>
-                        <Typography style={{marginTop: "2em"}}>Available space:</Typography>
+                        {/* <Typography style={{marginTop: "1.5em"}}>Dogs in care:</Typography>
+                        <Typography style={{marginTop: "2em"}}>Available space:</Typography> */}
                     </Grid>
                     <Grid item xs={6} sm={6} md={8} lg={6}>
                         <div>
-                        <TextField type="number" style={{marginTop: "1em"}} onChange={e => setMax(e.target.value)}></TextField>
-                        <TextField type="number" style={{marginTop: "1em"}} onChange={e => setCurrent(e.target.value)}></TextField>
-                        <TextField type="number" style={{marginTop: "1em"}} onChange={e => setAvailable(e.target.value)}></TextField>
+                        <TextField type="number" style={{marginTop: "0.5em"}} name="maxCapacity" value="maxCapacity"></TextField>
+                        {/* <TextField type="number" style={{marginTop: "1em"}}></TextField>
+                        <TextField type="number" style={{marginTop: "1em"}}></TextField> */}
                         </div>
                     </Grid>
                 </Grid>
             </Grid>
+        </Grid>
+    )
+
+    const caresFor = (
+        <Grid item container className={classes.itemContainer}>
             <Grid item container xs={10} sm={6} md={6} lg={6} style={{marginTop: "3em"}} direction="column">
                 <Grid item>
-                <Typography variant="h4">Cares for:</Typography>
+                    <Typography variant="h4">Cares for:</Typography>
                     <Divider/>
                 </Grid>
-                <Grid item container style={{marginTop: "3em"}}>
-                    <Grid item>
-                        <MultiSelectChips names={names} title="Select all that apply"/>
+                <Grid item container style={{marginTop: "1em"}}>
+                    <Grid item style={{marginTop: "1em"}}>
+                    <div>
+                    <FormControl variant="outlined" className={classes.formControl}>
+                    <InputLabel id="puppies">Puppies?</InputLabel>
+                    <Select
+                    labelId="puppies"
+                    id="puppies"
+                    name="puppies"
+                    label="Puppies?"
+                    >
+                    <MenuItem value="true">Yes</MenuItem>
+                    <MenuItem value="false">No</MenuItem>
+                    </Select>
+                    </FormControl>
+                    </div>
+                    </Grid>
+                </Grid>
+                <Grid item container style={{marginTop: "1em"}}>
+                    <Grid item style={{marginTop: "1em"}}>
+                    <div>
+                    <FormControl variant="outlined" className={classes.formControl}>
+                    <InputLabel id="adults">Adults?</InputLabel>
+                    <Select
+                    labelId="adults"
+                    id="adults"
+                    name="adults"
+                    label="Adults?"
+                    >
+                    <MenuItem value="true">Yes</MenuItem>
+                    <MenuItem value="false">No</MenuItem>
+                    </Select>
+                    </FormControl>
+                    </div>
                     </Grid>
                 </Grid>
             </Grid>
-        </Grid>
+            <Grid item container xs={10} sm={6} md={6} lg={6} style={{marginTop: "3em"}} direction="column">
+                <Grid item container style={{marginTop: "4.25em"}}>
+                    <Grid item style={{marginTop: "1em"}}>
+                    <div>
+                    <FormControl variant="outlined" className={classes.formControl}>
+                    <InputLabel id="seniors">Seniors?</InputLabel>
+                    <Select
+                    labelId="seniors"
+                    id="seniors"
+                    name="seniors"
+                    label="Seniors?"
+                    >
+                    <MenuItem value="true">Yes</MenuItem>
+                    <MenuItem value="false">No</MenuItem>
+                    </Select>
+                    </FormControl>
+                    </div>
+                    </Grid>
+                </Grid>
+                <Grid item container style={{marginTop: "1em"}}>
+                    <Grid item style={{marginTop: "1em"}}>
+                    <div>
+                    <FormControl variant="outlined" className={classes.formControl}>
+                    <InputLabel id="withBehaviorIssues">Behaviorial Issues?</InputLabel>
+                    <Select
+                    labelId="withBehaviorIssues"
+                    id="withBehaviorIssues"
+                    name="withBehaviorIssues"
+                    label="With behaviorial issues?"
+                    >
+                    <MenuItem value="true">Yes</MenuItem>
+                    <MenuItem value="false">No</MenuItem>
+                    </Select>
+                    </FormControl>
+                    </div>
+                    </Grid>
+                </Grid>
+            </Grid>
+    </Grid>
     )
 
     const references = (
@@ -230,25 +357,22 @@ export default function ProfileForm(){
                         <TextField variant="outlined" label="Last Name" onChange={e => setLastName(e.target.value)}/>
                     </Grid>
                     <Grid item container className={classes.formItem}>
-                        <TextField type="number" variant="outlined" label="Phone" onChange={e => setUserPhone(e.target.value)}/>
+                        <TextField variant="outlined" label="Phone" onChange={e => setUserPhone(e.target.value)}/>
                     </Grid>
                     <Grid item container className={classes.formItem}>
                         <TextField type="email" variant="outlined" label="Email" onChange={e => setuserEmail(e.target.value)}/>
                     </Grid>
-                    <Grid item container className={classes.formItem}>
-                        <TextField variant="outlined" label="City" onChange={e => setCity(e.target.value)}/>
-                    </Grid>
-                    <Grid item container className={classes.formItem}>
-                        <TextField variant="outlined" label="State" onChange={e => setLocation(e.target.value)}/>
-                    </Grid>
-                    <Grid item container className={classes.formItem}>
-                        <TextField rows={4} multiline variant="outlined" label="About" onChange={e => setAbout(e.target.value)}/>
+                    <Grid item container className={classes.formItem} direction="column">
+                        <InputLabel id="birthday">Date of birth</InputLabel>
+                        <TextField type="date" variant="outlined" labelId="birthday" name="dob"/>
                     </Grid>
                 </div>
             </Grid>
-            {admin ? roleEdit : null}
+            {/* {admin ? roleEdit : null} */}
+            {userStatus}
         </Grid>
         {capacity}
+        {caresFor}
         <Grid item>
             <Typography variant="h4">References</Typography>
             <Divider/>

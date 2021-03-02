@@ -209,7 +209,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function OverviewTable() {
+// rows becomes props.rows
+export default function OverviewTable(props) {
   const classes = useStyles();
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');

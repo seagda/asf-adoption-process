@@ -10,6 +10,14 @@ const API = {
     },
     createDog: function(dogData){
         return axios.post(`/api/dog`, dogData, {headers: {"x-access-token": localStorage.getItem("x-access-token")}})
+    }, 
+
+    // example get request
+    getDogDossiersAll: function() {
+        return axios.get("/api/dog", {headers: {"x-access-token": localStorage.getItem("x-access-token")}})
+    },
+    getExtContact: function(){
+        return axios.get(`/api/contact`, {headers: {"x-access-token": localStorage.getItem("x-access-token")}})
     }
 }
 
