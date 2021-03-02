@@ -8,8 +8,9 @@ import Divider from '@material-ui/core/Divider';
 import AvatarList from '../components/AvatarList';
 import BasicList from '../components/BasicList';
 import MediaCard from '../components/MediaCard';
-import DogAPI from '../utils/Dogs';
+// import DogAPI from '../utils/Dogs';
 import AlertAPI from '../utils/Alerts';
+import API from '../utils/API';
 import TeamAPI from '../utils/Team';
 import ListContainer from '../components/ListContainer';
 
@@ -40,7 +41,7 @@ const useStyles=makeStyles(theme => ({
 export default function FosterDashboard(){
     const classes = useStyles();
 
-    // api call for employee data to display
+    // api call for dog data to display
     const [dogs, setDogState] = useState([])
 
     useEffect(() => {
@@ -49,12 +50,11 @@ export default function FosterDashboard(){
 
     function loadDogs() {
     
-    DogAPI.getDogs()
+    API.getDogDossiersAll()
         .then(res => {
         setDogState(res)
         console.log(res)
-        }
-        )
+        })
         .catch(err => console.log(err));
     };
 
@@ -71,11 +71,11 @@ export default function FosterDashboard(){
         .then(res => {
         setAlertState(res)
         console.log(res)
-        }
-        )
+        })
         .catch(err => console.log(err));
     };
 
+   //ASF team data to display
   const [team, setTeamState] = useState([])
 
     useEffect(() => {
@@ -88,8 +88,7 @@ export default function FosterDashboard(){
         .then(res => {
             setTeamState(res)
             console.log(res)
-        }
-        )
+        })
         .catch(err => console.log(err));
     };
 
