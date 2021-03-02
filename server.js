@@ -19,7 +19,8 @@ app.use("/api", require("./middleware/verifyToken"));
 // API routes go here
 
 app.use("/auth", require("./controllers/authController"));
-app.use("/api/user", require("./controllers/userController"))
+app.use("/api/dashboard", require("./controllers/dashboardController"));
+app.use("/api/user", require("./controllers/userController"));
 app.use("/api/dog", require("./controllers/dogController"));
 app.use("/api/address", require("./controllers/addressController"));
 app.use("/api/event", require("./controllers/eventController"));
