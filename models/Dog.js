@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes, Model) => {
             Dog.belongsTo(db.MicrochipMfg);
 
             db.DogStatus.hasMany(Dog);
-            Dog.belongsTo(db.DogStatus);
+            Dog.belongsTo(db.DogStatus, { foreignKey: { defaultValue: 1 } });
         }
     }
 
@@ -38,15 +38,15 @@ module.exports = (sequelize, DataTypes, Model) => {
         },
         gender: DataTypes.ENUM("male", "female"),
         dob: DataTypes.DATEONLY,
-        microchipId: DataTypes.INTEGER,
+        microchipId: DataTypes.STRING,
         isPurebred: DataTypes.BOOLEAN,
         secondaryBreed: DataTypes.STRING,
         pullCost: DataTypes.INTEGER,
         behaviorIssues: DataTypes.STRING,
         medicalIssues: DataTypes.STRING,
         size: DataTypes.ENUM("mini", "small", "medium", "large"),
-        weight: DataTypes.DECIMAL,
-        coat: DataTypes.STRING,
+        weight: DataTypes.DECIMAL(10, 2),
+        coat: DataTypes.ENUM("blue merle", "red merle", "red", "tri-color", "black", "brown"),
         blocked: {
             type: DataTypes.BOOLEAN,
             defaultValue: false
