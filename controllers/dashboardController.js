@@ -14,6 +14,7 @@ router.get("/", (req, res) => {
     const permissionAnyAppResponse = ac.can(req.roles).readAny("AppResponse");
     if (permissionAnyAppResponse.granted) {
         dashboardPromises[1] = db.AppResponse.count({ where: { AppStatusId: { [db.Sequelize.Op.lt]: STATIC_IDS.APP_STATUS.APPROVED } }, include: db.AppType, group: ["AppTypeId", "AppType.name"] });
+        dashboardPromises[2] = db.User.sum("maxCapacity", { where: { hold: false } });
 
         // none of this works the way I want it to, if at all:
         /* // dashboardPromises[1]
@@ -26,14 +27,15 @@ router.get("/", (req, res) => {
     }
     const permissionOwnDog = ac.can(req.roles).readOwn("Dog");
     if (permissionOwnDog.granted) {
-        dashboardPromises[2] = db.Dog.findAll({ where: { currentlyWithId: req.userId }, order: ["DogStatusId"] });
+        dashboardPromises[3] = db.Dog.findAll({ where: { currentlyWithId: req.userId }, order: ["DogStatusId"] });
     }
 
     Promise.all(dashboardPromises)
-        .then(([dogStatusCounts, pendingAppCounts, myDogs]) => {
+        .then(([dogStatusCounts, pendingAppCounts, totalMaxCapacity, myDogs]) => {
             res.json({
                 dogStatusCounts: permissionAnyDog.filter(dogStatusCounts),
                 pendingAppCounts: permissionAnyAppResponse.filter(pendingAppCounts),
+                totalMaxCapacity,
                 myDogs: permissionOwnDog.filter(myDogs)
             });
         })
