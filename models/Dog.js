@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes, Model) => {
         }
 
         getRegion() {
-            if (this.currentlyWithId) return this.getCurrentlyWith({ include: "Region" }).then(currentlyWith => currentlyWith.Address);
+            if (this.currentlyWithId) return this.getCurrentlyWith({ include: "ResidesInRegion" }).then(currentlyWith => currentlyWith.ResidesInRegion);
             return this.getOrigin({ include: "Region" }).then(origin => origin.Region);
         }
 
