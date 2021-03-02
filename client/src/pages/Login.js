@@ -80,11 +80,11 @@ export default function Login(){
                 email: "",
                 password: ""
             })
-            localStorage.setItem("user", res.data)
+            localStorage.setItem("user", JSON.stringify(res.data))
             window.location ="/My-Profile"
         }).catch(err =>{
             alert("login failed")
-            console.log(err.message)
+            console.log(err.response.data.message)
         })
     }
 

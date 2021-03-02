@@ -1,7 +1,7 @@
 const axios = require("axios")
 
 function getHeaders(){
-    return {headers: {"x-access-token": localStorage.getItem("user").accessToken}}
+    return {headers: {"x-access-token": JSON.parse(localStorage.getItem("user")).accessToken}}
 }
 
 const API = {

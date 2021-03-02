@@ -167,6 +167,9 @@ export default function ProfileForm(){
         API.getExtContact().then(res =>{
             setOrigins(res.data)
             console.log(res.data)
+        }).catch(err=>{
+            console.error(err.response.data.message)
+            alert("get data failed")
         })
     }, [])
 
@@ -358,17 +361,20 @@ export default function ProfileForm(){
                     name="originId"
                     label="Dog Origin"
                     >
+                        <MenuItem value={0}>
+                            <em>Select contact</em>
+                        </MenuItem>
                     {origins.map((origin)=>(
                         <MenuItem value={origin.id}>{origin.fullName}</MenuItem>
                     ))}
                     </Select>
                     </FormControl>
                 </Grid>
-                <Grid item>
+                {/* <Grid item>
                     <Button variant="contained" color="secondary" onClick={()=>setContactFormVis("visible")}>Add external contact</Button>
-                </Grid>
+                </Grid> */}
             </Grid>
-            <React.Fragment>
+            {/* <React.Fragment>
                 <Grid item style={{marginTop: "3em"}}>
                     <Typography variant="h5">External Contact</Typography>
                     <Divider/>
@@ -388,7 +394,7 @@ export default function ProfileForm(){
                         <TextField label="State"/>
                         <TextField label="Zip"/>
                     </Grid>
-            </React.Fragment>
+            </React.Fragment> */}
             {/* <Grid item style={{marginTop: "1em"}}>
                 <Button variant="contained" color="secondary">Add external contact</Button>
             </Grid> */}
