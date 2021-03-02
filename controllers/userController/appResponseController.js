@@ -1,6 +1,8 @@
 const db = require("../../models");
 const ac = require("../../helpers/ac");
 const router = require("express").Router();
+const sId = require("../../scripts/staticIds");
+
 
 // show all APP RESPONSES, with correct ROLE permission
 router.get("/", (req, res) => {
@@ -76,5 +78,37 @@ router.delete("/:id", (req, res) => {
         });
     } else return res.status(403).send({ message: "Not authorized to delete an AppResponse"});
 });
+
+// Create alerts for AppResponses
+
+function generateStatusAlerts(appResp) {
+    appResp.getRegion().then(Region => {
+        const or = [ {id:appResp.userId},
+            { [db.Sequelize.Op.and]: [{ "$Regions.id$": Region.id }, { "$Roles.id$": sId.ROLES.PLACEMENT }] },
+            { [db.Sequelize.Op.and]: [{ "$Regions.id$": Region.id }, { "$Roles.id$": sId.ROLES.REGIONAL }] }
+        ];
+
+    //TODO: Add Alert for REF COMPLETE
+    if (appResp.AppStatusId === sId.APP_STATUS.REF_COMPLETE) {
+        or.push({ [db.Sequelize.Op.and]: [{ "$Regions.id$": Region.id }, { "$Roles.id$": sId.ROLES.ADMIN }] })
+        or.push({ [db.Sequelize.Op.and]: [{ "$Regions.id$": Region.id }, { "$Roles.id$": sId.ROLES.SUPERADMIN }] })
+    }
+
+    // Add Alert for APPROVED
+
+    else if (appResp.AppStatusId === sId.APP_STATUS.APPROVED) {
+        or.push({ [db.Sequelize.Op.and]: [{ "$Regions.id$": Region.id }, { "$Roles.id$": sId.ROLES.ADMIN }] })
+        or.push({ [db.Sequelize.Op.and]: [{ "$Regions.id$": Region.id }, { "$Roles.id$": sId.ROLES.SUPERADMIN }] })
+    }; 
+    return Promise.all([db.User.findAll({
+        where: {
+            [db.Sequelize.Op.or]: or
+        }, include: [db.Region, db.Role]
+    }),
+    appResp.getAppStatus()
+    ]);
+    }).then(([users, AppStatus]) => users.forEach(user=> user.createAlert({message: `${AppStatus.name} for ${user.name}`, aboutUserId:user.id })))
+      .catch(console.error);
+};
 
 module.exports = router;
