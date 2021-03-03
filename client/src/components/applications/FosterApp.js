@@ -34,7 +34,7 @@ export default function FosterApp(props) {
     const [appQuestions, setAppQuestions] = useState([])
 
     useEffect(()=>{
-        API.getAdopterApp().then(res=>{
+        API.getFosterApp().then(res=>{
             setAppQuestions(res.data)
             console.log(res.data)
         }).catch(err=>{

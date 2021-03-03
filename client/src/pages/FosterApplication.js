@@ -43,7 +43,7 @@ export default function FosterApplication (){
 
     return(
         <Grid container className={classes.mainContainer}>
-            <Typography variant="h4" color="primary">Adopter Application</Typography>
+            <Typography variant="h4" color="primary">Foster Application</Typography>
             {showPage ? <FosterApp
             showCompletedPage={data=>onCompletePage(data)}
             /> : setFinalPage()}
