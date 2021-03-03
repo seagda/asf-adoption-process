@@ -89,10 +89,45 @@ export default function ProfileForm(){
     const classes = useStyles();
     const repeat = true;
 
+    const [isPurebredData, setIsPurebredData] = useState({});
+    const handlePurebredChange = (event) => {
+      const {name, value} = event.target
+      setIsPurebredData({
+          ...isPurebredData,
+          [name]: value
+      })
+    };
+
+    const [coatColorData, setCoatColorData]= useState({});
+    const handleCoatColorChange = (event) =>{
+        const {name,value} = event.target
+        setCoatColorData({
+            ...coatColorData,
+            [name]: value
+        })
+    }
+
+    const [sizeData, setSizedata] = useState({});
+    const handleSizeChange = (event) => {
+      const {name, value} = event.target
+      setSizedata({
+          ...sizeData,
+          [name]: value
+      })
+    };
+
     const [contactFormVis, setContactFormVis] = useState(true)
     const onClick = () => setContactFormVis(false)
 
-    const [dogIntakeData, setDogIntakeData] = useState({})
+    // origin type selector 
+    const [originContactData, setOriginContactData] = useState({});
+    const handleOriginContact = (event) => {
+        const {name, value} = event.target
+        setOriginContactData({
+            ...originContactData,
+            [name]: value
+        })
+    };
 
     const [addedExternalContactData, setAddedExternalContactData] = useState({})
     const handleAddedExternalContactChange = (event) =>{
@@ -112,15 +147,6 @@ export default function ProfileForm(){
         })
     }
 
-    const [isPurebredData, setIsPurebredData] = useState({});
-    const handlePurebredChange = (event) => {
-      const {name, value} = event.target
-      setIsPurebredData({
-          ...isPurebredData,
-          [name]: value
-      })
-    };
-
     const [genderData, setGenderData] = useState({});
     const handleGenderChange = (event) => {
       const {name, value} = event.target
@@ -129,34 +155,6 @@ export default function ProfileForm(){
           [name]: value
       })
     };
-
-
-    // origin type selector 
-    const [originContactData, setOriginContactData] = useState({});
-    const handleOriginContact = (event) => {
-      const {name, value} = event.target
-      setOriginContactData({
-          ...originContactData,
-          [name]: value
-      })
-    };
-
-    const [sizeData, setSizedata] = useState({});
-    const handleSizeChange = (event) => {
-      const {name, value} = event.target
-      setSizedata({
-          ...sizeData,
-          [name]: value
-      })
-    };
-
-    const createDogInputChange = event =>{
-        const {name, value} = event.target
-        setDogIntakeData({
-            ...dogIntakeData,
-            [name]: value
-        })
-    }
     
     const [origins, setOrigins] = useState([])
 
@@ -170,12 +168,22 @@ export default function ProfileForm(){
         })
     }, [])
 
+    const [dogIntakeData, setDogIntakeData] = useState({})
+    const createDogInputChange = event =>{
+        const {name, value} = event.target
+        setDogIntakeData({
+            ...dogIntakeData,
+            [name]: value
+        })
+    }
+
     const handleDogIntakeFormSubmit = event =>{
         event.preventDefault();
         const newDog = {...dogIntakeData, 
             ...isPurebredData, 
             ...genderData,
-            ...sizeData, 
+            ...sizeData,
+            ...coatColorData, 
             ...originContactData,
         }
         if(originContactData.originId === 0){
@@ -189,6 +197,7 @@ export default function ProfileForm(){
             setIsPurebredData({})
             setGenderData({})
             setSizedata({})
+            setCoatColorData({})
             setOriginContactData({})
             setAddedExternalContactData({})
             setAddedAddressData({})
@@ -276,7 +285,26 @@ export default function ProfileForm(){
                 <TextField className={classes.formControl} variant="outlined" label="Secondary Breed" onChange={createDogInputChange} value={dogIntakeData.secondaryBreed} name="secondaryBreed"/>
             </Grid>
             <Grid item style={{marginTop: "1em"}}>
-                <TextField className={classes.formControl} variant="outlined" label="Coat Color" onChange={createDogInputChange} value={dogIntakeData.coat} name="coat"/>
+                <div>
+                    <FormControl variant="outlined" className={classes.formControl}>
+                    <InputLabel id="coat">Coat Color</InputLabel>
+                    <Select
+                    labelId="coat"
+                    id="coat"
+                    onChange={handleCoatColorChange}
+                    value={coatColorData.coat}
+                    name="coat"
+                    label="coat"
+                    >
+                    <MenuItem value="blue merle">Blue Merle</MenuItem>
+                    <MenuItem value="red merle">Red Merle</MenuItem>
+                    <MenuItem value="red">Red</MenuItem>
+                    <MenuItem value="tri-color">Tri-Color</MenuItem>
+                    <MenuItem value="black">Black</MenuItem>
+                    </Select>
+                    </FormControl>
+
+                </div>
             </Grid>
             <Grid item style={{marginTop: "1em"}}>
                 <TextField className={classes.formControl} type="number" variant="outlined" label="weight" onChange={createDogInputChange} value={dogIntakeData.weight} name="weight"/>
@@ -393,7 +421,7 @@ export default function ProfileForm(){
         <Grid item container className={classes.itemContainer}>
         <Grid container>
             <Grid item style={{marginTop: "3em"}}>
-                <Typography variant="h4">Health Record</Typography>
+                <Typography variant="h4">Medical Issues</Typography>
                 <Divider/>
             </Grid>
         </Grid>
@@ -408,7 +436,7 @@ export default function ProfileForm(){
                 <SingleSelect title="Has Medical Issues"/>
             </Grid> */}
             <Grid item container style={{marginTop: "1em"}} justify="center">
-                <TextField className={classes.largeTextfield} label="Medical Details" rows={6} multiline variant="outlined" onChange={createDogInputChange} value={dogIntakeData.medicalIssues} name="medicalIssues"/>
+                <TextField className={classes.largeTextfield} label="Known medical issues" rows={6} multiline variant="outlined" onChange={createDogInputChange} value={dogIntakeData.medicalIssues} name="medicalIssues"/>
             </Grid>
         </Grid>
         <Grid container>
