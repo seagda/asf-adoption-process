@@ -64,7 +64,7 @@ router.get("/:id", (req, res) => {
             include: [
                 { association: "currentlyWith", include: [db.Address, { association: "ResidesInRegion" }] },
                 { association: "origin", include: [db.Address, db.Region] },
-                db.DogPhoto
+                db.MicrochipMfg, db.DogPhoto
             ],
         }).then(dog => {
             // TODO: also check permissions for currently with and origin
