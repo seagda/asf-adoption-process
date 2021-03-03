@@ -3,6 +3,9 @@ import Grid from '@material-ui/core/Grid';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Button from "@material-ui/core/Button";
 import {NavLink} from "react-router-dom";
+import Typography from "@material-ui/core/Typography";
+import Paper from "@material-ui/core/Paper";
+import Divider from "@material-ui/core/Divider";
 
 const useStyles=makeStyles(theme => ({
     mainContainer: {
@@ -15,7 +18,7 @@ const useStyles=makeStyles(theme => ({
             width: "80%"
         },
         [theme.breakpoints.down("sm")]:{
-            width: "80%"
+            width: "60%"
         },
         [theme.breakpoints.down("xs")]:{
             spacing: theme.spacing(2),
@@ -24,7 +27,43 @@ const useStyles=makeStyles(theme => ({
     },
     formItem: {
         marginBottom: "1em"
+    },
+    paper: {
+        padding: "3em",
+        [theme.breakpoints.down("sm")]: {
+            width: "70%"
+        },
+        [theme.breakpoints.down("xs")]: {
+            width: "90%",
+            padding: "1em"
+        }
+    },
+    login: {
+        marginRight: "3em",
+        [theme.breakpoints.down("sm")]:{
+            marginRight: 0,
+            marginBottom: "2em"
+        },
+        [theme.breakpoints.down("xs")]:{
+            marginRight: 0
+        }
+    },
+    signup: {
+        marginLeft: "3em",
+        [theme.breakpoints.down("sm")]:{
+            marginLeft: 0
+        },
+        [theme.breakpoints.down("xs")]:{
+            marginLeft: 0,
+            marginTop: "2em"
+        }
+    },
+    welcome: {
+        [theme.breakpoints.down("sm")]: {
+            width: "60%"
+        }
     }
+
 }))
 
 export default function Home(){
@@ -32,16 +71,31 @@ export default function Home(){
 
     return(
         <Grid container className={classes.mainContainer}>
-            <Grid item>
-                <NavLink style={{textDecoration: "none"}} to="/signin">
-                    <Button color="secondary" variant="contained">Login</Button>
-                </NavLink>
+            <Grid item container align="center" style={{marginBottom: "3em"}} direction="column">
+                <Grid item className={classes.welcome}>
+                    <Typography variant="h4" color="primary">Welcome!</Typography>
+                    <Divider/>
+                </Grid>
             </Grid>
-            <Grid item>
-                <NavLink style={{textDecoration: "none"}} to="/signup">
-                    <Button color="secondary" variant="contained">Sign Up</Button>
-                </NavLink>
+            <Paper className={classes.paper}>
+            <Grid item container justify="space-evenly">
+                <Grid item align="center" className={classes.login}>
+                    <Typography>If you already have an account,</Typography>
+                    <Typography style={{marginBottom: "1em"}}> press "LOGIN" to continue.</Typography>
+                    <NavLink style={{textDecoration: "none"}} to="/signin">
+                        <Button color="secondary" variant="contained">Login</Button>
+                    </NavLink>
+                </Grid>
+                <Divider orientation="vertical" flexItem />
+                <Grid item align="center" className={classes.signup}>
+                    <Typography>If you need to create an account,</Typography>
+                    <Typography style={{marginBottom: "1em"}}> press "SIGN UP" to get started.</Typography>
+                    <NavLink style={{textDecoration: "none"}} to="/signup">
+                        <Button color="secondary" variant="contained">Sign Up</Button>
+                    </NavLink>
+                </Grid>
             </Grid>
+            </Paper>
         </Grid>
     )
 }

@@ -76,6 +76,18 @@ const useStyles = makeStyles(theme => ({
         [theme.breakpoints.down("sm")]: {
             marginLeft: "2.5em"
         }
+    },
+    seniorContainer: {
+        marginTop: "3em",
+        [theme.breakpoints.down("xs")]: {
+            marginTop: "1em"
+        }
+    },
+    seniorItem: {
+        marginTop: "4.25em",
+        [theme.breakpoints.down("xs")]: {
+            marginTop: "0.5em"
+        }
     }
 }))
 
@@ -86,13 +98,110 @@ export default function ProfileForm(){
     const names = ["Adopter", "Foster", "Regional", "Volunteer", "Rescuer", "Transporter", "Placement"]
 
     const [userIntakeData, setUserIntakeData] = useState({})
+    const createUserInputChange = event =>{
+        const {name,value} = event.target
+        setUserIntakeData({
+            ...userIntakeData,
+            [name]: value
+        })
+    }
+
+    const [isActiveData, setIsActiveData] = useState({});
+    const handleActiveChange = (event) => {
+      const {name, value} = event.target
+      setIsActiveData({
+          ...isActiveData,
+          [name]: value
+      })
+    };
+
+    const [isBlockedData, setIsBlockedData] = useState({});
+    const handleBlockedChange = (event) => {
+      const {name, value} = event.target
+      setIsBlockedData({
+          ...isBlockedData,
+          [name]: value
+      })
+    };
+
+    const [caresForPuppiesData, setCaresForPuppiesData] = useState({});
+    const handlePuppiesChange = (event) => {
+      const {name, value} = event.target
+      setCaresForPuppiesData({
+          ...caresForPuppiesData,
+          [name]: value
+      })
+    };
+
+    const [caresForAdultsData, setCaresForAdultsData] = useState({});
+    const handleAdultsChange = (event) => {
+      const {name, value} = event.target
+      setCaresForAdultsData({
+          ...caresForAdultsData,
+          [name]: value
+      })
+    };
+
+    const [caresForSeniorsData, setCaresForSeniorsData] = useState({});
+    const handleSeniorsChange = (event) => {
+      const {name, value} = event.target
+      setCaresForSeniorsData({
+          ...caresForSeniorsData,
+          [name]: value
+      })
+    };
+
+    const [withMedIssuesData, setWithMedIssuesData] = useState({});
+    const handleMedIssuesChange = (event) => {
+      const {name, value} = event.target
+      setWithMedIssuesData({
+          ...withMedIssuesData,
+          [name]: value
+      })
+    };
+
+    const [withBehaviorIssuesData, setWithBehaviorIssuesData] = useState({});
+    const handleBehaviorChange = (event) => {
+      const {name, value} = event.target
+      setWithBehaviorIssuesData({
+          ...withBehaviorIssuesData,
+          [name]: value
+      })
+    };
+
+    const [onHoldData, setOnHoldData] = useState({});
+    const handleHoldChange = (event) => {
+      const {name, value} = event.target
+      setOnHoldData({
+          ...onHoldData,
+          [name]: value
+      })
+    };
 
     const handleUserIntakeFormSubmit = event =>{
         event.preventDefault();
-        API.createUser({...userIntakeData})
+        API.createUser({...userIntakeData,
+            ...isActiveData,
+            ...isBlockedData,
+            ...caresForPuppiesData,
+            ...caresForAdultsData,
+            ...caresForSeniorsData,
+            ...withMedIssuesData,
+            ...withBehaviorIssuesData,
+            ...onHoldData
+        })
         .then(res =>{
             console.log(res.data)
             setUserIntakeData({})
+            setIsActiveData({})
+            setIsBlockedData({})
+            setCaresForPuppiesData({})
+            setCaresForAdultsData({})
+            setCaresForSeniorsData({})
+            setWithMedIssuesData({})
+            setWithBehaviorIssuesData({})
+            setOnHoldData({})
+            window.location = "/Manage-ASF-Users"
         }).catch(err=>{
             console.error(err.response.data.message)
             alert("Create dog failed")
@@ -138,6 +247,8 @@ export default function ProfileForm(){
                     <Select
                     labelId="active"
                     id="active"
+                    onChange={handleActiveChange}
+                    value={isActiveData.active}
                     name="active"
                     label="Is active?"
                     >
@@ -154,6 +265,8 @@ export default function ProfileForm(){
                     <Select
                     labelId="blocked"
                     id="blocked"
+                    onChange={handleBlockedChange}
+                    value={isBlockedData.blocked}
                     name="blocked"
                     label="Is blocked?"
                     >
@@ -170,6 +283,8 @@ export default function ProfileForm(){
                     <Select
                     labelId="hold"
                     id="hold"
+                    onChange={handleHoldChange}
+                    value={onHoldData.hold}
                     name="hold"
                     label="On hold?"
                     >
@@ -199,7 +314,7 @@ export default function ProfileForm(){
                     </Grid>
                     <Grid item xs={6} sm={6} md={8} lg={6}>
                         <div>
-                        <TextField variant="outlined" type="number" style={{marginTop: "0.5em"}} name="maxCapacity" value="maxCapacity"></TextField>
+                        <TextField variant="outlined" type="number" style={{marginTop: "0.5em"}} onChange={createUserInputChange} value={userIntakeData.maxCapacity} name="maxCapacity"></TextField>
                         {/* <TextField type="number" style={{marginTop: "1em"}}></TextField>
                         <TextField type="number" style={{marginTop: "1em"}}></TextField> */}
                         </div>
@@ -226,6 +341,8 @@ export default function ProfileForm(){
                     <Select
                     labelId="puppies"
                     id="puppies"
+                    onChange={handlePuppiesChange}
+                    value={caresForPuppiesData.puppies}
                     name="puppies"
                     label="Puppies?"
                     >
@@ -244,6 +361,8 @@ export default function ProfileForm(){
                     <Select
                     labelId="adults"
                     id="adults"
+                    onChange={handleAdultsChange}
+                    value={caresForAdultsData.adults}
                     name="adults"
                     label="Adults?"
                     >
@@ -255,8 +374,8 @@ export default function ProfileForm(){
                     </Grid>
                 </Grid>
             </Grid>
-            <Grid item container xs={10} sm={6} md={6} lg={6} style={{marginTop: "3em"}} direction="column">
-                <Grid item container style={{marginTop: "4.25em"}}>
+            <Grid item container xs={10} sm={6} md={6} lg={6} className={classes.seniorContainer} direction="column">
+                <Grid item container className={classes.seniorItem}>
                     <Grid item style={{marginTop: "1em"}}>
                     <div>
                     <FormControl variant="outlined" className={classes.formControl}>
@@ -264,7 +383,9 @@ export default function ProfileForm(){
                     <Select
                     labelId="seniors"
                     id="seniors"
-                    name="seniors"
+                    onChange={handleSeniorsChange}
+                    value={caresForSeniorsData.seniors}
+                    name="active"
                     label="Seniors?"
                     >
                     <MenuItem value="true">Yes</MenuItem>
@@ -282,6 +403,8 @@ export default function ProfileForm(){
                     <Select
                     labelId="withBehaviorIssues"
                     id="withBehaviorIssues"
+                    onChange={handleBehaviorChange}
+                    value={withBehaviorIssuesData.withBehaviorIssues}
                     name="withBehaviorIssues"
                     label="With behaviorial issues?"
                     >
@@ -302,6 +425,8 @@ export default function ProfileForm(){
                     <Select
                     labelId="withMedicalIssues"
                     id="withMedicalIssues"
+                    onChange={handleMedIssuesChange}
+                    value={withMedIssuesData.withMedicalIssues}
                     name="withMedicalIssues"
                     label="Medical Issues?"
                     >
@@ -387,14 +512,14 @@ export default function ProfileForm(){
         </Grid>
         <Grid container>
             <Grid item container style={{marginTop: "1em"}} justify="center">
-                <TextField className={classes.largeTextfield} label="Admin Notes" rows={6} multiline variant="outlined" name="adminNotes"/>
+                <TextField className={classes.largeTextfield} label="Admin Notes" rows={6} multiline variant="outlined" onChange={createUserInputChange} value={userIntakeData.adminNotes} name="adminNotes"/>
             </Grid>
         </Grid>
     </Grid>
     )
 
     return (
-        <form>
+        <form onSubmit={handleUserIntakeFormSubmit}>
         <Grid item container className={classes.itemContainer}>
         <Grid container justify="space-evenly" className={classes.picContainer}>
             <Grid item>
@@ -404,20 +529,20 @@ export default function ProfileForm(){
             <Grid item>
                 <div className={classes.form}>
                     <Grid item container className={classes.formItem}>
-                        <TextField variant="outlined" label="First Name"/>
+                        <TextField variant="outlined" label="First Name" onChange={createUserInputChange} value={userIntakeData.firstName} name="firstName"/>
                     </Grid>
                     <Grid item container className={classes.formItem}>
-                        <TextField variant="outlined" label="Last Name"/>
+                        <TextField variant="outlined" label="Last Name" onChange={createUserInputChange} value={userIntakeData.lastName} name="lastName"/>
                     </Grid>
                     <Grid item container className={classes.formItem}>
-                        <TextField variant="outlined" label="Phone"/>
+                        <TextField variant="outlined" label="Phone" onChange={createUserInputChange} value={userIntakeData.phone} name="phone"/>
                     </Grid>
                     <Grid item container className={classes.formItem}>
-                        <TextField type="email" variant="outlined" label="Email"/>
+                        <TextField type="email" variant="outlined" label="Email" onChange={createUserInputChange} value={userIntakeData.email} name="email"/>
                     </Grid>
                     <Grid item container className={classes.formItem} direction="column">
                         <InputLabel id="birthday">Date of birth</InputLabel>
-                        <TextField type="date" variant="outlined" labelId="birthday" name="dob"/>
+                        <TextField type="date" variant="outlined" labelId="birthday" onChange={createUserInputChange} value={userIntakeData.dob} name="dob"/>
                     </Grid>
                 </div>
             </Grid>
