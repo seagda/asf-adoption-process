@@ -51,7 +51,7 @@ export default function DogProfileView(){
                 <Typography variant="h4" color="primary">{dogData.name}'s details</Typography>
                 <Divider/>
             </Grid>
-            <DogBlockView name={dogData.name} dob={dogData.dob} gender={dogData.gender} size={dogData.size} microchipId={dogData.microchipId} asfId={dogData.asfId} microchipName={dogData.MicrochipMfg.name}/>
+            <DogBlockView name={dogData.name} dob={dogData.dob} gender={dogData.gender} size={dogData.size} microchipId={dogData.microchipId} asfId={dogData.asfId} microchipName={dogData.MicrochipMfg.name} image={dogData.DogPhotos[0].url}/>
             {dogData.canEdit ? <DogProfileActions/> : null}
         </Grid>
     )

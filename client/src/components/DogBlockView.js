@@ -37,7 +37,7 @@ export default function DogBlockView(props){
         <Grid item container className={classes.itemContainer}>
         <Grid container justify="space-evenly" className={classes.picContainer}>
             <Grid item>
-                <Image alt={"cool dog"} pic={dog} />
+                <Image alt={"cool dog"} pic={props.image} />
             </Grid>
             <Grid item className={classes.form}>
                 <Grid item container className={classes.formItem}>
