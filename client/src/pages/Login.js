@@ -4,6 +4,8 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
+import Divider from "@material-ui/core/Divider";
+import Typography from "@material-ui/core/Typography";
 
 import API from "../utils/API";
 
@@ -53,6 +55,31 @@ const useStyles=makeStyles(theme => ({
             margin: theme.spacing(1),
             width: '25ch',
         }
+    },
+    paper: {
+        marginLeft: "25em",
+        [theme.breakpoints.down("md")]:{
+            marginLeft: "4em",
+        },
+        [theme.breakpoints.down("sm")]:{
+            marginLeft: "4em",
+        },
+        [theme.breakpoints.down("xs")]:{
+            marginLeft: 0,
+        }
+    },
+    loginWelcome: {
+        width: "70%",
+        marginLeft: "10em",
+        [theme.breakpoints.down("md")]:{
+            marginLeft: "4em",
+        },
+        [theme.breakpoints.down("sm")]:{
+            marginLeft: "4em",
+        },
+        [theme.breakpoints.down("xs")]:{
+            marginLeft: 0,
+        }
     }
 }))
 
@@ -90,7 +117,13 @@ export default function Login(){
 
     return(
         <Grid container className={classes.mainContainer}>
-            <Paper>
+            <Grid item container align="center" style={{marginBottom: "3em"}} direction="column" className={classes.loginWelcome}>
+                <Grid item>
+                    <Typography variant="h4" color="primary">Login</Typography>
+                    <Divider/>
+                </Grid>
+            </Grid>
+            <Paper className={classes.paper}>
             <form onSubmit={handleLoginFormSubmit}>
                 <Grid item container className={classes.itemContainer}>
                     <Grid item className={classes.form}>

@@ -41,9 +41,7 @@ export default function Home(){
             <Grid item container align="center" style={{marginBottom: "3em"}} direction="column">
                 <Grid item>
                     <Typography variant="h4" color="primary">Welcome!</Typography>
-                </Grid>
-                <Grid item>
-                    <Typography></Typography>
+                    <Divider/>
                 </Grid>
             </Grid>
             <Paper className={classes.paper}>
