@@ -50,31 +50,25 @@ router.get("/status", (req, res) => {
 // show one DOG, with correct ROLE permission
 
 router.get("/:id", (req, res) => {
-    const permissionOwn = ac.can(req.roles).readOwn("Dog");
-    const permissionAny = ac.can(req.roles).readAny("Dog");
-    if (permissionOwn.granted || permissionAny.granted) {
+    const permissionReadOwn = ac.can(req.roles).readOwn("Dog");
+    const permissionReadAny = ac.can(req.roles).readAny("Dog");
+    const permissionUpdateOwn = ac.can(req.roles).updateOwn("Dog");
+    const permissionUpdateAny = ac.can(req.roles).updateAny("Dog");
+    if (permissionReadOwn.granted || permissionReadAny.granted) {
         db.Dog.findByPk(req.params.id, {
             include: [
-                { model: db.User, as: "currentlyWith", include: db.Address },
-                { model: db.ExtContact, as: "currentlyWith", include: db.Address },
+                { association: "currentlyWith", include: [db.Address, { association: "ResidesInRegion" }] },
+                { association: "origin", include: [db.Address, db.Region] },
             ],
         }).then(dog => {
+            // TODO: also check permissions for currently with and origin
             let dogJson;
             if (dog.currentlyWithId === req.userId) {
-                dogJson = permissionOwn.filter(dog.toJSON())
-            } else if (permissionAny.granted) {
-                dogJson = permissionAny.filter(dog.toJSON())
+                dogJson = { ...permissionReadOwn.filter(dog.toJSON()), canEdit: permissionUpdateOwn.granted }
+            } else if (permissionReadAny.granted) {
+                dogJson = { ...permissionReadAny.filter(dog.toJSON()), canEdit: permissionUpdateAny.granted }
             } else return res.status(403).send({ message: "you can't view this dog" });
-
-            if (dogJson.currentlyWithId) {
-                dogJson.city = dogJson.currentlyWith.Address.city;
-                dogJson.state = dogJson.currentlyWith.Address.state;
-            } else {
-                dogJson.city = dogJson.origin.Address.city;
-                dogJson.state = dogJson.origin.Address.state;
-            }
-            const { currentlyWith, origin, ...dogToSend } = dogJson;
-            res.json(dogToSend);
+            res.json(dogJson);
         });
 
     } else return res.status(403).send({ message: "Not authorized to view dogs" });
