@@ -44,7 +44,7 @@ router.post("/", (req, res) => {
     if (permission.granted) {
 
         db.AppResponse
-            .create({ ...permission.filter(req.body), UserId: req.userId })
+            .create({ response: req.body.response, AppTypeId: req.body.AppTypeId, UserId: req.userId })
             .then(() => res.status(200).send({ message: "Application successfully created" }))
             .catch(err => {
                 console.error(err)
