@@ -27,15 +27,12 @@ const useStyles=makeStyles(theme => ({
 
 
 export default function CreateUser() {
-    const classes = useStyles()
-
-    
+    const classes = useStyles();
 
     return (
         <Grid container className={classes.mainContainer}>
             <ProfileForm submitFunction={API.createUser}/>
             {/* <RoleAssignment/> */}
         </Grid>
-       
     )
 }

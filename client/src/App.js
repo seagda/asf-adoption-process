@@ -26,7 +26,6 @@ import FosterApplication from "./pages/FosterApplication";
 
 export default function App() {
     const admin = true;
-
     return (
         <ThemeProvider theme={theme}>
             <BrowserRouter>
@@ -43,7 +42,7 @@ export default function App() {
                     <Route path="/adopterApplication"><AdopterApplication/></Route>
                     <Route path="/fosterApplication"><FosterApplication/></Route>
                     <Route path="/createUser"><CreateUser/></Route>
-                    <Route path="/dogView"><DogProfileView/></Route>
+                    <Route path="/dogView/:id"><DogProfileView/></Route>
                     <Route path="/createdog"><DogProfileEdit/></Route>
                     <Route path="/signin"><Login /></Route>
                     <Route path="/signup"><SignUp/></Route>

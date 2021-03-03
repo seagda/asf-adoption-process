@@ -1,6 +1,8 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
+import {useParams} from "react-router-dom";
 import Grid from '@material-ui/core/Grid';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
+import API from "../utils/API";
 
 import DogBlockView from "../components/DogBlockView";
 
@@ -26,9 +28,23 @@ const useStyles=makeStyles(theme => ({
 export default function DogProfileView(){
     const classes = useStyles();
 
+    let {id} = useParams();
+    console.log(id)
+
+    const [dogData, setDogData] = useState({})
+    useEffect(()=>{
+        API.getSingleDogData(id).then(res =>{
+            console.log(res.data)
+            setDogData(res.data)
+        }).catch(err=>{
+            console.error(err.response.data.message)
+            alert("get data failed")
+        })
+    },[])
+
     return(
         <Grid container className={classes.mainContainer}>
-            <DogBlockView/>
+            <DogBlockView name={dogData.name}/>
         </Grid>
     )
 }
