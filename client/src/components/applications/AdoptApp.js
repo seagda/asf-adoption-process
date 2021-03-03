@@ -5,20 +5,28 @@ import { json } from "../questions/questions1";
 import Grid from '@material-ui/core/Grid';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import API from "../../utils/API";
+import "../../components/applications/style.css";
 
 // const useStyles = makeStyles(theme => ({
 //     matrix: {
-//         root: "table table-striped"
-//     },
-//     navigationButton: "button btn-lg"
+//         root: {
+//             sv_main: {
+//                 sv_body: {
+//                     borderTop: "blue"
+//                 }
+//             }
+//         }
+//     }
 // }))
 
-var myCss = {
-    matrix: {
-        root: "table table-striped"
-    },
-    navigationButton: "button btn-lg"
-};
+// var myCss = {
+//     matrix: {
+//         root: {
+
+//         }
+//     },
+//     navigationButton: "button"
+// };
 
 export default function AdoptApp(props) {
     // const classes = useStyles();
@@ -37,6 +45,7 @@ export default function AdoptApp(props) {
 
     return (
         <Survey.Survey
+            className="sv_main sv_body"
             json={{elements: appQuestions}}
             showCompletedPage={false}
             onComplete={data => props.showCompletedPage(data.valuesHash)}
