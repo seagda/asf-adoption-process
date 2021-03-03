@@ -4,6 +4,7 @@ import * as Survey from "survey-react";
 import { json } from "../questions/questions1";
 import Grid from '@material-ui/core/Grid';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
+import API from "../../utils/API";
 
 // const useStyles = makeStyles(theme => ({
 //     matrix: {
@@ -25,7 +26,6 @@ export default function AdoptApp(props) {
     return (
 
         <Survey.Survey
-            css={myCss}
             json={json}
             showCompletedPage={false}
             onComplete={data => props.showCompletedPage(data.valuesHash)}

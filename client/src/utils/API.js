@@ -17,6 +17,15 @@ const API = {
     createUser: function(userData){
         return axios.post(`/api/user/new`, userData, getHeaders())
     },
+    getAdopterApp: function(){
+        return axios.get(`/api/app/adopter`, getHeaders())
+    },
+    getFosterApp: function(){
+        return axios.get(`/api/app/foster`, getHeaders())
+    },
+    sendAppData: function(response, appId){
+        return axios.post(`/api/user/app-response`, response, appId, getHeaders())
+    },
 
     // example get request
     getDogDossiersAll: function() {
