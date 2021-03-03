@@ -36,7 +36,6 @@ const useStyles=makeStyles(theme => ({
         }
     },
     form: {
-        paddingRight: "3em",
         [theme.breakpoints.down("sm")]:{
             padding: "1em"
         }
