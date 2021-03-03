@@ -21,7 +21,7 @@ router.get("/:type/questions", (req, res) => {
     const permission = ac.can(req.roles).readAny("AppQuestion");
     if (permission.granted) {
         db.AppQuestionCategory.findAll({
-            order: [[db.AppQuestion, "position"]],
+            order: ["id", [db.AppQuestion, "position"], [db.AppQuestion, "id"]],
             include: {
                 model: db.AppQuestion,
                 include: [
