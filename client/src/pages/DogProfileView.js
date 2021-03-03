@@ -8,6 +8,7 @@ import Divider from "@material-ui/core/Divider";
 
 import DogBlockView from "../components/DogBlockView";
 import DogProfileActions from "../components/DogProfileActions";
+import DogBreedView from "../components/DogBreedView";
 
 const useStyles=makeStyles(theme => ({
     mainContainer: {
@@ -34,7 +35,7 @@ export default function DogProfileView(){
     let {id} = useParams();
     console.log(id)
 
-    const [dogData, setDogData] = useState({MicrochipMfg:{}, DogStatus:{}})
+    const [dogData, setDogData] = useState({MicrochipMfg:{}, DogStatus:{}, DogPhotos: []})
     useEffect(()=>{
         API.getSingleDogData(id).then(res =>{
             console.log(res.data)
@@ -51,8 +52,11 @@ export default function DogProfileView(){
                 <Typography variant="h4" color="primary">{dogData.name}'s details</Typography>
                 <Divider/>
             </Grid>
-            <DogBlockView name={dogData.name} dob={dogData.dob} gender={dogData.gender} size={dogData.size} microchipId={dogData.microchipId} asfId={dogData.asfId} microchipName={dogData.MicrochipMfg.name} image={dogData.DogPhotos[0].url}/>
+            <DogBlockView name={dogData.name} dob={dogData.dob} gender={dogData.gender} size={dogData.size} microchipId={dogData.microchipId} asfId={dogData.asfId} microchipName={dogData.MicrochipMfg.name} image={(dogData.DogPhotos.find((photo)=> photo.profilePhoto)||{}).url}/>
+
             {dogData.canEdit ? <DogProfileActions/> : null}
+
+            <DogBreedView/>
         </Grid>
     )
 }
