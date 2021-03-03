@@ -3,6 +3,8 @@ import {useParams} from "react-router-dom";
 import Grid from '@material-ui/core/Grid';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import API from "../utils/API";
+import Typography from "@material-ui/core/Typography";
+import Divider from "@material-ui/core/Divider";
 
 import DogBlockView from "../components/DogBlockView";
 
@@ -44,6 +46,10 @@ export default function DogProfileView(){
 
     return(
         <Grid container className={classes.mainContainer}>
+            <Grid item style={{marginBottom: "3em"}}>
+                <Typography variant="h4" color="primary">{dogData.name}'s details</Typography>
+                <Divider/>
+            </Grid>
             <DogBlockView name={dogData.name} dob={dogData.dob} gender={dogData.gender} size={dogData.size} microchipId={dogData.microchipId} asfId={dogData.asfId}/>
         </Grid>
     )
