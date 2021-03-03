@@ -94,24 +94,20 @@ export default function ProfileForm(){
 
     const [dogIntakeData, setDogIntakeData] = useState({})
 
-    const [addedExternalContactData, setAddedExternalContactData] = useState({
-        origin: {
-            email: "",
-            phone: "",
-            fullName: "",
-            contactType: "",
-            Address: {
-                street: "",
-                city: "",
-                state: "",
-                zip5: ""
-            }
-        }
-    })
+    const [addedExternalContactData, setAddedExternalContactData] = useState({})
     const handleAddedExternalContactChange = (event) =>{
         const {name,value} = event.target
         setAddedExternalContactData({
             ...addedExternalContactData,
+            [name]: value
+        })
+    }
+
+    const [addedAddressData, setAddedAddressData] = useState({})
+    const handleExternalAddress = (event) =>{
+        const {name,value} = event.target
+        setAddedAddressData({
+            ...addedAddressData,
             [name]: value
         })
     }
@@ -167,32 +163,26 @@ export default function ProfileForm(){
 
     const handleDogIntakeFormSubmit = event =>{
         event.preventDefault();
-        API.createDog({...dogIntakeData, 
+        const newDog = {...dogIntakeData, 
+
             ...isPurebredData, 
             ...sizeData, 
             ...originContactData,
-            ...addedExternalContactData
-        })
+            
+        }
+        if(originContactData.originId === 0){
+            newDog.origin = {...addedExternalContactData, Address: addedAddressData}
+        }
+        console.log(newDog)
+        API.createDog(newDog)
             .then(res =>{
             console.log(res.data)
             setDogIntakeData({})
             setIsPurebredData({})
             setSizedata({})
             setOriginContactData({})
-            setAddedExternalContactData({
-                origin: {
-                    email: "",
-                    phone: "",
-                    fullName: "",
-                    contactType: "",
-                    Address: {
-                        street: "",
-                        city: "",
-                        state: "",
-                        zip5: ""
-                    }
-                }
-            })
+            setAddedExternalContactData({})
+            setAddedAddressData({})
             window.location = "/My-Dogs"
         }).catch(err=>{
             console.error(err.response.data.message)
@@ -364,10 +354,10 @@ export default function ProfileForm(){
                     </Grid>
                     <Grid item container direction="column" style={{marginTop: "2em"}} xs={10} sm={10} md={6} lg={6}>
                         <Typography>Address:</Typography>
-                        <TextField label="Street" onChange={handleAddedExternalContactChange} value={addedExternalContactData.street} name="street"/>
-                        <TextField label="City" onChange={handleAddedExternalContactChange} value={addedExternalContactData.city} name="city"/>
-                        <TextField label="State" onChange={handleAddedExternalContactChange} value={addedExternalContactData.state} name="state"/>
-                        <TextField label="Zip" onChange={handleAddedExternalContactChange} value={addedExternalContactData.zip5} name="zip5"/>
+                        <TextField label="Street" onChange={handleExternalAddress} value={addedAddressData.street} name="street"/>
+                        <TextField label="City" onChange={handleExternalAddress} value={addedAddressData.city} name="city"/>
+                        <TextField label="State" onChange={handleExternalAddress} value={addedAddressData.state} name="state"/>
+                        <TextField label="Zip" onChange={handleExternalAddress} value={addedAddressData.zip5} name="zip5"/>
                     </Grid>
                 </React.Fragment>
             }
