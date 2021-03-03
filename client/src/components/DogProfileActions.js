@@ -24,7 +24,7 @@ export default function DogProfileActions(){
     return(
         <Grid container justify="space-evenly" style={{marginTop: "4em"}}>
             <Grid item>
-                {admin ? <EditButton toLink="/editprofile" buttonText="Edit Dog Info"/> : <EditButton toLink="/editprofile" buttonText="Edit Profile"/>}
+                <EditButton toLink="/editDog" buttonText="Edit Dog Info"/>
             </Grid>
         </Grid>
     )

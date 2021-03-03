@@ -7,6 +7,7 @@ import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 
 import DogBlockView from "../components/DogBlockView";
+import DogProfileActions from "../components/DogProfileActions";
 
 const useStyles=makeStyles(theme => ({
     mainContainer: {
@@ -33,7 +34,7 @@ export default function DogProfileView(){
     let {id} = useParams();
     console.log(id)
 
-    const [dogData, setDogData] = useState({})
+    const [dogData, setDogData] = useState({MicrochipMfg:{}, DogStatus:{}})
     useEffect(()=>{
         API.getSingleDogData(id).then(res =>{
             console.log(res.data)
@@ -51,6 +52,7 @@ export default function DogProfileView(){
                 <Divider/>
             </Grid>
             <DogBlockView name={dogData.name} dob={dogData.dob} gender={dogData.gender} size={dogData.size} microchipId={dogData.microchipId} asfId={dogData.asfId} microchipName={dogData.MicrochipMfg.name}/>
+            {dogData.canEdit ? <DogProfileActions/> : null}
         </Grid>
     )
 }
