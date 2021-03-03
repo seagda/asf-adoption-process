@@ -5,6 +5,7 @@ import Button from "@material-ui/core/Button";
 import {NavLink} from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
+import Divider from "@material-ui/core/Divider";
 
 const useStyles=makeStyles(theme => ({
     mainContainer: {
@@ -26,6 +27,9 @@ const useStyles=makeStyles(theme => ({
     },
     formItem: {
         marginBottom: "1em"
+    },
+    paper: {
+        padding: "3em"
     }
 }))
 
@@ -42,15 +46,17 @@ export default function Home(){
                     <Typography></Typography>
                 </Grid>
             </Grid>
+            <Paper className={classes.paper}>
             <Grid item container justify="space-evenly">
-                <Grid item align="center">
+                <Grid item align="center" style={{marginRight: "3em"}}>
                     <Typography>If you already have an account,</Typography>
                     <Typography style={{marginBottom: "1em"}}> press "LOGIN" to continue.</Typography>
                     <NavLink style={{textDecoration: "none"}} to="/signin">
                         <Button color="secondary" variant="contained">Login</Button>
                     </NavLink>
                 </Grid>
-                <Grid item align="center">
+                <Divider orientation="vertical" flexItem />
+                <Grid item align="center" style={{marginLeft: "3em"}}>
                     <Typography>If you need to create an account,</Typography>
                     <Typography style={{marginBottom: "1em"}}> press "SIGN UP" to get started.</Typography>
                     <NavLink style={{textDecoration: "none"}} to="/signup">
@@ -58,6 +64,7 @@ export default function Home(){
                     </NavLink>
                 </Grid>
             </Grid>
+            </Paper>
         </Grid>
     )
 }
