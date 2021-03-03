@@ -62,7 +62,11 @@ const useStyles=makeStyles(theme => ({
         [theme.breakpoints.down("sm")]: {
             width: "60%"
         }
-    }
+    },
+    imagePaper: {
+        padding: "0em",
+        width: "60%"
+    },
 
 }))
 
@@ -71,11 +75,18 @@ export default function Home(){
 
     return(
         <Grid container className={classes.mainContainer}>
-            <Grid item container align="center" style={{marginBottom: "3em"}} direction="column">
+            <Grid item container align="center" style={{marginBottom: "1em"}} direction="column">
                 <Grid item className={classes.welcome}>
                     <Typography variant="h4" color="primary">Welcome!</Typography>
                     <Divider/>
                 </Grid>
+                <Paper className={classes.imagePaper} style={{margin: "1em"}}>
+                    <Grid item container justify="space-evenly">
+                        <Grid item align="center">
+                            <img className={classes.imagePaper} src="https://cdn.dribbble.com/users/1379859/screenshots/3455666/artboard_1.jpg"></img>
+                        </Grid>
+                    </Grid>
+                </Paper>
             </Grid>
             <Paper className={classes.paper}>
             <Grid item container justify="space-evenly">
