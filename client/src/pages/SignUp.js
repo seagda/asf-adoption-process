@@ -80,9 +80,28 @@ export default function SignUp(){
         })
     }
 
+    const [addressFormData, setAddressFormData] = useState({
+        Address: {
+            street: "",
+            city: "",
+            state: "",
+            zip5: ""
+        }
+    })
+
+    const handleAddressInputChange = event =>{
+        const {name, value} = event.target
+        setAddressFormData({
+            ...addressFormData,
+            [name]: value
+        })
+    }
+
     const handleSignupFormSubmit = event =>{
         event.preventDefault();
-        API.signup(signupFormData).then(res =>{
+        API.signup({...signupFormData,
+            ...addressFormData
+        }).then(res =>{
             console.log(res.data)
             setSignupFormData({
                 firstName: "",
@@ -90,6 +109,14 @@ export default function SignUp(){
                 email: "",
                 password: "",
                 phone: ""
+            })
+            setAddressFormData({
+                Address: {
+                    street: "",
+                    city: "",
+                    state: "",
+                    zip5: ""
+                }
             })
             window.location = "/signin"
         }).catch(err =>{
@@ -137,16 +164,16 @@ export default function SignUp(){
                     </Grid>
                     <Grid item container className={classes.form}>
                             <Grid item className={classes.formItem}>
-                                <TextField className={classes.addressItem} variant="outlined" label="Street"/>
+                                <TextField className={classes.addressItem} variant="outlined" label="Street" onChange={handleAddressInputChange} value={addressFormData.Address.street} name="street"/>
                             </Grid>
                             <Grid item className={classes.formItem}>
-                                <TextField className={classes.addressItem} variant="outlined" label="City"/>
+                                <TextField className={classes.addressItem} variant="outlined" label="City" onChange={handleAddressInputChange} value={addressFormData.Address.city} name="city"/>
                             </Grid>
                             <Grid item className={classes.formItem}>
-                                <TextField className={classes.addressItem} variant="outlined" label="State"/>
+                                <TextField className={classes.addressItem} variant="outlined" label="State" onChange={handleAddressInputChange} value={addressFormData.Address.state} name="state"/>
                             </Grid>
                             <Grid item className={classes.formItem}>
-                                <TextField className={classes.addressItem} variant="outlined" label="Zip"/>
+                                <TextField className={classes.addressItem} variant="outlined" label="Zip" onChange={handleAddressInputChange} value={addressFormData.Address.zip5} name="zip5"/>
                             </Grid>
                     </Grid>
         
