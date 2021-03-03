@@ -44,7 +44,7 @@ export default function DogProfileView(){
 
     return(
         <Grid container className={classes.mainContainer}>
-            <DogBlockView name={dogData.name}/>
+            <DogBlockView name={dogData.name} dob={dogData.dob} gender={dogData.gender} size={dogData.size} microchipId={dogData.microchipId} asfId={dogData.asfId}/>
         </Grid>
     )
 }

@@ -41,22 +41,22 @@ export default function DogBlockView(props){
             </Grid>
             <Grid item className={classes.form}>
                 <Grid item container className={classes.formItem}>
-                    <Typography>Name: </Typography>
+                    <Typography>Name: {props.name}</Typography>
                 </Grid>
                 <Grid item container className={classes.formItem}>
-                     <Typography>Age: </Typography>
+                     <Typography>DOB: {props.dob}</Typography>
                 </Grid>
                 <Grid item container className={classes.formItem}>
-                     <Typography>Gender: </Typography>
+                     <Typography>Gender: {props.gender}</Typography>
                 </Grid>
                 <Grid item container className={classes.formItem}>
-                    <Typography>Size: </Typography>
+                    <Typography>Size: {props.size}</Typography>
                 </Grid>
                 <Grid item container className={classes.formItem}>
-                     <Typography>Location: </Typography>
+                     <Typography>Microchip Info: {props.microchipId}</Typography>
                  </Grid>
                 <Grid item container className={classes.formItem}>
-                     <Typography>About Me: </Typography>
+                     <Typography>ASF ID: {props.asfId}</Typography>
                 </Grid>
             </Grid>
         </Grid>
