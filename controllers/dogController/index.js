@@ -11,22 +11,25 @@ router.use("/medi-status", require("./mediStatusController"));
 router.get("/", (req, res) => {
     const permissionAny = ac.can(req.roles).readAny("Dog");
     const permissionOwn = ac.can(req.roles).readOwn("Dog");
-    if (permissionAny.granted) {
+    if (permissionAny.granted || permissionOwn.granted) {
+        const currentlyWith = { association: "currentlyWith", include: [db.Address, { association: "ResidesInRegion" }] };
+        if (!permissionAny.granted) currentlyWith.where = { id: req.userId };
         db.Dog.findAll({
-            include: [
-                { model: db.User, as: "currentlyWith", include: db.Address },
-                { model: db.ExtContact, as: "origin", include: db.Address }]
+            include: [currentlyWith, { association: "origin", include: [db.Address, db.Region] }]
         }).then(dogs => {
             const dogRes = dogs.map(dog => {
-                const dogJson = permissionAny.filter(dog.toJSON());
+                const dogJson = permissionAny.granted ? permissionAny.filter(dog.toJSON()) : permissionOwn.filter(dog.toJSON());
                 if (dogJson.currentlyWithId) {
                     dogJson.city = dogJson.currentlyWith.Address.city;
                     dogJson.state = dogJson.currentlyWith.Address.state;
+                    dogJson.Region = dogJson.currentlyWith.ResidesInRegion;
                 } else {
                     dogJson.city = dogJson.origin.Address.city;
                     dogJson.state = dogJson.origin.Address.state;
+                    dogJson.Region = dogJson.origin.Region;
                 }
-                const { currentlyWith, origin, ...dogToSend } = dogJson;
+                const { currentlyWith, ...dogToSend } = dogJson;
+                dogToSend.currentlyWith = { firstName: currentlyWith.firstName, lastName: currentlyWith.lastName, id: currentlyWith.id };
                 return dogToSend;
             });
             res.json(dogRes);
@@ -34,30 +37,7 @@ router.get("/", (req, res) => {
             console.error(err);
             res.sendStatus(500);
         });
-    } else if (permissionOwn.granted) {
-        db.Dog.findAll({
-            include: [{ model: db.User, as: "currentlyWith", where: { id: req.userId }, include: db.Address },
-            { model: db.ExtContact, as: "origin", include: db.Address }]
-        }).then(dogs => {
-            const dogRes = dogs.map(dog => {
-                const dogJson = permissionOwn.filter(dog.toJSON());
-                if (dogJson.currentlyWithId) {
-                    dogJson.city = dogJson.currentlyWith.Address.city;
-                    dogJson.state = dogJson.currentlyWith.Address.state;
-                } else {
-                    dogJson.city = dogJson.origin.Address.city;
-                    dogJson.state = dogJson.origin.Address.state;
-                }
-                const { currentlyWith, origin, ...dogToSend } = dogJson;
-                return dogToSend;
-            });
-            res.json(dogRes);
-        }).catch(err => {
-            console.error(err);
-            res.sendStatus(500);
-        });
-
-    } else return res.status(403).send({ message: "Not authorized to view dogs" });
+    }  else return res.status(403).send({ message: "Not authorized to view dogs" });
 });
 
 router.get("/status", (req, res) => {
