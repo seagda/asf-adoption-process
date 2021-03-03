@@ -89,9 +89,8 @@ export default function ProfileForm(){
     const classes = useStyles();
     const repeat = true;
 
-    const [contactFormVis, setContactFormVis] = useState({
-        visibility: "hidden"
-    })
+    const [contactFormVis, setContactFormVis] = useState(true)
+    const onClick = () => setContactFormVis(false)
 
     const [dogIntakeData, setDogIntakeData] = useState({})
 
@@ -307,23 +306,25 @@ export default function ProfileForm(){
                     </Select>
                     </FormControl>
                 </Grid>
-                {/* <Grid item>
-                    <Button variant="contained" color="secondary" onClick={()=>setContactFormVis("visible")}>Add external contact</Button>
-                </Grid> */}
+                <Grid item>
+                    <Typography>Or</Typography>
+                    <Button variant="contained" color="secondary" onClick={onClick}>Add external contact</Button>
+                </Grid>
             </Grid>
-            {/* <React.Fragment>
-                <Grid item style={{marginTop: "3em"}}>
-                    <Typography variant="h5">External Contact</Typography>
-                    <Divider/>
-                </Grid>
-                <Grid item container style={{marginTop: "1em"}}>
-                    <Grid item container justify="space-evenly">
-                        <TextField variant="outlined" label="Name" style={{marginTop: "1em"}}/>
-                        <TextField variant="outlined" label="Email" style={{marginTop: "1em"}}/>
-                        <TextField variant="outlined" label="Phone" style={{marginTop: "1em"}}/>
-                        <TextField variant="outlined" label="Type" style={{marginTop: "1em"}}/>
+            {contactFormVis ? null : 
+                <React.Fragment>
+                    <Grid item style={{marginTop: "3em"}}>
+                        <Typography variant="h5">External Contact</Typography>
+                        <Divider/>
                     </Grid>
-                </Grid>
+                    <Grid item container style={{marginTop: "1em"}}>
+                        <Grid item container justify="space-evenly">
+                            <TextField variant="outlined" label="Name" style={{marginTop: "1em"}}/>
+                            <TextField variant="outlined" label="Email" style={{marginTop: "1em"}}/>
+                            <TextField variant="outlined" label="Phone" style={{marginTop: "1em"}}/>
+                            <TextField variant="outlined" label="Type" style={{marginTop: "1em"}}/>
+                        </Grid>
+                    </Grid>
                     <Grid item container direction="column" style={{marginTop: "2em"}} xs={10} sm={10} md={6} lg={6}>
                         <Typography>Address:</Typography>
                         <TextField label="Street"/>
@@ -331,7 +332,8 @@ export default function ProfileForm(){
                         <TextField label="State"/>
                         <TextField label="Zip"/>
                     </Grid>
-            </React.Fragment> */}
+                </React.Fragment>
+            }
             {/* <Grid item style={{marginTop: "1em"}}>
                 <Button variant="contained" color="secondary">Add external contact</Button>
             </Grid> */}
