@@ -23,7 +23,7 @@ const useStyles=makeStyles(theme => ({
     }
 }))
 
-export default function AdopterApplication (){
+export default function FosterApplication (){
     const classes = useStyles();
     const [showPage, setShowPage] = useState(true);
 
