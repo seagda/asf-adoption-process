@@ -121,6 +121,15 @@ export default function ProfileForm(){
       })
     };
 
+    const [genderData, setGenderData] = useState({});
+    const handleGenderChange = (event) => {
+      const {name, value} = event.target
+      setGenderData({
+          ...genderData,
+          [name]: value
+      })
+    };
+
 
     // origin type selector 
     const [originContactData, setOriginContactData] = useState({});
@@ -165,6 +174,7 @@ export default function ProfileForm(){
         event.preventDefault();
         const newDog = {...dogIntakeData, 
             ...isPurebredData, 
+            ...genderData,
             ...sizeData, 
             ...originContactData,
         }
@@ -177,6 +187,7 @@ export default function ProfileForm(){
             console.log(res.data)
             setDogIntakeData({})
             setIsPurebredData({})
+            setGenderData({})
             setSizedata({})
             setOriginContactData({})
             setAddedExternalContactData({})
@@ -425,9 +436,25 @@ export default function ProfileForm(){
                         <InputLabel id="birthday">Date of birth</InputLabel>
                         <TextField type="date" variant="outlined" labelId="birthday" onChange={createDogInputChange} value={dogIntakeData.dob} name="dob"/>
                     </Grid>
-                    <Grid item container className={classes.formItem}>
-                        <TextField variant="outlined" label="Gender" onChange={createDogInputChange} value={dogIntakeData.gender} name="gender"/>
-                    </Grid>
+                        <Grid item style={{marginTop: "1em"}}>
+                            <div>
+                                <FormControl variant="outlined" style={{minWidth: 195, marginBottom: "1em"}}>
+                                    <InputLabel id="gender">Gender</InputLabel>
+                                    <Select
+                                        labelId="gender"
+                                        id="gender"
+                                        onChange={handleGenderChange}
+                                        value={genderData.gender}
+                                        name="gender"
+                                        label="Gender"
+                                    >
+                                        <MenuItem value="female">Female</MenuItem>
+                                        <MenuItem value="male">Male</MenuItem>
+                                    </Select>
+                                </FormControl>
+
+                    </div>
+                </Grid>
                     <Grid item container className={classes.numberItem}>
                         {/* <NumberFormat placeholder="Microchip ID" variant="outlined" onChange={createDogInputChange} value={dogIntakeData.microchipId} name="microchipId"/> */}
                         <TextField type="number" variant="outlined" label="Microchip ID" onChange={createDogInputChange} value={dogIntakeData.microchipId} name="microchipId"/>
