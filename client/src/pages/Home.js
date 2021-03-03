@@ -3,6 +3,8 @@ import Grid from '@material-ui/core/Grid';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Button from "@material-ui/core/Button";
 import {NavLink} from "react-router-dom";
+import Typography from "@material-ui/core/Typography";
+import Paper from "@material-ui/core/Paper";
 
 const useStyles=makeStyles(theme => ({
     mainContainer: {
@@ -32,15 +34,29 @@ export default function Home(){
 
     return(
         <Grid container className={classes.mainContainer}>
-            <Grid item>
-                <NavLink style={{textDecoration: "none"}} to="/signin">
-                    <Button color="secondary" variant="contained">Login</Button>
-                </NavLink>
+            <Grid item container align="center" style={{marginBottom: "3em"}} direction="column">
+                <Grid item>
+                    <Typography variant="h4" color="primary">Welcome!</Typography>
+                </Grid>
+                <Grid item>
+                    <Typography></Typography>
+                </Grid>
             </Grid>
-            <Grid item>
-                <NavLink style={{textDecoration: "none"}} to="/signup">
-                    <Button color="secondary" variant="contained">Sign Up</Button>
-                </NavLink>
+            <Grid item container justify="space-evenly">
+                <Grid item align="center">
+                    <Typography>If you already have an account,</Typography>
+                    <Typography style={{marginBottom: "1em"}}> press "LOGIN" to continue.</Typography>
+                    <NavLink style={{textDecoration: "none"}} to="/signin">
+                        <Button color="secondary" variant="contained">Login</Button>
+                    </NavLink>
+                </Grid>
+                <Grid item align="center">
+                    <Typography>If you need to create an account,</Typography>
+                    <Typography style={{marginBottom: "1em"}}> press "SIGN UP" to get started.</Typography>
+                    <NavLink style={{textDecoration: "none"}} to="/signup">
+                        <Button color="secondary" variant="contained">Sign Up</Button>
+                    </NavLink>
+                </Grid>
             </Grid>
         </Grid>
     )
