@@ -37,7 +37,7 @@ export default function AdoptApp(props) {
 
     return (
         <Survey.Survey
-            json={appQuestions}
+            json={{elements: appQuestions}}
             showCompletedPage={false}
             onComplete={data => props.showCompletedPage(data.valuesHash)}
         />
