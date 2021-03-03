@@ -49,12 +49,15 @@ export default function MyProfile(){
     const classes = useStyles();
     const admin = false;
 
+    const [puppiesData, setPuppiesData] = useState(false)
+
     const [userData, setUserData] = useState({})
 
     useEffect(()=>{
         API.getMyUserData().then(res =>{
             console.log(res.data)
             setUserData(res.data)
+            setPuppiesData(res.data.puppies)
         }).catch(err=>{
             console.error(err.response.data.message)
             alert("get data failed")
@@ -67,7 +70,7 @@ export default function MyProfile(){
             <ProfileBlock firstName={userData.firstName} lastName={userData.lastName} phone={userData.phone} email={userData.email}/>
             <ProfileActions/>
             <Roles/>
-            <CapacityView/>
+            <CapacityView maxCapacity={userData.maxCapacity} puppies={puppiesData}/>
             <References/>
             {admin ? <AdminNotes/> : null}
 

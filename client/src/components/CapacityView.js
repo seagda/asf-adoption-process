@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function CapacityView(){
+export default function CapacityView(props){
     const classes = useStyles();
     const capacityNums = [{number: "4"}, {number: "2"}, {number: "2"}];
     const caresFor = [{type: "Senior"}, {type: "Puppy"}]
@@ -34,17 +34,17 @@ export default function CapacityView(){
                     </Grid>
                     <Grid item container>
                         <Grid>
-                            <Typography style={{marginTop: "1em"}}>Max Capacity:</Typography>
-                            <Typography style={{marginTop: "1em"}}>Dogs in care:</Typography>
-                            <Typography style={{marginTop: "1em", marginRight: "0.5em"}}>Available space:</Typography>
+                            <Typography style={{marginTop: "1em"}}>Max Capacity: {props.maxCapacity}</Typography>
+                            {/* <Typography style={{marginTop: "1em"}}>Dogs in care:</Typography>
+                            <Typography style={{marginTop: "1em", marginRight: "0.5em"}}>Available space:</Typography> */}
                         </Grid>
-                        <Grid item xs={6} sm={6} md={8} lg={6}>
+                        {/* <Grid item xs={6} sm={6} md={8} lg={6}>
                             {capacityNums.map((number)=>(
                                 <CapacityNums
                                 number={number.number}
                             />
                             ))}
-                        </Grid>
+                        </Grid> */}
                     </Grid>
                 </Grid>
                 <Grid item container xs={10} sm={6} md={6} lg={6} style={{marginTop: "3em"}} direction="column">
@@ -52,13 +52,12 @@ export default function CapacityView(){
                         <Typography variant="h4">Cares for:</Typography>
                         <Divider/>
                     </Grid>
-                    <Grid item container style={{marginTop: "3em"}}>
+                    <Grid item container style={{marginTop: "1em"}}>
                         <Grid item>
-                            {caresFor.map((type)=>(
-                                <CaresFor
-                                label={type.type}
-                                />
-                            ))}
+                            {props.puppies ? <Chip label="Puppies"/> : null}
+                        </Grid>
+                        <Grid item>
+                            {props.seniors ? <Chip label="Puppies"/> : null}
                         </Grid>
                     </Grid>
                 </Grid>

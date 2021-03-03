@@ -44,7 +44,7 @@ export default function ProfileBlock(props){
                     <Typography>First Name: {props.firstName}</Typography>
                 </Grid>
                 <Grid item container className={classes.formItem}>
-                    <Typography>Last Name: {props.LastName}</Typography>
+                    <Typography>Last Name: {props.lastName}</Typography>
                 </Grid>
                 <Grid item container className={classes.formItem}>
                      <Typography>Phone: {props.phone}</Typography>
