@@ -66,7 +66,7 @@ router.get("/", (req, res) => {
                     { status: "Full Adopters", number: adopters.length - adoptersWithSpace.length }
                 ];
             }
-            if (myDogs) dashboardData.myDogs = permissionOwnDog.filter(myDogs);
+            if (myDogs) dashboardData.myDogs = permissionOwnDog.filter(myDogs.map(dog => dog.toJSON()));
             res.json(dashboardData);
         })
         .catch(err => {
