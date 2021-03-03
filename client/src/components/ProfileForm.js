@@ -186,7 +186,10 @@ export default function ProfileForm(){
             setUserIntakeData({
                 firstName: res.data.firstName, 
                 lastName: res.data.lastName,
-                phone: res.data.phone
+                phone: res.data.phone,
+                email: res.data.email,
+                dob: res.data.dob,
+                maxCapacity: res.data.maxCapacity
             })
         }).catch(err=>{
             console.error(err.response.data.message)
@@ -526,21 +529,21 @@ export default function ProfileForm(){
     //     </Grid>
     // )
 
-    const adminNotes = (
-        <Grid item container className={classes.itemContainer, classes.marginFix}>
-        <Grid container>
-            <Grid item style={{marginTop: "3em"}}>
-                <Typography variant="h4">Admin Notes</Typography>
-                <Divider/>
-            </Grid>
-        </Grid>
-        <Grid container>
-            <Grid item container style={{marginTop: "1em"}} justify="center">
-                <TextField className={classes.largeTextfield} InputLabelProps={{shrink: true}} label="Admin Notes" rows={6} multiline variant="outlined" onChange={createUserInputChange} value={userIntakeData.adminNotes} name="adminNotes"/>
-            </Grid>
-        </Grid>
-    </Grid>
-    )
+    // const adminNotes = (
+    //     <Grid item container className={classes.itemContainer, classes.marginFix}>
+    //     <Grid container>
+    //         <Grid item style={{marginTop: "3em"}}>
+    //             <Typography variant="h4">Admin Notes</Typography>
+    //             <Divider/>
+    //         </Grid>
+    //     </Grid>
+    //     <Grid container>
+    //         <Grid item container style={{marginTop: "1em"}} justify="center">
+    //             <TextField className={classes.largeTextfield} InputLabelProps={{shrink: true}} label="Admin Notes" rows={6} multiline variant="outlined" onChange={createUserInputChange} value={userIntakeData.adminNotes} name="adminNotes"/>
+    //         </Grid>
+    //     </Grid>
+    // </Grid>
+    // )
 
     return (
         <form onSubmit={handleUserIntakeFormSubmit}>
@@ -580,7 +583,7 @@ export default function ProfileForm(){
             <Divider/>
         </Grid>
         {references} */}
-        {adminNotes}
+        {/* {adminNotes} */}
         <Grid item container className={classes.formItem} justify={"flex-end"}>
             <SaveButton buttonText="Save Changes"/>
         </Grid>
