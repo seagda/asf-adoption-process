@@ -31,6 +31,12 @@ const useStyles=makeStyles(theme => ({
             spacing: theme.spacing(2),
             marginLeft: 5
         }
+    }, 
+    cardContainer: {
+        flexGrow: '1', 
+        padding: theme.spacing(3),
+        flexWrap: "wrap",
+        direction: "row"
     }
 }))
 
@@ -55,27 +61,52 @@ export default function DashboardMain(){
     }, [])
 
     return(
-        <Grid container className={classes.mainContainer}>
+        <Grid container className={classes.mainContainer} justify="space-evenly" spacing={4}>
             {console.log(localStorage.getItem("user"))}
    
             <Grid item xs={12}>
                 <Typography variant="h3" component="h4" gutterBottom align="center" color="primary">
-                    Admin Dashboard
+                    My Dashboard
                     <Divider />
                 </Typography>
             </Grid>
-            
-            {JSON.parse(localStorage.getItem("user")).roles.some( (role) => ["regional", "admin", "superAdmin"].includes(role)) ? 
-            <Grid item xs={12}>
-                <QuickActionsAdmin/>
-            </Grid>: null}
+            <Grid item xs={12} s={10}>
+                <Typography variant="h5" component="h6" gutterBottom color="primary">
+                    Quick Actions
+                    <Divider />
+                </Typography>
+                {JSON.parse(localStorage.getItem("user")).roles.some( (role) => ["regional", "admin", "superAdmin"].includes(role)) ? 
+                <Grid item xs={12}>
+                    <QuickActionsAdmin/>
+                </Grid>: null}
+                {JSON.parse(localStorage.getItem("user")).roles.includes("foster") ?
+                <Grid item xs={12}>
+                    <QuickActionsFoster/>
+                </Grid>: null}
+            </Grid>
             {dashboardData.fosterCounts && dashboardData.adopterCounts && dashboardData.dogStatusCounts ? <Grid item xs={12}>
                 <PieChartContainer data={dashboardData}/>
             </Grid>: null}
             {JSON.parse(localStorage.getItem("user")).roles.includes("foster") ?
-                <Grid item xs={12}>
-                <QuickActionsFoster/>
-            </Grid>: null}
+                <Grid item xs={12} s={10}>
+                    <Typography variant="h5" component="h6" gutterBottom color="primary">
+                        My Dogs
+                        <Divider />
+                    </Typography>
+                </Grid>:null}
+            {/* {dogs.length ? (
+                <Grid container className={classes.cardContainer} justify="center">
+                        {dogs.map(dog =>{
+                            return (
+                                <Grid item xs={10} s={10} m={6} lg={3}>
+                                    <MediaCard name={dog.name} image={dog.image} dossierLink={dog.dossierLink} assessmentLink={dog.assessmentLink} />
+                                </Grid>
+                            )
+                        })}    
+                </Grid>
+                ):(<p>Currently no data to display</p>)} 
+            </Grid>*/}
+            
            
             {/* <Grid item xs={12} s={12} m={6} lg={6} style={{marginTop: "2em"}}>
                  <Typography variant="h5" component="h4" gutterBottom align="center" color="primary">
