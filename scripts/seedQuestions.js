@@ -40,7 +40,7 @@ const assessQuestSeed = [
     {desc: "Strangers on property", AssessQuestionCategoryId: 2},
     {desc: "Strangers in public", AssessQuestionCategoryId: 2},
     {desc: "Adult Women", AssessQuestionCategoryId: 2},
-    {desc: "Adult Men", AssessQuestionCategoryId: 2}
+    {desc: "Adult Men", AssessQuestionCategoryId: 2},
     {desc: "Touch your dogs at all", AssessQuestionCategoryId: 3},
     {desc: "Toes for clipping nails", AssessQuestionCategoryId: 3},
     {desc: "Legs", AssessQuestionCategoryId: 3},
@@ -84,6 +84,6 @@ const appQuestCatSeed = [
  
 Promise.all([
     db.AssessQuestionCategory.bulkCreate(assessQuestCatSeed),
-    db.AppQuestionCategory.bulkCreate(appQuestCatSeed), 
+    db.AppQuestionCategory.bulkCreate(appQuestCatSeed)
 ]).then(() => db.AssessQuestion.bulkCreate(assessQuestSeed))
   .catch(console.error);
