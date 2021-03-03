@@ -18,10 +18,10 @@ const API = {
         return axios.post(`/api/user/new`, userData, getHeaders())
     },
     getAdopterApp: function(){
-        return axios.get(`/api/app/adopter`, getHeaders())
+        return axios.get(`/api/app/adopter/questions`, getHeaders())
     },
     getFosterApp: function(){
-        return axios.get(`/api/app/foster`, getHeaders())
+        return axios.get(`/api/app/foster/questions`, getHeaders())
     },
     sendAppData: function(response, appId){
         return axios.post(`/api/user/app-response`, response, appId, getHeaders())
