@@ -120,7 +120,7 @@ export default function ManageASFUsers() {
                         if (selectedRegions.length > 0 && !selectedRegions.includes(user.ResidesInRegion.id)) {
                             return false;
                         } 
-                        if (selectedRoles.length > 0 && !selectedRoles.some( (role) => user.Roles.includes(role))) {
+                        if (selectedRoles.length > 0 && !selectedRoles.some( (selectedRole) => user.Roles.some(role => role.id === selectedRole))) {
                             return false; 
                         }
                         if (!(parseInt(searchUser) === user.id || (user.firstName + " " + user.lastName).toLowerCase().includes(searchUser.toLowerCase()))) {

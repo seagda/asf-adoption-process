@@ -65,7 +65,7 @@ export default function DashboardMain(){
         .catch(err => console.log(err));
     };
 
-         // api call for alert data to display
+    // api call for alert data to display
    
     function loadDashboard() {
         

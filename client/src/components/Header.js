@@ -101,7 +101,7 @@ function ResponsiveDrawer(props) {
                 <img src={logo} className={classes.logo}/>
             </NavLink>
             <List>
-                {['My-Dashboard', 'My-Profile', 'My-Settings', 'Logout'].map((text, index) => (
+                {['My-Dashboard', 'My-Profile', 'Logout'].map((text, index) => (
                     <ListItem button key={text} className={classes.listItem} onClick={() => setMobileOpen(false)}>
                         <ListItemIcon className={classes.listItem}>{index === 0 ? <PersonIcon /> : index === 1 ? <PetsIcon /> : index === 2 ? <SettingsIcon /> : <ExitToAppIcon />}</ListItemIcon>
                         <NavLink className={classes.link} to={`/${text}`}>{`${text.replace("-", " ")}`}</NavLink>
@@ -110,7 +110,7 @@ function ResponsiveDrawer(props) {
             </List>
             <Divider />
             <List>
-                {['Dog-Dossiers', 'Manage-ASF-Users', 'ASF-Admin-Settings'].map((text, index) => (
+                {['Dog-Dossiers', 'Manage-ASF-Users'].map((text, index) => (
                     <ListItem button key={text} className={classes.listItem} onClick={() => setMobileOpen(false)}>
                         <ListItemIcon className={classes.listItem}>{index === 0 ? <DescriptionIcon /> : index === 1 ? <SupervisorAccountIcon /> : <PermDataSettingIcon />}</ListItemIcon>
                         <NavLink className={classes.link} to={`/${text}`}>{`${text.replace("-", " ")}`}</NavLink>
