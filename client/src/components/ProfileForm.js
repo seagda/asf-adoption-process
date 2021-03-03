@@ -178,11 +178,12 @@ export default function ProfileForm(){
       })
     };
 
-    const [userdata, setUserData] = useState({})
+    const [userData, setUserData] = useState({})
     useEffect(()=>{
         API.getMyUserData().then(res =>{
             console.log(res.data)
             setUserData(res.data)
+            setUserIntakeData({firstName: res.data.firstName})
         }).catch(err=>{
             console.error(err.response.data.message)
             alert("get data failed")
@@ -540,7 +541,7 @@ export default function ProfileForm(){
             <Grid item>
                 <div className={classes.form}>
                     <Grid item container className={classes.formItem}>
-                        <TextField variant="outlined" label="First Name" onChange={createUserInputChange} value={userIntakeData.firstName} name="firstName"/>
+                        <TextField variant="outlined" InputLabelProps={{shrink: true}} label="First Name" onChange={createUserInputChange} value={userIntakeData.firstName} name="firstName"/>
                     </Grid>
                     <Grid item container className={classes.formItem}>
                         <TextField variant="outlined" label="Last Name" onChange={createUserInputChange} value={userIntakeData.lastName} name="lastName"/>
