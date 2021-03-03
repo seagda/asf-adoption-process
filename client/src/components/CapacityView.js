@@ -65,6 +65,9 @@ export default function CapacityView(props){
                         <Grid item>
                             {props.behavior ? <Chip label="Behaviorial Issues"/> : null}
                         </Grid>
+                        <Grid item>
+                            {props.medical ? <Chip label="Medical Issues"/> : null}
+                        </Grid>
                     </Grid>
                 </Grid>
             </Grid>
