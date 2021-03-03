@@ -10,6 +10,7 @@ import UserFlow from '../components/UserFlow';
 import UserTable from '../components/UserTable';
 import Hidden from '@material-ui/core/Hidden';
 import API from '../utils/API';
+import SearchBar from "../components/SearchBar";
 
 const useStyles=makeStyles(theme => ({
     mainContainer: {
@@ -36,15 +37,9 @@ export default function ManageASFUsers() {
     const [regions, setRegionList] = React.useState([]);
     
     const [selectedRoles, setRole] = React.useState([]);
-    const [roles, setRoleList] = React.useState([
-        'adopter',
-        'foster',
-        'regional lead',
-        'transport',
-        'volunteer',
-      ]);
+    const [roles, setRoleList] = React.useState([]);
     
-    const [searchUser, setUserSearch] = React.useState([]);
+    const [searchUser, setUserSearch] = React.useState("");
     const [users, setUserState] = useState([])
 
     useEffect(() => {
@@ -54,24 +49,24 @@ export default function ManageASFUsers() {
         function loadUsers() {
             API.getUsersAll()
                 .then(res => {
-                setUserState(res)
+                setUserState(res.data)
                 console.log(res)
                 })
                 .catch(err => console.log(err));
 
             API.getRegions()
                 .then(res => {
-                setRegionList(res)
+                setRegionList(res.data)
                 console.log(res)
                 })
                 .catch(err => console.log(err));
 
-            // API.getRoles()
-            //     .then(res => {
-            //     setRoleList(res)
-            //     console.log(res)
-            //     })
-            //     .catch(err => console.log(err));
+            API.getRoles()
+                .then(res => {
+                setRoleList(res.data)
+                console.log(res)
+                })
+                .catch(err => console.log(err));
         };
 
     const handleRegionChange = (event) => {
@@ -100,15 +95,13 @@ export default function ManageASFUsers() {
                     <AddButton buttonText="Add User" toLink="/createUser" />
                 </Grid>
                 <Grid item xs={12}>
-                     <form noValidate autoComplete="off">
-                        <TextField id="outlined-basic" label="Search" variant="outlined" fullWidth />
-                    </form>
+                    <SearchBar searchUser={searchUser} onChange={handleUserSearch} />
                 </Grid>
                 <Grid item xs={12} s={12} m={6} lg={6}>
-                    <MultiSelectChips names={regions} title="Select Region" selectedOption={selectedRegions} onOptionChange={handleRegionChange}/>
+                    <MultiSelectChips options={regions} title="Select Region" selectedOption={selectedRegions} onOptionChange={handleRegionChange}/>
                 </Grid>
                 <Grid item xs={12} s={12} m={6} lg={6}>
-                    <MultiSelectChips names={roles} title="Select Role" selectedOption={selectedRoles} onOptionChange={handleRoleChange} />
+                    <MultiSelectChips options={roles} title="Select Role" selectedOption={selectedRoles} onOptionChange={handleRoleChange} />
                 </Grid>
                 <Grid item xs={12}>
                     <Divider />
@@ -123,13 +116,14 @@ export default function ManageASFUsers() {
                 </Grid>
                 <Grid item xs={12}>
                 <UserTable rows={users.filter( (user) => {
-                        if (!selectedRegions.includes(user.ResidesInRegion)) {
+                    console.log(user)
+                        if (selectedRegions.length > 0 && !selectedRegions.includes(user.ResidesInRegion.id)) {
                             return false;
                         } 
-                        if (!selectedRoles.some( (role) => user.Roles.includes(role))) {
+                        if (selectedRoles.length > 0 && !selectedRoles.some( (role) => user.Roles.includes(role))) {
                             return false; 
                         }
-                        if (!(parseInt(searchUser) === user.id || user.name.includes(searchUser))) {
+                        if (!(parseInt(searchUser) === user.id || (user.firstName + " " + user.lastName).toLowerCase().includes(searchUser.toLowerCase()))) {
                             return false; 
                         }
                         return true;

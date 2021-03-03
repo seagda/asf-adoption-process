@@ -22,8 +22,8 @@ export default class Demo extends React.PureComponent {
   }
 
   render() {
-    const { data: data } = this.state.data;
-    const { text: text } = this.state.text;
+    const data = this.state.data;
+    const text = this.state.text;
 
     return (
       <Grid container justify="space-evenly" style={{marginTop: "1em"}}>

@@ -13,6 +13,7 @@ import BasicList from '../components/BasicList';
 import ListContainer from '../components/ListContainer';
 import TeamAPI from '../utils/Team';
 import AlertAPI from '../utils/Alerts';
+import API from '../utils/API';
 
 
 const useStyles=makeStyles(theme => ({
@@ -33,14 +34,12 @@ const useStyles=makeStyles(theme => ({
     }
 }))
 
-export default function AdminDashboard(){
+export default function DashboardMain(){
     const classes = useStyles();
-// api call for employee data to display
     const [team, setTeamState] = useState([])
-
-    useEffect(() => {
-        loadTeam()
-    }, [])
+    const [alerts, setAlertState] = useState([])
+    const [dashboardData, setDashboardState] = useState({})
+    const [selectedRegions, setRegion] = React.useState([]);
 
     function loadTeam() {
         
@@ -54,12 +53,7 @@ export default function AdminDashboard(){
     };
 
     // api call for alert data to display
-    const [alerts, setAlertState] = useState([])
-
-    useEffect(() => {
-        loadAlerts()
-    }, [])
-
+    
     function loadAlerts() {
         
     AlertAPI.getAlerts()
@@ -71,9 +65,26 @@ export default function AdminDashboard(){
         .catch(err => console.log(err));
     };
 
-// region select drop down
-    const [selectedRegions, setRegion] = React.useState([]);
+         // api call for alert data to display
+   
+    function loadDashboard() {
+        
+    API.getDashboardData()
+        .then(res => {
+        console.log(res)
+        setDashboardState(res.data)
+        
+        })
+        .catch(err => console.log(err));
+    };
 
+    useEffect(() => {
+        loadTeam()
+        loadAlerts()
+        loadDashboard()
+    }, [])
+// region select drop down
+    
     const handleRegionChange = (event) => {
         setRegion(event.target.value);
       };
@@ -92,27 +103,30 @@ export default function AdminDashboard(){
 
     return(
         <Grid container className={classes.mainContainer}>
+            {console.log(localStorage.getItem("user"))}
+   
             <Grid item xs={12}>
                 <Typography variant="h3" component="h4" gutterBottom align="center" color="primary">
                     Admin Dashboard
                     <Divider />
                 </Typography>
             </Grid>
-            {localStorage.getItem("user").roles.some( (role) => ["regional", "admin", "superAdmin"].includes(role)) ? 
+            
+            {JSON.parse(localStorage.getItem("user")).roles.some( (role) => ["regional", "admin", "superAdmin"].includes(role)) ? 
                 <Grid item xs={12}>
                 <QuickActionsAdmin/>
             </Grid>: null}
-            {localStorage.getItem("user").roles.includes("foster") ?
+            {JSON.parse(localStorage.getItem("user")).roles.includes("foster") ?
                 <Grid item xs={12}>
                 <QuickActionsFoster/>
             </Grid>: null}
-            
+{/*             
             <Grid item m={8} lg={8} />
             <Grid item xs={12} s={12} m={4} lg={4}>
-                <MultiSelectChips names={regions} title="Select Region" selectedOption={selectedRegions} onOptionChange={handleRegionChange}/>
-            </Grid>
+                <MultiSelectChips options={regions} title="Select Region" selectedOption={selectedRegions} onOptionChange={handleRegionChange}/>
+            </Grid> */}
             <Grid item xs={12}>
-                <PieChartContainer/>
+                <PieChartContainer data={dashboardData}/>
             </Grid>
             <Grid item xs={12} s={12} m={6} lg={6} style={{marginTop: "2em"}}>
                  <Typography variant="h5" component="h4" gutterBottom align="center" color="primary">

@@ -27,15 +27,18 @@ const API = {
     getRegions: function(){
         return axios.get(`/api/region`, getHeaders())
     },
-    // getDogStatus: function(){
-    //     return axios.get(`/api/dog/status`, getHeaders())
-    // },
-    // getRoles: function(){
-    //     return axios.get(`/api/role`, getHeaders())
-    // },
-    // getUsersAll: function(){
-    //     return axios.get(`/api/user/`, getHeaders())
-    // }
+    getDogStatus: function(){
+        return axios.get(`/api/dog/status`, getHeaders())
+    },
+    getRoles: function(){
+        return axios.get(`/api/role`, getHeaders())
+    },
+    getUsersAll: function(){
+        return axios.get(`/api/user`, getHeaders())
+    },
+    getDashboardData: function(){
+        return axios.get(`/api/dashboard`, getHeaders())
+    }
 }
 
 export default API;

@@ -102,7 +102,7 @@ export default function AdminDashboard(){
             </Grid>
             <Grid item m={8} lg={8} />
             <Grid item xs={12} s={12} m={4} lg={4}>
-                <MultiSelectChips names={regions} title="Select Region" selectedOption={selectedRegions} onOptionChange={handleRegionChange}/>
+                {/* <MultiSelectChips names={regions} title="Select Region" selectedOption={selectedRegions} onOptionChange={handleRegionChange}/> */}
             </Grid>
             <Grid item xs={12}>
                 <PieChartContainer/>

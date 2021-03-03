@@ -14,10 +14,11 @@ import MyProfile from "./pages/MyProfile";
 import ManageASFUsers from "./pages/ManageASFUsers";
 // import ASFSettings from "./pages/ASFSettings";
 import EditProfile from "./pages/EditProfile";
-import AdminDashboard from "./pages/AdminDashboard";
+// import AdminDashboard from "./pages/AdminDashboard";
 import FosterDashboard from "./pages/FosterDashboard";
 import DogProfileView from "./pages/DogProfileView";
 import DogProfileEdit from "./pages/DogProfileEdit";
+import DashboardMain from "./pages/DashboardMain";
 import SignUp from "./pages/SignUp";
 import Home from "./pages/Home";
 import Settings from "./pages/Settings";
@@ -48,7 +49,7 @@ export default function App() {
                     <Route path="/signin"><Login /></Route>
                     <Route path="/signup"><SignUp/></Route>
                     <Route path="/signup"><SignUp/></Route>
-                    <Route path="/ASF-Admin-Settings"><AdminDashboard/></Route>
+                    <Route path="/ASF-Admin-Settings"><DashboardMain/></Route>
                     <Route path="/My-Settings"><Settings/></Route>
                 </Switch>
             </BrowserRouter>

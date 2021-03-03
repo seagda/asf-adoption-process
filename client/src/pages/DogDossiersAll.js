@@ -38,13 +38,7 @@ export default function DogDossiersAll() {
     const [regions, setRegionList] = React.useState([]);
     
     const [selectedDogStatus, setDogStatus] = React.useState([]);
-    const [dogStatusList, setDogStatusList] = React.useState([
-            'Pending Intake',
-            'Foster Ready',
-            'In Foster',
-            'Adoption Ready',
-            'Adopted',
-          ]);
+    const [dogStatusList, setDogStatusList] = React.useState([]);
    
     const [searchDog, setDogSearch] = React.useState("");
     const [dogs, setDogState] = useState([])
@@ -68,12 +62,12 @@ export default function DogDossiersAll() {
             })
             .catch(err => console.log(err));
 
-        // API.getDogStatus()
-        //     .then(res => {
-        //     setDogStatusList(res.data)
-        //     console.log(res)
-        //     })
-        //     .catch(err => console.log(err));
+        API.getDogStatus()
+            .then(res => {
+            setDogStatusList(res.data)
+            console.log(res)
+            })
+            .catch(err => console.log(err));
     };
   
     const handleRegionChange = (event) => {
@@ -102,13 +96,13 @@ export default function DogDossiersAll() {
                     <AddButton buttonText="Add Dog" toLink="/createdog" />
                 </Grid>
                 <Grid item xs={12}>
-                    <SearchBar searchDog={searchDog} handleDogStatusChange={handleSearchInputChange}/>
+                    <SearchBar searchDog={searchDog} onChange={handleSearchInputChange}/>
                 </Grid>
                 <Grid item xs={12} s={12} m={6} lg={6}>
-                    <MultiSelectChips names={regions.map( (region) => region.name)} title="Select Region" selectedOption={selectedRegions} onOptionChange={handleRegionChange}/>
+                    <MultiSelectChips options={regions} title="Select Region" selectedOption={selectedRegions} onOptionChange={handleRegionChange}/>
                 </Grid>
                 <Grid item xs={12} s={12} m={6} lg={6}>
-                    <MultiSelectChips names={dogStatusList} title="Select Dog Status" selectedOption={selectedDogStatus} onOptionChange={handleDogStatusChange} />
+                    <MultiSelectChips options={dogStatusList} title="Select Dog Status" selectedOption={selectedDogStatus} onOptionChange={handleDogStatusChange} />
                 </Grid>
                 <Grid item xs={12}>
                     <Divider />
@@ -123,13 +117,13 @@ export default function DogDossiersAll() {
                 </Grid>
                 <Grid item xs={12}>
                     <OverviewTable rows={dogs.filter( (dog) => {
-                        if (!selectedRegions.includes(dog.Region)) {
+                        if (selectedRegions.length > 0 && !selectedRegions.includes(dog.Region)) {
                             return false;
                         } 
-                        if (!selectedDogStatus.includes(dog.DogStatus)) {
+                        if (selectedDogStatus.length > 0 && !selectedDogStatus.includes(dog.DogStatusId)) {
                             return false; 
                         }
-                        if (!(parseInt(searchDog) === dog.id || dog.name.includes(searchDog))) {
+                        if (!(parseInt(searchDog) === dog.id || dog.name.toLowerCase().includes(searchDog.toLowerCase()))) {
                             return false; 
                         }
                         return true;

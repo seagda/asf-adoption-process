@@ -22,16 +22,6 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
 
 
-function createData(id, name, user, city, state, vetName, vetPhone, region, status) {
-  return { id, name, user, city, state, vetName, vetPhone, region, status };
-}
-
-const rows = [
-  createData(1, 'Bruce', 'Nancy', 'Sammamish', 'WA', 'Paul Simon', '235-222-4850', ['West Coast'], ['Foster Ready']),
-  createData(2, 'Sweet Dog', 'Kathryn','Santa Cruz', 'CA', 'McJagger', '235-222-7122', ['West Coast'], ['Adopted']),
-  createData(3, 'Cody', 'Boston', 'Jocelyn', 'MA', 'Miley Cyrus', '321-222-4850', ['Northeast'], ['Pending Intake']),
-
-];
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -65,8 +55,8 @@ const headCells = [
   { id: 'user', numeric: false, disablePadding: false, label: 'ASF User' },
   { id: 'city', numeric: false, disablePadding: false, label: 'City' },
   { id: 'state', numeric: false, disablePadding: false, label: 'State' },
-  { id: 'vetName', numeric: false, disablePadding: false, label: 'Vet Name' },
-  { id: 'vetPhone', numeric: false, disablePadding: false, label: 'Vet Phone' },
+  { id: 'gender', numeric: false, disablePadding: false, label: 'Gender' },
+  { id: 'dob', numeric: false, disablePadding: false, label: 'Date of Birth' },
   { id: 'region', numeric: false, disablePadding: false, label: 'Region' },
   { id: 'status', numeric: false, disablePadding: false, label: 'Status' },
 ];
@@ -227,7 +217,7 @@ export default function OverviewTable(props) {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = rows.map((n) => n.name);
+      const newSelecteds = props.rows.map((n) => n.name);
       setSelected(newSelecteds);
       return;
     }
@@ -269,7 +259,7 @@ export default function OverviewTable(props) {
 
   const isSelected = (name) => selected.indexOf(name) !== -1;
 
-  const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
+  const emptyRows = rowsPerPage - Math.min(rowsPerPage, props.rows.length - page * rowsPerPage);
 
   return (
     <div className={classes.root}>
@@ -289,10 +279,10 @@ export default function OverviewTable(props) {
               orderBy={orderBy}
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
-              rowCount={rows.length}
+              rowCount={props.rows.length}
             />
             <TableBody>
-              {stableSort(rows, getComparator(order, orderBy))
+              {stableSort(props.rows, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
                   const isItemSelected = isSelected(row.name);
@@ -321,8 +311,8 @@ export default function OverviewTable(props) {
                       <TableCell >{row.user}</TableCell>
                       <TableCell >{row.city}</TableCell>
                       <TableCell >{row.state}</TableCell>
-                      <TableCell >{row.vetName}</TableCell>
-                      <TableCell >{row.vetPhone}</TableCell>
+                      <TableCell >{row.gender}</TableCell>
+                      <TableCell >{row.dob}</TableCell>
                       <TableCell >{row.region}</TableCell>
                       <TableCell >{row.status}</TableCell>
                     </TableRow>
@@ -339,7 +329,7 @@ export default function OverviewTable(props) {
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
-          count={rows.length}
+          count={props.rows.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onChangePage={handleChangePage}
