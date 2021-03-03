@@ -164,11 +164,9 @@ export default function ProfileForm(){
     const handleDogIntakeFormSubmit = event =>{
         event.preventDefault();
         const newDog = {...dogIntakeData, 
-
             ...isPurebredData, 
             ...sizeData, 
             ...originContactData,
-            
         }
         if(originContactData.originId === 0){
             newDog.origin = {...addedExternalContactData, Address: addedAddressData}

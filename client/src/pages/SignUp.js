@@ -64,13 +64,7 @@ const useStyles=makeStyles(theme => ({
 export default function SignUp(){
     const classes = useStyles();
 
-    const [signupFormData, setSignupFormData] = useState({
-        firstName: "",
-        lastName: "",
-        email: "",
-        password: "",
-        phone: ""
-    })
+    const [signupFormData, setSignupFormData] = useState({})
 
     const signupInputChange = event =>{
         const {name, value} = event.target
@@ -80,14 +74,7 @@ export default function SignUp(){
         })
     }
 
-    const [addressFormData, setAddressFormData] = useState({
-        Address: {
-            street: "",
-            city: "",
-            state: "",
-            zip5: ""
-        }
-    })
+    const [addressFormData, setAddressFormData] = useState({})
 
     const handleAddressInputChange = event =>{
         const {name, value} = event.target
@@ -99,25 +86,14 @@ export default function SignUp(){
 
     const handleSignupFormSubmit = event =>{
         event.preventDefault();
-        API.signup({...signupFormData,
-            ...addressFormData
-        }).then(res =>{
+        const newUser = {...signupFormData,
+            Address: addressFormData
+        }
+        console.log(newUser)
+        API.signup(newUser).then(res =>{
             console.log(res.data)
-            setSignupFormData({
-                firstName: "",
-                lastName: "",
-                email: "",
-                password: "",
-                phone: ""
-            })
-            setAddressFormData({
-                Address: {
-                    street: "",
-                    city: "",
-                    state: "",
-                    zip5: ""
-                }
-            })
+            setSignupFormData({})
+            setAddressFormData({})
             window.location = "/signin"
         }).catch(err =>{
             console.error(err.response.data.message)
@@ -160,7 +136,7 @@ export default function SignUp(){
                     
                     <Grid item container style={{marginLeft: "1em"}} align="flext-start">
                         <Grid item>
-                            <Typography variant="h7">Address</Typography>
+                            <Typography variant="h6">Address</Typography>
                         </Grid>
                     </Grid>
                     <Grid item container className={classes.form}>
