@@ -99,9 +99,10 @@ router.post("/new", (req, res) => {
 
 // view user profile by id
 router.get("/:id", (req, res) => {
-    const permission = ac.can(req.roles).readAny("User");
-    if (permission.granted) {
-        db.User.findByPk(req.params.id).then(user => res.json(permission.filter(user.toJSON()))).catch(err => {
+    const permissionRead = ac.can(req.roles).readAny("User");
+    const permissionUpdate = ac.can(req.roles).updateAny("User");
+    if (permissionRead.granted) {
+        db.User.findByPk(req.params.id).then(user => res.json({ ...permissionRead.filter(user.toJSON()), canEdit: permissionUpdate.granted })).catch(err => {
             console.error(err);
             res.status(500).send({ message: "Database error" });
         });
