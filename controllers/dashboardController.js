@@ -38,7 +38,7 @@ router.get("/", (req, res) => {
                 dashboardPromises[6] = db.User.findAll({ include: [{ association: "currentlyWith" }, { model: db.Role, where: { id: STATIC_IDS.ROLES.ADOPTER } }] });
             }
             if (permissionOwnDog.granted) {
-                dashboardPromises[7] = user.getCurrentlyWith({ order: ["DogStatusId"] });
+                dashboardPromises[7] = user.getCurrentlyWith({ include: [{ model: db.DogPhoto, where: { profilePhoto: true } }, db.DogStatus], order: ["DogStatusId"] });
             }
 
             return Promise.all(dashboardPromises);
