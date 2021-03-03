@@ -37,7 +37,7 @@ export default function ProfileBlock(props){
         <Grid item container className={classes.itemContainer}>
         <Grid container justify="space-evenly" className={classes.picContainer}>
             <Grid item>
-                <Image alt={"Ashley"} pic={ashley} />
+                <Image alt={"user photo"} image={props.image} />
             </Grid>
             <Grid item className={classes.form}>
                 <Grid item container className={classes.formItem}>
@@ -51,6 +51,9 @@ export default function ProfileBlock(props){
                 </Grid>
                 <Grid item container className={classes.formItem}>
                      <Typography>Email: {props.email}</Typography>
+                </Grid>
+                <Grid item container className={classes.formItem}>
+                     <Typography>DOB: {props.dob}</Typography>
                 </Grid>
                 {/* <Grid item container className={classes.formItem}>
                     <Typography>City: Camarillo</Typography>

@@ -1,6 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
+import Typography from "@material-ui/core/Typography";
+import Divider from "@material-ui/core/Divider";
 
 import API from "../utils/API";
 
@@ -74,12 +76,16 @@ export default function MyProfile(){
 
     return(
         <Grid container className={classes.mainContainer}>
+            <Grid item style={{marginBottom: "3em"}}>
+                <Typography variant="h4" color="primary">{userData.firstName}'s profile</Typography>
+                <Divider/>
+            </Grid>
             {/* <ProfileForm/> */}
-            <ProfileBlock firstName={userData.firstName} lastName={userData.lastName} phone={userData.phone} email={userData.email}/>
+            <ProfileBlock firstName={userData.firstName} lastName={userData.lastName} phone={userData.phone} email={userData.email} dob={userData.dob} image={userData.profileUrl}/>
             <ProfileActions/>
             <Roles/>
-            <CapacityView maxCapacity={userData.maxCapacity} puppies={puppiesData} seniors={seniorsData} adults={adultsData} behavior={behaviorData} medical={medicalIssuesData}/>
-            <References/>
+            <CapacityView style={{marginBottom: "5em"}} maxCapacity={userData.maxCapacity} puppies={puppiesData} seniors={seniorsData} adults={adultsData} behavior={behaviorData} medical={medicalIssuesData}/>
+            {/* <References/> */}
             {admin ? <AdminNotes/> : null}
 
             {/* User views */}

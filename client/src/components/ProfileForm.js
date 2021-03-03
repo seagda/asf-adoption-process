@@ -178,6 +178,17 @@ export default function ProfileForm(){
       })
     };
 
+    const [userdata, setUserData] = useState({})
+    useEffect(()=>{
+        API.getMyUserData().then(res =>{
+            console.log(res.data)
+            setUserData(res.data)
+        }).catch(err=>{
+            console.error(err.response.data.message)
+            alert("get data failed")
+        })
+    }, [])
+
     const handleUserIntakeFormSubmit = event =>{
         event.preventDefault();
         API.createUser({...userIntakeData,
