@@ -22,14 +22,14 @@ export default class Demo extends React.PureComponent {
   }
 
   render() {
-    const data = this.state.data;
+    // const data = this.state.data;
     const text = this.state.text;
 
     return (
       <Grid container justify="space-evenly" style={{marginTop: "1em"}}>
             <Grid item >
               <Paper marginLeft="1em" >
-                <Chart data={data} height="50" width="300">
+                <Chart data={this.state.data} height="50" width="300">
                   <Legend/>
                   <Title text={text}/>
                   <Hidden xsUp>
@@ -40,7 +40,7 @@ export default class Demo extends React.PureComponent {
             </Grid>
             <Grid item >
               <Paper marginLeft="1em" >
-                <Chart data={data} height="100%" width="300">
+                <Chart data={this.state.data} height="100%" width="300">
                   <Legend/>
                     <PieSeries valueField="number" argumentField="status" outerRadius="0"/>
                 </Chart>
@@ -48,7 +48,7 @@ export default class Demo extends React.PureComponent {
             </Grid>
             <Grid item >
               <Paper marginLeft="1em">
-                <Chart data={data} width="300" height="300">
+                <Chart data={this.state.data} width="300" height="300">
                   <Animation /> 
                   <PieSeries valueField="number" argumentField="status"/>
                 </Chart>
