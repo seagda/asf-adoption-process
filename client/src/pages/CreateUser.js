@@ -4,6 +4,7 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 
 import ProfileForm from "../components/ProfileForm";
 import RoleAssignment from "../components/RoleAssignment";
+import API from '../utils/API';
 
 
 const useStyles=makeStyles(theme => ({
@@ -28,10 +29,11 @@ const useStyles=makeStyles(theme => ({
 export default function CreateUser() {
     const classes = useStyles()
 
+    
 
     return (
         <Grid container className={classes.mainContainer}>
-            <ProfileForm/>
+            <ProfileForm submitFunction={API.createUser}/>
             {/* <RoleAssignment/> */}
         </Grid>
        

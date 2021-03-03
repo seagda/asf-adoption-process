@@ -33,8 +33,6 @@ export default function EditProfile() {
         API.getMyUserData().then(res =>{
             console.log(res.data)
             setUserData(res.data)
-            // setUserIntakeData()
-            // setIsActiveData({active: res.data.active})
         }).catch(err=>{
             console.error(err.response.data.message)
             alert("get data failed")
@@ -43,7 +41,7 @@ export default function EditProfile() {
 
     return (
         <Grid container className={classes.mainContainer}>
-            <ProfileForm userData={userData}/>
+            <ProfileForm submitFunction={API.updateMyUserData} userData={userData}/>
         </Grid>
        
     )

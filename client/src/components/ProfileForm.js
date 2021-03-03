@@ -187,12 +187,13 @@ export default function ProfileForm(props){
             dob: props.userData.dob,
             maxCapacity: props.userData.maxCapacity
         })
+        setIsActiveData({active: props.userData.active})
     }, [props.userData])
 
 
     const handleUserIntakeFormSubmit = event =>{
         event.preventDefault();
-        API.createUser({...userIntakeData,
+        props.submitFunction({...userIntakeData,
             ...isActiveData,
             ...isBlockedData,
             ...caresForPuppiesData,
