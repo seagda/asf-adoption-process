@@ -34,7 +34,7 @@ export default function AdopterApplication (){
 
     const setFinalPage = ()=>{
         return(
-            <Grid item>
+            <Grid item container direction="column" align="center">
                 <Typography variant="h5">Thanks for completing the application!</Typography>
                 <Typography variant="h5">An ASF team member will contact you soon.</Typography>
             </Grid>
@@ -43,8 +43,8 @@ export default function AdopterApplication (){
 
     return(
         <Grid container className={classes.mainContainer}>
-            <Typography variant="h4" color="primary">Adopter Application</Typography>
-            {showPage ? <AdoptApp
+            
+            {showPage ? <Typography variant="h4" color="primary">Adopter Application</Typography> && <AdoptApp
             showCompletedPage={data=>onCompletePage(data)}
             /> : setFinalPage()}
         </Grid>
