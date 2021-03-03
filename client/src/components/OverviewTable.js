@@ -308,13 +308,13 @@ export default function OverviewTable(props) {
                         {row.id}
                       </TableCell>
                       <TableCell >{row.name}</TableCell>
-                      <TableCell >{row.user}</TableCell>
+                      <TableCell >{row.currentlyWith ? row.currentlyWith.firstName + " " + row.currentlyWith.lastName : "not assigned"}</TableCell>
                       <TableCell >{row.city}</TableCell>
                       <TableCell >{row.state}</TableCell>
                       <TableCell >{row.gender}</TableCell>
                       <TableCell >{row.dob}</TableCell>
-                      <TableCell >{row.region}</TableCell>
-                      <TableCell >{row.status}</TableCell>
+                      <TableCell >{row.Region.name}</TableCell>
+                      <TableCell >{row.DogStatus.name}</TableCell>
                     </TableRow>
                   );
                 })}
