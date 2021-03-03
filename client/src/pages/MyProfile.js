@@ -54,6 +54,7 @@ export default function MyProfile(){
     useEffect(()=>{
         API.getMyUserData().then(res =>{
             console.log(res.data)
+            setUserData(res.data)
         }).catch(err=>{
             console.error(err.response.data.message)
             alert("get data failed")
@@ -63,7 +64,7 @@ export default function MyProfile(){
     return(
         <Grid container className={classes.mainContainer}>
             {/* <ProfileForm/> */}
-            <ProfileBlock/>
+            <ProfileBlock firstName={userData.firstName} lastName={userData.lastName} phone={userData.phone} email={userData.email}/>
             <ProfileActions/>
             <Roles/>
             <CapacityView/>
