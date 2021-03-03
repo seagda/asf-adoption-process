@@ -23,8 +23,8 @@ router.get("/", (req, res) => {
                 email: user.email,
                 city: user.Address ? user.Address.city : "No Address",
                 state: user.Address ? user.Address.state : "--",
-                region: user.ResidesInRegion.name,
-                roles: user.Roles.map(role => role.name).filter(role => role !== "user")
+                ResidesInRegion: user.ResidesInRegion,
+                Roles: user.Roles.filter(role => role.name !== "user")
             })))))
             .catch(err => {
                 console.error(err);
