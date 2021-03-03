@@ -1,6 +1,8 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
+
+import API from "../utils/API";
 
 // Both user/admin
 
@@ -46,6 +48,17 @@ const useStyles=makeStyles(theme => ({
 export default function MyProfile(){
     const classes = useStyles();
     const admin = false;
+
+    const [userData, setUserData] = useState({})
+
+    useEffect(()=>{
+        API.getMyUserData().then(res =>{
+            console.log(res.data)
+        }).catch(err=>{
+            console.error(err.response.data.message)
+            alert("get data failed")
+        })
+    }, [])
 
     return(
         <Grid container className={classes.mainContainer}>

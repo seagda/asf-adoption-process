@@ -26,6 +26,9 @@ const API = {
     sendAppData: function(response, appId){
         return axios.post(`/api/user/app-response`, response, appId, getHeaders())
     },
+    getMyUserData: function(){
+        return axios.get(`/api/user/me`, getHeaders())
+    },
 
     getDogDossiersAll: function() {
         return axios.get("/api/dog", getHeaders())
