@@ -28,13 +28,13 @@ import "../../components/applications/style.css";
 //     navigationButton: "button"
 // };
 
-export default function AdoptApp(props) {
+export default function FosterApp(props) {
     // const classes = useStyles();
 
     const [appQuestions, setAppQuestions] = useState([])
 
     useEffect(()=>{
-        API.getAdopterApp().then(res=>{
+        API.getFosterApp().then(res=>{
             setAppQuestions(res.data)
             console.log(res.data)
         }).catch(err=>{

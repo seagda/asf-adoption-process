@@ -8,7 +8,7 @@ import ResponsiveDrawer from "../src/components/Header";
 import DogDossiersAll from "../src/pages/DogDossiersAll"
 import Login from "../src/pages/Login"
 import CreateUser from "../src/pages/CreateUser";
-import Application from "./pages/Application";
+import AdopterApplication from "./pages/AdopterApplication";
 import MyProfile from "./pages/MyProfile";
 // import MyDogs from "./pages/MyDogs";
 import ManageASFUsers from "./pages/ManageASFUsers";
@@ -22,6 +22,7 @@ import DashboardMain from "./pages/DashboardMain";
 import SignUp from "./pages/SignUp";
 import Home from "./pages/Home";
 import Settings from "./pages/Settings";
+import FosterApplication from "./pages/FosterApplication";
 
 export default function App() {
     const admin = true;
@@ -39,7 +40,8 @@ export default function App() {
                     <Route path="/Dog-Dossiers"><DogDossiersAll /></Route>
                     <Route path="/Manage-ASF-Users"><ManageASFUsers/></Route>
                     <Route path="/editprofile"><EditProfile/></Route>
-                    <Route path="/application"><Application/></Route>
+                    <Route path="/adopterApplication"><AdopterApplication/></Route>
+                    <Route path="/fosterApplication"><FosterApplication/></Route>
                     <Route path="/createUser"><CreateUser/></Route>
                     <Route path="/dogView"><DogProfileView/></Route>
                     <Route path="/createdog"><DogProfileEdit/></Route>

@@ -24,7 +24,10 @@ export default function ProfileActions(){
     return(
         <Grid container justify="space-evenly" style={{marginTop: "4em"}}>
             <Grid item>
-                {admin ? null : <ApplyButton toLink="/application" buttonText="Apply to adopt an aussie"/>}
+                {admin ? null : <ApplyButton toLink="/adopterApplication" buttonText="Apply to adopt an aussie"/>}
+            </Grid>
+            <Grid item>
+                {admin ? null : <ApplyButton toLink="/fosterApplication" buttonText="Apply to become a foster"/>}
             </Grid>
             <Grid item>
                 {admin ? <EditButton toLink="/editprofile" buttonText="Edit Profile"/> : <EditButton toLink="/editprofile" buttonText="Edit Profile"/>}
