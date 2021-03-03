@@ -29,7 +29,7 @@ router.get("/", (req, res) => {
                     dogJson.Region = dogJson.origin.Region;
                 }
                 const { currentlyWith, ...dogToSend } = dogJson;
-                dogToSend.currentlyWith = { firstName: currentlyWith.firstName, lastName: currentlyWith.lastName, id: currentlyWith.id };
+                if (dogJson.currentlyWith) dogToSend.currentlyWith = { firstName: currentlyWith.firstName, lastName: currentlyWith.lastName, id: currentlyWith.id };
                 return dogToSend;
             });
             res.json(dogRes);
@@ -37,7 +37,7 @@ router.get("/", (req, res) => {
             console.error(err);
             res.sendStatus(500);
         });
-    }  else return res.status(403).send({ message: "Not authorized to view dogs" });
+    } else return res.status(403).send({ message: "Not authorized to view dogs" });
 });
 
 router.get("/status", (req, res) => {
