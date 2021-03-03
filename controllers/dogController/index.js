@@ -15,7 +15,7 @@ router.get("/", (req, res) => {
         const currentlyWith = { association: "currentlyWith", include: [db.Address, { association: "ResidesInRegion" }] };
         if (!permissionAny.granted) currentlyWith.where = { id: req.userId };
         db.Dog.findAll({
-            include: [currentlyWith, { association: "origin", include: [db.Address, db.Region] }]
+            include: [currentlyWith, { association: "origin", include: [db.Address, db.Region] }, db.DogStatus]
         }).then(dogs => {
             const dogRes = dogs.map(dog => {
                 const dogJson = permissionAny.granted ? permissionAny.filter(dog.toJSON()) : permissionOwn.filter(dog.toJSON());
