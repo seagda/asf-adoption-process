@@ -41,13 +41,13 @@ router.get("/:type/questions", (req, res) => {
                         if (question.type === "number" || question.type === "url") {
                             question.inputType = question.type;
                             question.type = "text";
-                        } else if (question.type === "radiogroup") question.choices = appQuestion.AppQuestionOptions.map(option => option.option);
+                        } else if (question.type === "radiogroup") question.choices = appQuestion.AppQuestionOptions.map(option => option.name);
                         if (appQuestion.DependsOnQuestion) {
                             question.visibleIf = `{${appQuestion.DependsOnQuestion.name}}=`
                             if (appQuestion.DependsOnQuestion.type === "boolean")
                                 question.visibleIf += appQuestion.dependsOnAnswer;
                             else if (appQuestion.DependsOnQuestion.type === "radiogroup")
-                                question.visibleIf += `'${appQuestion.DependsOnQuestion.AppQuestionOptions.find(option => option.id === appQuestion.dependsOnAnswer).option}'`
+                                question.visibleIf += `'${appQuestion.DependsOnQuestion.AppQuestionOptions.find(option => option.id === appQuestion.dependsOnAnswer).name}'`
                         }
                         return question;
                     })
