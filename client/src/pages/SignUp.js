@@ -120,6 +120,7 @@ export default function SignUp(){
             })
             window.location = "/signin"
         }).catch(err =>{
+            console.error(err.response.data.message)
             alert("signup failed")
         })
     }
