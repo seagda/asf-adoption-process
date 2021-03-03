@@ -183,7 +183,11 @@ export default function ProfileForm(){
         API.getMyUserData().then(res =>{
             console.log(res.data)
             setUserData(res.data)
-            setUserIntakeData({firstName: res.data.firstName})
+            setUserIntakeData({
+                firstName: res.data.firstName, 
+                lastName: res.data.lastName,
+                phone: res.data.phone
+            })
         }).catch(err=>{
             console.error(err.response.data.message)
             alert("get data failed")
@@ -221,27 +225,27 @@ export default function ProfileForm(){
     }
 
 
-    const roleEdit = (
-        <Grid item container className={classes.itemContainer}>
-        <Grid container style={{marginTop: "1em"}}>
-            <Grid item>
-                <Typography variant="h4">Role Title</Typography>
-            </Grid>
-        </Grid>
-        <Grid container justify="space-between">
-            <Grid item style={{marginTop: "1em"}}>
-                {roles.map((role)=> (
-                    <RoleTitles
-                    label={role.role}
-                    />
-                ))}
-            </Grid>
-            <Grid item>
-                <MultiSelectChips names={names} title="Add Role(s)"/>
-            </Grid>
-        </Grid>
-    </Grid>
-    )
+    // const roleEdit = (
+    //     <Grid item container className={classes.itemContainer}>
+    //     <Grid container style={{marginTop: "1em"}}>
+    //         <Grid item>
+    //             <Typography variant="h4">Role Title</Typography>
+    //         </Grid>
+    //     </Grid>
+    //     <Grid container justify="space-between">
+    //         <Grid item style={{marginTop: "1em"}}>
+    //             {roles.map((role)=> (
+    //                 <RoleTitles
+    //                 label={role.role}
+    //                 />
+    //             ))}
+    //         </Grid>
+    //         <Grid item>
+    //             <MultiSelectChips names={names} title="Add Role(s)"/>
+    //         </Grid>
+    //     </Grid>
+    // </Grid>
+    // )
 
     const userStatus = (
         <Grid item container className={classes.itemContainer, classes.marginFix}>
@@ -263,6 +267,7 @@ export default function ProfileForm(){
                     value={isActiveData.active}
                     name="active"
                     label="Is active?"
+                    InputLabelProps={{shrink: true}}
                     >
                     <MenuItem value="true">Yes</MenuItem>
                     <MenuItem value="false">No</MenuItem>
@@ -281,6 +286,7 @@ export default function ProfileForm(){
                     value={isBlockedData.blocked}
                     name="blocked"
                     label="Is blocked?"
+                    InputLabelProps={{shrink: true}}
                     >
                     <MenuItem value="true">Yes</MenuItem>
                     <MenuItem value="false">No</MenuItem>
@@ -299,6 +305,7 @@ export default function ProfileForm(){
                     value={onHoldData.hold}
                     name="hold"
                     label="On hold?"
+                    InputLabelProps={{shrink: true}}
                     >
                     <MenuItem value="true">Yes</MenuItem>
                     <MenuItem value="false">No</MenuItem>
@@ -357,6 +364,7 @@ export default function ProfileForm(){
                     value={caresForPuppiesData.puppies}
                     name="puppies"
                     label="Puppies?"
+                    InputLabelProps={{shrink: true}}
                     >
                     <MenuItem value="true">Yes</MenuItem>
                     <MenuItem value="false">No</MenuItem>
@@ -377,6 +385,7 @@ export default function ProfileForm(){
                     value={caresForAdultsData.adults}
                     name="adults"
                     label="Adults?"
+                    InputLabelProps={{shrink: true}}
                     >
                     <MenuItem value="true">Yes</MenuItem>
                     <MenuItem value="false">No</MenuItem>
@@ -399,6 +408,7 @@ export default function ProfileForm(){
                     value={caresForSeniorsData.seniors}
                     name="active"
                     label="Seniors?"
+                    InputLabelProps={{shrink: true}}
                     >
                     <MenuItem value="true">Yes</MenuItem>
                     <MenuItem value="false">No</MenuItem>
@@ -419,6 +429,7 @@ export default function ProfileForm(){
                     value={withBehaviorIssuesData.withBehaviorIssues}
                     name="withBehaviorIssues"
                     label="With behaviorial issues?"
+                    InputLabelProps={{shrink: true}}
                     >
                     <MenuItem value="true">Yes</MenuItem>
                     <MenuItem value="false">No</MenuItem>
@@ -441,6 +452,7 @@ export default function ProfileForm(){
                     value={withMedIssuesData.withMedicalIssues}
                     name="withMedicalIssues"
                     label="Medical Issues?"
+                    InputLabelProps={{shrink: true}}
                     >
                     <MenuItem value="true">Yes</MenuItem>
                     <MenuItem value="false">No</MenuItem>
@@ -524,7 +536,7 @@ export default function ProfileForm(){
         </Grid>
         <Grid container>
             <Grid item container style={{marginTop: "1em"}} justify="center">
-                <TextField className={classes.largeTextfield} label="Admin Notes" rows={6} multiline variant="outlined" onChange={createUserInputChange} value={userIntakeData.adminNotes} name="adminNotes"/>
+                <TextField className={classes.largeTextfield} InputLabelProps={{shrink: true}} label="Admin Notes" rows={6} multiline variant="outlined" onChange={createUserInputChange} value={userIntakeData.adminNotes} name="adminNotes"/>
             </Grid>
         </Grid>
     </Grid>
@@ -544,17 +556,17 @@ export default function ProfileForm(){
                         <TextField variant="outlined" InputLabelProps={{shrink: true}} label="First Name" onChange={createUserInputChange} value={userIntakeData.firstName} name="firstName"/>
                     </Grid>
                     <Grid item container className={classes.formItem}>
-                        <TextField variant="outlined" label="Last Name" onChange={createUserInputChange} value={userIntakeData.lastName} name="lastName"/>
+                        <TextField variant="outlined" InputLabelProps={{shrink: true}} label="Last Name" onChange={createUserInputChange} value={userIntakeData.lastName} name="lastName"/>
                     </Grid>
                     <Grid item container className={classes.formItem}>
-                        <TextField variant="outlined" label="Phone" onChange={createUserInputChange} value={userIntakeData.phone} name="phone"/>
+                        <TextField variant="outlined" InputLabelProps={{shrink: true}} label="Phone" onChange={createUserInputChange} value={userIntakeData.phone} name="phone"/>
                     </Grid>
                     <Grid item container className={classes.formItem}>
-                        <TextField type="email" variant="outlined" label="Email" onChange={createUserInputChange} value={userIntakeData.email} name="email"/>
+                        <TextField type="email" variant="outlined" InputLabelProps={{shrink: true}} label="Email" onChange={createUserInputChange} value={userIntakeData.email} name="email"/>
                     </Grid>
                     <Grid item container className={classes.formItem} direction="column">
                         <InputLabel id="birthday">Date of birth</InputLabel>
-                        <TextField type="date" variant="outlined" labelId="birthday" onChange={createUserInputChange} value={userIntakeData.dob} name="dob"/>
+                        <TextField type="date" variant="outlined" InputLabelProps={{shrink: true}} labelId="birthday" onChange={createUserInputChange} value={userIntakeData.dob} name="dob"/>
                     </Grid>
                 </div>
             </Grid>
