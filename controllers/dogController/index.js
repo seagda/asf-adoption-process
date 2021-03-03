@@ -112,6 +112,22 @@ router.post("/:DogId/photo", (req, res) => {
         });
 });
 
+// change profile photo
+router.put("/:DogId/profile-photo/:PhotoId", (req, res) => {
+    const permissionOwn = ac.can(req.roles).updateOwn("Dog");
+    const permissionAny = ac.can(req.roles).updateAny("Dog");
+    Promise.resolve((() => permissionOwn.granted && !permissionAny.granted ? db.Dog.findByPk(req.params.DogId).then(dog => dog.currentlyWithId === req.userId) : permissionAny.granted)())
+        .then(granted => granted ? Promise.all([
+            db.DogPhoto.update({ profilePhoto: false }, { where: { DogId: req.params.DogId, id: { [db.Sequelize.Op.ne]: req.params.PhotoId } } }),
+            db.DogPhoto.update({ profilePhoto: true }, { where: { DogId: req.params.DogId, id: req.params.PhotoId } })
+        ]).then(() => true) : false)
+        .then(granted => granted ? res.status(200).send({ message: "Profile photo updated" }) : res.status(403).send({ message: "Not authorized to change this dog's profile photo" }))
+        .catch(err => {
+            console.error(err);
+            res.status(500).send({ message: "Database error" });
+        });
+});
+
 // update Own or Any DOG by id, with correct ROLE permission
 
 router.put("/:id", (req, res) => {
