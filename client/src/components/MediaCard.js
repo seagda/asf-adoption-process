@@ -37,14 +37,17 @@ export default function MediaCard(props) {
           <Typography gutterBottom variant="h5" component="h2">
             {props.name}
           </Typography>
+          <Typography gutterBottom variant="p" component="h3">
+            Gender: {props.gender}
+          </Typography>
+          <Typography gutterBottom variant="p" component="h3">
+            Date of Birth: {props.dob}
+          </Typography>
         </CardContent>
       </CardActionArea>
       <CardActions>
         <Button size="small" color="primary" to={props.dossierLink}>
-          Update Profile
-        </Button>
-        <Button size="small" color="primary" to={props.assessmentLink}>
-          Add Behavior Assessment
+          View Dossier
         </Button>
       </CardActions>
     </Card>

@@ -4,6 +4,7 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { useState, useEffect } from "react";
 import QuickActionsAdmin from "../components/QuickActionsAdmin";
 import QuickActionsFoster from "../components/QuickActionsFoster";
+import QuickActionsAdopter from "../components/QuickActionsAdopter";
 import PieChartContainer from "../components/PieChartContainer";
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
@@ -87,6 +88,12 @@ export default function DashboardMain(){
                 <Grid item xs={12}>
                     <QuickActionsFoster/>
                 </Grid>: null}
+
+                {/* And/or if Foster credentials, display these quick actions */}
+                {JSON.parse(localStorage.getItem("user")).roles.includes("adopter") ?
+                <Grid item xs={12}>
+                    <QuickActionsAdopter/>
+                </Grid>: null}
             </Grid>
 
             <Grid item xs={12} s={10}>
@@ -111,7 +118,7 @@ export default function DashboardMain(){
                             {dashboardData.myDogs.map(dog =>{
                                 return (
                                     <Grid item xs={10} s={10} m={6} lg={3}>
-                                        <MediaCard name={dog.name} />
+                                        <MediaCard name={dog.name} gender={dog.gender} dob={dog.dob} image={dog.DogPhotos[0].url} /* dossierLink={} */ />
                                     </Grid>
                                 )
                             })}    

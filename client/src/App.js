@@ -4,18 +4,13 @@ import {BrowserRouter, Route, Switch} from "react-router-dom";
 
 import theme from "../src/components/Theme";
 import ResponsiveDrawer from "../src/components/Header"; 
-// import DogDossier from "../src/pages/DogDossier"
 import DogDossiersAll from "../src/pages/DogDossiersAll"
 import Login from "../src/pages/Login"
 import CreateUser from "../src/pages/CreateUser";
 import AdopterApplication from "./pages/AdopterApplication";
 import MyProfile from "./pages/MyProfile";
-// import MyDogs from "./pages/MyDogs";
 import ManageASFUsers from "./pages/ManageASFUsers";
-// import ASFSettings from "./pages/ASFSettings";
 import EditProfile from "./pages/EditProfile";
-// import AdminDashboard from "./pages/AdminDashboard";
-import FosterDashboard from "./pages/FosterDashboard";
 import DogProfileView from "./pages/DogProfileView";
 import DogProfileEdit from "./pages/DogProfileEdit";
 import DashboardMain from "./pages/DashboardMain";
