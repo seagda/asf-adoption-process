@@ -115,5 +115,5 @@ Promise.all([
     db.AssessQuestionCategory.bulkCreate(assessQuestCatSeed),
     db.AppQuestionCategory.bulkCreate(appQuestCatSeed)
 ]).then(() => db.AssessQuestion.bulkCreate(assessQuestSeed))
-  .then(() => db.AppQuestion.bulkCreate(appQuestSeed, {include: db.AppQuestionOption}))
+  .then(() => db.AppQuestion.bulkCreate(appQuestSeed, {include: db.AppQuestionOption}).then(appQuestions => appQuestions.forEach(appQuestion => appQuestion.addAppType(1))))
   .catch(console.error);
