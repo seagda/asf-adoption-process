@@ -33,24 +33,20 @@ export default function App() {
                 <Switch>
                     <Route exact path="/"><Home /></Route>
                     <Route path="/My-Profile"><MyProfile/></Route>
-                    <Route path="/My-Dashboard"><FosterDashboard/></Route>
+                    <Route path="/My-Dashboard"><DashboardMain/></Route>
                     <Route path="/Settings"><Settings/></Route>
                     <Route path="/Logout" />
                     <Route path="/Dog-Dossiers"><DogDossiersAll /></Route>
                     <Route path="/Manage-ASF-Users"><ManageASFUsers/></Route>
-                    {/* <Route path="/ASF-Settings"><ASFSettings/></Route> */}
                     <Route path="/editprofile"><EditProfile/></Route>
                     <Route path="/application"><Application/></Route>
-                    {/* <Route path="/Admin-Dashboard"><AdminDashboard/></Route> */}
-                    {/* <Route path="/Foster-Dashboard"><FosterDashboard/></Route> */}
                     <Route path="/createUser"><CreateUser/></Route>
                     <Route path="/dogView"><DogProfileView/></Route>
                     <Route path="/createdog"><DogProfileEdit/></Route>
                     <Route path="/signin"><Login /></Route>
                     <Route path="/signup"><SignUp/></Route>
                     <Route path="/signup"><SignUp/></Route>
-                    <Route path="/ASF-Admin-Settings"><DashboardMain/></Route>
-                    <Route path="/My-Settings"><Settings/></Route>
+                   
                 </Switch>
             </BrowserRouter>
         </ThemeProvider>

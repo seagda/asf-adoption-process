@@ -36,37 +36,9 @@ const useStyles=makeStyles(theme => ({
 
 export default function DashboardMain(){
     const classes = useStyles();
-    const [team, setTeamState] = useState([])
-    const [alerts, setAlertState] = useState([])
+
     const [dashboardData, setDashboardState] = useState({})
-    const [selectedRegions, setRegion] = React.useState([]);
-
-    function loadTeam() {
-        
-        TeamAPI.getTeam()
-        .then(res => {
-            setTeamState(res)
-            console.log(res)
-        }
-        )
-        .catch(err => console.log(err));
-    };
-
-    // api call for alert data to display
-    
-    function loadAlerts() {
-        
-    AlertAPI.getAlerts()
-        .then(res => {
-        setAlertState(res)
-        console.log(res)
-        }
-        )
-        .catch(err => console.log(err));
-    };
-
-    // api call for alert data to display
-   
+  
     function loadDashboard() {
         
     API.getDashboardData()
@@ -79,27 +51,8 @@ export default function DashboardMain(){
     };
 
     useEffect(() => {
-        loadTeam()
-        loadAlerts()
         loadDashboard()
     }, [])
-// region select drop down
-    
-    const handleRegionChange = (event) => {
-        setRegion(event.target.value);
-      };
-    const regions = [
-        'Midwest/South',
-        'Mid-Atlantic',
-        'Mississippi Valley',
-        'West Coast',
-        'Great Lakes',
-        'Plains States',
-        'Rocky Mountain',
-        'Southeast',
-        'Northeast',
-        'Texas'
-      ];
 
     return(
         <Grid container className={classes.mainContainer}>
@@ -113,22 +66,18 @@ export default function DashboardMain(){
             </Grid>
             
             {JSON.parse(localStorage.getItem("user")).roles.some( (role) => ["regional", "admin", "superAdmin"].includes(role)) ? 
-                <Grid item xs={12}>
+            <Grid item xs={12}>
                 <QuickActionsAdmin/>
+            </Grid>: null}
+            {dashboardData.fosterCounts && dashboardData.adopterCounts && dashboardData.dogStatusCounts ? <Grid item xs={12}>
+                <PieChartContainer data={dashboardData}/>
             </Grid>: null}
             {JSON.parse(localStorage.getItem("user")).roles.includes("foster") ?
                 <Grid item xs={12}>
                 <QuickActionsFoster/>
             </Grid>: null}
-{/*             
-            <Grid item m={8} lg={8} />
-            <Grid item xs={12} s={12} m={4} lg={4}>
-                <MultiSelectChips options={regions} title="Select Region" selectedOption={selectedRegions} onOptionChange={handleRegionChange}/>
-            </Grid> */}
-            <Grid item xs={12}>
-                <PieChartContainer data={dashboardData}/>
-            </Grid>
-            <Grid item xs={12} s={12} m={6} lg={6} style={{marginTop: "2em"}}>
+           
+            {/* <Grid item xs={12} s={12} m={6} lg={6} style={{marginTop: "2em"}}>
                  <Typography variant="h5" component="h4" gutterBottom align="center" color="primary">
                     ASF Team Members
                     <Divider />
@@ -157,7 +106,7 @@ export default function DashboardMain(){
                     })}    
                 </ListContainer>
                 ):(<p>Currently no data to display</p>)}
-            </Grid>
+            </Grid> */}
         </Grid>
     )
 }
