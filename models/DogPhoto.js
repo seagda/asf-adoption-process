@@ -3,10 +3,6 @@ module.exports = (sequelize, DataTypes) => {
         url: { type: DataTypes.STRING, allowNull: false, validate: { isUrl: true } }
     }, { paranoid: false });
 
-    DogPhoto.associate = db => {
-        db.Dog.hasMany(DogPhoto);
-        DogPhoto.belongsTo(db.Dog);
-    };
     return DogPhoto;
 };
 

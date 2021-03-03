@@ -11,7 +11,11 @@ module.exports = (sequelize, DataTypes, Model) => {
         }
 
         static associate(db) {
-            Dog.hasOne(db.DogPhoto, { foreignKey: { name: "profilePhoto", allowNull: true } });
+            // Dog.hasOne(db.DogPhoto, { as: "ProfilePhoto", foreignKey: { name: "ProfilePhotoId", allowNull: true } });
+            // db.DogPhoto.belongsTo(Dog, { as: "ProfilePhoto", foreignKey: { name: "ProfilePhotoId", allowNull: true } });
+
+            Dog.hasMany(db.DogPhoto);
+            db.DogPhoto.belongsTo(Dog);
 
             db.ExtContact.hasMany(Dog, { as: "origin", foreignKey: { name: "originId", allowNull: false } });
             Dog.belongsTo(db.ExtContact, { as: "origin", foreignKey: { name: "originId", allowNull: false } });

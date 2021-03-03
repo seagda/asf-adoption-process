@@ -216,6 +216,26 @@ db.Role.bulkCreate(roleSeed)
     process.exit(1);
 });
 
+// Seed the DOG PHOTO table with dog pics
+const dogPhotoSeed = [
+    {url:"https://i.imgur.com/cL8S26i.png", DogId: 1},
+    {url:"https://i.imgur.com/eh0x4we.png", DogId: 2},
+    {url:"https://i.imgur.com/miydoCE.png", DogId: 3},
+    {url:"https://i.imgur.com/pC1T7H3.png", DogId: 4},
+    {url:"https://i.imgur.com/e4mSNSv.png", DogId: 5},
+    {url:"https://i.imgur.com/wxNdooS.png", DogId: 6},
+    {url:"https://i.imgur.com/1JEOCDA.png", DogId: 7},
+    {url:"https://i.imgur.com/9jMHdLC.png", DogId: 8},
+    {url:"https://i.imgur.com/7UpWner.png", DogId: 9},
+    {url:"https://i.imgur.com/lktuT9D.png", DogId: 10},
+    {url:"https://i.imgur.com/ec2RHKA.png", DogId: 11},
+    {url:"https://i.imgur.com/ec2RHKA.png", DogId: 12},
+    {url:"https://i.imgur.com/CLIaLZE.png", DogId: 13},
+    {url:"https://i.imgur.com/RZCdh7F.png", DogId: 14},
+    {url:"https://i.imgur.com/ywMoMQC.png", DogId: 15},
+    {url:"https://i.imgur.com/MoEKdmE.png", DogId: 16}
+];
+
 // Seed the DOG table with 12 dogs
 
 const dogSeed = [
@@ -245,4 +265,6 @@ Promise.all([
     db.AppType.bulkCreate(appTypeSeed)
 ]).then(() => db.ExtContact.bulkCreate(extContactSeed))
   .then(() => db.Dog.bulkCreate(dogSeed))
+  .then(() => db.DogPhoto.bulkCreate(dogPhotoSeed))
+//   .then((dogPhotos => dogPhotos.forEach(dogPhoto => dogPhoto.getDog().then(dog => dog.setProfilePhoto(dogPhoto.id)))))
   .catch(console.error);
