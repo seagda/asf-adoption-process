@@ -207,7 +207,7 @@ db.Role.bulkCreate(roleSeed)
     usersData[25].addRoles([1, 3]);
     usersData[26].addRoles([1, 3]);
     usersData[27].addRoles([1, 3]);
-    usersData[28].addRoles([1, 3]);
+    usersData[28].addRoles([1, 2, 3]);
     usersData[29].addRoles([1, 3, 4]);
     usersData[30].addRoles([1, 3, 4]);
     console.log(usersData.length + " records inserted!");
@@ -233,7 +233,8 @@ const dogPhotoSeed = [
     {url:"https://i.imgur.com/CLIaLZE.png", DogId: 13, profilePhoto: true},
     {url:"https://i.imgur.com/RZCdh7F.png", DogId: 14, profilePhoto: true},
     {url:"https://i.imgur.com/ywMoMQC.png", DogId: 15, profilePhoto: true},
-    {url:"https://i.imgur.com/MoEKdmE.png", DogId: 16, profilePhoto: true}
+    {url:"https://i.imgur.com/MoEKdmE.png", DogId: 16, profilePhoto: true},
+    {url:"https://i.imgur.com/MoEKdmE.png", DogId: 17, profilePhoto: true}
 ];
 
 // Seed the DOG table with 12 dogs
@@ -250,11 +251,12 @@ const dogSeed = [
     {originId:1, DogStatusId: 3,currentlyWithId:15, asfId: 2508, name: "Maya", gender: "female", dob: "2016-05-01", isPurebred: true, pullCost:200, behaviorIssues:true, medicalIssues: false, size: "mini", weight:25, coat: "red merle" },
     {originId:2, asfId: 2509, name: "Tonni", gender: "female", dob: "2017-08-01", microchipId:"822636", MicrochipMfgId: 8, isPurebred: false, secondaryBreed: "retriever", pullCost:200, behaviorIssues:false, medicalIssues: false, size: "medium", weight: 45.2, coat: "red merle" },
     {originId:3, DogStatusId: 3,currentlyWithId:14, asfId: 2510, name: "Champ", gender: "male", dob: "2020-12-01", MicrochipId:"522555", microchipMfgId: 8, isPurebred: true, pullCost:200, behaviorIssues:true, medicalIssues: false, size: "small", weight:40.2, coat: "tri-color" },
-    {originId:4, asfId: 2511, name: "Gabrielle", gender: "female", dob: "2010-11-01", microchipId:"56566", MicrochipMfgId: 8, microchipMfgId: 8, isPurebred: false, secondaryBreed: "border collie", pullCost:200, behaviorIssues:true, medicalIssues: false, size: "medium", weight:55.3, coat: "black" },
+    {originId:4, asfId: 2511, name: "Gabrielle", gender: "female", dob: "2010-11-01", microchipId:"56566", MicrochipMfgId: 8, isPurebred: false, secondaryBreed: "border collie", pullCost:200, behaviorIssues:true, medicalIssues: false, size: "medium", weight:55.3, coat: "black" },
     {originId:5, DogStatusId: 3, currentlyWithId:16, asfId: 2512, name: "Xena", gender: "female", dob: "2010-11-01", microchipId:"53637889", MicrochipMfgId: 8, isPurebred: true, pullCost:200, behaviorIssues:true, medicalIssues: false, size: "mini", weight:19, coat: "blue merle" },
     {originId:7, DogStatusId: 2, currentlyWithId:29, asfId: 2513, name: "Reina", gender: "female", dob: "2016-05-01", isPurebred: false, secondaryBreed: "german shepherd", pullCost:200, behaviorIssues:false, medicalIssues: false, size: "medium", weight: 50, coat: "tri-color" },
     {originId:7, DogStatusId: 2, currentlyWithId:29, asfId: 2514, name: "Titan", gender: "male", dob: "2010-11-01", isPurebred: true, pullCost:200, behaviorIssues:false, medicalIssues: false, size: "large", weight:67.78, coat: "black" },
-    {originId:10, DogStatusId: 3, currentlyWithId:15, asfId: 2515, name: "Billie", gender: "female", dob: "2020-12-01", microchipId:"5966", MicrochipMfgId: 8, isPurebred: false, secondaryBreed: "pit", pullCost:200, behaviorIssues:true, medicalIssues: false, size: "large", weight: 70, coat: "blue merle" }
+    {originId:10, DogStatusId: 3, currentlyWithId:15, asfId: 2515, name: "Billie", gender: "female", dob: "2020-12-01", microchipId:"5966", MicrochipMfgId: 8, isPurebred: false, secondaryBreed: "pit", pullCost:200, behaviorIssues:true, medicalIssues: false, size: "large", weight: 70, coat: "blue merle" },
+    {originId:9, DogStatusId: 6, currentlyWithId:28, asfId: 2516, name: "Spot", gender: "male", dob: "2020-12-01", microchipId:"5967", MicrochipMfgId: 8, isPurebred: false, secondaryBreed: "poodle", pullCost:200, behaviorIssues:true, medicalIssues: false, size: "large", weight: 70, coat: "blue merle" }
 ]; 
 Promise.all([
     db.Region.bulkCreate(regionSeed),
@@ -266,5 +268,4 @@ Promise.all([
 ]).then(() => db.ExtContact.bulkCreate(extContactSeed))
   .then(() => db.Dog.bulkCreate(dogSeed))
   .then(() => db.DogPhoto.bulkCreate(dogPhotoSeed))
-//   .then((dogPhotos => dogPhotos.forEach(dogPhoto => dogPhoto.getDog().then(dog => dog.setProfilePhoto(dogPhoto.id)))))
   .catch(console.error);
