@@ -218,22 +218,22 @@ db.Role.bulkCreate(roleSeed)
 
 // Seed the DOG PHOTO table with dog pics
 const dogPhotoSeed = [
-    {url:"https://i.imgur.com/cL8S26i.png", DogId: 1},
-    {url:"https://i.imgur.com/eh0x4we.png", DogId: 2},
-    {url:"https://i.imgur.com/miydoCE.png", DogId: 3},
-    {url:"https://i.imgur.com/pC1T7H3.png", DogId: 4},
-    {url:"https://i.imgur.com/e4mSNSv.png", DogId: 5},
-    {url:"https://i.imgur.com/wxNdooS.png", DogId: 6},
-    {url:"https://i.imgur.com/1JEOCDA.png", DogId: 7},
-    {url:"https://i.imgur.com/9jMHdLC.png", DogId: 8},
-    {url:"https://i.imgur.com/7UpWner.png", DogId: 9},
-    {url:"https://i.imgur.com/lktuT9D.png", DogId: 10},
-    {url:"https://i.imgur.com/ec2RHKA.png", DogId: 11},
-    {url:"https://i.imgur.com/ec2RHKA.png", DogId: 12},
-    {url:"https://i.imgur.com/CLIaLZE.png", DogId: 13},
-    {url:"https://i.imgur.com/RZCdh7F.png", DogId: 14},
-    {url:"https://i.imgur.com/ywMoMQC.png", DogId: 15},
-    {url:"https://i.imgur.com/MoEKdmE.png", DogId: 16}
+    {url:"https://i.imgur.com/cL8S26i.png", DogId: 1, profilePhoto: true},
+    {url:"https://i.imgur.com/eh0x4we.png", DogId: 2, profilePhoto: true},
+    {url:"https://i.imgur.com/miydoCE.png", DogId: 3, profilePhoto: true},
+    {url:"https://i.imgur.com/pC1T7H3.png", DogId: 4, profilePhoto: true},
+    {url:"https://i.imgur.com/e4mSNSv.png", DogId: 5, profilePhoto: true},
+    {url:"https://i.imgur.com/wxNdooS.png", DogId: 6, profilePhoto: true},
+    {url:"https://i.imgur.com/1JEOCDA.png", DogId: 7, profilePhoto: true},
+    {url:"https://i.imgur.com/9jMHdLC.png", DogId: 8, profilePhoto: true},
+    {url:"https://i.imgur.com/7UpWner.png", DogId: 9, profilePhoto: true},
+    {url:"https://i.imgur.com/lktuT9D.png", DogId: 10, profilePhoto: true},
+    {url:"https://i.imgur.com/ec2RHKA.png", DogId: 11, profilePhoto: true},
+    {url:"https://i.imgur.com/ec2RHKA.png", DogId: 12, profilePhoto: true},
+    {url:"https://i.imgur.com/CLIaLZE.png", DogId: 13, profilePhoto: true},
+    {url:"https://i.imgur.com/RZCdh7F.png", DogId: 14, profilePhoto: true},
+    {url:"https://i.imgur.com/ywMoMQC.png", DogId: 15, profilePhoto: true},
+    {url:"https://i.imgur.com/MoEKdmE.png", DogId: 16, profilePhoto: true}
 ];
 
 // Seed the DOG table with 12 dogs
