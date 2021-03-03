@@ -94,6 +94,27 @@ export default function ProfileForm(){
 
     const [dogIntakeData, setDogIntakeData] = useState({})
 
+    const [addedExternalContactData, setAddedExternalContactData] = useState({
+        origin: {
+            email: "",
+            phone: "",
+            fullName: "",
+            contactType: "",
+            Address: {
+                street: "",
+                city: "",
+                state: "",
+                zip5: ""
+            }
+        }
+    })
+    const handleAddedExternalContactChange = (event) =>{
+        const {name,value} = event.target
+        setAddedExternalContactData({
+            ...addedExternalContactData,
+            [name]: value
+        })
+    }
 
     const [isPurebredData, setIsPurebredData] = useState({});
     const handlePurebredChange = (event) => {
@@ -149,13 +170,16 @@ export default function ProfileForm(){
         API.createDog({...dogIntakeData, 
             ...isPurebredData, 
             ...sizeData, 
-            ...originContactData})
+            ...originContactData,
+            ...addedExternalContactData
+        })
             .then(res =>{
             console.log(res.data)
             setDogIntakeData({})
             setIsPurebredData({})
             setSizedata({})
             setOriginContactData({})
+            setAddedExternalContactData({})
             window.location = "/My-Dogs"
         }).catch(err=>{
             console.error(err.response.data.message)
@@ -319,18 +343,18 @@ export default function ProfileForm(){
                     </Grid>
                     <Grid item container style={{marginTop: "1em"}}>
                         <Grid item container justify="space-evenly">
-                            <TextField variant="outlined" label="Name" style={{marginTop: "1em"}}/>
-                            <TextField variant="outlined" label="Email" style={{marginTop: "1em"}}/>
-                            <TextField variant="outlined" label="Phone" style={{marginTop: "1em"}}/>
-                            <TextField variant="outlined" label="Type" style={{marginTop: "1em"}}/>
+                            <TextField variant="outlined" label="Name" style={{marginTop: "1em"}} onChange={handleAddedExternalContactChange} value={addedExternalContactData.fullName} name="fullName"/>
+                            <TextField variant="outlined" label="Email" style={{marginTop: "1em"}} onChange={handleAddedExternalContactChange} value={addedExternalContactData.email} name="email"/>
+                            <TextField variant="outlined" label="Phone" style={{marginTop: "1em"}} onChange={handleAddedExternalContactChange} value={addedExternalContactData.phone} name="phone"/>
+                            <TextField variant="outlined" label="Type" style={{marginTop: "1em"}} onChange={handleAddedExternalContactChange} value={addedExternalContactData.contactType} name="contactType"/>
                         </Grid>
                     </Grid>
                     <Grid item container direction="column" style={{marginTop: "2em"}} xs={10} sm={10} md={6} lg={6}>
                         <Typography>Address:</Typography>
-                        <TextField label="Street"/>
-                        <TextField label="City"/>
-                        <TextField label="State"/>
-                        <TextField label="Zip"/>
+                        <TextField label="Street" onChange={handleAddedExternalContactChange} value={addedExternalContactData.Address.street} name="street"/>
+                        <TextField label="City" onChange={handleAddedExternalContactChange} value={addedExternalContactData.Address.city} name="city"/>
+                        <TextField label="State" onChange={handleAddedExternalContactChange} value={addedExternalContactData.Address.state} name="state"/>
+                        <TextField label="Zip" onChange={handleAddedExternalContactChange} value={addedExternalContactData.Address.zip5} name="zip5"/>
                     </Grid>
                 </React.Fragment>
             }
