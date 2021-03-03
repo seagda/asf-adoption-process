@@ -29,8 +29,33 @@ const useStyles=makeStyles(theme => ({
         marginBottom: "1em"
     },
     paper: {
-        padding: "3em"
+        padding: "3em",
+        [theme.breakpoints.down("sm")]: {
+            width: "50%"
+        }
+    },
+    login: {
+        marginRight: "3em",
+        [theme.breakpoints.down("xs")]:{
+            marginRight: 0
+        }
+    },
+    signup: {
+        marginLeft: "3em",
+        [theme.breakpoints.down("sm")]:{
+            marginLeft: 0
+        },
+        [theme.breakpoints.down("xs")]:{
+            marginLeft: 0,
+            marginTop: "2em"
+        }
+    },
+    welcome: {
+        [theme.breakpoints.down("sm")]: {
+            width: "60%"
+        }
     }
+
 }))
 
 export default function Home(){
@@ -46,7 +71,7 @@ export default function Home(){
             </Grid>
             <Paper className={classes.paper}>
             <Grid item container justify="space-evenly">
-                <Grid item align="center" style={{marginRight: "3em"}}>
+                <Grid item align="center" className={classes.login}>
                     <Typography>If you already have an account,</Typography>
                     <Typography style={{marginBottom: "1em"}}> press "LOGIN" to continue.</Typography>
                     <NavLink style={{textDecoration: "none"}} to="/signin">
@@ -54,7 +79,7 @@ export default function Home(){
                     </NavLink>
                 </Grid>
                 <Divider orientation="vertical" flexItem />
-                <Grid item align="center" style={{marginLeft: "3em"}}>
+                <Grid item align="center" className={classes.signup}>
                     <Typography>If you need to create an account,</Typography>
                     <Typography style={{marginBottom: "1em"}}> press "SIGN UP" to get started.</Typography>
                     <NavLink style={{textDecoration: "none"}} to="/signup">
