@@ -14,6 +14,7 @@ import ListContainer from '../components/ListContainer';
 import TeamAPI from '../utils/Team';
 import AlertAPI from '../utils/Alerts';
 import API from '../utils/API';
+import MediaCard from '../components/MediaCard';
 
 
 const useStyles=makeStyles(theme => ({
@@ -94,18 +95,18 @@ export default function DashboardMain(){
                         <Divider />
                     </Typography>
                 </Grid>:null}
-            {/* {dogs.length ? (
+            {dashboardData.myDogs.length ? (
                 <Grid container className={classes.cardContainer} justify="center">
-                        {dogs.map(dog =>{
+                        {dashboardData.myDogs.map(dog =>{
                             return (
                                 <Grid item xs={10} s={10} m={6} lg={3}>
-                                    <MediaCard name={dog.name} image={dog.image} dossierLink={dog.dossierLink} assessmentLink={dog.assessmentLink} />
+                                    <MediaCard name={dog.name} /* image={dog.image} */ />
                                 </Grid>
                             )
                         })}    
                 </Grid>
                 ):(<p>Currently no data to display</p>)} 
-            </Grid>*/}
+        
             
            
             {/* <Grid item xs={12} s={12} m={6} lg={6} style={{marginTop: "2em"}}>
