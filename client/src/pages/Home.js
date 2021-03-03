@@ -18,7 +18,7 @@ const useStyles=makeStyles(theme => ({
             width: "80%"
         },
         [theme.breakpoints.down("sm")]:{
-            width: "80%"
+            width: "60%"
         },
         [theme.breakpoints.down("xs")]:{
             spacing: theme.spacing(2),
@@ -31,11 +31,19 @@ const useStyles=makeStyles(theme => ({
     paper: {
         padding: "3em",
         [theme.breakpoints.down("sm")]: {
-            width: "50%"
+            width: "70%"
+        },
+        [theme.breakpoints.down("xs")]: {
+            width: "90%",
+            padding: "1em"
         }
     },
     login: {
         marginRight: "3em",
+        [theme.breakpoints.down("sm")]:{
+            marginRight: 0,
+            marginBottom: "2em"
+        },
         [theme.breakpoints.down("xs")]:{
             marginRight: 0
         }
@@ -64,7 +72,7 @@ export default function Home(){
     return(
         <Grid container className={classes.mainContainer}>
             <Grid item container align="center" style={{marginBottom: "3em"}} direction="column">
-                <Grid item>
+                <Grid item className={classes.welcome}>
                     <Typography variant="h4" color="primary">Welcome!</Typography>
                     <Divider/>
                 </Grid>
