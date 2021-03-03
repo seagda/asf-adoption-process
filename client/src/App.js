@@ -47,7 +47,6 @@ export default function App() {
                     <Route path="/createdog"><DogProfileEdit/></Route>
                     <Route path="/signin"><Login /></Route>
                     <Route path="/signup"><SignUp/></Route>
-                    <Route path="/signup"><SignUp/></Route>
                    
                 </Switch>
             </BrowserRouter>

@@ -29,6 +29,9 @@ const API = {
     getMyUserData: function(){
         return axios.get(`/api/user/me`, getHeaders())
     },
+    updateMyUserData: function(userData){
+        return axios.put(`/api/user/me`, userData, getHeaders())
+    },
 
     getDogDossiersAll: function() {
         return axios.get("/api/dog", getHeaders())

@@ -91,7 +91,7 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-export default function ProfileForm(){
+export default function ProfileForm(props){
     const classes = useStyles();
     const admin = true;
     const roles = [{role: "Adopter"}, {role: "Foster"}];
@@ -178,24 +178,17 @@ export default function ProfileForm(){
       })
     };
 
-    const [userData, setUserData] = useState({})
     useEffect(()=>{
-        API.getMyUserData().then(res =>{
-            console.log(res.data)
-            setUserData(res.data)
-            setUserIntakeData({
-                firstName: res.data.firstName, 
-                lastName: res.data.lastName,
-                phone: res.data.phone,
-                email: res.data.email,
-                dob: res.data.dob,
-                maxCapacity: res.data.maxCapacity
-            })
-        }).catch(err=>{
-            console.error(err.response.data.message)
-            alert("get data failed")
+        setUserIntakeData({
+            firstName: props.userData.firstName, 
+            lastName: props.userData.lastName,
+            phone: props.userData.phone,
+            email: props.userData.email,
+            dob: props.userData.dob,
+            maxCapacity: props.userData.maxCapacity
         })
-    }, [])
+    }, [props.userData])
+
 
     const handleUserIntakeFormSubmit = event =>{
         event.preventDefault();
