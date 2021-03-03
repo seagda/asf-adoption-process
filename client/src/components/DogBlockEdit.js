@@ -179,7 +179,20 @@ export default function ProfileForm(){
             setIsPurebredData({})
             setSizedata({})
             setOriginContactData({})
-            setAddedExternalContactData({})
+            setAddedExternalContactData({
+                origin: {
+                    email: "",
+                    phone: "",
+                    fullName: "",
+                    contactType: "",
+                    Address: {
+                        street: "",
+                        city: "",
+                        state: "",
+                        zip5: ""
+                    }
+                }
+            })
             window.location = "/My-Dogs"
         }).catch(err=>{
             console.error(err.response.data.message)
@@ -351,10 +364,10 @@ export default function ProfileForm(){
                     </Grid>
                     <Grid item container direction="column" style={{marginTop: "2em"}} xs={10} sm={10} md={6} lg={6}>
                         <Typography>Address:</Typography>
-                        <TextField label="Street" onChange={handleAddedExternalContactChange} value={addedExternalContactData.Address.street} name="street"/>
-                        <TextField label="City" onChange={handleAddedExternalContactChange} value={addedExternalContactData.Address.city} name="city"/>
-                        <TextField label="State" onChange={handleAddedExternalContactChange} value={addedExternalContactData.Address.state} name="state"/>
-                        <TextField label="Zip" onChange={handleAddedExternalContactChange} value={addedExternalContactData.Address.zip5} name="zip5"/>
+                        <TextField label="Street" onChange={handleAddedExternalContactChange} value={addedExternalContactData.street} name="street"/>
+                        <TextField label="City" onChange={handleAddedExternalContactChange} value={addedExternalContactData.city} name="city"/>
+                        <TextField label="State" onChange={handleAddedExternalContactChange} value={addedExternalContactData.state} name="state"/>
+                        <TextField label="Zip" onChange={handleAddedExternalContactChange} value={addedExternalContactData.zip5} name="zip5"/>
                     </Grid>
                 </React.Fragment>
             }

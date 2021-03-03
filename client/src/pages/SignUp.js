@@ -165,16 +165,16 @@ export default function SignUp(){
                     </Grid>
                     <Grid item container className={classes.form}>
                             <Grid item className={classes.formItem}>
-                                <TextField className={classes.addressItem} variant="outlined" label="Street" onChange={handleAddressInputChange} value={addressFormData.Address.street} name="street"/>
+                                <TextField className={classes.addressItem} variant="outlined" label="Street" onChange={handleAddressInputChange} value={addressFormData.street} name="street"/>
                             </Grid>
                             <Grid item className={classes.formItem}>
-                                <TextField className={classes.addressItem} variant="outlined" label="City" onChange={handleAddressInputChange} value={addressFormData.Address.city} name="city"/>
+                                <TextField className={classes.addressItem} variant="outlined" label="City" onChange={handleAddressInputChange} value={addressFormData.city} name="city"/>
                             </Grid>
                             <Grid item className={classes.formItem}>
-                                <TextField className={classes.addressItem} variant="outlined" label="State" onChange={handleAddressInputChange} value={addressFormData.Address.state} name="state"/>
+                                <TextField className={classes.addressItem} variant="outlined" label="State" onChange={handleAddressInputChange} value={addressFormData.state} name="state"/>
                             </Grid>
                             <Grid item className={classes.formItem}>
-                                <TextField className={classes.addressItem} variant="outlined" label="Zip" onChange={handleAddressInputChange} value={addressFormData.Address.zip5} name="zip5"/>
+                                <TextField className={classes.addressItem} variant="outlined" label="Zip" onChange={handleAddressInputChange} value={addressFormData.zip5} name="zip5"/>
                             </Grid>
                     </Grid>
         
