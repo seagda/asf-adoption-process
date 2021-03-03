@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
     const AppQuestionOption = sequelize.define("AppQuestionOption", {
-        option: {
+        name: {
             type: DataTypes.STRING,
             allowNull: false
         }

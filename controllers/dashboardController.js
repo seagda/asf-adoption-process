@@ -44,28 +44,30 @@ router.get("/", (req, res) => {
             return Promise.all(dashboardPromises);
         })
         .then(([Alerts, dogStatusCounts, totalMaxCapacity, totalDogsInOurCare, pendingAppCounts, fosters, adopters, myDogs]) => {
-            const fostersWithSpace = fosters.filter(foster => foster.currentlyWith.length < foster.maxCapacity);
-            const fosterCounts = [
-                { status: "Pending Applications", number: (pendingAppCounts.find(appCount => appCount.name === "foster") || { count: 0 }).count },
-                { status: "Available Fosters", number: fostersWithSpace.length },
-                { status: "Full Fosters", number: fosters.length - fostersWithSpace.length }
-            ];
-            const adoptersWithSpace = adopters.filter(adopter => adopter.currentlyWith.length < adopter.maxCapacity);
-            const adopterCounts = [
-                { status: "Pending Applications", number: (pendingAppCounts.find(appCount => appCount.name === "adopter") || { count: 0 }).count },
-                { status: "Available Adopters", number: adoptersWithSpace.length },
-                { status: "Full Adopters", number: adopters.length - adoptersWithSpace.length }
-            ];
-            res.json({
-                alerts: permissionOwnAlerts.filter(Alerts),
-                dogStatusCounts: dogStatusCounts.map(statusCount => ({ status: statusCount.name, number: statusCount.count })),
-                totalMaxCapacity,
-                totalDogsInOurCare,
-                pendingAppCounts,
-                fosterCounts,
-                adopterCounts,
-                myDogs: permissionOwnDog.filter(myDogs)
-            });
+            const dashboardData = {};
+            if (Alerts) dashboardData.alerts = permissionOwnAlerts.filter(Alerts);
+            if (dogStatusCounts) dashboardData.dogStatusCounts = dogStatusCounts.map(statusCount => ({ status: statusCount.name, number: statusCount.count }));
+            if (totalMaxCapacity !== undefined) dashboardData.totalMaxCapacity = totalMaxCapacity;
+            if (totalDogsInOurCare !== undefined) dashboardData.totalDogsInOurCare = totalDogsInOurCare;
+            if (pendingAppCounts) dashboardData.pendingAppCounts = pendingAppCounts;
+            if (fosters) {
+                const fostersWithSpace = fosters.filter(foster => foster.currentlyWith.length < foster.maxCapacity);
+                dashboardData.fosterCounts = [
+                    { status: "Pending Applications", number: (pendingAppCounts.find(appCount => appCount.name === "foster") || { count: 0 }).count },
+                    { status: "Available Fosters", number: fostersWithSpace.length },
+                    { status: "Full Fosters", number: fosters.length - fostersWithSpace.length }
+                ];
+            }
+            if (adopters) {
+                const adoptersWithSpace = adopters.filter(adopter => adopter.currentlyWith.length < adopter.maxCapacity);
+                dashboardData.adopterCounts = [
+                    { status: "Pending Applications", number: (pendingAppCounts.find(appCount => appCount.name === "adopter") || { count: 0 }).count },
+                    { status: "Available Adopters", number: adoptersWithSpace.length },
+                    { status: "Full Adopters", number: adopters.length - adoptersWithSpace.length }
+                ];
+            }
+            if (myDogs) dashboardData.myDogs = permissionOwnDog.filter(myDogs);
+            res.json(dashboardData);
         })
         .catch(err => {
             console.error(err);
