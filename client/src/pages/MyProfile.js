@@ -50,6 +50,7 @@ export default function MyProfile(){
     const admin = false;
 
     const [puppiesData, setPuppiesData] = useState(false)
+    const [seniorsData, setSeniorsData] = useState(false)
 
     const [userData, setUserData] = useState({})
 
@@ -58,6 +59,7 @@ export default function MyProfile(){
             console.log(res.data)
             setUserData(res.data)
             setPuppiesData(res.data.puppies)
+            setSeniorsData(res.data.seniors)
         }).catch(err=>{
             console.error(err.response.data.message)
             alert("get data failed")
@@ -70,7 +72,7 @@ export default function MyProfile(){
             <ProfileBlock firstName={userData.firstName} lastName={userData.lastName} phone={userData.phone} email={userData.email}/>
             <ProfileActions/>
             <Roles/>
-            <CapacityView maxCapacity={userData.maxCapacity} puppies={puppiesData}/>
+            <CapacityView maxCapacity={userData.maxCapacity} puppies={puppiesData} seniors={seniorsData}/>
             <References/>
             {admin ? <AdminNotes/> : null}
 

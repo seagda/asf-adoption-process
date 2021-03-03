@@ -57,7 +57,7 @@ export default function CapacityView(props){
                             {props.puppies ? <Chip label="Puppies"/> : null}
                         </Grid>
                         <Grid item>
-                            {props.seniors ? <Chip label="Puppies"/> : null}
+                            {props.seniors ? <Chip label="Seniors"/> : null}
                         </Grid>
                     </Grid>
                 </Grid>
