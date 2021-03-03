@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false
         },
         type: {
-            type: DataTypes.ENUM("boolean", "text", "number", "url", "radiogroup"),
+            type: DataTypes.ENUM("boolean", "text", "number", "url", "radiogroup", "checkbox"),
             allowNull: false
         },
         isRequired: {

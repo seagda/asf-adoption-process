@@ -11,7 +11,8 @@ module.exports = (sequelize, DataTypes, Model) => {
         }
 
         static associate(db) {
-            Dog.hasOne(db.DogPhoto, { foreignKey: { name: "profilePhoto", allowNull: true } });
+            Dog.hasMany(db.DogPhoto, {foreignKey: {allowNull: false}});
+            db.DogPhoto.belongsTo(Dog, {foreignKey: {allowNull: false}});
 
             db.ExtContact.hasMany(Dog, { as: "origin", foreignKey: { name: "originId", allowNull: false } });
             Dog.belongsTo(db.ExtContact, { as: "origin", foreignKey: { name: "originId", allowNull: false } });
@@ -46,7 +47,7 @@ module.exports = (sequelize, DataTypes, Model) => {
         medicalIssues: DataTypes.STRING,
         size: DataTypes.ENUM("mini", "small", "medium", "large"),
         weight: DataTypes.DECIMAL(10, 2),
-        coat: DataTypes.ENUM("blue merle", "red merle", "red", "tri-color", "black", "brown"),
+        coat: DataTypes.ENUM("double merle", "black and tan", "blue merle", "red merle", "red", "red bi-color", "tri-color", "black", "black bi-color", "brown", "white"),
         blocked: {
             type: DataTypes.BOOLEAN,
             defaultValue: false
