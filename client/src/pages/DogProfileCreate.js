@@ -2,6 +2,7 @@ import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import SaveButton from "../components/SaveButton";
+import API from "../utils/API";
 
 import DogBlockEdit from "../components/DogBlockEdit";
 import DogStatusEdit from "../components/DogStatusEdit";
@@ -33,7 +34,7 @@ export default function DogProfileCreate(){
 
     return(
         <Grid container className={classes.mainContainer}>
-            <DogBlockEdit/>
+            <DogBlockEdit submitFunction={API.createDog} />
             {/* <DogStatusEdit/> */}
         </Grid>
     )

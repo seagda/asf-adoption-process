@@ -206,7 +206,7 @@ export default function ProfileForm(props){
             newDog.origin = {...addedExternalContactData, Address: addedAddressData}
         }
         console.log(newDog)
-        API.createDog(newDog)
+        props.submitFunction(newDog)
             .then(res =>{
             console.log(res.data)
             setDogIntakeData({})
