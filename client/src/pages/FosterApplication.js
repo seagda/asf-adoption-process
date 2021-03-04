@@ -4,6 +4,7 @@ import Grid from '@material-ui/core/Grid';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Typography from "@material-ui/core/Typography";
 import FosterApp from "../components/applications/FosterApp";
+import API from "../utils/API";
 
 const useStyles=makeStyles(theme => ({
     mainContainer: {
@@ -28,7 +29,7 @@ export default function FosterApplication (){
     const [showPage, setShowPage] = useState(true);
 
     const onCompletePage = useCallback((data)=>{
-        console.log(data);
+        API.sendAppData(data, 2);
         setShowPage(!showPage)
     }, [showPage])
 

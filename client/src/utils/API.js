@@ -1,8 +1,22 @@
 const axios = require("axios")
 
 function getHeaders(){
-    return {headers: {"x-access-token": JSON.parse(localStorage.getItem("user")).accessToken}}
+    const userString = localStorage.getItem("user")
+    if(!userString){
+        window.location = "/"
+        return null
+    } 
+    return {headers: {"x-access-token": JSON.parse(userString).accessToken}}
 }
+
+// function handle401(err){
+//     console.error(err)
+//     if(err.status === 401){
+//         window.location.href = "/"
+//     } else {
+//         return err
+//     }
+// }
 
 const API = {
     login: function(userData){
@@ -23,9 +37,22 @@ const API = {
     getFosterApp: function(){
         return axios.get(`/api/app/foster/questions`, getHeaders())
     },
-    sendAppData: function(response, appId){
-        return axios.post(`/api/user/app-response`, response, appId, getHeaders())
+    sendAppData: function(response, appTypeId){
+        return axios.post(`/api/user/app-response`, response, appTypeId, getHeaders())
     },
+    getUserAppResponses: function(userId) {
+        return axios.get(`/api/user/app-response/user/${userId}`, getHeaders())
+    },
+    getMyAppResponses: function() {
+        return axios.get(`/api/user/app-response/me`, getHeaders())
+    },
+    getBehaviorQuestions: function (){
+        return axios.get(`/api/dog/assess/questions`, getHeaders())
+    },
+    sendBehaviorForm: function (response,dogId, date){
+        return axios.post(`/api/dog/assess/${dogId}`, {response, date}, getHeaders())
+    },
+
     getMyUserData: function(){
         return axios.get(`/api/user/me`, getHeaders())
     },
@@ -37,6 +64,9 @@ const API = {
     },
     updateDogInfo: function(dogData, dogId){
         return axios.put(`/api/dog/${dogId}`, dogData, getHeaders())
+    },
+    microchipMfgGetAll: function(){
+        return axios.get("/api/dog/microchip-mfg", getHeaders())
     },
 
     getDogDossiersAll: function() {

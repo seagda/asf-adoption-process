@@ -52,6 +52,12 @@ router.get("/status", (req, res) => {
     });
 });
 
+// get list of microchip mfgs
+router.get("/microchip-mfg", (req, res) => db.MicrochipMfg.findAll().then(microchipMfgs => res.json(microchipMfgs)).catch(err => {
+    console.error(err);
+    res.status(500).send({ message: "Database error" });
+}));
+
 // show one DOG, with correct ROLE permission
 
 router.get("/:id", (req, res) => {
@@ -85,9 +91,11 @@ router.get("/:id", (req, res) => {
 router.post("/", (req, res) => {
     // TODO: createOwn dog permission for owner surrender
     // Check for permission to create dog
+    console.log(req.body)
     const permissionAny = ac.can(req.roles).createAny("Dog");
+    console.log(permissionAny.filter(req.body))
     if (permissionAny.granted) {
-        db.Dog.create(permissionAny.filter(req.body), { include: { model: db.ExtContact, as: "origin", include: db.Address } })
+        db.Dog.create({ ...permissionAny.filter(req.body), DogStatusId: 1 }, { include: { model: db.ExtContact, as: "origin", include: db.Address } })
             // currentlyWith always starts null
             .then(dog => res.status(200).send({ id: dog.id }))
             .catch(err => {
@@ -167,12 +175,6 @@ router.delete("/archive/:id", (req, res) => {
         });
     else return res.status(403).send({ message: "Not authorized to archive dogs" });
 });
-
-// get list of microchip mfgs
-router.get("/microchip-mfg", (req, res) => db.MicrochipMfg.findAll().then(microchipMfgs => res.json(microchipMfgs)).catch(err => {
-    console.error(err);
-    res.status(500).send({ message: "Database error" });
-}));
 
 // Generate ALERTS
 

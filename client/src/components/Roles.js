@@ -1,9 +1,12 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import RoleTitles from "./RoleTitles";
+import Chip from "@material-ui/core/Chip";
+
+import API from "../utils/API";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -17,9 +20,8 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function Roles(){
+export default function Roles(props){
     const classes = useStyles();
-    const roles = [{role: "Super Admin"}]
 
     return(
         <Grid item container className={classes.itemContainer}>
@@ -31,11 +33,7 @@ export default function Roles(){
             </Grid>
             <Grid container>
                 <Grid item style={{marginTop: "1em"}}>
-                    {roles.map((role)=> (
-                        <RoleTitles
-                        label={role.role}
-                        />
-                    ))}
+                    <Chip/>
                 </Grid>
             </Grid>
         </Grid>

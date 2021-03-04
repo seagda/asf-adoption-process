@@ -95,13 +95,13 @@ function ResponsiveDrawer(props) {
     };
 
     const handleLogout = () =>{
-        localStorage.setItem("user", "")
+        localStorage.removeItem("user")
     }
 
     const drawer = (
         <div>
             {/* <div className={classes.toolbar} /> */}
-            <NavLink to="/" className={classes.logoContainer}>
+            <NavLink to="/My-Dashboard" className={classes.logoContainer}>
                 <img src={logo} className={classes.logo}/>
             </NavLink>
             <List>

@@ -160,8 +160,13 @@ export default function ProfileForm(props){
     const [dogStatusList, setDogStatusList] = useState([]);
     const [dogStatusNew, setDogStatusNew] = useState(0)
     const handleStatusChange = (event) => setDogStatusNew(event.target.value)
+
+    const [microchipMfgList, setMicrochipMfgList] = useState([]);
     
     const [origins, setOrigins] = useState([])
+
+    const [dogId, setDogId] = useState();
+    console.log(dogId)
 
     useEffect(()=>{
         setDogIntakeData({
@@ -177,17 +182,30 @@ export default function ProfileForm(props){
             pullCost: props.dogData.pullCost,
             DogStatusId: props.dogData.DogStatusId
         })
+        setDogId(props.dogData.id)
     }, [props.dogData])
 
     useEffect(()=>{
         LoadContacts();
         LoadStatus();
+        LoadMfg();
     },[])
 
     function LoadStatus (){
         API.getDogStatus().then(res =>{
             setDogStatusList(res.data)
+            // setMicrochipMfgList(res.data)
             // console.log(res.data)
+        }).catch(err=>{
+            console.error(err.response.data.message)
+            alert("get data failed")
+        })
+    }
+
+    function LoadMfg (){
+        API.microchipMfgGetAll().then(res =>{
+            setMicrochipMfgList(res.data)
+            console.log(res.data)
         }).catch(err=>{
             console.error(err.response.data.message)
             alert("get data failed")
@@ -223,7 +241,8 @@ export default function ProfileForm(props){
             ...originContactData,
             DogStatusId: dogStatusNew
         }
-        if(originContactData.originId === 0){
+        console.log(originContactData, addedExternalContactData, addedAddressData)
+        if(!originContactData.originId){
             newDog.origin = {...addedExternalContactData, Address: addedAddressData}
         }
         console.log(newDog)
@@ -239,7 +258,7 @@ export default function ProfileForm(props){
             setAddedExternalContactData({})
             setAddedAddressData({})
             setDogStatusNew(0)
-            window.location = "/My-Dogs"
+            window.location = "/dogView/" + (dogId || res.data.id)
         }).catch(err=>{
             console.error(err)
             alert("Create dog failed")
@@ -410,12 +429,13 @@ export default function ProfileForm(props){
                     </Select>
                     </FormControl>
                 </Grid>
-                <Grid item>
+                {/* THIS IS ON PURPOSE! Coming back soon to repair */}
+                {/* <Grid item>
                     <Typography>Or</Typography>
                     <Button variant="contained" color="secondary" onClick={onClick}>Add external contact</Button>
-                </Grid>
+                </Grid> */}
             </Grid>
-            {contactFormVis ? null : 
+            {/* {contactFormVis ? null : 
                 <React.Fragment>
                     <Grid item style={{marginTop: "3em"}}>
                         <Typography variant="h5">External Contact</Typography>
@@ -437,7 +457,7 @@ export default function ProfileForm(props){
                         <TextField label="Zip" InputLabelProps={{shrink: true}} onChange={handleExternalAddress} value={addedAddressData.zip5} name="zip5"/>
                     </Grid>
                 </React.Fragment>
-            }
+            } */}
             {/* <Grid item style={{marginTop: "1em"}}>
                 <Button variant="contained" color="secondary">Add external contact</Button>
             </Grid> */}
@@ -522,10 +542,27 @@ export default function ProfileForm(props){
                                     </Select>
                                 </FormControl>
 
-                    </div>
-                </Grid>
+                            </div>
+                        </Grid>
                     <Grid item container className={classes.numberItem}>
-                        {/* <NumberFormat placeholder="Microchip ID" variant="outlined" onChange={createDogInputChange} value={dogIntakeData.microchipId} name="microchipId"/> */}
+                        <Grid item style={{marginTop: "1em"}}>
+                            <div>
+                                <FormControl variant="outlined" style={{minWidth: 195, marginBottom: "1em"}}>
+                                    <InputLabel id="microchipMfgList">Microchip Company</InputLabel>
+                                    <Select
+                                        labelId="microchipMfgList"
+                                        id="microchipMfgList"
+                                        label="Microchip Manufacturer"
+                                        InputLabelProps={{shrink: true}}
+                                        name="microchipMfgList"
+                                    >
+                                        {microchipMfgList.map((mfg)=><MenuItem value={mfg.id}>{mfg.name}</MenuItem>)}
+                                    </Select>
+                                </FormControl>
+                            </div>
+                        </Grid>
+                    </Grid>
+                    <Grid item container className={classes.numberItem}>
                         <TextField type="number" variant="outlined" label="Microchip ID" InputLabelProps={{shrink: true}} onChange={createDogInputChange} value={dogIntakeData.microchipId} name="microchipId"/>
                     </Grid>
                     <Grid item container className={classes.formItem}>

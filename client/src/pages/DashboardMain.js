@@ -47,7 +47,7 @@ export default function DashboardMain(){
     function loadDashboard() {
     API.getDashboardData()
         .then(res => {
-        console.log(res)
+        console.log(res.data)
         setDashboardState(res.data)
         
         })
@@ -57,6 +57,12 @@ export default function DashboardMain(){
     useEffect(() => {
         loadDashboard()
     }, [])
+
+    const userString = localStorage.getItem("user")
+    if(!userString){
+        window.location = "/"
+    }
+    const user = JSON.parse(userString)
 
     return(
         <Grid container className={classes.mainContainer} justify="space-evenly" spacing={4}>
@@ -75,19 +81,19 @@ export default function DashboardMain(){
                 </Typography>
 
                 {/* If Admin credentials, display these quick actions */}
-                {JSON.parse(localStorage.getItem("user")).roles.some( (role) => ["regional", "admin", "superAdmin"].includes(role)) ? 
+                {user.roles.some( (role) => ["regional", "admin", "superAdmin"].includes(role)) ? 
                 <Grid item xs={12}>
                     <QuickActionsAdmin/>
                 </Grid>: null}
 
                 {/* And/or if Foster credentials, display these quick actions */}
-                {JSON.parse(localStorage.getItem("user")).roles.includes("foster") ?
+                {user.roles.includes("foster") ?
                 <Grid item xs={12}>
                     <QuickActionsFoster/>
                 </Grid>: null}
 
                 {/* And/or if Foster credentials, display these quick actions */}
-                {JSON.parse(localStorage.getItem("user")).roles.includes("adopter") ?
+                {user.roles.includes("adopter") ?
                 <Grid item xs={12}>
                     <QuickActionsAdopter/>
                 </Grid>: null}
@@ -115,7 +121,7 @@ export default function DashboardMain(){
                             {dashboardData.myDogs.map(dog =>{
                                 return (
                                     <Grid item xs={10} s={10} m={6} lg={3}>
-                                        <MediaCard name={dog.name} gender={dog.gender} dob={dog.dob} image={dog.DogPhotos[0].url} /* dossierLink={} */ />
+                                        <MediaCard id={dog.id} name={dog.name} gender={dog.gender} dob={dog.dob} image={dog.DogPhotos[0].url} /* dossierLink={} */ />
                                     </Grid>
                                 )
                             })}    
