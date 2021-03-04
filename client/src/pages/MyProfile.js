@@ -59,6 +59,8 @@ export default function MyProfile(){
 
     const [userData, setUserData] = useState({})
 
+    const [appResponseData, setAppResponseData] = useState([]);
+
     useEffect(()=>{
         API.getMyUserData().then(res =>{
             console.log(res.data)
@@ -71,7 +73,13 @@ export default function MyProfile(){
         }).catch(err=>{
             console.error(err.response.data.message)
             alert("get data failed")
-        })
+        });
+        API.getMyAppResponses().then(res => {
+            setAppResponseData(res.data);
+        }).catch(err=>{
+            console.error(err.response.data.message)
+            alert("get data failed")
+        });
     }, [])
 
     return(
@@ -87,6 +95,8 @@ export default function MyProfile(){
             <CapacityView style={{marginBottom: "5em"}} maxCapacity={userData.maxCapacity} puppies={puppiesData} seniors={seniorsData} adults={adultsData} behavior={behaviorData} medical={medicalIssuesData}/>
             {/* <References/> */}
             {admin ? <AdminNotes/> : null}
+
+            {/* {appResponseData.length ? } */}
 
             {/* User views */}
 
