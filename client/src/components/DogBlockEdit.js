@@ -156,11 +156,12 @@ export default function ProfileForm(props){
           [name]: value
       })
     };
+
+    const [dogStatusData, setDogStatusData] = useState([]);
     
     const [origins, setOrigins] = useState([])
 
     useEffect(()=>{
-        LoadContacts();
         setDogIntakeData({
             name: props.dogData.name,
             dob: props.dogData.dob,
@@ -171,9 +172,25 @@ export default function ProfileForm(props){
             weight: props.dogData.weight,
             medicalIssues: props.dogData.medicalIssues,
             behaviorialIssues: props.dogData.behaviorIssues,
-            pullCost: props.dogData.pullCost
+            pullCost: props.dogData.pullCost,
+            DogStatusId: props.dogData.DogStatusId
         })
     }, [props.dogData])
+
+    useEffect(()=>{
+        LoadContacts();
+        LoadStatus();
+    },[])
+
+    function LoadStatus (){
+        API.getDogStatus().then(res =>{
+            setDogStatusData(res.data)
+            // console.log(res.data)
+        }).catch(err=>{
+            console.error(err.response.data.message)
+            alert("get data failed")
+        })
+    }
 
     function LoadContacts (){
         API.getExtContact().then(res =>{
@@ -225,50 +242,49 @@ export default function ProfileForm(props){
         })
     }
 
-    // const dogStatus = (
-    //     <Grid item container className={classes.itemContainer}>
-    //     <Grid container style={{marginTop: "1em"}}>
-    //         <Grid item>
-    //             <Typography variant="h4">Dog Status</Typography>
-    //             <Divider/>
-    //         </Grid>
-    //     </Grid>
-    //     <Grid container>
-    //         <Grid item container justify="space-between">
-    //             <Grid item style={{marginTop: "1em"}}>
-    //                 <Chip label="In Foster"/>
-    //                 <br/>
-    //                 <TextField style={{marginTop: "1em"}} variant="outlined" label="Add Details" rows={4}/>
-    //             </Grid>
-    //             <Grid item>
-    //                     <div>
-    //                         <FormControl variant="outlined" className={classes.formControl}>
-    //                         <InputLabel id="demo-simple-select-outlined-label">Select Status</InputLabel>
-    //                         <Select
-    //                         labelId="demo-simple-select-outlined-label"
-    //                         id="demo-simple-select-outlined"
-    //                         onChange={handleStatusChange}
-    //                         value="status"
-    //                         name="status"
-    //                         label="Select Status"
-    //                         >
-    //                         <MenuItem value="">
-    //                         <em>None</em>
-    //                         </MenuItem>
-    //                         <MenuItem value="inTransit">In Transit</MenuItem>
-    //                         <MenuItem value="inFoster">In Foster</MenuItem>
-    //                         <MenuItem value="adopted">Adopted</MenuItem>
-    //                         </Select>
-    //                         </FormControl>
+    const dogStatus = (
+        <Grid item container className={classes.itemContainer}>
+        <Grid container style={{marginTop: "1em"}}>
+            <Grid item>
+                <Typography variant="h4">Dog Status</Typography>
+                <Divider/>
+            </Grid>
+        </Grid>
+        <Grid container>
+            <Grid item container justify="space-between">
+                <Grid item style={{marginTop: "1em"}}>
+                    <Chip label={(dogStatusData.find((status)=>status.id === dogIntakeData.DogStatusId)|| {}).name}/>
+                    <br/>
+                    <TextField style={{marginTop: "1em"}} variant="outlined" label="Add Details" rows={4}/>
+                </Grid>
+                <Grid item>
+                        <div>
+                            <FormControl variant="outlined" className={classes.formControl}>
+                            <InputLabel id="demo-simple-select-outlined-label">Select Status</InputLabel>
+                            <Select
+                            labelId="demo-simple-select-outlined-label"
+                            id="demo-simple-select-outlined"
+                            value="status"
+                            name="status"
+                            label="Select Status"
+                            >
+                            <MenuItem value="">
+                            <em>None</em>
+                            </MenuItem>
+                            <MenuItem value="inTransit">In Transit</MenuItem>
+                            <MenuItem value="inFoster">In Foster</MenuItem>
+                            <MenuItem value="adopted">Adopted</MenuItem>
+                            </Select>
+                            </FormControl>
 
-    //                     </div>
-    //                 <br/>
-    //                 {repeat ? <Typography style={{color: "red", fontWeight: 800}}>Repeated Relocations</Typography> : null}
-    //             </Grid>
-    //         </Grid>
-    //     </Grid>
-    // </Grid>
-    // )
+                        </div>
+                    <br/>
+                    {repeat ? <Typography style={{color: "red", fontWeight: 800}}>Repeated Relocations</Typography> : null}
+                </Grid>
+            </Grid>
+        </Grid>
+    </Grid>
+    )
 
     const breedInfo = (
         <Grid item container className={classes.itemContainer}>
@@ -522,7 +538,7 @@ export default function ProfileForm(props){
         
         {/* <DogStatusEdit/> */}
         {breedInfo}
-        {/* {dogStatus} */}
+        {window.location.href.includes("create") ? null : dogStatus}
         {/* <IntakeDetailsEdit/> */}
         {window.location.href.includes("create") ? intakeDetails : null}
         {/* <BehaviorForm/> */}
