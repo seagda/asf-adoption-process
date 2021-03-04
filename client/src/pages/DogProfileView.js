@@ -36,7 +36,7 @@ export default function DogProfileView(){
     let {id} = useParams();
     console.log(id)
 
-    const [dogData, setDogData] = useState({MicrochipMfg:{}, DogStatus:{}, DogPhotos: [], origin: {Region: {}}})
+    const [dogData, setDogData] = useState({MicrochipMfg:{}, DogStatus:{}, DogPhotos: [], origin: {Region: {}, Address: {}}})
     useEffect(()=>{
         API.getSingleDogData(id).then(res =>{
             console.log(res.data)
@@ -58,7 +58,7 @@ export default function DogProfileView(){
             {dogData.canEdit ? <DogProfileActions/> : null}
 
             <DogBreedView coat={dogData.coat} weight={dogData.weight} purebred={dogData.isPurebred} secondary={dogData.secondaryBreed}/>
-            <DogOriginView originName={dogData.origin.fullName} originRegion={dogData.origin.Region.name}/>
+            <DogOriginView originName={dogData.origin.fullName} originRegion={dogData.origin.Region.name} originStreet={dogData.origin.Address.street} originCity={dogData.origin.Address.city} originState={dogData.origin.Address.state} originZip={dogData.origin.Address.zip5} originPhone={dogData.origin.phone}/>
         </Grid>
     )
 }

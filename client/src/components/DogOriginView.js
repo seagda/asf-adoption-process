@@ -27,21 +27,21 @@ export default function DogOriginView(props){
                     </Grid>
                     <Grid item container style={{marginTop: "1em"}}>
                         <Grid item xs={6} sm={6} md={8} lg={6}>
-                            <Typography style={{marginTop: "1em"}}>Region:  {props.coat}</Typography>
+                            <Typography style={{marginTop: "1em"}}>Region:  {props.originRegion}</Typography>
                         </Grid>
                         <Grid item xs={6} sm={6} md={8} lg={6}>
                             <Typography style={{marginTop: "1em"}}>Name:{props.originName}</Typography>
                         </Grid>
                         <Grid item xs={6} sm={6} md={8} lg={6}>
-                            <Typography style={{marginTop: "1em"}}>Phone:{props.weight}</Typography>
+                            <Typography style={{marginTop: "1em"}}>Phone:{props.originPhone}</Typography>
                         </Grid>
                         <Grid item xs={6} sm={6} md={8} lg={6}>
-                            <Typography style={{marginTop: "1em"}}>Address:{props.weight}</Typography>
+                            <Typography style={{marginTop: "1em"}}>Address</Typography>
                             <Divider/>
-                            <Typography style={{marginTop: "1em"}}>Street:{props.weight}</Typography>
-                            <Typography style={{marginTop: "1em"}}>City:{props.weight}</Typography>
-                            <Typography style={{marginTop: "1em"}}>State:{props.weight}</Typography>
-                            <Typography style={{marginTop: "1em"}}>Zip:{props.weight}</Typography>
+                            <Typography style={{marginTop: "1em"}}>Street:{props.originStreet}</Typography>
+                            <Typography style={{marginTop: "1em"}}>City:{props.originCity}</Typography>
+                            <Typography style={{marginTop: "1em"}}>State:{props.originState}</Typography>
+                            <Typography style={{marginTop: "1em"}}>Zip:{props.originZip}</Typography>
                         </Grid>
                     </Grid>
             </Grid>
