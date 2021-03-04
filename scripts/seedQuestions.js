@@ -71,9 +71,9 @@ const appQuestCatSeed = [
 // Seed the APPLICATION Question table
 const appQuestBothSeed = [
     { position: 1, name: "dog-owner", title: "Have you ever owned a dog?", type: "boolean", AppQuestionCategoryId:1},
-    { position: 2, name: "aussie-owner", title: "Have you ever owned an Aussie?", type: "boolean", dependsOnAnswer: 0, dependsOnQuestionId: 1, AppQuestionCategoryId:1},
-    { position: 3, name: "surrender", title: "Have you ever had to surrender a dog in the past?", type: "boolean", dependsOnAnswer: 0, dependsOnQuestionId:1, AppQuestionCategoryId:1},
-    { position: 4, name: "surrender-why", title: "Why did you have to surrender?", type: "text", dependsOnAnswer: 1, dependsOnQuestionId: 1, AppQuestionCategoryId:1},
+    { position: 2, name: "aussie-owner", title: "Have you ever owned an Aussie?", type: "boolean", dependsOnAnswer: 1, dependsOnQuestionId: 1, AppQuestionCategoryId:1},
+    { position: 3, name: "surrender", title: "Have you ever had to surrender a dog in the past?", type: "boolean", dependsOnAnswer: 1, dependsOnQuestionId:1, AppQuestionCategoryId:1},
+    { position: 4, name: "surrender-why", title: "Why did you have to surrender?", type: "text", dependsOnAnswer: 1, dependsOnQuestionId: 3, AppQuestionCategoryId:1},
     { position: 5, name: "animal-cruelty", title: "Have you ever been convicted of animal cruelty or neglect?", type: "boolean", AppQuestionCategoryId:1},
     { position: 6, name: "animal-cruelty-why", title: "Explain the conviction", type: "text", dependsOnAnswer: 1, dependsOnQuestionId: 5, AppQuestionCategoryId:1},
     { position: 7, name: "dog-knowledge", title: "Rate your overall knowledge of dog health: basic nutrition, behavior etc", type: "number", AppQuestionCategoryId:1},
