@@ -8,5 +8,7 @@ module.exports = ac => {
         .createAny("User")
         .readAny("User")
         .readAny("Region")
-        .readAny("Alert")
+        .readAny("Alert");
+
+    ac.grant("admin").extend("regional");
 };
