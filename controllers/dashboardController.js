@@ -56,7 +56,7 @@ router.get("/", (req, res) => {
         })
         .then(([Alerts, dogStatusCounts, totalMaxCapacity, totalDogsInOurCare, pendingAppCounts, fosters, adopters, teamMembers, myDogs]) => {
             const dashboardData = {};
-            if (Alerts) dashboardData.alerts = permissionOwnAlerts.filter(Alerts);
+            if (Alerts) dashboardData.alerts = permissionOwnAlerts.filter(Alerts.map(alert => alert.toJSON()));
             if (dogStatusCounts) dashboardData.dogStatusCounts = dogStatusCounts.map(statusCount => ({ status: statusCount.name, number: statusCount.count }));
             if (totalMaxCapacity !== undefined) dashboardData.totalMaxCapacity = totalMaxCapacity;
             if (totalDogsInOurCare !== undefined) dashboardData.totalDogsInOurCare = totalDogsInOurCare;
