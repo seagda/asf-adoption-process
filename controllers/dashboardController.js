@@ -11,7 +11,7 @@ router.get("/", (req, res) => {
     const permissionAnyAppResponse = ac.can(req.roles).readAny("AppResponse");
     const permissionAnyUser = ac.can(req.roles).readAny("User");
     const permissionOwnDog = ac.can(req.roles).readOwn("Dog");
-    db.User.findByPk(req.userId)
+    db.User.findByPk(req.userId, { include: [db.Role, { association: "AssignedToRegion" }] })
         .then(user => {
             const dashboardPromises = [];
             if (permissionOwnAlerts.granted) {
@@ -36,14 +36,18 @@ router.get("/", (req, res) => {
             if (permissionAnyUser.granted) {
                 dashboardPromises[5] = db.User.findAll({ include: [{ association: "currentlyWith" }, { model: db.Role, where: { id: STATIC_IDS.ROLES.FOSTER } }] });
                 dashboardPromises[6] = db.User.findAll({ include: [{ association: "currentlyWith" }, { model: db.Role, where: { id: STATIC_IDS.ROLES.ADOPTER } }] });
+                const roleWhere = {};
+                const regionWhere = {};
+                if (user.Roles.find(role => role.id === STATIC_IDS.ROLES.SUPERADMIN)) roleWhere.id = { [db.Sequelize.Op.any]: [STATIC_IDS.ROLES.ADMIN, STATIC_IDS.ROLES.REGIONAL] };
+                dashboardPromises[7] = db.User.findAll({ include: [{ model: db.Role, where: roleWhere }, { association: "ResidesInRegion" }] })
             }
             if (permissionOwnDog.granted) {
-                dashboardPromises[7] = user.getCurrentlyWith({ include: [{ model: db.DogPhoto, where: { profilePhoto: true } }, db.DogStatus], order: ["DogStatusId"] });
+                dashboardPromises[8] = user.getCurrentlyWith({ include: [{ model: db.DogPhoto, where: { profilePhoto: true } }, db.DogStatus], order: ["DogStatusId"] });
             }
 
             return Promise.all(dashboardPromises);
         })
-        .then(([Alerts, dogStatusCounts, totalMaxCapacity, totalDogsInOurCare, pendingAppCounts, fosters, adopters, myDogs]) => {
+        .then(([Alerts, dogStatusCounts, totalMaxCapacity, totalDogsInOurCare, pendingAppCounts, fosters, adopters, teamMembers, myDogs]) => {
             const dashboardData = {};
             if (Alerts) dashboardData.alerts = permissionOwnAlerts.filter(Alerts);
             if (dogStatusCounts) dashboardData.dogStatusCounts = dogStatusCounts.map(statusCount => ({ status: statusCount.name, number: statusCount.count }));
@@ -66,6 +70,7 @@ router.get("/", (req, res) => {
                     { status: "Full Adopters", number: adopters.length - adoptersWithSpace.length }
                 ];
             }
+            if (teamMembers) dashboardData.teamMembers = permissionAnyUser.filter(teamMembers.map(member => member.toJSON()));
             if (myDogs) dashboardData.myDogs = permissionOwnDog.filter(myDogs.map(dog => dog.toJSON()));
             res.json(dashboardData);
         })
