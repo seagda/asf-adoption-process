@@ -58,6 +58,12 @@ export default function DashboardMain(){
         loadDashboard()
     }, [])
 
+    const userString = localStorage.getItem("user")
+    if(!userString){
+        window.location = "/"
+    }
+    const user = JSON.parse(userString)
+
     return(
         <Grid container className={classes.mainContainer} justify="space-evenly" spacing={4}>
             {console.log(localStorage.getItem("user"))}
@@ -75,19 +81,19 @@ export default function DashboardMain(){
                 </Typography>
 
                 {/* If Admin credentials, display these quick actions */}
-                {JSON.parse(localStorage.getItem("user")).roles.some( (role) => ["regional", "admin", "superAdmin"].includes(role)) ? 
+                {user.roles.some( (role) => ["regional", "admin", "superAdmin"].includes(role)) ? 
                 <Grid item xs={12}>
                     <QuickActionsAdmin/>
                 </Grid>: null}
 
                 {/* And/or if Foster credentials, display these quick actions */}
-                {JSON.parse(localStorage.getItem("user")).roles.includes("foster") ?
+                {user.roles.includes("foster") ?
                 <Grid item xs={12}>
                     <QuickActionsFoster/>
                 </Grid>: null}
 
                 {/* And/or if Foster credentials, display these quick actions */}
-                {JSON.parse(localStorage.getItem("user")).roles.includes("adopter") ?
+                {user.roles.includes("adopter") ?
                 <Grid item xs={12}>
                     <QuickActionsAdopter/>
                 </Grid>: null}
