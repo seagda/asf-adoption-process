@@ -26,9 +26,14 @@ export default function DogInfoCurrent(props){
                         <Divider/>
                     </Grid>
                     <Grid item container style={{marginTop: "1em"}}>
-                        <Grid item xs={6} sm={6} md={8} lg={6}>
+                        <Grid item xs={10} sm={6} md={8} lg={6}>
                             {props.currentlyWith ? <Typography style={{marginTop: "1em"}}>Currently With:  {props.currentlyWith}</Typography> : <Typography>Dog not currently assigned to ASF team member</Typography>}
-                            
+                        </Grid>
+                        <Grid item xs={10} sm={6} md={8} lg={6}>
+                            {props.behaviorIssues ? <Typography>Behaviorial Issues: Yes</Typography> : <Typography>Behaviorial Issues: No</Typography>}
+                        </Grid>
+                        <Grid item xs={10} sm={6} md={8} lg={6}>
+                            {props.behaviorIssues ? <Typography style={{marginTop: "1em"}}>Medical Issues: Yes</Typography> : <Typography style={{marginTop: "1em"}}>Medical Issues: No</Typography>}
                         </Grid>
                     </Grid>
             </Grid>
