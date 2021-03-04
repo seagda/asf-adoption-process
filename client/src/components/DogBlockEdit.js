@@ -172,7 +172,7 @@ export default function ProfileForm(props){
             behaviorialIssues: props.dogData.behaviorIssues,
             pullCost: props.dogData.pullCost
         })
-    }, [])
+    }, [props.dogData])
 
     function LoadContacts (){
         API.getExtContact().then(res =>{
