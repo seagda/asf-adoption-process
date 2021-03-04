@@ -20,6 +20,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
+import {NavLink} from "react-router-dom";
 
 
 
@@ -307,7 +308,7 @@ export default function OverviewTable(props) {
                       <TableCell component="th" id={labelId} scope="row" padding="none">
                         {row.id}
                       </TableCell>
-                      <TableCell >{row.name}</TableCell>
+                      <TableCell ><NavLink gutterBottom style={{textDecoration: "none"}} to={`/dogView/${row.id}`}>{row.name}</NavLink></TableCell>
                       <TableCell >{row.currentlyWith ? row.currentlyWith.firstName + " " + row.currentlyWith.lastName : "not assigned"}</TableCell>
                       <TableCell >{row.city}</TableCell>
                       <TableCell >{row.state}</TableCell>
