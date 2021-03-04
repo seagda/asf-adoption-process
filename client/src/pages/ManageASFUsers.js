@@ -80,6 +80,13 @@ export default function ManageASFUsers() {
     };
 
     const classes = useStyles()
+
+    const userString = localStorage.getItem("user")
+    if(!userString){
+        window.location = "/"
+    }
+    const user = JSON.parse(userString)
+
     return (
         
         <Grid container className={classes.mainContainer}>
@@ -91,9 +98,10 @@ export default function ManageASFUsers() {
                 </Typography>
                 </Grid>
                 <Grid item xs={4} s={4} m={8} lg={10} />
-                <Grid item xs={8} s={8} m={4} lg={2}>
+                {user.roles.some(role => ["superAdmin", "regional", "admin"].includes(role)) ? 
+                (<Grid item xs={8} s={8} m={4} lg={2}>
                     <AddButton buttonText="Add User" toLink="/createUser" />
-                </Grid>
+                </Grid>) : null}
                 <Grid item xs={12}>
                     <SearchBar searchUser={searchUser} onChange={handleUserSearch} />
                 </Grid>
