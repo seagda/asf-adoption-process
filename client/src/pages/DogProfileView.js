@@ -49,7 +49,7 @@ export default function DogProfileView(){
             setDogData(res.data)
         }).catch(err=>{
             console.error(err)
-            alert("get data failed")
+            // alert("get data failed")
         })
     },[])
 

@@ -35,7 +35,7 @@ export default function EditProfile() {
             setUserData(res.data)
         }).catch(err=>{
             console.error(err.response.data.message)
-            alert("get data failed")
+            // alert("get data failed")
         })
     }, [])
 
