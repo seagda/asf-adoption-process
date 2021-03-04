@@ -39,7 +39,7 @@ const API = {
         return axios.put(`/api/dog/${dogId}`, dogData, getHeaders())
     },
     microchipMfgGetAll: function(){
-        return axios.get("/api/microchip-mfg", getHeaders())
+        return axios.get("/api/dog/microchip-mfg", getHeaders())
     },
 
     getDogDossiersAll: function() {

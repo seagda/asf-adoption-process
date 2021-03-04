@@ -550,7 +550,7 @@ export default function ProfileForm(props){
                                         InputLabelProps={{shrink: true}}
                                         name="microchipMfgList"
                                     >
-                                        {microchipMfgList.map((mfg)=><MenuItem value={mfg.microchipMfg.id}>{mfg.microchipMfg.name}</MenuItem>)}
+                                        {microchipMfgList.map((mfg)=><MenuItem value={mfg.id}>{mfg.name}</MenuItem>)}
                                     </Select>
                                 </FormControl>
                             </div>
