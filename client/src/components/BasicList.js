@@ -21,9 +21,9 @@ export default function BasicList(props) {
     <List className={classes.root}>
       <ListItem>
         <ListItemAvatar>
-          <Avatar alt={props.name} src={props.image}/>
+          <Avatar alt="alert" src="https://www.town.winthrop.ma.us/sites/g/files/vyhlif4061/f/styles/news_image/public/pages/alert.png?itok=E3AWz5Wm"/>
         </ListItemAvatar>
-        <ListItemText primary={props.name} secondary={props.dueDate} />
+        <ListItemText primary={props.message}/>
       </ListItem>
     </List>
   );

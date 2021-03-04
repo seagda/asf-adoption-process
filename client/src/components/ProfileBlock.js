@@ -37,27 +37,33 @@ export default function ProfileBlock(props){
         <Grid item container className={classes.itemContainer}>
         <Grid container justify="space-evenly" className={classes.picContainer}>
             <Grid item>
-                <Image alt={"Ashley"} pic={ashley} />
+                <Image alt={"user photo"} image={props.image} />
             </Grid>
             <Grid item className={classes.form}>
                 <Grid item container className={classes.formItem}>
-                    <Typography>Name: Betsy Best</Typography>
+                    <Typography>First Name: {props.firstName}</Typography>
                 </Grid>
                 <Grid item container className={classes.formItem}>
-                     <Typography>Phone: 805-345-2781</Typography>
+                    <Typography>Last Name: {props.lastName}</Typography>
                 </Grid>
                 <Grid item container className={classes.formItem}>
-                     <Typography>Email: bestbets@gmail.com</Typography>
+                     <Typography>Phone: {props.phone}</Typography>
                 </Grid>
                 <Grid item container className={classes.formItem}>
+                     <Typography>Email: {props.email}</Typography>
+                </Grid>
+                <Grid item container className={classes.formItem}>
+                     <Typography>DOB: {props.dob}</Typography>
+                </Grid>
+                {/* <Grid item container className={classes.formItem}>
                     <Typography>City: Camarillo</Typography>
                 </Grid>
                 <Grid item container className={classes.formItem}>
                      <Typography>State: CA</Typography>
-                 </Grid>
-                <Grid item container className={classes.formItem}>
+                 </Grid> */}
+                {/* <Grid item container className={classes.formItem}>
                      <Typography>About Me: Passionate about animal rescue!</Typography>
-                </Grid>
+                </Grid> */}
             </Grid>
         </Grid>
     </Grid>

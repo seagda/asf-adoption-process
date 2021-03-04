@@ -10,7 +10,7 @@ import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    marginLeft: theme.spacing(4),
+    marginLeft: theme.spacing(2),
     marginTop: theme.spacing(2),
     width: '100%',
     maxWidth: '90%',
@@ -27,11 +27,11 @@ export default function AvatarList(props) {
   return (
     <List className={classes.root}>
       <ListItem alignItems="flex-start">
-        <ListItemAvatar>
-          <Avatar alt={props.name} src={props.image} />
+        <ListItemAvatar >
+          <Avatar alt={props.firstName} src={props.image} className={classes.large}/>
         </ListItemAvatar>
         <ListItemText
-          primary={props.name}
+          primary={props.firstName + " " + props.lastName} 
           secondary={
             <React.Fragment>
               <ul>
@@ -39,8 +39,8 @@ export default function AvatarList(props) {
                 variant="body2"
                 color="textPrimary"
               >
-                <li><strong>Role:</strong> {props.role}</li>
-                <li><strong>Location:</strong> {props.city}</li>
+                <li><strong>Role:</strong> {props.roles.map( (role) => role.name).join(", ")}</li>
+                <li><strong>Location:</strong> {props.ResidesInRegion.name}</li>
                 <li><strong>Email:</strong> {props.email}</li>
               </Typography>
               </ul>

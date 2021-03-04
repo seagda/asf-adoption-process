@@ -18,6 +18,13 @@ export default createMuiTheme({
         secondary: {
             main: dkYellow,
             second: ltYellow
+        },
+        lightBlue: {
+            main: ltBlue
+        },
+        lightYellow: {
+            main: ltYellow
+        },
         }
     }
-})
+)
