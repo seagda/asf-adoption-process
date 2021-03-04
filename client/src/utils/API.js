@@ -43,6 +43,9 @@ const API = {
     getUserAppResponses: function(userId) {
         return axios.get(`/api/user/app-response/user/${userId}`, getHeaders())
     },
+    getMyAppResponses: function() {
+        return axios.get(`/api/user/app-response/me`, getHeaders())
+    },
     getMyUserData: function(){
         return axios.get(`/api/user/me`, getHeaders())
     },
