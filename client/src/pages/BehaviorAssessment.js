@@ -1,9 +1,11 @@
 import React, {useState, useCallback} from "react";
+import {useParams} from "react-router-dom";
 import "survey-react/survey.css";
 import Grid from '@material-ui/core/Grid';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Typography from "@material-ui/core/Typography";
 import BehaviorForm from "../components/applications/BehaviorForm";
+import API from "../utils/API";
 
 const useStyles=makeStyles(theme => ({
     mainContainer: {
@@ -27,8 +29,12 @@ export default function BehaviorAssessment (){
     const classes = useStyles();
     const [showPage, setShowPage] = useState(true);
 
+    const date = Date.now()
+
+    let {id} = useParams();
+
     const onCompletePage = useCallback((data)=>{
-        console.log(data);
+        API.sendBehaviorForm(data, id, date)
         setShowPage(!showPage)
     }, [showPage])
 
