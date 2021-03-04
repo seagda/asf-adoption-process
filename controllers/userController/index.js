@@ -16,16 +16,19 @@ router.get("/", (req, res) => {
     const permission = ac.can(req.roles).readAny("User");
     if (permission.granted) {
         db.User.findAll({ include: [db.Address, { association: "ResidesInRegion" }, db.Role] })
-            .then(users => res.json(permission.filter(users.map(user => ({
-                id: user.id,
-                firstName: user.firstName,
-                lastName: user.lastName,
-                email: user.email,
-                city: user.Address ? user.Address.city : "No Address",
-                state: user.Address ? user.Address.state : "--",
-                region: user.ResidesInRegion.name,
-                roles: user.Roles.map(role => role.name).filter(role => role !== "user")
-            })))))
+            .then(users => res.json(permission.filter(users.map(user => {
+                userJson = user.toJSON();
+                return {
+                    id: userJson.id,
+                    firstName: userJson.firstName,
+                    lastName: userJson.lastName,
+                    email: userJson.email,
+                    city: userJson.Address ? userJson.Address.city : "No Address",
+                    state: userJson.Address ? userJson.Address.state : "--",
+                    ResidesInRegion: userJson.ResidesInRegion,
+                    Roles: userJson.Roles.filter(role => role.name !== "user")
+                }
+            }))))
             .catch(err => {
                 console.error(err);
                 res.status(500).send({ message: "error getting users from the database" });
@@ -96,9 +99,10 @@ router.post("/new", (req, res) => {
 
 // view user profile by id
 router.get("/:id", (req, res) => {
-    const permission = ac.can(req.roles).readAny("User");
-    if (permission.granted) {
-        db.User.findByPk(req.params.id).then(user => res.json(permission.filter(user.toJSON()))).catch(err => {
+    const permissionRead = ac.can(req.roles).readAny("User");
+    const permissionUpdate = ac.can(req.roles).updateAny("User");
+    if (permissionRead.granted) {
+        db.User.findByPk(req.params.id).then(user => res.json({ ...permissionRead.filter(user.toJSON()), canEdit: permissionUpdate.granted })).catch(err => {
             console.error(err);
             res.status(500).send({ message: "Database error" });
         });

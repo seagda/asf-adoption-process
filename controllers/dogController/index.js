@@ -9,24 +9,32 @@ router.use("/medi-status", require("./mediStatusController"));
 
 // show all DOGS, with correct ROLE permission
 router.get("/", (req, res) => {
-    const permissionAny = ac.can(req.roles).readAny("Dog");
     const permissionOwn = ac.can(req.roles).readOwn("Dog");
-    if (permissionAny.granted) {
+    const permissionAny = ac.can(req.roles).readAny("Dog");
+    if (permissionAny.granted || permissionOwn.granted) {
+        const currentlyWith = { association: "currentlyWith", include: [db.Address, { association: "ResidesInRegion" }] };
+        if (!permissionAny.granted) currentlyWith.where = { id: req.userId };
         db.Dog.findAll({
             include: [
-                { model: db.User, as: "currentlyWith", include: db.Address },
-                { model: db.ExtContact, as: "origin", include: db.Address }]
+                currentlyWith,
+                db.DogStatus,
+                { association: "origin", include: [db.Address, db.Region] },
+                { model: db.DogPhoto, required: false, where: { profilePhoto: true } }
+            ]
         }).then(dogs => {
             const dogRes = dogs.map(dog => {
-                const dogJson = permissionAny.filter(dog.toJSON());
+                const dogJson = permissionAny.granted ? permissionAny.filter(dog.toJSON()) : permissionOwn.filter(dog.toJSON());
                 if (dogJson.currentlyWithId) {
                     dogJson.city = dogJson.currentlyWith.Address.city;
                     dogJson.state = dogJson.currentlyWith.Address.state;
+                    dogJson.Region = dogJson.currentlyWith.ResidesInRegion;
                 } else {
                     dogJson.city = dogJson.origin.Address.city;
                     dogJson.state = dogJson.origin.Address.state;
+                    dogJson.Region = dogJson.origin.Region;
                 }
-                const { currentlyWith, origin, ...dogToSend } = dogJson;
+                const { currentlyWith, ...dogToSend } = dogJson;
+                if (dogJson.currentlyWith) dogToSend.currentlyWith = { firstName: currentlyWith.firstName, lastName: currentlyWith.lastName, id: currentlyWith.id };
                 return dogToSend;
             });
             res.json(dogRes);
@@ -34,29 +42,6 @@ router.get("/", (req, res) => {
             console.error(err);
             res.sendStatus(500);
         });
-    } else if (permissionOwn.granted) {
-        db.Dog.findAll({
-            include: [{ model: db.User, as: "currentlyWith", where: { id: req.userId }, include: db.Address },
-            { model: db.ExtContact, as: "origin", include: db.Address }]
-        }).then(dogs => {
-            const dogRes = dogs.map(dog => {
-                const dogJson = permissionOwn.filter(dog.toJSON());
-                if (dogJson.currentlyWithId) {
-                    dogJson.city = dogJson.currentlyWith.Address.city;
-                    dogJson.state = dogJson.currentlyWith.Address.state;
-                } else {
-                    dogJson.city = dogJson.origin.Address.city;
-                    dogJson.state = dogJson.origin.Address.state;
-                }
-                const { currentlyWith, origin, ...dogToSend } = dogJson;
-                return dogToSend;
-            });
-            res.json(dogRes);
-        }).catch(err => {
-            console.error(err);
-            res.sendStatus(500);
-        });
-
     } else return res.status(403).send({ message: "Not authorized to view dogs" });
 });
 
@@ -70,31 +55,26 @@ router.get("/status", (req, res) => {
 // show one DOG, with correct ROLE permission
 
 router.get("/:id", (req, res) => {
-    const permissionOwn = ac.can(req.roles).readOwn("Dog");
-    const permissionAny = ac.can(req.roles).readAny("Dog");
-    if (permissionOwn.granted || permissionAny.granted) {
+    const permissionReadOwn = ac.can(req.roles).readOwn("Dog");
+    const permissionReadAny = ac.can(req.roles).readAny("Dog");
+    const permissionUpdateOwn = ac.can(req.roles).updateOwn("Dog");
+    const permissionUpdateAny = ac.can(req.roles).updateAny("Dog");
+    if (permissionReadOwn.granted || permissionReadAny.granted) {
         db.Dog.findByPk(req.params.id, {
             include: [
-                { model: db.User, as: "currentlyWith", include: db.Address },
-                { model: db.ExtContact, as: "currentlyWith", include: db.Address },
+                { association: "currentlyWith", include: [db.Address, { association: "ResidesInRegion" }] },
+                { association: "origin", include: [db.Address, db.Region] },
+                db.MicrochipMfg, db.DogPhoto
             ],
         }).then(dog => {
+            // TODO: also check permissions for currently with and origin
             let dogJson;
             if (dog.currentlyWithId === req.userId) {
-                dogJson = permissionOwn.filter(dog.toJSON())
-            } else if (permissionAny.granted) {
-                dogJson = permissionAny.filter(dog.toJSON())
+                dogJson = { ...permissionReadOwn.filter(dog.toJSON()), canEdit: permissionUpdateOwn.granted }
+            } else if (permissionReadAny.granted) {
+                dogJson = { ...permissionReadAny.filter(dog.toJSON()), canEdit: permissionUpdateAny.granted }
             } else return res.status(403).send({ message: "you can't view this dog" });
-
-            if (dogJson.currentlyWithId) {
-                dogJson.city = dogJson.currentlyWith.Address.city;
-                dogJson.state = dogJson.currentlyWith.Address.state;
-            } else {
-                dogJson.city = dogJson.origin.Address.city;
-                dogJson.state = dogJson.origin.Address.state;
-            }
-            const { currentlyWith, origin, ...dogToSend } = dogJson;
-            res.json(dogToSend);
+            res.json(dogJson);
         });
 
     } else return res.status(403).send({ message: "Not authorized to view dogs" });
@@ -115,6 +95,37 @@ router.post("/", (req, res) => {
                 res.status(500).send({ message: "Database error" });
             });
     } else return res.status(403).send({ message: "Not authorized to add a dog" });
+});
+
+// add photo to dog
+router.post("/:DogId/photo", (req, res) => {
+    const permissionOwn = ac.can(req.roles).updateOwn("Dog");
+    const permissionAny = ac.can(req.roles).updateAny("Dog");
+    Promise.resolve((() => permissionOwn.granted && !permissionAny.granted ? db.Dog.findByPk(req.params.DogId).then(dog => dog.currentlyWithId === req.userId) : permissionAny.granted)())
+        .then(granted => granted ? (req.body.profilePhoto ? db.DogPhoto.update({ profilePhoto: false }, { where: { DogId: req.params.DogId } }).then(() => true) : true) : false)
+        .then(granted => granted
+            ? db.DogPhoto.create({ DogId: req.params.DogId, url: req.body.url, profilePhoto: req.body.profilePhoto }).then(() => res.status(200).send({ message: "Successfully added photo" }))
+            : res.status(403).send({ message: "Not authorized to add photos to this dog" }))
+        .catch(err => {
+            console.error(err);
+            res.status(500).send({ message: "Database error" });
+        });
+});
+
+// change profile photo
+router.put("/:DogId/profile-photo/:PhotoId", (req, res) => {
+    const permissionOwn = ac.can(req.roles).updateOwn("Dog");
+    const permissionAny = ac.can(req.roles).updateAny("Dog");
+    Promise.resolve((() => permissionOwn.granted && !permissionAny.granted ? db.Dog.findByPk(req.params.DogId).then(dog => dog.currentlyWithId === req.userId) : permissionAny.granted)())
+        .then(granted => granted ? Promise.all([
+            db.DogPhoto.update({ profilePhoto: false }, { where: { DogId: req.params.DogId, id: { [db.Sequelize.Op.ne]: req.params.PhotoId } } }),
+            db.DogPhoto.update({ profilePhoto: true }, { where: { DogId: req.params.DogId, id: req.params.PhotoId } })
+        ]).then(() => true) : false)
+        .then(granted => granted ? res.status(200).send({ message: "Profile photo updated" }) : res.status(403).send({ message: "Not authorized to change this dog's profile photo" }))
+        .catch(err => {
+            console.error(err);
+            res.status(500).send({ message: "Database error" });
+        });
 });
 
 // update Own or Any DOG by id, with correct ROLE permission
