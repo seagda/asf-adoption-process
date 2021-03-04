@@ -19,21 +19,14 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ProfileActions(){
     const classes = useStyles();
-    const admin = true;
 
     return(
         <Grid container justify="space-evenly" style={{marginTop: "4em"}}>
             <Grid item>
-                {admin ? null : <ApplyButton toLink="/adopterApplication" buttonText="Apply to adopt an aussie"/>}
+                <EditButton toLink="/editprofile" buttonText="Edit Profile"/> 
             </Grid>
             <Grid item>
-                {admin ? null : <ApplyButton toLink="/fosterApplication" buttonText="Apply to become a foster"/>}
-            </Grid>
-            <Grid item>
-                {admin ? <EditButton toLink="/editprofile" buttonText="Edit Profile"/> : <EditButton toLink="/editprofile" buttonText="Edit Profile"/>}
-            </Grid>
-            <Grid item>
-                {admin ? <UpdateButton toLink="/" buttonText="Update Password"/> : <UpdateButton toLink="/" buttonText="Update Password"/>}
+               <UpdateButton toLink="/" buttonText="Update Password"/> : <UpdateButton toLink="/" buttonText="Update Password"/>
             </Grid>
             <Grid item>
                 {/* {admin ? <ContactButton toLink="/" buttonText="Contact"/> : <ContactButton toLink="/" buttonText="Contact Admin"/>} */}
