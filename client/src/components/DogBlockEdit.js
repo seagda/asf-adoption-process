@@ -159,6 +159,10 @@ export default function ProfileForm(){
     const [origins, setOrigins] = useState([])
 
     useEffect(()=>{
+        LoadContacts();
+    }, [])
+
+    function LoadContacts (){
         API.getExtContact().then(res =>{
             setOrigins(res.data)
             // console.log(res.data)
@@ -166,7 +170,7 @@ export default function ProfileForm(){
             console.error(err.response.data.message)
             alert("get data failed")
         })
-    }, [])
+    }
 
     const [dogIntakeData, setDogIntakeData] = useState({})
     const createDogInputChange = event =>{

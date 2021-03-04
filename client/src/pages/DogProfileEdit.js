@@ -47,7 +47,7 @@ export default function DogProfileEdit(){
 
     return(
         <Grid container className={classes.mainContainer}>
-            <DogBlockEdit/>
+            <DogBlockEdit dogData={dogData} submitFunction={API.updateDogInfo}/>
             {/* <DogStatusEdit/> */}
         </Grid>
     )

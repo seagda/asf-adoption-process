@@ -35,6 +35,9 @@ const API = {
     getSingleDogData: function(dogId){
         return axios.get(`/api/dog/${dogId}`, getHeaders())
     },
+    updateDogInfo: function(dogData, dogId){
+        return axios.put(`/api/dog/${dogId}`, dogData, getHeaders())
+    },
 
     getDogDossiersAll: function() {
         return axios.get("/api/dog", getHeaders())
