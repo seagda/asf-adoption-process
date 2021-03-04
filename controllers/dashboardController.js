@@ -36,11 +36,11 @@ router.get("/", (req, res) => {
             if (permissionAnyUser.granted) {
                 dashboardPromises[5] = db.User.findAll({ include: [{ association: "currentlyWith" }, { model: db.Role, where: { id: STATIC_IDS.ROLES.FOSTER } }] });
                 dashboardPromises[6] = db.User.findAll({ include: [{ association: "currentlyWith" }, { model: db.Role, where: { id: STATIC_IDS.ROLES.ADOPTER } }] });
-                const roleWhere = { id: { [db.Sequelize.Op.is]: null } };
-                const regionWhere = { id: { [db.Sequelize.Op.is]: null } };
+                let roleWhere = { id: { [db.Sequelize.Op.is]: null } };
+                let regionWhere = { id: { [db.Sequelize.Op.is]: null } };
                 if (user.Roles.find(role => role.id === STATIC_IDS.ROLES.SUPERADMIN)) {
                     roleWhere.id = { [db.Sequelize.Op.in]: [STATIC_IDS.ROLES.REGIONAL, STATIC_IDS.ROLES.ADMIN] };
-                    regionWhere.id = {};
+                    regionWhere = {};
                 }
                 else if (user.Roles.find(role => role.id === STATIC_IDS.ROLES.ADMIN || role.id === STATIC_IDS.ROLES.REGIONAL)) {
                     roleWhere.id = { [db.Sequelize.Op.in]: [STATIC_IDS.ROLES.RESCUER, STATIC_IDS.ROLES.ADOPTER, STATIC_IDS.ROLES.FOSTER] };
