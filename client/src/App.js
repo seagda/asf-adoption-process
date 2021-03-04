@@ -17,12 +17,13 @@ import EditProfile from "./pages/EditProfile";
 // import AdminDashboard from "./pages/AdminDashboard";
 import FosterDashboard from "./pages/FosterDashboard";
 import DogProfileView from "./pages/DogProfileView";
-import DogProfileEdit from "./pages/DogProfileEdit";
+import DogProfileCreate from "./pages/DogProfileCreate";
 import DashboardMain from "./pages/DashboardMain";
 import SignUp from "./pages/SignUp";
 import Home from "./pages/Home";
 import Settings from "./pages/Settings";
 import FosterApplication from "./pages/FosterApplication";
+import DogProfileEdit from "./pages/DogProfileEdit";
 
 export default function App() {
     const admin = true;
@@ -43,10 +44,10 @@ export default function App() {
                     <Route path="/fosterApplication"><FosterApplication/></Route>
                     <Route path="/createUser"><CreateUser/></Route>
                     <Route path="/dogView/:id"><DogProfileView/></Route>
-                    <Route path="/createdog"><DogProfileEdit/></Route>
+                    <Route path="/createdog"><DogProfileCreate/></Route>
                     <Route path="/signin"><Login /></Route>
                     <Route path="/signup"><SignUp/></Route>
-                   
+                    <Route path="/editDog"><DogProfileEdit/></Route>
                 </Switch>
             </BrowserRouter>
         </ThemeProvider>
