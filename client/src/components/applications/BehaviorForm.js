@@ -14,7 +14,7 @@ export default function AdoptApp(props) {
     const [appQuestions, setAppQuestions] = useState([])
 
     useEffect(()=>{
-        API.getAdopterApp().then(res=>{
+        API.getBehaviorQuestions().then(res=>{
             setAppQuestions(res.data)
             console.log(res.data)
         }).catch(err=>{

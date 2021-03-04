@@ -37,9 +37,16 @@ const API = {
     getFosterApp: function(){
         return axios.get(`/api/app/foster/questions`, getHeaders())
     },
-    sendAppData: function(response, appId){
-        return axios.post(`/api/user/app-response`, response, appId, getHeaders())
+    sendAppData: function(response, appTypeId){
+        return axios.post(`/api/user/app-response`, response, appTypeId, getHeaders())
     },
+    getBehaviorQuestions: function (){
+        return axios.get(`/api/dog/assess/questions`, getHeaders())
+    },
+    sendBehaviorForm: function (response,dogId, date){
+        return axios.post(`/api/dog/assess/${dogId}`, {response, date}, getHeaders())
+    },
+
     getMyUserData: function(){
         return axios.get(`/api/user/me`, getHeaders())
     },
