@@ -44,6 +44,7 @@ export default function App() {
                     <Route path="/fosterApplication"><FosterApplication/></Route>
                     <Route path="/createUser"><CreateUser/></Route>
                     <Route path="/dogView/:id"><DogProfileView/></Route>
+                    <Route path="/viewDog"><p style={{fontSize: 100}}>THE PATH IS DOGVIEW</p></Route>
                     <Route path="/createdog"><DogProfileCreate/></Route>
                     <Route path="/signin"><Login /></Route>
                     <Route path="/signup"><SignUp/></Route>

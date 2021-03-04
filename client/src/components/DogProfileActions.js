@@ -17,14 +17,14 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function DogProfileActions(){
+export default function DogProfileActions(props){
     const classes = useStyles();
     const admin = true;
 
     return(
         <Grid container justify="space-evenly" style={{marginTop: "4em"}}>
             <Grid item>
-                <EditButton toLink="/editDog" buttonText="Edit Dog Info"/>
+                <EditButton toLink={"/editDog/" + props.id} buttonText="Edit Dog Info"/>
             </Grid>
         </Grid>
     )

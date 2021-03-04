@@ -109,6 +109,7 @@ export default function ProfileForm(props){
     const [isActiveData, setIsActiveData] = useState({});
     const handleActiveChange = (event) => {
       const {name, value} = event.target
+      console.log(value)
       setIsActiveData({
           ...isActiveData,
           [name]: value
@@ -187,7 +188,8 @@ export default function ProfileForm(props){
             dob: props.userData.dob,
             maxCapacity: props.userData.maxCapacity
         })
-        setIsActiveData({active: props.userData.active})
+        setIsActiveData({active: false})
+        console.log(isActiveData)
     }, [props.userData])
 
 
@@ -266,8 +268,8 @@ export default function ProfileForm(props){
                     label="Is active?"
                     InputLabelProps={{shrink: true}}
                     >
-                    <MenuItem value="true">Yes</MenuItem>
-                    <MenuItem value="false">No</MenuItem>
+                    <MenuItem value={true}>Yes</MenuItem>
+                    <MenuItem value={false}>No</MenuItem>
                     </Select>
                     </FormControl>
                 </div>
@@ -285,8 +287,8 @@ export default function ProfileForm(props){
                     label="Is blocked?"
                     InputLabelProps={{shrink: true}}
                     >
-                    <MenuItem value="true">Yes</MenuItem>
-                    <MenuItem value="false">No</MenuItem>
+                    <MenuItem value={true}>Yes</MenuItem>
+                    <MenuItem value={false}>No</MenuItem>
                     </Select>
                     </FormControl>
                 </div>
@@ -304,8 +306,8 @@ export default function ProfileForm(props){
                     label="On hold?"
                     InputLabelProps={{shrink: true}}
                     >
-                    <MenuItem value="true">Yes</MenuItem>
-                    <MenuItem value="false">No</MenuItem>
+                    <MenuItem value={true}>Yes</MenuItem>
+                    <MenuItem value={false}>No</MenuItem>
                     </Select>
                     </FormControl>
                 </div>
@@ -363,8 +365,8 @@ export default function ProfileForm(props){
                     label="Puppies?"
                     InputLabelProps={{shrink: true}}
                     >
-                    <MenuItem value="true">Yes</MenuItem>
-                    <MenuItem value="false">No</MenuItem>
+                    <MenuItem value={true}>Yes</MenuItem>
+                    <MenuItem value={false}>No</MenuItem>
                     </Select>
                     </FormControl>
                     </div>
@@ -384,8 +386,8 @@ export default function ProfileForm(props){
                     label="Adults?"
                     InputLabelProps={{shrink: true}}
                     >
-                    <MenuItem value="true">Yes</MenuItem>
-                    <MenuItem value="false">No</MenuItem>
+                    <MenuItem value={true}>Yes</MenuItem>
+                    <MenuItem value={false}>No</MenuItem>
                     </Select>
                     </FormControl>
                     </div>
@@ -407,8 +409,8 @@ export default function ProfileForm(props){
                     label="Seniors?"
                     InputLabelProps={{shrink: true}}
                     >
-                    <MenuItem value="true">Yes</MenuItem>
-                    <MenuItem value="false">No</MenuItem>
+                    <MenuItem value={true}>Yes</MenuItem>
+                    <MenuItem value={false}>No</MenuItem>
                     </Select>
                     </FormControl>
                     </div>
@@ -428,8 +430,8 @@ export default function ProfileForm(props){
                     label="With behaviorial issues?"
                     InputLabelProps={{shrink: true}}
                     >
-                    <MenuItem value="true">Yes</MenuItem>
-                    <MenuItem value="false">No</MenuItem>
+                    <MenuItem value={true}>Yes</MenuItem>
+                    <MenuItem value={false}>No</MenuItem>
                     </Select>
                     </FormControl>
                     </div>
@@ -451,8 +453,8 @@ export default function ProfileForm(props){
                     label="Medical Issues?"
                     InputLabelProps={{shrink: true}}
                     >
-                    <MenuItem value="true">Yes</MenuItem>
-                    <MenuItem value="false">No</MenuItem>
+                    <MenuItem value={true}>Yes</MenuItem>
+                    <MenuItem value={false}>No</MenuItem>
                     </Select>
                     </FormControl>
                     </div>

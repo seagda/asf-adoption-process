@@ -56,7 +56,7 @@ export default function DogProfileView(){
             </Grid>
             <DogBlockView name={dogData.name} dob={dogData.dob} gender={dogData.gender} size={dogData.size} microchipId={dogData.microchipId} asfId={dogData.asfId} microchipName={dogData.MicrochipMfg.name} image={(dogData.DogPhotos.find((photo)=> photo.profilePhoto)||{}).url}/>
 
-            {dogData.canEdit ? <DogProfileActions/> : null}
+            {dogData.canEdit ? <DogProfileActions id={id}/> : null}
 
             <DogBreedView coat={dogData.coat} weight={dogData.weight} purebred={dogData.isPurebred} secondary={dogData.secondaryBreed}/>
             <DogOriginView originName={dogData.origin.fullName} originRegion={dogData.origin.Region.name} originStreet={dogData.origin.Address.street} originCity={dogData.origin.Address.city} originState={dogData.origin.Address.state} originZip={dogData.origin.Address.zip5} originPhone={dogData.origin.phone} pullCost={dogData.pullCost}/>
