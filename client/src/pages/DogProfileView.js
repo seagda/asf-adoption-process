@@ -61,7 +61,7 @@ export default function DogProfileView(){
             <DogBreedView coat={dogData.coat} weight={dogData.weight} purebred={dogData.isPurebred} secondary={dogData.secondaryBreed}/>
             <DogOriginView originName={dogData.origin.fullName} originRegion={dogData.origin.Region.name} originStreet={dogData.origin.Address.street} originCity={dogData.origin.Address.city} originState={dogData.origin.Address.state} originZip={dogData.origin.Address.zip5} originPhone={dogData.origin.phone} pullCost={dogData.pullCost}/>
 
-            <DogInfoCurrent currentlyWith={dogData.currentlyWith} behaviorIssues={dogData.behaviorIssues} medicalIssues={dogData.medicalIssues}/>
+            <DogInfoCurrent currentlyWith={dogData.currentlyWith} behaviorIssues={dogData.behaviorIssues} medicalIssues={dogData.medicalIssues} blocked={dogData.blocked}/>
         </Grid>
     )
 }
