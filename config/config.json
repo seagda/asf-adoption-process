@@ -1,0 +1,19 @@
+{
+  "development": {
+    "username": "root",
+    "password": "password",
+    "database": "asf_dog_dossiers",
+    "host": "localhost",
+    "dialect": "mysql",
+    "define": {
+      "underscored": true,
+      "paranoid": true
+    }
+  },
+  "production": {
+    "use_env_variable": "JAWSDB_URL",
+    "define": {
+      "paranoid": true
+    }
+  }
+}

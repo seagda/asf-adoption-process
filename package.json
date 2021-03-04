@@ -1,0 +1,45 @@
+{
+  "name": "dog-dossier",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
+    "start:prod": "node server.js",
+    "start:dev": "concurrently \"nodemon --ignore 'client/*'\" \"npm run client\"",
+    "client": "cd client && npm run start",
+    "install": "cd client && npm install",
+    "build": "cd client && npm run build",
+    "force-sync": "echo \"This will permanently delete all information currently in the database\" && echo \"You will probably want to npm run seed afterwards\" && cli-confirm \"Are you sure you want to do this?\" && node scripts/forceSync.js",
+    "seed": "node scripts/seedDB.js && node scripts/seedQuestions.js",
+    "heroku-postbuild": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/seagda/asf-adoption-process.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/seagda/asf-adoption-process/issues"
+  },
+  "homepage": "https://github.com/seagda/asf-adoption-process#readme",
+  "dependencies": {
+    "accesscontrol": "^2.2.1",
+    "axios": "^0.21.1",
+    "bcrypt": "^5.0.0",
+    "cli-confirm": "^1.0.1",
+    "express": "^4.17.1",
+    "if-env": "^1.0.4",
+    "jsonwebtoken": "^8.5.1",
+    "mysql2": "^2.2.5",
+    "nodemailer": "^6.4.18",
+    "sequelize": "^6.5.0"
+  },
+  "devDependencies": {
+    "concurrently": "^5.3.0",
+    "dotenv": "^8.2.0",
+    "nodemon": "^2.0.7"
+  }
+}
