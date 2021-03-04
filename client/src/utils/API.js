@@ -40,6 +40,9 @@ const API = {
     sendAppData: function(response, appId){
         return axios.post(`/api/user/app-response`, response, appId, getHeaders())
     },
+    getUserAppResponses: function(userId) {
+        return axios.get(`/api/user/app-response/user/${userId}`, getHeaders())
+    },
     getMyUserData: function(){
         return axios.get(`/api/user/me`, getHeaders())
     },
