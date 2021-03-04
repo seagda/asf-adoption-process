@@ -7,6 +7,7 @@ import ApplyButton from "./ApplyButton";
 import HoldCheckbox from "./HoldCheckbox";
 import UpdateButton from "./UpdateButton";
 import ContactButton from "./ContactButton";
+import PlayArrowIcon from '@material-ui/icons/PlayArrow'
 
 const useStyles = makeStyles((theme) => ({
     itemContainer: {
@@ -20,17 +21,33 @@ const useStyles = makeStyles((theme) => ({
 export default function ProfileActions(){
     const classes = useStyles();
 
+    const userString = localStorage.getItem("user")
+    if(!userString){
+        window.location = "/"
+    }
+    const user = JSON.parse(userString)
+
     return(
         <Grid container justify="space-evenly" style={{marginTop: "4em"}}>
             <Grid item>
                 <EditButton toLink="/editprofile" buttonText="Edit Profile"/> 
             </Grid>
             <Grid item>
-               <UpdateButton toLink="/" buttonText="Update Password"/> : <UpdateButton toLink="/" buttonText="Update Password"/>
+               <UpdateButton toLink="/" buttonText="Update Password"/>
             </Grid>
-            <Grid item>
-                {/* {admin ? <ContactButton toLink="/" buttonText="Contact"/> : <ContactButton toLink="/" buttonText="Contact Admin"/>} */}
-            </Grid>
+            {!user.roles.includes("adopter") ? (
+                <Grid item>
+                    <ApplyButton toLink="/adopterApplication" buttonText="Apply To Adopt" color="secondary" icon={<PlayArrowIcon />} />
+                </Grid>)
+            : null}
+            {!user.roles.includes("foster") ? (
+                <Grid item>
+                    <ApplyButton toLink="/fosterApplication" buttonText="Apply To Foster" color="secondary" icon={<PlayArrowIcon />} />
+                </Grid>)
+            : null}
+            {/* <Grid item>
+                {admin ? <ContactButton toLink="/" buttonText="Contact"/> : <ContactButton toLink="/" buttonText="Contact Admin"/>}
+            </Grid> */}
             {/* <Grid item>
                 <HoldCheckbox label="Put me on hold"/>
                 {admin ? <HoldCheckbox label="Mark User as inactive"/> : null}
