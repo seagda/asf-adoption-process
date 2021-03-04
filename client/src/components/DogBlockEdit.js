@@ -160,6 +160,8 @@ export default function ProfileForm(props){
     const [dogStatusList, setDogStatusList] = useState([]);
     const [dogStatusNew, setDogStatusNew] = useState(0)
     const handleStatusChange = (event) => setDogStatusNew(event.target.value)
+
+    const [microchipMfgList, setMicrochipMfgList] = useState([]);
     
     const [origins, setOrigins] = useState([])
 
@@ -182,12 +184,24 @@ export default function ProfileForm(props){
     useEffect(()=>{
         LoadContacts();
         LoadStatus();
+        LoadMfg();
     },[])
 
     function LoadStatus (){
         API.getDogStatus().then(res =>{
             setDogStatusList(res.data)
+            // setMicrochipMfgList(res.data)
             // console.log(res.data)
+        }).catch(err=>{
+            console.error(err.response.data.message)
+            alert("get data failed")
+        })
+    }
+
+    function LoadMfg (){
+        API.microchipMfgGetAll().then(res =>{
+            setMicrochipMfgList(res.data)
+            console.log(res.data)
         }).catch(err=>{
             console.error(err.response.data.message)
             alert("get data failed")
@@ -522,10 +536,27 @@ export default function ProfileForm(props){
                                     </Select>
                                 </FormControl>
 
-                    </div>
-                </Grid>
+                            </div>
+                        </Grid>
                     <Grid item container className={classes.numberItem}>
-                        {/* <NumberFormat placeholder="Microchip ID" variant="outlined" onChange={createDogInputChange} value={dogIntakeData.microchipId} name="microchipId"/> */}
+                        <Grid item style={{marginTop: "1em"}}>
+                            <div>
+                                <FormControl variant="outlined" style={{minWidth: 195, marginBottom: "1em"}}>
+                                    <InputLabel id="microchipMfgList">Microchip Company</InputLabel>
+                                    <Select
+                                        labelId="microchipMfgList"
+                                        id="microchipMfgList"
+                                        label="Microchip Manufacturer"
+                                        InputLabelProps={{shrink: true}}
+                                        name="microchipMfgList"
+                                    >
+                                        {microchipMfgList.map((mfg)=><MenuItem value={mfg.microchipMfg.id}>{mfg.microchipMfg.name}</MenuItem>)}
+                                    </Select>
+                                </FormControl>
+                            </div>
+                        </Grid>
+                    </Grid>
+                    <Grid item container className={classes.numberItem}>
                         <TextField type="number" variant="outlined" label="Microchip ID" InputLabelProps={{shrink: true}} onChange={createDogInputChange} value={dogIntakeData.microchipId} name="microchipId"/>
                     </Grid>
                     <Grid item container className={classes.formItem}>

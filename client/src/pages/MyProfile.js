@@ -81,9 +81,9 @@ export default function MyProfile(){
                 <Divider/>
             </Grid>
             {/* <ProfileForm/> */}
-            <ProfileBlock firstName={userData.firstName} lastName={userData.lastName} phone={userData.phone} email={userData.email} dob={userData.dob} image={userData.profileUrl}/>
+            <ProfileBlock firstName={userData.firstName} lastName={userData.lastName} phone={userData.phone} email={userData.email} dob={userData.dob} image={userData.photoUrl}/>
             <ProfileActions/>
-            <Roles/>
+            {/* <Roles/> */}
             <CapacityView style={{marginBottom: "5em"}} maxCapacity={userData.maxCapacity} puppies={puppiesData} seniors={seniorsData} adults={adultsData} behavior={behaviorData} medical={medicalIssuesData}/>
             {/* <References/> */}
             {admin ? <AdminNotes/> : null}

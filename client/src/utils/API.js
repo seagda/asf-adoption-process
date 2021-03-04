@@ -38,6 +38,9 @@ const API = {
     updateDogInfo: function(dogData, dogId){
         return axios.put(`/api/dog/${dogId}`, dogData, getHeaders())
     },
+    microchipMfgGetAll: function(){
+        return axios.get("/api/microchip-mfg", getHeaders())
+    },
 
     getDogDossiersAll: function() {
         return axios.get("/api/dog", getHeaders())
