@@ -9,6 +9,7 @@ import Divider from "@material-ui/core/Divider";
 import DogBlockView from "../components/DogBlockView";
 import DogProfileActions from "../components/DogProfileActions";
 import DogBreedView from "../components/DogBreedView";
+import DogOriginView from "../components/DogOriginView";
 
 const useStyles=makeStyles(theme => ({
     mainContainer: {
@@ -35,7 +36,7 @@ export default function DogProfileView(){
     let {id} = useParams();
     console.log(id)
 
-    const [dogData, setDogData] = useState({MicrochipMfg:{}, DogStatus:{}, DogPhotos: []})
+    const [dogData, setDogData] = useState({MicrochipMfg:{}, DogStatus:{}, DogPhotos: [], origin: {Region: {}}})
     useEffect(()=>{
         API.getSingleDogData(id).then(res =>{
             console.log(res.data)
@@ -56,7 +57,8 @@ export default function DogProfileView(){
 
             {dogData.canEdit ? <DogProfileActions/> : null}
 
-            <DogBreedView/>
+            <DogBreedView coat={dogData.coat} weight={dogData.weight} purebred={dogData.isPurebred} secondary={dogData.secondaryBreed}/>
+            <DogOriginView originName={dogData.origin.fullName} originRegion={dogData.origin.Region.name}/>
         </Grid>
     )
 }
