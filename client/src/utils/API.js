@@ -1,74 +1,81 @@
 const axios = require("axios")
 
 function getHeaders(){
-    return {headers: {"x-access-token": JSON.parse(localStorage.getItem("user")).accessToken}}
+    const userString = localStorage.getItem("user")
+    if(!userString){
+        window.location = "/"
+        return null
+    } 
+    return {headers: {"x-access-token": JSON.parse(userString).accessToken}}
 }
 
-function handle401(err){
-    console.error(err)
-    if(err.status === 401){
-        window.location.href = "/"
-    } 
-}
+// function handle401(err){
+//     console.error(err)
+//     if(err.status === 401){
+//         window.location.href = "/"
+//     } else {
+//         return err
+//     }
+// }
 
 const API = {
     login: function(userData){
-        return axios.post(`/auth/signin`, userData).catch(handle401)
+        return axios.post(`/auth/signin`, userData)
     },
     signup: function(userData){
-        return axios.post(`/auth/signup`, userData).catch(handle401)
+        return axios.post(`/auth/signup`, userData)
     },
     createDog: function(dogData){
-        return axios.post(`/api/dog`, dogData, getHeaders()).catch(handle401)
+        return axios.post(`/api/dog`, dogData, getHeaders())
     }, 
     createUser: function(userData){
-        return axios.post(`/api/user/new`, userData, getHeaders()).catch(handle401)
+        return axios.post(`/api/user/new`, userData, getHeaders())
     },
     getAdopterApp: function(){
-        return axios.get(`/api/app/adopter/questions`, getHeaders()).catch(handle401)
+        return axios.get(`/api/app/adopter/questions`, getHeaders())
     },
     getFosterApp: function(){
-        return axios.get(`/api/app/foster/questions`, getHeaders()).catch(handle401)
+        return axios.get(`/api/app/foster/questions`, getHeaders())
     },
     sendAppData: function(response, appId){
-        return axios.post(`/api/user/app-response`, response, appId, getHeaders()).catch(handle401)
+        return axios.post(`/api/user/app-response`, response, appId, getHeaders())
     },
     getMyUserData: function(){
-        return axios.get(`/api/user/me`, getHeaders()).catch(handle401)
+        return axios.get(`/api/user/me`, getHeaders())
     },
     updateMyUserData: function(userData){
-        return axios.put(`/api/user/me`, userData, getHeaders()).catch(handle401)
+        return axios.put(`/api/user/me`, userData, getHeaders())
     },
     getSingleDogData: function(dogId){
-        return axios.get(`/api/dog/${dogId}`, getHeaders()).catch(handle401)
+        return axios.get(`/api/dog/${dogId}`, getHeaders())
     },
     updateDogInfo: function(dogData, dogId){
-        return axios.put(`/api/dog/${dogId}`, dogData, getHeaders()).catch(handle401)
+        return axios.put(`/api/dog/${dogId}`, dogData, getHeaders())
     },
     microchipMfgGetAll: function(){
-        return axios.get("/api/dog/microchip-mfg", getHeaders()).catch(handle401)
+        return axios.get("/api/dog/microchip-mfg", getHeaders())
     },
 
     getDogDossiersAll: function() {
-        return axios.get("/api/dog", getHeaders()).catch(handle401)
+        return axios.get("/api/dog", getHeaders())
     },
     getExtContact: function(){
-        return axios.get(`/api/contact`, getHeaders()).catch(handle401)
+        return axios.get(`/api/contact`, getHeaders())
     },
     getRegions: function(){
-        return axios.get(`/api/region`, getHeaders()).catch(handle401)
+        return axios.get(`/api/region`, getHeaders())
     },
     getDogStatus: function(){
-        return axios.get(`/api/dog/status`, getHeaders()).catch(handle401)
+        return axios.get(`/api/dog/status`, getHeaders())
     },
     getRoles: function(){
-        return axios.get(`/api/role`, getHeaders()).catch(handle401)
+        return axios.get(`/api/role`, getHeaders())
     },
     getUsersAll: function(){
-        return axios.get(`/api/user`, getHeaders()).catch(handle401)
+        return axios.get(`/api/user`, getHeaders())
     },
     getDashboardData: function(){
-        return axios.get(`/api/dashboard`, getHeaders()).catch(handle401)
+        return axios.get(`/api/dashboard`, getHeaders())
     }
 }
 
