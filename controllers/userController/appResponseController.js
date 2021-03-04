@@ -20,6 +20,19 @@ router.get("/", (req, res) => {
     } else return res.status(403).send({ message: "Not authorized to view AppResponse" });
 });
 
+// get app responses by user id
+router.get("/user/:id", (req, res) => {
+    const permission = req.params.id === req.userId ? ac.can(req.roles).readOwn("AppResponse") : ac.can(req.roles).readAny("AppResponse");
+    if (permission.granted) {
+        db.AppResponse.findAll({ where: { UserId: req.params.id }, include: [db.AppStatus, db.AppType] })
+            .then(responses => responses.map(response => permission.filter(response.toJSON())))
+            .catch(err => {
+                console.error(err);
+                res.status(500).send({ message: "whoops" });
+            });
+    } else res.status(403).send({ message: "Not authorized to view application responses for this user" });
+});
+
 // show one APP RESPONSE, with correct ROLE permission
 router.get("/:id", (req, res) => {
     const permissionAny = ac.can(req.roles).readAny("AppResponse");
