@@ -91,7 +91,9 @@ router.get("/:id", (req, res) => {
 router.post("/", (req, res) => {
     // TODO: createOwn dog permission for owner surrender
     // Check for permission to create dog
+    console.log(req.body)
     const permissionAny = ac.can(req.roles).createAny("Dog");
+    console.log(permissionAny.filter(req.body))
     if (permissionAny.granted) {
         db.Dog.create({ ...permissionAny.filter(req.body), DogStatusId: 1 }, { include: { model: db.ExtContact, as: "origin", include: db.Address } })
             // currentlyWith always starts null

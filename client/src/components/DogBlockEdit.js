@@ -165,6 +165,9 @@ export default function ProfileForm(props){
     
     const [origins, setOrigins] = useState([])
 
+    const [dogId, setDogId] = useState();
+    console.log(dogId)
+
     useEffect(()=>{
         setDogIntakeData({
             name: props.dogData.name,
@@ -179,6 +182,7 @@ export default function ProfileForm(props){
             pullCost: props.dogData.pullCost,
             DogStatusId: props.dogData.DogStatusId
         })
+        setDogId(props.dogData.id)
     }, [props.dogData])
 
     useEffect(()=>{
@@ -237,7 +241,8 @@ export default function ProfileForm(props){
             ...originContactData,
             DogStatusId: dogStatusNew
         }
-        if(originContactData.originId === 0){
+        console.log(originContactData, addedExternalContactData, addedAddressData)
+        if(!originContactData.originId){
             newDog.origin = {...addedExternalContactData, Address: addedAddressData}
         }
         console.log(newDog)
@@ -253,7 +258,7 @@ export default function ProfileForm(props){
             setAddedExternalContactData({})
             setAddedAddressData({})
             setDogStatusNew(0)
-            window.location = "/My-Dogs"
+            window.location = "/dogView/" + (dogId || res.data.id)
         }).catch(err=>{
             console.error(err)
             alert("Create dog failed")
@@ -424,12 +429,13 @@ export default function ProfileForm(props){
                     </Select>
                     </FormControl>
                 </Grid>
-                <Grid item>
+                {/* THIS IS ON PURPOSE! Coming back soon to repair */}
+                {/* <Grid item>
                     <Typography>Or</Typography>
                     <Button variant="contained" color="secondary" onClick={onClick}>Add external contact</Button>
-                </Grid>
+                </Grid> */}
             </Grid>
-            {contactFormVis ? null : 
+            {/* {contactFormVis ? null : 
                 <React.Fragment>
                     <Grid item style={{marginTop: "3em"}}>
                         <Typography variant="h5">External Contact</Typography>
@@ -451,7 +457,7 @@ export default function ProfileForm(props){
                         <TextField label="Zip" InputLabelProps={{shrink: true}} onChange={handleExternalAddress} value={addedAddressData.zip5} name="zip5"/>
                     </Grid>
                 </React.Fragment>
-            }
+            } */}
             {/* <Grid item style={{marginTop: "1em"}}>
                 <Button variant="contained" color="secondary">Add external contact</Button>
             </Grid> */}
