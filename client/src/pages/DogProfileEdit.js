@@ -41,7 +41,7 @@ export default function DogProfileEdit(){
             setDogData(res.data)
         }).catch(err=>{
             console.error(err.response.data.message)
-            alert("get data failed")
+            // alert("get data failed")
         })
     },[])
 

@@ -198,7 +198,7 @@ export default function ProfileForm(props){
             // console.log(res.data)
         }).catch(err=>{
             console.error(err.response.data.message)
-            alert("get data failed")
+            // alert("get data failed")
         })
     }
 
@@ -208,7 +208,7 @@ export default function ProfileForm(props){
             console.log(res.data)
         }).catch(err=>{
             console.error(err.response.data.message)
-            alert("get data failed")
+            // alert("get data failed")
         })
     }
 
@@ -218,7 +218,7 @@ export default function ProfileForm(props){
             // console.log(res.data)
         }).catch(err=>{
             console.error(err.response.data.message)
-            alert("get data failed")
+            // alert("get data failed")
         })
     }
 
@@ -261,7 +261,7 @@ export default function ProfileForm(props){
             window.location = "/dogView/" + (dogId || res.data.id)
         }).catch(err=>{
             console.error(err)
-            alert("Create dog failed")
+            // alert("Create dog failed")
         })
     }
 
