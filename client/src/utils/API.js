@@ -37,8 +37,8 @@ const API = {
     getFosterApp: function(){
         return axios.get(`/api/app/foster/questions`, getHeaders())
     },
-    sendAppData: function(response, appTypeId){
-        return axios.post(`/api/user/app-response`, response, appTypeId, getHeaders())
+    sendAppData: function(response, AppTypeId){
+        return axios.post(`/api/user/app-response`, {response, AppTypeId}, getHeaders())
     },
     getUserAppResponses: function(userId) {
         return axios.get(`/api/user/app-response/user/${userId}`, getHeaders())

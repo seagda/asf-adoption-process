@@ -70,7 +70,7 @@ router.post("/", (req, res) => {
     if (permission.granted) {
 
         db.AppResponse
-            .create({ response: req.body.response, AppTypeId: req.body.AppTypeId, UserId: req.userId })
+            .create({ response: req.body.response, AppTypeId: req.body.AppTypeId, UserId: req.userId, AppStatusId: sId.APP_STATUS.APP_RECEIVED })
             .then(() => res.status(200).send({ message: "Application successfully created" }))
             .catch(err => {
                 console.error(err)
