@@ -8,12 +8,9 @@ import QuickActionsAdopter from "../components/QuickActionsAdopter";
 import PieChartContainer from "../components/PieChartContainer";
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
-import MultiSelectChips from '../components/MultiSelectChips';
 import AvatarList from '../components/AvatarList';
 import BasicList from '../components/BasicList';
 import ListContainer from '../components/ListContainer';
-import TeamAPI from '../utils/Team';
-import AlertAPI from '../utils/Alerts';
 import API from '../utils/API';
 import MediaCard from '../components/MediaCard';
 
@@ -125,25 +122,27 @@ export default function DashboardMain(){
                     </Grid>
                 </React.Fragment>
                     ):null} 
+            </Grid>
+            <Grid item container xs={12} s={10}>
 
                 {/* Render ASF Regional Leads and team if user is admin */}
-                {/* {dashboardData.teamArray ? 
+                {dashboardData.teamMembers ? 
                 <Grid item xs={12} s={12} m={6} lg={6} style={{marginTop: "2em"}}>
                     <Typography variant="h5" component="h4" gutterBottom align="center" color="primary">
                         ASF Team Members
                         <Divider />
                     </Typography> 
                     
-                    {dashboardData.teamArray.length ? (
+                    {dashboardData.teamMembers.length ? (
                         <ListContainer>
-                            {dashboardData.teamArray.map(teamMember =>{
+                            {dashboardData.teamMembers.map(teamMember =>{
                                 return (
-                                    <AvatarList firstName={teamMember.firstName} lastName={teamMember.lastName} image={teamMember.photoUrl} roles={teamMember.Roles} city={teamMember.city} email={teamMember.email}/>
+                                    <AvatarList firstName={teamMember.firstName} lastName={teamMember.lastName} image={teamMember.photoUrl} roles={teamMember.Roles} ResidesInRegion={teamMember.ResidesInRegion} email={teamMember.email}/>
                                 )
                             })}    
                         </ListContainer>
                     ):null}
-                <Grid/>:null} */}
+                </Grid>:null}
 
                 {/* Render user alerts */}
                 {dashboardData.alerts ? (
@@ -156,11 +155,11 @@ export default function DashboardMain(){
                         <ListContainer>
                             {dashboardData.alerts.map(alert =>{
                                 return (
-                                    <BasicList name={alert.name} message={alert.message} />
+                                    <BasicList message={alert.message} />
                                 )
                             })}    
                         </ListContainer>
-                    ):(<p>You are all caught up!</p>)}
+                    ):(<h3>You are all caught up!</h3>)}
                 </Grid>) :null}
             </Grid>
         </Grid>
