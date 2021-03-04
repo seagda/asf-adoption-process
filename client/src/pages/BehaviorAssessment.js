@@ -3,7 +3,7 @@ import "survey-react/survey.css";
 import Grid from '@material-ui/core/Grid';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Typography from "@material-ui/core/Typography";
-import AdoptApp from "../components/applications/AdoptApp";
+import BehaviorForm from "../components/applications/BehaviorForm";
 
 const useStyles=makeStyles(theme => ({
     mainContainer: {
@@ -44,7 +44,7 @@ export default function BehaviorAssessment (){
     return(
         <Grid container className={classes.mainContainer}>
             
-            {showPage ? <Typography variant="h4" color="primary">Behavior Assessment</Typography> && <AdoptApp
+            {showPage ? <Typography variant="h4" color="primary">Behavior Assessment</Typography> && <BehaviorForm
             showCompletedPage={data=>onCompletePage(data)}
             /> : setFinalPage()}
         </Grid>
