@@ -1,5 +1,6 @@
 import React, {useState, useEffect, Component} from 'react';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
+import {matchPath} from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import TextField from '@material-ui/core/TextField';
 import Typography from "@material-ui/core/Typography";
@@ -523,7 +524,7 @@ export default function ProfileForm(props){
         {breedInfo}
         {/* {dogStatus} */}
         {/* <IntakeDetailsEdit/> */}
-        {intakeDetails}
+        {window.location.href.includes("create") ? intakeDetails : null}
         {/* <BehaviorForm/> */}
         {/* <HealthRecordEdit/> */}
         {healthRecord}
