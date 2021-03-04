@@ -23,9 +23,9 @@ export default function ApplyButton(props) {
         <NavLink className={classes.link} to={props.toLink}>
             <Button
             variant="contained"
-            color="secondary"
+            color={props.color}
             className={classes.button}
-            startIcon={<PetsIcon />}
+            startIcon={props.icon}
              >
                 {`${props.buttonText}`}
             </Button>

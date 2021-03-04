@@ -70,16 +70,16 @@ function getStyles(name, personName, theme) {
               input={<Input id="select-multiple-chip" />}
               renderValue={(selected) => (
                 <div className={classes.chips}>
-                  {selected.map((value) => (
-                    <Chip key={value} label={value} className={classes.chip} />
-                  ))}
+                  {selected ? selected.map((value) => (
+                    <Chip key={value} label={props.options.find((option) => option.id === value).name} className={classes.chip} />
+                  )): null}
                 </div>
               )}
               MenuProps={MenuProps}
               //  pass in the props below which are names in this case
-            > {props.names.map((name) => (
-                <MenuItem key={name} value={name} style={getStyles(name, selected, theme)}>
-                  {name}
+            > {props.options.map((option) => (
+                <MenuItem key={option.id} value={option.id} style={getStyles(option.name, selected, theme)}>
+                  {option.name}
                 </MenuItem>
               ))}
             </Select>

@@ -3,8 +3,7 @@ import "survey-react/survey.css";
 import Grid from '@material-ui/core/Grid';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Typography from "@material-ui/core/Typography";
-
-import AdoptApp from "../components/applications/AdoptApp";
+import FosterApp from "../components/applications/FosterApp";
 
 const useStyles=makeStyles(theme => ({
     mainContainer: {
@@ -24,7 +23,7 @@ const useStyles=makeStyles(theme => ({
     }
 }))
 
-export default function Application (){
+export default function FosterApplication (){
     const classes = useStyles();
     const [showPage, setShowPage] = useState(true);
 
@@ -44,7 +43,8 @@ export default function Application (){
 
     return(
         <Grid container className={classes.mainContainer}>
-            {showPage ? <AdoptApp
+            <Typography variant="h4" color="primary">Foster Application</Typography>
+            {showPage ? <FosterApp
             showCompletedPage={data=>onCompletePage(data)}
             /> : setFinalPage()}
         </Grid>

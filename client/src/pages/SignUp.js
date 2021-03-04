@@ -4,6 +4,8 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
+import Typography from "@material-ui/core/Typography";
+import Divider from "@material-ui/core/Divider";
 
 import API from '../utils/API';
 
@@ -34,6 +36,7 @@ const useStyles=makeStyles(theme => ({
         }
     },
     form: {
+        justifyContent: "space-evenly",
         [theme.breakpoints.down("sm")]:{
             padding: "1em"
         }
@@ -52,19 +55,16 @@ const useStyles=makeStyles(theme => ({
             margin: theme.spacing(1),
             width: '25ch',
         }
+    },
+    addressItem: {
+        minWidth: 250
     }
 }))
 
 export default function SignUp(){
     const classes = useStyles();
 
-    const [signupFormData, setSignupFormData] = useState({
-        firstName: "",
-        lastName: "",
-        email: "",
-        password: "",
-        phone: 1
-    })
+    const [signupFormData, setSignupFormData] = useState({})
 
     const signupInputChange = event =>{
         const {name, value} = event.target
@@ -74,46 +74,84 @@ export default function SignUp(){
         })
     }
 
+    const [addressFormData, setAddressFormData] = useState({})
+
+    const handleAddressInputChange = event =>{
+        const {name, value} = event.target
+        setAddressFormData({
+            ...addressFormData,
+            [name]: value
+        })
+    }
+
     const handleSignupFormSubmit = event =>{
         event.preventDefault();
-        API.signup(signupFormData).then(res =>{
+        const newUser = {...signupFormData,
+            Address: addressFormData
+        }
+        console.log(newUser)
+        API.signup(newUser).then(res =>{
             console.log(res.data)
-            setSignupFormData({
-                firstName: "",
-                lastName: "",
-                email: "",
-                password: "",
-                phone: 1
-            })
+            setSignupFormData({})
+            setAddressFormData({})
             window.location = "/signin"
         }).catch(err =>{
+            console.error(err.response.data.message)
             alert("signup failed")
         })
     }
 
     return(
         <Grid container className={classes.mainContainer}>
+            <Grid item container>
+                <Grid item>
+                    <Typography variant="h3" component="h4" gutterBottom align="center" color="primary">
+                        Sign up
+                    <Divider />
+                    </Typography>
+                </Grid>
+            </Grid>
             <Paper>
             <form onSubmit={handleSignupFormSubmit}>
                 <Grid item container className={classes.itemContainer}>
-                    <Grid item>
-                        <div className={classes.form}>
-                            <Grid item container className={classes.formItem}>
+                    <Grid item container className={classes.form}>
+                        {/* <div className={classes.form}> */}
+                            <Grid item className={classes.formItem}>
                                 <TextField variant="outlined" label="First Name" onChange={signupInputChange} value={signupFormData.firstName} name="firstName"/>
                             </Grid>
-                            <Grid item container className={classes.formItem}>
+                            <Grid item className={classes.formItem}>
                                 <TextField variant="outlined" label="Last Name" onChange={signupInputChange} value={signupFormData.lastName} name="lastName"/>
                             </Grid>
-                            <Grid item container className={classes.formItem}>
+                            <Grid item className={classes.formItem}>
                                 <TextField type="email" variant="outlined" label="Email" onChange={signupInputChange} value={signupFormData.email} name="email"/>
                             </Grid>
-                            <Grid item container className={classes.formItem}>
+                            <Grid item className={classes.formItem}>
                                 <TextField type="password" variant="outlined" label="Password" onChange={signupInputChange} value={signupFormData.password} name="password"/>
                             </Grid>
-                            <Grid item container className={classes.formItem}>
-                                <TextField variant="outlined" type="number" label="Phone" onChange={signupInputChange} value={signupFormData.phone} name="phone"/>
+                            <Grid item className={classes.formItem}>
+                                <TextField variant="outlined" label="Phone" onChange={signupInputChange} value={signupFormData.phone} name="phone"/>
                             </Grid>
-                        </div>
+                        {/* </div> */}
+                    </Grid>
+                    
+                    <Grid item container style={{marginLeft: "1em"}} align="flext-start">
+                        <Grid item>
+                            <Typography variant="h6">Address</Typography>
+                        </Grid>
+                    </Grid>
+                    <Grid item container className={classes.form}>
+                            <Grid item className={classes.formItem}>
+                                <TextField className={classes.addressItem} variant="outlined" label="Street" onChange={handleAddressInputChange} value={addressFormData.street} name="street"/>
+                            </Grid>
+                            <Grid item className={classes.formItem}>
+                                <TextField className={classes.addressItem} variant="outlined" label="City" onChange={handleAddressInputChange} value={addressFormData.city} name="city"/>
+                            </Grid>
+                            <Grid item className={classes.formItem}>
+                                <TextField className={classes.addressItem} variant="outlined" label="State" onChange={handleAddressInputChange} value={addressFormData.state} name="state"/>
+                            </Grid>
+                            <Grid item className={classes.formItem}>
+                                <TextField className={classes.addressItem} variant="outlined" label="Zip" onChange={handleAddressInputChange} value={addressFormData.zip5} name="zip5"/>
+                            </Grid>
                     </Grid>
         
                     <Grid item container className={classes.formItem} justify={"center"}>

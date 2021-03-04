@@ -1,5 +1,6 @@
 import React, {useState, useEffect, Component} from 'react';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
+import {matchPath} from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import TextField from '@material-ui/core/TextField';
 import Typography from "@material-ui/core/Typography";
@@ -85,32 +86,11 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-export default function ProfileForm(){
+export default function ProfileForm(props){
     const classes = useStyles();
     const repeat = true;
 
-    const [contactFormVis, setContactFormVis] = useState({
-        visibility: "hidden"
-    })
-
-    const [dogIntakeData, setDogIntakeData] = useState({
-        name: "",
-        dob: null,
-        gender: "",
-        microchipId: 0,
-        secondaryBreed: "",
-        pullCost: 0,
-        behaviorialIssues: "",
-        medicalIssues: "",
-        weight: 1,
-        coat: "",
-        asfId: 1
-    })
-
-
-    const [isPurebredData, setIsPurebredData] = useState({
-        isPurebred: false
-    });
+    const [isPurebredData, setIsPurebredData] = useState({});
     const handlePurebredChange = (event) => {
       const {name, value} = event.target
       setIsPurebredData({
@@ -119,32 +99,16 @@ export default function ProfileForm(){
       })
     };
 
-    const [isBlockedData, setIsBlockedData] = useState({
-        blocked: false
-    });
-    const handleBlockedChange = (event) => {
-      const {name, value} = event.target
-      setIsBlockedData({
-          ...isBlockedData,
-          [name]: value
-      })
-    };
+    const [coatColorData, setCoatColorData]= useState({});
+    const handleCoatColorChange = (event) =>{
+        const {name,value} = event.target
+        setCoatColorData({
+            ...coatColorData,
+            [name]: value
+        })
+    }
 
-    // origin type selector 
-    const [originContactData, setOriginContactData] = useState({
-        originId: 0
-    });
-    const handleOriginContact = (event) => {
-      const {name, value} = event.target
-      setOriginContactData({
-          ...originContactData,
-          [name]: value
-      })
-    };
-
-    const [sizeData, setSizedata] = useState({
-        size: ""
-    });
+    const [sizeData, setSizedata] = useState({});
     const handleSizeChange = (event) => {
       const {name, value} = event.target
       setSizedata({
@@ -153,6 +117,94 @@ export default function ProfileForm(){
       })
     };
 
+    const [contactFormVis, setContactFormVis] = useState(true)
+    const onClick = () => setContactFormVis(false)
+
+    // origin type selector 
+    const [originContactData, setOriginContactData] = useState({});
+    const handleOriginContact = (event) => {
+        const {name, value} = event.target
+        setOriginContactData({
+            ...originContactData,
+            [name]: value
+        })
+    };
+
+    const [addedExternalContactData, setAddedExternalContactData] = useState({})
+    const handleAddedExternalContactChange = (event) =>{
+        const {name,value} = event.target
+        setAddedExternalContactData({
+            ...addedExternalContactData,
+            [name]: value
+        })
+    }
+
+    const [addedAddressData, setAddedAddressData] = useState({})
+    const handleExternalAddress = (event) =>{
+        const {name,value} = event.target
+        setAddedAddressData({
+            ...addedAddressData,
+            [name]: value
+        })
+    }
+
+    const [genderData, setGenderData] = useState({});
+    const handleGenderChange = (event) => {
+      const {name, value} = event.target
+      setGenderData({
+          ...genderData,
+          [name]: value
+      })
+    };
+
+    const [dogStatusList, setDogStatusList] = useState([]);
+    const [dogStatusNew, setDogStatusNew] = useState(0)
+    const handleStatusChange = (event) => setDogStatusNew(event.target.value)
+    
+    const [origins, setOrigins] = useState([])
+
+    useEffect(()=>{
+        setDogIntakeData({
+            name: props.dogData.name,
+            dob: props.dogData.dob,
+            gender: props.dogData.gender,
+            microchipId: props.dogData.microchipId,
+            asfId: props.dogData.asfId,
+            secondaryBreed: props.dogData.secondaryBreed,
+            weight: props.dogData.weight,
+            medicalIssues: props.dogData.medicalIssues,
+            behaviorialIssues: props.dogData.behaviorIssues,
+            pullCost: props.dogData.pullCost,
+            DogStatusId: props.dogData.DogStatusId
+        })
+    }, [props.dogData])
+
+    useEffect(()=>{
+        LoadContacts();
+        LoadStatus();
+    },[])
+
+    function LoadStatus (){
+        API.getDogStatus().then(res =>{
+            setDogStatusList(res.data)
+            // console.log(res.data)
+        }).catch(err=>{
+            console.error(err.response.data.message)
+            alert("get data failed")
+        })
+    }
+
+    function LoadContacts (){
+        API.getExtContact().then(res =>{
+            setOrigins(res.data)
+            // console.log(res.data)
+        }).catch(err=>{
+            console.error(err.response.data.message)
+            alert("get data failed")
+        })
+    }
+
+    const [dogIntakeData, setDogIntakeData] = useState({})
     const createDogInputChange = event =>{
         const {name, value} = event.target
         setDogIntakeData({
@@ -160,45 +212,33 @@ export default function ProfileForm(){
             [name]: value
         })
     }
-    
-    const [origins, setOrigins] = useState([])
-
-    useEffect(()=>{
-        API.getExtContact().then(res =>{
-            setOrigins(res.data)
-            console.log(res.data)
-        })
-    }, [])
 
     const handleDogIntakeFormSubmit = event =>{
         event.preventDefault();
-        API.createDog(dogIntakeData, isPurebredData, isBlockedData, sizeData, originContactData).then(res =>{
+        const newDog = {...dogIntakeData, 
+            ...isPurebredData, 
+            ...genderData,
+            ...sizeData,
+            ...coatColorData, 
+            ...originContactData,
+            DogStatusId: dogStatusNew
+        }
+        if(originContactData.originId === 0){
+            newDog.origin = {...addedExternalContactData, Address: addedAddressData}
+        }
+        console.log(newDog)
+        props.submitFunction(newDog)
+            .then(res =>{
             console.log(res.data)
-            setDogIntakeData({
-                name: "",
-                dob: null,
-                gender: "",
-                microchipId: 0,
-                secondaryBreed: "",
-                pullCost: 0,
-                behaviorialIssues: "",
-                medicalIssues: "",
-                weight: 1,
-                coat: "",
-                asfId: 1
-            })
-            setIsPurebredData({
-                isPurebred: false
-            })
-            setIsBlockedData({
-                blocked: false
-            })
-            setSizedata({
-                size: ""
-            })
-            setOriginContactData({
-                originId: 0
-            })
+            setDogIntakeData({})
+            setIsPurebredData({})
+            setGenderData({})
+            setSizedata({})
+            setCoatColorData({})
+            setOriginContactData({})
+            setAddedExternalContactData({})
+            setAddedAddressData({})
+            setDogStatusNew(0)
             window.location = "/My-Dogs"
         }).catch(err=>{
             console.error(err)
@@ -206,50 +246,48 @@ export default function ProfileForm(){
         })
     }
 
-    // const dogStatus = (
-    //     <Grid item container className={classes.itemContainer}>
-    //     <Grid container style={{marginTop: "1em"}}>
-    //         <Grid item>
-    //             <Typography variant="h4">Dog Status</Typography>
-    //             <Divider/>
-    //         </Grid>
-    //     </Grid>
-    //     <Grid container>
-    //         <Grid item container justify="space-between">
-    //             <Grid item style={{marginTop: "1em"}}>
-    //                 <Chip label="In Foster"/>
-    //                 <br/>
-    //                 <TextField style={{marginTop: "1em"}} variant="outlined" label="Add Details" rows={4}/>
-    //             </Grid>
-    //             <Grid item>
-    //                     <div>
-    //                         <FormControl variant="outlined" className={classes.formControl}>
-    //                         <InputLabel id="demo-simple-select-outlined-label">Select Status</InputLabel>
-    //                         <Select
-    //                         labelId="demo-simple-select-outlined-label"
-    //                         id="demo-simple-select-outlined"
-    //                         onChange={handleStatusChange}
-    //                         value="status"
-    //                         name="status"
-    //                         label="Select Status"
-    //                         >
-    //                         <MenuItem value="">
-    //                         <em>None</em>
-    //                         </MenuItem>
-    //                         <MenuItem value="inTransit">In Transit</MenuItem>
-    //                         <MenuItem value="inFoster">In Foster</MenuItem>
-    //                         <MenuItem value="adopted">Adopted</MenuItem>
-    //                         </Select>
-    //                         </FormControl>
+    const dogStatus = (
+        <Grid item container className={classes.itemContainer}>
+        <Grid container style={{marginTop: "1em"}}>
+            <Grid item>
+                <Typography variant="h4">Dog Status</Typography>
+                <Divider/>
+            </Grid>
+        </Grid>
+        <Grid container>
+            <Grid item container justify="space-between">
+                <Grid item style={{marginTop: "1em"}}>
+                    <Chip label={(dogStatusList.find((status)=>status.id === dogIntakeData.DogStatusId)|| {}).name}/>
+                    <br/>
+                    <TextField style={{marginTop: "1em"}} variant="outlined" label="Add Details" rows={4}/>
+                </Grid>
+                <Grid item>
+                        <div>
+                            <FormControl variant="outlined" className={classes.formControl}>
+                            <InputLabel id="demo-simple-select-outlined-label">Select Status</InputLabel>
+                            <Select
+                            labelId="demo-simple-select-outlined-label"
+                            id="demo-simple-select-outlined"
+                            value={dogStatusNew}
+                            onChange={handleStatusChange}
+                            name="dogStatusNew"
+                            label="Select Status"
+                            >
+                            <MenuItem value="">
+                            <em>None</em>
+                            </MenuItem>
+                            {dogStatusList.map((status)=><MenuItem value={status.id}>{status.name}</MenuItem>)}
+                            </Select>
+                            </FormControl>
 
-    //                     </div>
-    //                 <br/>
-    //                 {repeat ? <Typography style={{color: "red", fontWeight: 800}}>Repeated Relocations</Typography> : null}
-    //             </Grid>
-    //         </Grid>
-    //     </Grid>
-    // </Grid>
-    // )
+                        </div>
+                    <br/>
+                    {/* {repeat ? <Typography style={{color: "red", fontWeight: 800}}>Repeated Relocations</Typography> : null} */}
+                </Grid>
+            </Grid>
+        </Grid>
+    </Grid>
+    )
 
     const breedInfo = (
         <Grid item container className={classes.itemContainer}>
@@ -271,6 +309,7 @@ export default function ProfileForm(){
                     value={isPurebredData.isPurebred}
                     name="isPurebred"
                     label="Select Status"
+                    InputLabelProps={{shrink: true}}
                     >
                     <MenuItem value="true">Yes</MenuItem>
                     <MenuItem value="false">No</MenuItem>
@@ -280,13 +319,33 @@ export default function ProfileForm(){
                 </div>
             </Grid>
             <Grid item style={{marginTop: "1em"}}>
-                <TextField className={classes.formControl} variant="outlined" label="Secondary Breed" onChange={createDogInputChange} value={dogIntakeData.secondaryBreed} name="secondaryBreed"/>
+                <TextField className={classes.formControl} variant="outlined" label="Secondary Breed" InputLabelProps={{shrink: true}} onChange={createDogInputChange} value={dogIntakeData.secondaryBreed} name="secondaryBreed"/>
             </Grid>
             <Grid item style={{marginTop: "1em"}}>
-                <TextField className={classes.formControl} variant="outlined" label="Coat Color" onChange={createDogInputChange} value={dogIntakeData.coat} name="coat"/>
+                <div>
+                    <FormControl variant="outlined" className={classes.formControl}>
+                    <InputLabel id="coat">Coat Color</InputLabel>
+                    <Select
+                    labelId="coat"
+                    id="coat"
+                    onChange={handleCoatColorChange}
+                    value={coatColorData.coat}
+                    name="coat"
+                    label="coat"
+                    InputLabelProps={{shrink: true}}
+                    >
+                    <MenuItem value="blue merle">Blue Merle</MenuItem>
+                    <MenuItem value="red merle">Red Merle</MenuItem>
+                    <MenuItem value="red">Red</MenuItem>
+                    <MenuItem value="tri-color">Tri-Color</MenuItem>
+                    <MenuItem value="black">Black</MenuItem>
+                    </Select>
+                    </FormControl>
+
+                </div>
             </Grid>
             <Grid item style={{marginTop: "1em"}}>
-                <TextField className={classes.formControl} type="number" variant="outlined" label="weight" onChange={createDogInputChange} value={dogIntakeData.weight} name="weight"/>
+                <TextField className={classes.formControl} type="number" variant="outlined" label="weight" InputLabelProps={{shrink: true}} onChange={createDogInputChange} value={dogIntakeData.weight} name="weight"/>
             </Grid>
             <Grid item style={{marginTop: "1em"}}>
                 <div>
@@ -299,6 +358,7 @@ export default function ProfileForm(){
                     value={sizeData.size}
                     name="size"
                     label="Size"
+                    InputLabelProps={{shrink: true}}
                     >
                     <MenuItem value="mini">Mini</MenuItem>
                     <MenuItem value="small">Small</MenuItem>
@@ -323,28 +383,10 @@ export default function ProfileForm(){
         </Grid>
         <Grid container justify="space-evenly">
             <Grid item style={{marginTop: "1em"}}>
-                <TextField className={classes.formControl} type="number" variant="outlined" label="Pull Cost" onChange={createDogInputChange} value={dogIntakeData.pullCost} name="pullCost"/>
+                <TextField className={classes.formControl} type="number" variant="outlined" label="Pull Cost" InputLabelProps={{shrink: true}} onChange={createDogInputChange} value={dogIntakeData.pullCost} name="pullCost"/>
             </Grid>
             <Grid item style={{marginTop: "1em"}}>
-                <TextField className={classes.formControl} variant="outlined" label="Behavioral Issues" onChange={createDogInputChange} value={dogIntakeData.behaviorialIssues} name="behaviorialIssues"/>
-            </Grid>
-            <Grid item style={{marginTop: "1em"}}>
-                <div>
-                    <FormControl variant="outlined" className={classes.formControl}>
-                    <InputLabel id="blocked">Blocked?</InputLabel>
-                    <Select
-                    labelId="blocked"
-                    id="blocked"
-                    onChange={handleBlockedChange}
-                    value={isBlockedData.blocked}
-                    name="blocked"
-                    label="Is blocked?"
-                    >
-                    <MenuItem value="true">Yes</MenuItem>
-                    <MenuItem value="false">No</MenuItem>
-                    </Select>
-                    </FormControl>
-                </div>
+                <TextField className={classes.formControl} variant="outlined" label="Behavioral Issues" InputLabelProps={{shrink: true}} onChange={createDogInputChange} value={dogIntakeData.behaviorialIssues} name="behaviorialIssues"/>
             </Grid>
             <Grid item container style={{marginTop: "1em"}} align="center" direction="column">
                 <Grid item>
@@ -357,7 +399,11 @@ export default function ProfileForm(){
                     value={originContactData.originId}
                     name="originId"
                     label="Dog Origin"
+                    InputLabelProps={{shrink: true}}
                     >
+                        <MenuItem value={0}>
+                            <em>Select contact</em>
+                        </MenuItem>
                     {origins.map((origin)=>(
                         <MenuItem value={origin.id}>{origin.fullName}</MenuItem>
                     ))}
@@ -365,30 +411,33 @@ export default function ProfileForm(){
                     </FormControl>
                 </Grid>
                 <Grid item>
-                    <Button variant="contained" color="secondary" onClick={()=>setContactFormVis("visible")}>Add external contact</Button>
+                    <Typography>Or</Typography>
+                    <Button variant="contained" color="secondary" onClick={onClick}>Add external contact</Button>
                 </Grid>
             </Grid>
-            <React.Fragment>
-                <Grid item style={{marginTop: "3em"}}>
-                    <Typography variant="h5">External Contact</Typography>
-                    <Divider/>
-                </Grid>
-                <Grid item container style={{marginTop: "1em"}}>
-                    <Grid item container justify="space-evenly">
-                        <TextField variant="outlined" label="Name" style={{marginTop: "1em"}}/>
-                        <TextField variant="outlined" label="Email" style={{marginTop: "1em"}}/>
-                        <TextField variant="outlined" label="Phone" style={{marginTop: "1em"}}/>
-                        <TextField variant="outlined" label="Type" style={{marginTop: "1em"}}/>
+            {contactFormVis ? null : 
+                <React.Fragment>
+                    <Grid item style={{marginTop: "3em"}}>
+                        <Typography variant="h5">External Contact</Typography>
+                        <Divider/>
                     </Grid>
-                </Grid>
+                    <Grid item container style={{marginTop: "1em"}}>
+                        <Grid item container justify="space-evenly">
+                            <TextField variant="outlined" label="Name" InputLabelProps={{shrink: true}} style={{marginTop: "1em"}} onChange={handleAddedExternalContactChange} value={addedExternalContactData.fullName} name="fullName"/>
+                            <TextField variant="outlined" label="Email" InputLabelProps={{shrink: true}} style={{marginTop: "1em"}} onChange={handleAddedExternalContactChange} value={addedExternalContactData.email} name="email"/>
+                            <TextField variant="outlined" label="Phone" InputLabelProps={{shrink: true}} style={{marginTop: "1em"}} onChange={handleAddedExternalContactChange} value={addedExternalContactData.phone} name="phone"/>
+                            <TextField variant="outlined" label="Type" InputLabelProps={{shrink: true}} style={{marginTop: "1em"}} onChange={handleAddedExternalContactChange} value={addedExternalContactData.contactType} name="contactType"/>
+                        </Grid>
+                    </Grid>
                     <Grid item container direction="column" style={{marginTop: "2em"}} xs={10} sm={10} md={6} lg={6}>
                         <Typography>Address:</Typography>
-                        <TextField label="Street"/>
-                        <TextField label="City"/>
-                        <TextField label="State"/>
-                        <TextField label="Zip"/>
+                        <TextField label="Street" InputLabelProps={{shrink: true}} onChange={handleExternalAddress} value={addedAddressData.street} name="street"/>
+                        <TextField label="City" InputLabelProps={{shrink: true}} onChange={handleExternalAddress} value={addedAddressData.city} name="city"/>
+                        <TextField label="State" InputLabelProps={{shrink: true}} onChange={handleExternalAddress} value={addedAddressData.state} name="state"/>
+                        <TextField label="Zip" InputLabelProps={{shrink: true}} onChange={handleExternalAddress} value={addedAddressData.zip5} name="zip5"/>
                     </Grid>
-            </React.Fragment>
+                </React.Fragment>
+            }
             {/* <Grid item style={{marginTop: "1em"}}>
                 <Button variant="contained" color="secondary">Add external contact</Button>
             </Grid> */}
@@ -412,7 +461,7 @@ export default function ProfileForm(){
         <Grid item container className={classes.itemContainer}>
         <Grid container>
             <Grid item style={{marginTop: "3em"}}>
-                <Typography variant="h4">Health Record</Typography>
+                <Typography variant="h4">Medical Issues</Typography>
                 <Divider/>
             </Grid>
         </Grid>
@@ -427,7 +476,7 @@ export default function ProfileForm(){
                 <SingleSelect title="Has Medical Issues"/>
             </Grid> */}
             <Grid item container style={{marginTop: "1em"}} justify="center">
-                <TextField className={classes.largeTextfield} label="Medical Details" rows={6} multiline variant="outlined" onChange={createDogInputChange} value={dogIntakeData.medicalIssues} name="medicalIssues"/>
+                <TextField className={classes.largeTextfield} label="Known medical issues" InputLabelProps={{shrink: true}} rows={6} multiline variant="outlined" onChange={createDogInputChange} value={dogIntakeData.medicalIssues} name="medicalIssues"/>
             </Grid>
         </Grid>
         <Grid container>
@@ -449,21 +498,38 @@ export default function ProfileForm(){
             <Grid item>
                 <div className={classes.form}>
                     <Grid item container className={classes.formItem}>
-                        <TextField variant="outlined" label="Name" onChange={createDogInputChange} value={dogIntakeData.name} name="name"/>
+                        <TextField variant="outlined" label="Name" InputLabelProps={{shrink: true}} onChange={createDogInputChange} value={dogIntakeData.name} name="name"/>
                     </Grid>
                     <Grid item container className={classes.formItem} direction="column">
                         <InputLabel id="birthday">Date of birth</InputLabel>
-                        <TextField type="date" variant="outlined" labelId="birthday" onChange={createDogInputChange} value={dogIntakeData.dob} name="dob"/>
+                        <TextField type="date" variant="outlined" labelId="birthday" InputLabelProps={{shrink: true}} onChange={createDogInputChange} value={dogIntakeData.dob} name="dob"/>
                     </Grid>
-                    <Grid item container className={classes.formItem}>
-                        <TextField variant="outlined" label="Gender" onChange={createDogInputChange} value={dogIntakeData.gender} name="gender"/>
-                    </Grid>
+                        <Grid item style={{marginTop: "1em"}}>
+                            <div>
+                                <FormControl variant="outlined" style={{minWidth: 195, marginBottom: "1em"}}>
+                                    <InputLabel id="gender">Gender</InputLabel>
+                                    <Select
+                                        labelId="gender"
+                                        id="gender"
+                                        onChange={handleGenderChange}
+                                        value={genderData.gender}
+                                        name="gender"
+                                        label="Gender"
+                                        InputLabelProps={{shrink: true}}
+                                    >
+                                        <MenuItem value="female">Female</MenuItem>
+                                        <MenuItem value="male">Male</MenuItem>
+                                    </Select>
+                                </FormControl>
+
+                    </div>
+                </Grid>
                     <Grid item container className={classes.numberItem}>
                         {/* <NumberFormat placeholder="Microchip ID" variant="outlined" onChange={createDogInputChange} value={dogIntakeData.microchipId} name="microchipId"/> */}
-                        <TextField type="number" variant="outlined" label="Microchip ID" onChange={createDogInputChange} value={dogIntakeData.microchipId} name="microchipId"/>
+                        <TextField type="number" variant="outlined" label="Microchip ID" InputLabelProps={{shrink: true}} onChange={createDogInputChange} value={dogIntakeData.microchipId} name="microchipId"/>
                     </Grid>
                     <Grid item container className={classes.formItem}>
-                        <TextField type="number" variant="outlined" label="ASF ID" onChange={createDogInputChange} value={dogIntakeData.asfId} name="asfId"/>
+                        <TextField type="number" variant="outlined" label="ASF ID" InputLabelProps={{shrink: true}} onChange={createDogInputChange} value={dogIntakeData.asfId} name="asfId"/>
                     </Grid>
                     {/* <Grid item container className={classes.formItem}>
                         <TextField rows={4} multiline variant="outlined" label="About" onChange={e => setAbout(e.target.value)}/>
@@ -475,9 +541,9 @@ export default function ProfileForm(){
         
         {/* <DogStatusEdit/> */}
         {breedInfo}
-        {/* {dogStatus} */}
+        {window.location.href.includes("create") ? null : dogStatus}
         {/* <IntakeDetailsEdit/> */}
-        {intakeDetails}
+        {window.location.href.includes("create") ? intakeDetails : null}
         {/* <BehaviorForm/> */}
         {/* <HealthRecordEdit/> */}
         {healthRecord}

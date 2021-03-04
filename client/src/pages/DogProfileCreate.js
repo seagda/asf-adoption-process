@@ -1,5 +1,4 @@
-import React, {useState, useEffect} from 'react';
-import {useParams} from "react-router-dom";
+import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import SaveButton from "../components/SaveButton";
@@ -30,24 +29,12 @@ const useStyles=makeStyles(theme => ({
     }
 }))
 
-export default function DogProfileEdit(){
+export default function DogProfileCreate(){
     const classes = useStyles();
-
-    let {id} = useParams();
-    const [dogData, setDogData] = useState({})
-    useEffect(()=>{
-        API.getSingleDogData(id).then(res =>{
-            console.log(res.data)
-            setDogData(res.data)
-        }).catch(err=>{
-            console.error(err.response.data.message)
-            alert("get data failed")
-        })
-    },[])
 
     return(
         <Grid container className={classes.mainContainer}>
-            <DogBlockEdit dogData={dogData} submitFunction={(dogData) => API.updateDogInfo(dogData, id)}/>
+            <DogBlockEdit dogData={{}} submitFunction={API.createDog} />
             {/* <DogStatusEdit/> */}
         </Grid>
     )
