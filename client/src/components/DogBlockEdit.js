@@ -161,7 +161,7 @@ export default function ProfileForm(){
     useEffect(()=>{
         API.getExtContact().then(res =>{
             setOrigins(res.data)
-            console.log(res.data)
+            // console.log(res.data)
         }).catch(err=>{
             console.error(err.response.data.message)
             alert("get data failed")
