@@ -11,8 +11,8 @@ export default function SearchBar(props) {
 
   return (
     <div>
-        <form noValidate autoComplete="off">
-            <TextField id="outlined-basic" label="Search" variant="outlined" fullWidth/>
+        <form noValidate autoComplete="off" onSubmit={(event) => event.preventDefault()}>
+            <TextField id="outlined-basic" label="Search" variant="outlined" fullWidth onChange={props.onChange}/>
         </form>
     </div>
   );

@@ -24,7 +24,10 @@ export default function ProfileActions(){
     return(
         <Grid container justify="space-evenly" style={{marginTop: "4em"}}>
             <Grid item>
-                {admin ? null : <ApplyButton toLink="/application" buttonText="Apply to adopt an aussie"/>}
+                {admin ? null : <ApplyButton toLink="/adopterApplication" buttonText="Apply to adopt an aussie"/>}
+            </Grid>
+            <Grid item>
+                {admin ? null : <ApplyButton toLink="/fosterApplication" buttonText="Apply to become a foster"/>}
             </Grid>
             <Grid item>
                 {admin ? <EditButton toLink="/editprofile" buttonText="Edit Profile"/> : <EditButton toLink="/editprofile" buttonText="Edit Profile"/>}
@@ -35,10 +38,10 @@ export default function ProfileActions(){
             <Grid item>
                 {/* {admin ? <ContactButton toLink="/" buttonText="Contact"/> : <ContactButton toLink="/" buttonText="Contact Admin"/>} */}
             </Grid>
-            <Grid item>
+            {/* <Grid item>
                 <HoldCheckbox label="Put me on hold"/>
-                {/* {admin ? <HoldCheckbox label="Mark User as inactive"/> : null} */}
-            </Grid>
+                {admin ? <HoldCheckbox label="Mark User as inactive"/> : null}
+            </Grid> */}
         </Grid>
     )
 }

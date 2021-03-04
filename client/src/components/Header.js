@@ -94,6 +94,10 @@ function ResponsiveDrawer(props) {
         setMobileOpen(!mobileOpen);
     };
 
+    const handleLogout = () =>{
+        localStorage.setItem("user", "")
+    }
+
     const drawer = (
         <div>
             {/* <div className={classes.toolbar} /> */}
@@ -101,16 +105,20 @@ function ResponsiveDrawer(props) {
                 <img src={logo} className={classes.logo}/>
             </NavLink>
             <List>
-                {['My-Dashboard', 'My-Profile', 'My-Settings', 'Logout'].map((text, index) => (
+                {['My-Dashboard', 'My-Profile'].map((text, index) => (
                     <ListItem button key={text} className={classes.listItem} onClick={() => setMobileOpen(false)}>
-                        <ListItemIcon className={classes.listItem}>{index === 0 ? <PersonIcon /> : index === 1 ? <PetsIcon /> : index === 2 ? <SettingsIcon /> : <ExitToAppIcon />}</ListItemIcon>
+                        <ListItemIcon className={classes.listItem}>{index === 0 ? <PersonIcon /> : <PetsIcon /> }</ListItemIcon>
                         <NavLink className={classes.link} to={`/${text}`}>{`${text.replace("-", " ")}`}</NavLink>
                     </ListItem>
                 ))}
+                <ListItem button className={classes.listItem} onClick={() => {setMobileOpen(false); handleLogout()}}>
+                    <ListItemIcon className={classes.listItem}><ExitToAppIcon /></ListItemIcon>
+                    <NavLink className={classes.link} to={"/"}>Logout</NavLink>
+                </ListItem>
             </List>
             <Divider />
             <List>
-                {['Dog-Dossiers', 'Manage-ASF-Users', 'ASF-Admin-Settings'].map((text, index) => (
+                {['Dog-Dossiers', 'Manage-ASF-Users'].map((text, index) => (
                     <ListItem button key={text} className={classes.listItem} onClick={() => setMobileOpen(false)}>
                         <ListItemIcon className={classes.listItem}>{index === 0 ? <DescriptionIcon /> : index === 1 ? <SupervisorAccountIcon /> : <PermDataSettingIcon />}</ListItemIcon>
                         <NavLink className={classes.link} to={`/${text}`}>{`${text.replace("-", " ")}`}</NavLink>

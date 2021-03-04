@@ -22,15 +22,15 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
 
 
-function createData(id, name, email, city, state, region, role) {
-  return { id, name, email, city, state, region, role };
-}
+// function createData(id, name, email, city, state, region, role) {
+//   return { id, name, email, city, state, region, role };
+// }
 
-const rows = [
-  createData(1, 'Kacey Musgraves', 'dogs12', 'Austen', 'TX', ['Texas'], ['Regional Lead']),
-  createData(2, 'Dwight Shroot', 'beets22', 'Scranton', 'PA', ['Northeast'], ['Foster']),
-  createData(3, 'Winston', 'newGirl99', 'Los Angeles', 'CA', ['West Coast'], ['Adopter', 'Foster'])
-];
+// const rows = [
+//   createData(1, 'Kacey Musgraves', 'dogs12', 'Austen', 'TX', ['Texas'], ['Regional Lead']),
+//   createData(2, 'Dwight Shroot', 'beets22', 'Scranton', 'PA', ['Northeast'], ['Foster']),
+//   createData(3, 'Winston', 'newGirl99', 'Los Angeles', 'CA', ['West Coast'], ['Adopter', 'Foster'])
+// ];
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -60,7 +60,8 @@ function stableSort(array, comparator) {
 
 // lable column headers
 const headCells = [
-  { id: 'name', numeric: false, disablePadding: false, label: 'Name' },
+  { id: 'firstName', numeric: false, disablePadding: false, label: 'First Name' },
+  { id: 'lastName', numeric: false, disablePadding: false, label: 'Last Name' },
   { id: 'email', numeric: false, disablePadding: false, label: 'Email' },
   { id: 'city', numeric: false, disablePadding: false, label: 'City' },
   { id: 'state', numeric: false, disablePadding: false, label: 'State' },
@@ -206,7 +207,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function UserTable() {
+export default function UserTable(props) {
   const classes = useStyles();
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
@@ -223,7 +224,7 @@ export default function UserTable() {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = rows.map((n) => n.name);
+      const newSelecteds = props.rows.map((n) => n.name);
       setSelected(newSelecteds);
       return;
     }
@@ -265,7 +266,7 @@ export default function UserTable() {
 
   const isSelected = (name) => selected.indexOf(name) !== -1;
 
-  const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
+  const emptyRows = rowsPerPage - Math.min(rowsPerPage, props.rows.length - page * rowsPerPage);
 
   return (
     <div className={classes.root}>
@@ -285,10 +286,10 @@ export default function UserTable() {
               orderBy={orderBy}
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
-              rowCount={rows.length}
+              rowCount={props.rows.length}
             />
             <TableBody>
-              {stableSort(rows, getComparator(order, orderBy))
+              {stableSort(props.rows, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
                   const isItemSelected = isSelected(row.id);
@@ -311,13 +312,14 @@ export default function UserTable() {
                         /> */}
                       </TableCell>
                       <TableCell component="th" id={labelId} scope="row" padding="none">
-                        {row.name}
+                        {row.firstName}
                       </TableCell>
+                      <TableCell >{row.lastName}</TableCell>
                       <TableCell >{row.email}</TableCell>
                       <TableCell >{row.city}</TableCell>
                       <TableCell >{row.state}</TableCell>
-                      <TableCell >{row.region.join(", ")}</TableCell>
-                      <TableCell >{row.role.join(", ")}</TableCell>
+                      <TableCell >{row.ResidesInRegion.name}</TableCell>
+                      <TableCell >{row.Roles.map( (role) => role.name).join(", ")}</TableCell>
                     </TableRow>
                   );
                 })}
@@ -332,7 +334,7 @@ export default function UserTable() {
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
-          count={rows.length}
+          count={props.rows.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onChangePage={handleChangePage}

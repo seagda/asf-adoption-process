@@ -37,26 +37,26 @@ export default function DogBlockView(props){
         <Grid item container className={classes.itemContainer}>
         <Grid container justify="space-evenly" className={classes.picContainer}>
             <Grid item>
-                <Image alt={"cool dog"} pic={dog} />
+                <Image alt={"cool dog"} pic={props.image} />
             </Grid>
             <Grid item className={classes.form}>
                 <Grid item container className={classes.formItem}>
-                    <Typography>Name: </Typography>
+                    <Typography>Name: {props.name}</Typography>
                 </Grid>
                 <Grid item container className={classes.formItem}>
-                     <Typography>Age: </Typography>
+                     <Typography>DOB: {props.dob}</Typography>
                 </Grid>
                 <Grid item container className={classes.formItem}>
-                     <Typography>Gender: </Typography>
+                     <Typography>Gender: {props.gender}</Typography>
                 </Grid>
                 <Grid item container className={classes.formItem}>
-                    <Typography>Size: </Typography>
+                    <Typography>Size: {props.size}</Typography>
                 </Grid>
                 <Grid item container className={classes.formItem}>
-                     <Typography>Location: </Typography>
+                     <Typography>Microchip Info: {props.microchipName} {props.microchipId}</Typography>
                  </Grid>
                 <Grid item container className={classes.formItem}>
-                     <Typography>About Me: </Typography>
+                     <Typography>ASF ID: {props.asfId}</Typography>
                 </Grid>
             </Grid>
         </Grid>

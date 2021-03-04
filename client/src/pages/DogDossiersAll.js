@@ -33,11 +33,14 @@ const useStyles=makeStyles(theme => ({
 
 export default function DogDossiersAll() {
     const [error, setError] = useState("");
+    
     const [selectedRegions, setRegion] = React.useState([]);
+    const [regions, setRegionList] = React.useState([]);
+    
     const [selectedDogStatus, setDogStatus] = React.useState([]);
+    const [dogStatusList, setDogStatusList] = React.useState([]);
+   
     const [searchDog, setDogSearch] = React.useState("");
-
-    // api call for dog data to display
     const [dogs, setDogState] = useState([])
 
     useEffect(() => {
@@ -45,13 +48,26 @@ export default function DogDossiersAll() {
     }, [])
 
     function loadDogs() {
-    
-    API.getDogDossiersAll()
-        .then(res => {
-        setDogState(res)
-        console.log(res)
-        })
-        .catch(err => console.log(err));
+        API.getDogDossiersAll()
+            .then(res => {
+            setDogState(res.data)
+            console.log(res)
+            })
+            .catch(err => console.log(err));
+
+        API.getRegions()
+            .then(res => {
+            setRegionList(res.data)
+            console.log(res)
+            })
+            .catch(err => console.log(err));
+
+        API.getDogStatus()
+            .then(res => {
+            setDogStatusList(res.data)
+            console.log(res)
+            })
+            .catch(err => console.log(err));
     };
   
     const handleRegionChange = (event) => {
@@ -64,34 +80,12 @@ export default function DogDossiersAll() {
       setDogSearch(event.target.value);
     };
 
-    const regions = [
-        'Midwest/South',
-        'Mid-Atlantic',
-        'Mississippi Valley',
-        'West Coast',
-        'Great Lakes',
-        'Plains States',
-        'Rocky Mountain',
-        'Southeast',
-        'Northeast',
-        'Texas'
-      ];
-
-    const dogStatus = [
-        'Pending Intake',
-        'Foster Ready',
-        'In Foster',
-        'Adoption Ready',
-        'Adopted',
-      ];
-
     const classes = useStyles()
     return (
         
         <Grid container className={classes.mainContainer}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                {/* double check on prop to set searchUser state here */}
                 <Typography variant="h3" component="h4" gutterBottom align="center" color="primary">
                     Dog Dossiers
                     <Divider />
@@ -102,13 +96,13 @@ export default function DogDossiersAll() {
                     <AddButton buttonText="Add Dog" toLink="/createdog" />
                 </Grid>
                 <Grid item xs={12}>
-                    <SearchBar searchDog={searchDog} handleDogStatusChange={handleSearchInputChange}/>
+                    <SearchBar searchDog={searchDog} onChange={handleSearchInputChange}/>
                 </Grid>
                 <Grid item xs={12} s={12} m={6} lg={6}>
-                    <MultiSelectChips names={regions} title="Select Region" selectedOption={selectedRegions} onOptionChange={handleRegionChange}/>
+                    <MultiSelectChips options={regions} title="Select Region" selectedOption={selectedRegions} onOptionChange={handleRegionChange}/>
                 </Grid>
                 <Grid item xs={12} s={12} m={6} lg={6}>
-                    <MultiSelectChips names={dogStatus} title="Select Dog Status" selectedOption={selectedDogStatus} onOptionChange={handleDogStatusChange} />
+                    <MultiSelectChips options={dogStatusList} title="Select Dog Status" selectedOption={selectedDogStatus} onOptionChange={handleDogStatusChange} />
                 </Grid>
                 <Grid item xs={12}>
                     <Divider />
@@ -123,13 +117,13 @@ export default function DogDossiersAll() {
                 </Grid>
                 <Grid item xs={12}>
                     <OverviewTable rows={dogs.filter( (dog) => {
-                        if (!selectedRegions.includes(dog.Region)) {
+                        if (selectedRegions.length > 0 && !selectedRegions.includes(dog.Region.id)) {
                             return false;
                         } 
-                        if (!selectedDogStatus.includes(dog.DogStatus)) {
+                        if (selectedDogStatus.length > 0 && !selectedDogStatus.includes(dog.DogStatus.id)) {
                             return false; 
                         }
-                        if (!(parseInt(searchDog) === dog.id || dog.name.includes(searchDog))) {
+                        if (!(parseInt(searchDog) === dog.id || dog.name.toLowerCase().includes(searchDog.toLowerCase()))) {
                             return false; 
                         }
                         return true;
