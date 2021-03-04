@@ -25,9 +25,9 @@ export default function QuickActionsFoster(){
 
     return (
         <Grid container justify="space-evenly" style={{marginTop: "1em"}}>
-            <Grid item>
+            {/* <Grid item>
                 <ApplyButton toLink="/createdog" buttonText="Add Behavior Assessment" color="secondary" icon={<AddIcon />}/>
-            </Grid>
+            </Grid> */}
             <Grid item>
                 <ApplyButton toLink="/editprofile" buttonText="Edit My Profile and Capacity" color="secondary" icon={<EditIcon />}/>
             </Grid>

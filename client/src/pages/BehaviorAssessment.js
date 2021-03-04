@@ -1,9 +1,10 @@
 import React, {useState, useCallback} from "react";
+import {useParams} from "react-router-dom";
 import "survey-react/survey.css";
 import Grid from '@material-ui/core/Grid';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Typography from "@material-ui/core/Typography";
-import AdoptApp from "../components/applications/AdoptApp";
+import BehaviorForm from "../components/applications/BehaviorForm";
 import API from "../utils/API";
 
 const useStyles=makeStyles(theme => ({
@@ -24,20 +25,24 @@ const useStyles=makeStyles(theme => ({
     }
 }))
 
-export default function AdopterApplication (){
+export default function BehaviorAssessment (){
     const classes = useStyles();
     const [showPage, setShowPage] = useState(true);
 
+    const date = Date.now()
+
+    let {id} = useParams();
+
     const onCompletePage = useCallback((data)=>{
-        API.sendAppData(data, 1);
+        API.sendBehaviorForm(data, id, date)
         setShowPage(!showPage)
     }, [showPage])
 
     const setFinalPage = ()=>{
         return(
             <Grid item container direction="column" align="center">
-                <Typography variant="h5">Thanks for completing the application!</Typography>
-                <Typography variant="h5">An ASF team member will contact you soon.</Typography>
+                <Typography variant="h5">Thanks for completing a behavior assessment!</Typography>
+                <Typography variant="h5">We're one step closer to saving another Aussie.</Typography>
             </Grid>
         )
     }
@@ -45,7 +50,7 @@ export default function AdopterApplication (){
     return(
         <Grid container className={classes.mainContainer}>
             
-            {showPage ? <Typography variant="h4" color="primary">Adopter Application</Typography> && <AdoptApp
+            {showPage ? <Typography variant="h4" color="primary">Behavior Assessment</Typography> && <BehaviorForm
             showCompletedPage={data=>onCompletePage(data)}
             /> : setFinalPage()}
         </Grid>

@@ -19,6 +19,7 @@ import Home from "./pages/Home";
 import Settings from "./pages/Settings";
 import FosterApplication from "./pages/FosterApplication";
 import DogProfileEdit from "./pages/DogProfileEdit";
+import BehaviorAssessment from "./pages/BehaviorAssessment";
 
 export default function App() {
     const admin = true;
@@ -44,6 +45,7 @@ export default function App() {
                     <Route path="/signin"><Login /></Route>
                     <Route path="/signup"><SignUp/></Route>
                     <Route path="/editDog/:id"><DogProfileEdit/></Route>
+                    <Route path="/behavior/:id"><BehaviorAssessment/></Route>
                 </Switch>
             </BrowserRouter>
         </ThemeProvider>

@@ -7,6 +7,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import {NavLink} from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
   margin: theme.spacing(20),
@@ -25,6 +26,7 @@ export default function MediaCard(props) {
   return (
     <Card className={classes.root}>
       <CardActionArea>
+        <NavLink to={`/dogView/${props.id}`}>
         <CardMedia
           className={classes.media}
           component="img"
@@ -33,6 +35,7 @@ export default function MediaCard(props) {
           image={props.image}
           title={props.name}
         />
+        </NavLink>
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
             {props.name}
