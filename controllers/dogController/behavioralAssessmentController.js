@@ -2,6 +2,14 @@ const db = require("../../models");
 const ac = require("../../helpers/ac");
 const router = require("express").Router();
 
+// get all ALL BEHAVIORAL ASSESSMENT QUESTIONS
+router.get("/questions", (req, res) => {
+    db.AssessQuestion.findAll().then(questions => res.json(questions)).catch(err => {
+        console.error(err);
+        res.status(500).send({message:"whoops"});
+    });
+});
+
 // show all BEHAVIORAL ASSESSMENT for ONE dog, with correct ROLE permission
 router.get("/:id", (req, res) => {
     const permissionOwn = ac.can(req.roles).readOwn("BehavioralAssessment");
