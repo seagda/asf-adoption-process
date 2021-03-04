@@ -47,7 +47,7 @@ export default function DashboardMain(){
     function loadDashboard() {
     API.getDashboardData()
         .then(res => {
-        console.log(res)
+        console.log(res.data)
         setDashboardState(res.data)
         
         })
@@ -121,7 +121,7 @@ export default function DashboardMain(){
                             {dashboardData.myDogs.map(dog =>{
                                 return (
                                     <Grid item xs={10} s={10} m={6} lg={3}>
-                                        <MediaCard name={dog.name} gender={dog.gender} dob={dog.dob} image={dog.DogPhotos[0].url} /* dossierLink={} */ />
+                                        <MediaCard id={dog.id} name={dog.name} gender={dog.gender} dob={dog.dob} image={dog.DogPhotos[0].url} /* dossierLink={} */ />
                                     </Grid>
                                 )
                             })}    
