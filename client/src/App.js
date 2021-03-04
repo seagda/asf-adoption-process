@@ -12,16 +12,16 @@ import MyProfile from "./pages/MyProfile";
 import ManageASFUsers from "./pages/ManageASFUsers";
 import EditProfile from "./pages/EditProfile";
 import DogProfileView from "./pages/DogProfileView";
-import DogProfileEdit from "./pages/DogProfileEdit";
+import DogProfileCreate from "./pages/DogProfileCreate";
 import DashboardMain from "./pages/DashboardMain";
 import SignUp from "./pages/SignUp";
 import Home from "./pages/Home";
 import Settings from "./pages/Settings";
 import FosterApplication from "./pages/FosterApplication";
+import DogProfileEdit from "./pages/DogProfileEdit";
 
 export default function App() {
     const admin = true;
-
     return (
         <ThemeProvider theme={theme}>
             <BrowserRouter>
@@ -38,12 +38,12 @@ export default function App() {
                     <Route path="/adopterApplication"><AdopterApplication/></Route>
                     <Route path="/fosterApplication"><FosterApplication/></Route>
                     <Route path="/createUser"><CreateUser/></Route>
-                    <Route path="/dogView"><DogProfileView/></Route>
-                    <Route path="/createdog"><DogProfileEdit/></Route>
+                    <Route path="/dogView/:id"><DogProfileView/></Route>
+                    <Route path="/viewDog"><p style={{fontSize: 100}}>THE PATH IS DOGVIEW</p></Route>
+                    <Route path="/createdog"><DogProfileCreate/></Route>
                     <Route path="/signin"><Login /></Route>
                     <Route path="/signup"><SignUp/></Route>
-                    <Route path="/signup"><SignUp/></Route>
-                   
+                    <Route path="/editDog/:id"><DogProfileEdit/></Route>
                 </Switch>
             </BrowserRouter>
         </ThemeProvider>

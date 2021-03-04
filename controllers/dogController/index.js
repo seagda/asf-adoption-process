@@ -168,6 +168,12 @@ router.delete("/archive/:id", (req, res) => {
     else return res.status(403).send({ message: "Not authorized to archive dogs" });
 });
 
+// get list of microchip mfgs
+router.get("/microchip-mfg", (req, res) => db.MicrochipMfg.findAll().then(microchipMfgs => res.json(microchipMfgs)).catch(err => {
+    console.error(err);
+    res.status(500).send({ message: "Database error" });
+}));
+
 // Generate ALERTS
 
 function generateStatusAlerts(dog) {

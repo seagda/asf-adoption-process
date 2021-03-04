@@ -26,6 +26,18 @@ const API = {
     sendAppData: function(response, appId){
         return axios.post(`/api/user/app-response`, response, appId, getHeaders())
     },
+    getMyUserData: function(){
+        return axios.get(`/api/user/me`, getHeaders())
+    },
+    updateMyUserData: function(userData){
+        return axios.put(`/api/user/me`, userData, getHeaders())
+    },
+    getSingleDogData: function(dogId){
+        return axios.get(`/api/dog/${dogId}`, getHeaders())
+    },
+    updateDogInfo: function(dogData, dogId){
+        return axios.put(`/api/dog/${dogId}`, dogData, getHeaders())
+    },
 
     getDogDossiersAll: function() {
         return axios.get("/api/dog", getHeaders())

@@ -38,10 +38,10 @@ export default function ProfileActions(){
             <Grid item>
                 {/* {admin ? <ContactButton toLink="/" buttonText="Contact"/> : <ContactButton toLink="/" buttonText="Contact Admin"/>} */}
             </Grid>
-            <Grid item>
+            {/* <Grid item>
                 <HoldCheckbox label="Put me on hold"/>
-                {/* {admin ? <HoldCheckbox label="Mark User as inactive"/> : null} */}
-            </Grid>
+                {admin ? <HoldCheckbox label="Mark User as inactive"/> : null}
+            </Grid> */}
         </Grid>
     )
 }

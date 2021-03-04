@@ -91,7 +91,7 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-export default function ProfileForm(){
+export default function ProfileForm(props){
     const classes = useStyles();
     const admin = true;
     const roles = [{role: "Adopter"}, {role: "Foster"}];
@@ -109,6 +109,7 @@ export default function ProfileForm(){
     const [isActiveData, setIsActiveData] = useState({});
     const handleActiveChange = (event) => {
       const {name, value} = event.target
+      console.log(value)
       setIsActiveData({
           ...isActiveData,
           [name]: value
@@ -178,9 +179,23 @@ export default function ProfileForm(){
       })
     };
 
+    useEffect(()=>{
+        setUserIntakeData({
+            firstName: props.userData.firstName, 
+            lastName: props.userData.lastName,
+            phone: props.userData.phone,
+            email: props.userData.email,
+            dob: props.userData.dob,
+            maxCapacity: props.userData.maxCapacity
+        })
+        setIsActiveData({active: false})
+        console.log(isActiveData)
+    }, [props.userData])
+
+
     const handleUserIntakeFormSubmit = event =>{
         event.preventDefault();
-        API.createUser({...userIntakeData,
+        props.submitFunction({...userIntakeData,
             ...isActiveData,
             ...isBlockedData,
             ...caresForPuppiesData,
@@ -209,27 +224,27 @@ export default function ProfileForm(){
     }
 
 
-    const roleEdit = (
-        <Grid item container className={classes.itemContainer}>
-        <Grid container style={{marginTop: "1em"}}>
-            <Grid item>
-                <Typography variant="h4">Role Title</Typography>
-            </Grid>
-        </Grid>
-        <Grid container justify="space-between">
-            <Grid item style={{marginTop: "1em"}}>
-                {roles.map((role)=> (
-                    <RoleTitles
-                    label={role.role}
-                    />
-                ))}
-            </Grid>
-            <Grid item>
-                <MultiSelectChips names={names} title="Add Role(s)"/>
-            </Grid>
-        </Grid>
-    </Grid>
-    )
+    // const roleEdit = (
+    //     <Grid item container className={classes.itemContainer}>
+    //     <Grid container style={{marginTop: "1em"}}>
+    //         <Grid item>
+    //             <Typography variant="h4">Role Title</Typography>
+    //         </Grid>
+    //     </Grid>
+    //     <Grid container justify="space-between">
+    //         <Grid item style={{marginTop: "1em"}}>
+    //             {roles.map((role)=> (
+    //                 <RoleTitles
+    //                 label={role.role}
+    //                 />
+    //             ))}
+    //         </Grid>
+    //         <Grid item>
+    //             <MultiSelectChips names={names} title="Add Role(s)"/>
+    //         </Grid>
+    //     </Grid>
+    // </Grid>
+    // )
 
     const userStatus = (
         <Grid item container className={classes.itemContainer, classes.marginFix}>
@@ -251,9 +266,10 @@ export default function ProfileForm(){
                     value={isActiveData.active}
                     name="active"
                     label="Is active?"
+                    InputLabelProps={{shrink: true}}
                     >
-                    <MenuItem value="true">Yes</MenuItem>
-                    <MenuItem value="false">No</MenuItem>
+                    <MenuItem value={true}>Yes</MenuItem>
+                    <MenuItem value={false}>No</MenuItem>
                     </Select>
                     </FormControl>
                 </div>
@@ -269,9 +285,10 @@ export default function ProfileForm(){
                     value={isBlockedData.blocked}
                     name="blocked"
                     label="Is blocked?"
+                    InputLabelProps={{shrink: true}}
                     >
-                    <MenuItem value="true">Yes</MenuItem>
-                    <MenuItem value="false">No</MenuItem>
+                    <MenuItem value={true}>Yes</MenuItem>
+                    <MenuItem value={false}>No</MenuItem>
                     </Select>
                     </FormControl>
                 </div>
@@ -287,9 +304,10 @@ export default function ProfileForm(){
                     value={onHoldData.hold}
                     name="hold"
                     label="On hold?"
+                    InputLabelProps={{shrink: true}}
                     >
-                    <MenuItem value="true">Yes</MenuItem>
-                    <MenuItem value="false">No</MenuItem>
+                    <MenuItem value={true}>Yes</MenuItem>
+                    <MenuItem value={false}>No</MenuItem>
                     </Select>
                     </FormControl>
                 </div>
@@ -345,9 +363,10 @@ export default function ProfileForm(){
                     value={caresForPuppiesData.puppies}
                     name="puppies"
                     label="Puppies?"
+                    InputLabelProps={{shrink: true}}
                     >
-                    <MenuItem value="true">Yes</MenuItem>
-                    <MenuItem value="false">No</MenuItem>
+                    <MenuItem value={true}>Yes</MenuItem>
+                    <MenuItem value={false}>No</MenuItem>
                     </Select>
                     </FormControl>
                     </div>
@@ -365,9 +384,10 @@ export default function ProfileForm(){
                     value={caresForAdultsData.adults}
                     name="adults"
                     label="Adults?"
+                    InputLabelProps={{shrink: true}}
                     >
-                    <MenuItem value="true">Yes</MenuItem>
-                    <MenuItem value="false">No</MenuItem>
+                    <MenuItem value={true}>Yes</MenuItem>
+                    <MenuItem value={false}>No</MenuItem>
                     </Select>
                     </FormControl>
                     </div>
@@ -387,9 +407,10 @@ export default function ProfileForm(){
                     value={caresForSeniorsData.seniors}
                     name="active"
                     label="Seniors?"
+                    InputLabelProps={{shrink: true}}
                     >
-                    <MenuItem value="true">Yes</MenuItem>
-                    <MenuItem value="false">No</MenuItem>
+                    <MenuItem value={true}>Yes</MenuItem>
+                    <MenuItem value={false}>No</MenuItem>
                     </Select>
                     </FormControl>
                     </div>
@@ -407,9 +428,10 @@ export default function ProfileForm(){
                     value={withBehaviorIssuesData.withBehaviorIssues}
                     name="withBehaviorIssues"
                     label="With behaviorial issues?"
+                    InputLabelProps={{shrink: true}}
                     >
-                    <MenuItem value="true">Yes</MenuItem>
-                    <MenuItem value="false">No</MenuItem>
+                    <MenuItem value={true}>Yes</MenuItem>
+                    <MenuItem value={false}>No</MenuItem>
                     </Select>
                     </FormControl>
                     </div>
@@ -429,9 +451,10 @@ export default function ProfileForm(){
                     value={withMedIssuesData.withMedicalIssues}
                     name="withMedicalIssues"
                     label="Medical Issues?"
+                    InputLabelProps={{shrink: true}}
                     >
-                    <MenuItem value="true">Yes</MenuItem>
-                    <MenuItem value="false">No</MenuItem>
+                    <MenuItem value={true}>Yes</MenuItem>
+                    <MenuItem value={false}>No</MenuItem>
                     </Select>
                     </FormControl>
                     </div>
@@ -502,21 +525,21 @@ export default function ProfileForm(){
     //     </Grid>
     // )
 
-    const adminNotes = (
-        <Grid item container className={classes.itemContainer, classes.marginFix}>
-        <Grid container>
-            <Grid item style={{marginTop: "3em"}}>
-                <Typography variant="h4">Admin Notes</Typography>
-                <Divider/>
-            </Grid>
-        </Grid>
-        <Grid container>
-            <Grid item container style={{marginTop: "1em"}} justify="center">
-                <TextField className={classes.largeTextfield} label="Admin Notes" rows={6} multiline variant="outlined" onChange={createUserInputChange} value={userIntakeData.adminNotes} name="adminNotes"/>
-            </Grid>
-        </Grid>
-    </Grid>
-    )
+    // const adminNotes = (
+    //     <Grid item container className={classes.itemContainer, classes.marginFix}>
+    //     <Grid container>
+    //         <Grid item style={{marginTop: "3em"}}>
+    //             <Typography variant="h4">Admin Notes</Typography>
+    //             <Divider/>
+    //         </Grid>
+    //     </Grid>
+    //     <Grid container>
+    //         <Grid item container style={{marginTop: "1em"}} justify="center">
+    //             <TextField className={classes.largeTextfield} InputLabelProps={{shrink: true}} label="Admin Notes" rows={6} multiline variant="outlined" onChange={createUserInputChange} value={userIntakeData.adminNotes} name="adminNotes"/>
+    //         </Grid>
+    //     </Grid>
+    // </Grid>
+    // )
 
     return (
         <form onSubmit={handleUserIntakeFormSubmit}>
@@ -529,20 +552,20 @@ export default function ProfileForm(){
             <Grid item>
                 <div className={classes.form}>
                     <Grid item container className={classes.formItem}>
-                        <TextField variant="outlined" label="First Name" onChange={createUserInputChange} value={userIntakeData.firstName} name="firstName"/>
+                        <TextField variant="outlined" InputLabelProps={{shrink: true}} label="First Name" onChange={createUserInputChange} value={userIntakeData.firstName} name="firstName"/>
                     </Grid>
                     <Grid item container className={classes.formItem}>
-                        <TextField variant="outlined" label="Last Name" onChange={createUserInputChange} value={userIntakeData.lastName} name="lastName"/>
+                        <TextField variant="outlined" InputLabelProps={{shrink: true}} label="Last Name" onChange={createUserInputChange} value={userIntakeData.lastName} name="lastName"/>
                     </Grid>
                     <Grid item container className={classes.formItem}>
-                        <TextField variant="outlined" label="Phone" onChange={createUserInputChange} value={userIntakeData.phone} name="phone"/>
+                        <TextField variant="outlined" InputLabelProps={{shrink: true}} label="Phone" onChange={createUserInputChange} value={userIntakeData.phone} name="phone"/>
                     </Grid>
                     <Grid item container className={classes.formItem}>
-                        <TextField type="email" variant="outlined" label="Email" onChange={createUserInputChange} value={userIntakeData.email} name="email"/>
+                        <TextField type="email" variant="outlined" InputLabelProps={{shrink: true}} label="Email" onChange={createUserInputChange} value={userIntakeData.email} name="email"/>
                     </Grid>
                     <Grid item container className={classes.formItem} direction="column">
                         <InputLabel id="birthday">Date of birth</InputLabel>
-                        <TextField type="date" variant="outlined" labelId="birthday" onChange={createUserInputChange} value={userIntakeData.dob} name="dob"/>
+                        <TextField type="date" variant="outlined" InputLabelProps={{shrink: true}} labelId="birthday" onChange={createUserInputChange} value={userIntakeData.dob} name="dob"/>
                     </Grid>
                 </div>
             </Grid>
@@ -556,7 +579,7 @@ export default function ProfileForm(){
             <Divider/>
         </Grid>
         {references} */}
-        {adminNotes}
+        {/* {adminNotes} */}
         <Grid item container className={classes.formItem} justify={"flex-end"}>
             <SaveButton buttonText="Save Changes"/>
         </Grid>
