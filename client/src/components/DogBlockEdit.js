@@ -157,7 +157,9 @@ export default function ProfileForm(props){
       })
     };
 
-    const [dogStatusData, setDogStatusData] = useState([]);
+    const [dogStatusList, setDogStatusList] = useState([]);
+    const [dogStatusNew, setDogStatusNew] = useState(0)
+    const handleStatusChange = (event) => setDogStatusNew(event.target.value)
     
     const [origins, setOrigins] = useState([])
 
@@ -184,7 +186,7 @@ export default function ProfileForm(props){
 
     function LoadStatus (){
         API.getDogStatus().then(res =>{
-            setDogStatusData(res.data)
+            setDogStatusList(res.data)
             // console.log(res.data)
         }).catch(err=>{
             console.error(err.response.data.message)
@@ -219,6 +221,7 @@ export default function ProfileForm(props){
             ...sizeData,
             ...coatColorData, 
             ...originContactData,
+            DogStatusId: dogStatusNew
         }
         if(originContactData.originId === 0){
             newDog.origin = {...addedExternalContactData, Address: addedAddressData}
@@ -235,6 +238,7 @@ export default function ProfileForm(props){
             setOriginContactData({})
             setAddedExternalContactData({})
             setAddedAddressData({})
+            setDogStatusNew(0)
             window.location = "/My-Dogs"
         }).catch(err=>{
             console.error(err.response.data.message)
@@ -253,7 +257,7 @@ export default function ProfileForm(props){
         <Grid container>
             <Grid item container justify="space-between">
                 <Grid item style={{marginTop: "1em"}}>
-                    <Chip label={(dogStatusData.find((status)=>status.id === dogIntakeData.DogStatusId)|| {}).name}/>
+                    <Chip label={(dogStatusList.find((status)=>status.id === dogIntakeData.DogStatusId)|| {}).name}/>
                     <br/>
                     <TextField style={{marginTop: "1em"}} variant="outlined" label="Add Details" rows={4}/>
                 </Grid>
@@ -264,22 +268,21 @@ export default function ProfileForm(props){
                             <Select
                             labelId="demo-simple-select-outlined-label"
                             id="demo-simple-select-outlined"
-                            value="status"
-                            name="status"
+                            value={dogStatusNew}
+                            onChange={handleStatusChange}
+                            name="dogStatusNew"
                             label="Select Status"
                             >
                             <MenuItem value="">
                             <em>None</em>
                             </MenuItem>
-                            <MenuItem value="inTransit">In Transit</MenuItem>
-                            <MenuItem value="inFoster">In Foster</MenuItem>
-                            <MenuItem value="adopted">Adopted</MenuItem>
+                            {dogStatusList.map((status)=><MenuItem value={status.id}>{status.name}</MenuItem>)}
                             </Select>
                             </FormControl>
 
                         </div>
                     <br/>
-                    {repeat ? <Typography style={{color: "red", fontWeight: 800}}>Repeated Relocations</Typography> : null}
+                    {/* {repeat ? <Typography style={{color: "red", fontWeight: 800}}>Repeated Relocations</Typography> : null} */}
                 </Grid>
             </Grid>
         </Grid>
