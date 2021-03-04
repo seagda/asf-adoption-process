@@ -10,7 +10,7 @@ import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    marginLeft: theme.spacing(4),
+    marginLeft: theme.spacing(2),
     marginTop: theme.spacing(2),
     width: '100%',
     maxWidth: '90%',
@@ -27,7 +27,7 @@ export default function AvatarList(props) {
   return (
     <List className={classes.root}>
       <ListItem alignItems="flex-start">
-        <ListItemAvatar>
+        <ListItemAvatar >
           <Avatar alt={props.firstName} src={props.image} className={classes.large}/>
         </ListItemAvatar>
         <ListItemText

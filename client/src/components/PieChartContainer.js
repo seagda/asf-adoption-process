@@ -11,7 +11,7 @@ export default function PieChartContainer(props){
     const adopterStatus = props.data.adopterCounts || []
  
     return (
-        <Grid container justify="space-evenly" style={{marginTop: "2em"}}>
+        <Grid container justify="space-evenly" >
             {console.log(props.data.dogStatusCounts)}
             <Grid item s={12} m={3} lg={3} style={{marginTop: "1em"}}>
                 <PieChart data={props.data.dogStatusCounts} text={"Total ASF Dogs"} />

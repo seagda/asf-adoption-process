@@ -26,7 +26,7 @@ export default class Demo extends React.PureComponent {
     const text = this.state.text;
 
     return (
-      <Grid container justify="space-evenly" style={{marginTop: "1em"}}>
+      <Grid container justify="space-evenly">
             <Grid item >
               <Paper marginLeft="1em" >
                 <Chart data={this.state.data} height="50" width="300">
