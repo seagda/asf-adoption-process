@@ -37,13 +37,18 @@ export default function DogProfileView(){
     let {id} = useParams();
     console.log(id)
 
-    const [dogData, setDogData] = useState({MicrochipMfg:{}, DogStatus:{}, DogPhotos: [], origin: {Region: {}, Address: {}}})
+    const [dogData, setDogData] = useState({
+        MicrochipMfg:{}, 
+        DogStatus:{}, 
+        DogPhotos: [], 
+        origin: {Region: {}, Address: {}}
+    })
     useEffect(()=>{
         API.getSingleDogData(id).then(res =>{
             console.log(res.data)
             setDogData(res.data)
         }).catch(err=>{
-            console.error(err.response.data.message)
+            console.error(err)
             alert("get data failed")
         })
     },[])
@@ -54,14 +59,40 @@ export default function DogProfileView(){
                 <Typography variant="h4" color="primary">{dogData.name}'s details</Typography>
                 <Divider/>
             </Grid>
-            <DogBlockView name={dogData.name} dob={dogData.dob} gender={dogData.gender} size={dogData.size} microchipId={dogData.microchipId} asfId={dogData.asfId} microchipName={dogData.MicrochipMfg.name} image={(dogData.DogPhotos.find((photo)=> photo.profilePhoto)||{}).url}/>
+
+            <DogBlockView 
+            name={dogData.name} 
+            dob={dogData.dob} 
+            gender={dogData.gender} 
+            size={dogData.size} 
+            microchipId={dogData.microchipId} 
+            asfId={dogData.asfId} 
+            // microchipName={dogData.MicrochipMfg.name} 
+            image={(dogData.DogPhotos.find((photo)=> photo.profilePhoto)||{}).url}/>
 
             {dogData.canEdit ? <DogProfileActions id={id}/> : null}
 
-            <DogBreedView coat={dogData.coat} weight={dogData.weight} purebred={dogData.isPurebred} secondary={dogData.secondaryBreed}/>
-            <DogOriginView originName={dogData.origin.fullName} originRegion={dogData.origin.Region.name} originStreet={dogData.origin.Address.street} originCity={dogData.origin.Address.city} originState={dogData.origin.Address.state} originZip={dogData.origin.Address.zip5} originPhone={dogData.origin.phone} pullCost={dogData.pullCost}/>
+            <DogBreedView 
+            coat={dogData.coat} 
+            weight={dogData.weight} 
+            purebred={dogData.isPurebred} 
+            secondary={dogData.secondaryBreed}/>
 
-            <DogInfoCurrent currentlyWith={dogData.currentlyWith} behaviorIssues={dogData.behaviorIssues} medicalIssues={dogData.medicalIssues} blocked={dogData.blocked}/>
+            <DogOriginView 
+            originName={dogData.origin.fullName} 
+            originRegion={dogData.origin.Region.name} 
+            originStreet={dogData.origin.Address.street} 
+            originCity={dogData.origin.Address.city} 
+            originState={dogData.origin.Address.state} 
+            originZip={dogData.origin.Address.zip5} 
+            originPhone={dogData.origin.phone} 
+            pullCost={dogData.pullCost}/>
+
+            <DogInfoCurrent 
+            currentlyWith={dogData.currentlyWith} 
+            behaviorIssues={dogData.behaviorIssues} 
+            medicalIssues={dogData.medicalIssues} 
+            blocked={dogData.blocked}/>
         </Grid>
     )
 }

@@ -241,7 +241,7 @@ export default function ProfileForm(props){
             setDogStatusNew(0)
             window.location = "/My-Dogs"
         }).catch(err=>{
-            console.error(err.response.data.message)
+            console.error(err)
             alert("Create dog failed")
         })
     }
