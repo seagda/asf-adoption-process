@@ -10,6 +10,7 @@ import DogBlockView from "../components/DogBlockView";
 import DogProfileActions from "../components/DogProfileActions";
 import DogBreedView from "../components/DogBreedView";
 import DogOriginView from "../components/DogOriginView";
+import DogInfoCurrent from "../components/DogInfoCurrent";
 
 const useStyles=makeStyles(theme => ({
     mainContainer: {
@@ -58,7 +59,9 @@ export default function DogProfileView(){
             {dogData.canEdit ? <DogProfileActions/> : null}
 
             <DogBreedView coat={dogData.coat} weight={dogData.weight} purebred={dogData.isPurebred} secondary={dogData.secondaryBreed}/>
-            <DogOriginView originName={dogData.origin.fullName} originRegion={dogData.origin.Region.name} originStreet={dogData.origin.Address.street} originCity={dogData.origin.Address.city} originState={dogData.origin.Address.state} originZip={dogData.origin.Address.zip5} originPhone={dogData.origin.phone}/>
+            <DogOriginView originName={dogData.origin.fullName} originRegion={dogData.origin.Region.name} originStreet={dogData.origin.Address.street} originCity={dogData.origin.Address.city} originState={dogData.origin.Address.state} originZip={dogData.origin.Address.zip5} originPhone={dogData.origin.phone} pullCost={dogData.pullCost}/>
+
+            <DogInfoCurrent currentlyWith={dogData.currentlyWith}/>
         </Grid>
     )
 }

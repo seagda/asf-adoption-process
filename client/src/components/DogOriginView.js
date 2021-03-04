@@ -36,6 +36,9 @@ export default function DogOriginView(props){
                             <Typography style={{marginTop: "1em"}}>Phone:{props.originPhone}</Typography>
                         </Grid>
                         <Grid item xs={6} sm={6} md={8} lg={6}>
+                            <Typography style={{marginTop: "1em"}}>Pull Cost:${props.pullCost}</Typography>
+                        </Grid>
+                        <Grid item xs={6} sm={6} md={8} lg={6}>
                             <Typography style={{marginTop: "1em"}}>Address</Typography>
                             <Divider/>
                             <Typography style={{marginTop: "1em"}}>Street:{props.originStreet}</Typography>
