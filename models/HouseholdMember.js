@@ -1,13 +1,14 @@
 module.exports = (sequelize, DataTypes) => {
-    const Familymember = sequelize.define("Familymember", {
+    const HouseholdMember = sequelize.define("HouseholdMember", {
         firstName: { type: DataTypes.STRING, allowNull: false },
         lastName: { type: DataTypes.STRING, allowNull: false },
-        dob: { type: DataTypes.DATEONLY, allowNull: false }
+        dob: { type: DataTypes.DATEONLY, allowNull: false },
+        relationship: { type: DataTypes.STRING, allowNull: false }
     });
 
-    Familymember.associate = db => {
-        db.User.hasMany(Familymember);
-        Familymember.belongsTo(db.User);
+    HouseholdMember.associate = db => {
+        db.User.hasMany(HouseholdMember);
+        HouseholdMember.belongsTo(db.User);
     };
-    return Familymember;
+    return HouseholdMember;
 };
