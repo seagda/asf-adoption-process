@@ -6,10 +6,10 @@ const mail = require("../../helpers/mail");
 
 const router = require("express").Router();
 
-router.use("/alert", require("./alertController"));
-router.use("/app-response", require("./appResponseController"));
-router.use("/family", require("./familymemberController"));
-router.use("/reference", require("./referenceController"));
+router.use("/alert", require("./alert"));
+router.use("/app-response", require("./appResponse"));
+router.use("/family", require("./familymember"));
+router.use("/reference", require("./reference"));
 
 // get all users
 router.get("/", (req, res) => {

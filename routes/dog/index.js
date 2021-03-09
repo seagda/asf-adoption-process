@@ -3,9 +3,9 @@ const ac = require("../../helpers/ac");
 const router = require("express").Router();
 const sId = require("../../scripts/staticIds");
 
-router.use("/assess", require("./behavioralAssessmentController"));
-router.use("/document", require("./documentController"));
-router.use("/medi-status", require("./mediStatusController"));
+router.use("/assess", require("./behavioralAssessment"));
+router.use("/document", require("./document"));
+router.use("/medi-status", require("./mediStatus"));
 
 // show all DOGS, with correct ROLE permission
 router.get("/", (req, res) => {

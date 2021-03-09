@@ -18,16 +18,16 @@ app.use("/api", require("./middleware/verifyToken"));
 
 // API routes go here
 
-app.use("/auth", require("./controllers/authController"));
-app.use("/api/dashboard", require("./controllers/dashboardController"));
-app.use("/api/user", require("./controllers/userController"));
-app.use("/api/dog", require("./controllers/dogController"));
-app.use("/api/address", require("./controllers/addressController"));
-app.use("/api/event", require("./controllers/eventController"));
-app.use("/api/contact", require("./controllers/extContactController"));
-app.use("/api/region", require("./controllers/regionController"));
-app.use("/api/app", require("./controllers/appController"));
-app.use("/api/role", require("./controllers/roleController"));
+app.use("/auth", require("./routes/auth"));
+app.use("/api/dashboard", require("./routes/dashboard"));
+app.use("/api/user", require("./routes/user"));
+app.use("/api/dog", require("./routes/dog"));
+app.use("/api/address", require("./routes/address"));
+app.use("/api/event", require("./routes/event"));
+app.use("/api/contact", require("./routes/extContact"));
+app.use("/api/region", require("./routes/region"));
+app.use("/api/app", require("./routes/app"));
+app.use("/api/role", require("./routes/role"));
 
 if (env === "production") {
     app.use(express.static("client/build"));
