@@ -26,7 +26,7 @@ router.get("/", (req, res) => {
                     city: userJson.Address ? userJson.Address.city : "No Address",
                     state: userJson.Address ? userJson.Address.state : "--",
                     ResidesInRegion: userJson.ResidesInRegion,
-                    Roles: userJson.Roles.filter(role => role.name !== "user")
+                    Roles: userJson.Roles.filter(role => role.name !== "User")
                 }
             }))))
             .catch(err => {
