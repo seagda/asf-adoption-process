@@ -3,16 +3,16 @@ const db = require("../models");
 
 // Seed the ROLES table
 const roleSeed = [
-    { name: "user" },
-    { name: "rescuer" },
-    { name: "adopter" },
-    { name: "foster" },
-    { name: "placement" },
-    { name: "regional" },
-    { name: "superAdmin" },
-    { name: "admin" },
-    { name: "transporter" },
-    { name: "volunteer" }
+    { name: "User" },
+    { name: "Rescuer" },
+    { name: "Adopter" },
+    { name: "Foster" },
+    { name: "Placement" },
+    { name: "Regional" },
+    { name: "SuperAdmin" },
+    { name: "Admin" },
+    { name: "Transporter" },
+    { name: "Volunteer" }
 ];
 
 // Seed the AppType table

@@ -1,5 +1,5 @@
 module.exports = ac => {
-    ac.grant("adopter").grant("foster").extend("adopter")
+    ac.grant("Adopter").grant("Foster").extend("Adopter")
         .readAny("User", "!blocked", "!adminNotes")
         .updateOwn("Dog", ["DogStatus", "DogStatusId"])
         .readAny("AppResponseAdopter")

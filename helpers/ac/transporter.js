@@ -1,3 +1,3 @@
 module.exports = ac => {
-    ac.grant("user").grant("transporter").extend("user")
+    ac.grant("User").grant("Transporter").extend("User")
 };
