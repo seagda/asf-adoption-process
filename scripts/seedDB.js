@@ -9,7 +9,7 @@ const roleSeed = [
     { name: "Foster" },
     { name: "Placement" },
     { name: "Regional" },
-    { name: "SuperAdmin" },
+    { name: "Super Admin" },
     { name: "Admin" },
     { name: "Transporter" },
     { name: "Volunteer" }
