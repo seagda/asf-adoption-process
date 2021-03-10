@@ -98,7 +98,7 @@ export default function ManageASFUsers() {
                 </Typography>
                 </Grid>
                 <Grid item xs={4} s={4} m={8} lg={10} />
-                {user.roles.some(role => ["superAdmin", "regional", "admin"].includes(role)) ? 
+                {user.roles.some(role => ["Super Admin", "Regional", "Admin"].includes(role)) ? 
                 (<Grid item xs={8} s={8} m={4} lg={2}>
                     <AddButton buttonText="Add User" toLink="/createUser" />
                 </Grid>) : null}
