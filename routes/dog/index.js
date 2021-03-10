@@ -210,6 +210,7 @@ function generateStatusAlerts(dog) {
         ]);
     })
         .then(([users, DogStatus]) => Promise.all(users.map(user => user.createAlert({ message: `${dog.name} is ${DogStatus.name}`, AboutDogId: dog.id }))))
+        .then(alerts => alertController.notifyUsers(alerts))
         .catch(console.error);
 }
 
