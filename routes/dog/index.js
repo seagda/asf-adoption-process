@@ -2,6 +2,7 @@ const db = require("../../models");
 const ac = require("../../helpers/ac");
 const router = require("express").Router();
 const sId = require("../../scripts/staticIds");
+const alertController = require("../../controllers/alert");
 
 router.use("/assess", require("./behavioralAssessment"));
 router.use("/document", require("./document"));
@@ -207,7 +208,9 @@ function generateStatusAlerts(dog) {
         }),
         dog.getDogStatus()
         ]);
-    }).then(([users, DogStatus]) => users.forEach(user => user.createAlert({ message: `${dog.name} is ${DogStatus.name}`, aboutDogId: dog.id }))).catch(console.error);
+    })
+        .then(([users, DogStatus]) => Promise.all(users.map(user => user.createAlert({ message: `${dog.name} is ${DogStatus.name}`, AboutDogId: dog.id }))))
+        .catch(console.error);
 }
 
 module.exports = router;
