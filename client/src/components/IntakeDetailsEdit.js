@@ -94,14 +94,14 @@ export default function IntakeDetailsEdit(props){
                     </Grid>
                     <Grid item container direction="column" style={{marginTop: "2em"}} xs={10} sm={10} md={6} lg={6}>
                         <Typography>Address:</Typography>
-                        <TextField label="Street" InputLabelProps={{shrink: true}} onChange={handleExternalAddress} value={addedAddressData.street} name="street"/>
-                        <TextField label="City" InputLabelProps={{shrink: true}} onChange={handleExternalAddress} value={addedAddressData.city} name="city"/>
-                        <TextField label="State" InputLabelProps={{shrink: true}} onChange={handleExternalAddress} value={addedAddressData.state} name="state"/>
-                        <TextField label="Zip" InputLabelProps={{shrink: true}} onChange={handleExternalAddress} value={addedAddressData.zip5} name="zip5"/>
+                        <TextField label="Street" InputLabelProps={{shrink: true}} onChange={props.addressChange} value={props.streetValue} name="street"/>
+                        <TextField label="City" InputLabelProps={{shrink: true}} onChange={props.addressChange} value={props.cityValue} name="city"/>
+                        <TextField label="State" InputLabelProps={{shrink: true}} onChange={props.addressChange} value={props.stateValue} name="state"/>
+                        <TextField label="Zip" InputLabelProps={{shrink: true}} onChange={props.addressChange} value={props.zipValue} name="zip5"/>
                     </Grid>
                 </React.Fragment>
             }
-            <Grid item style={{marginTop: "1em"}}>
+            {/* <Grid item style={{marginTop: "1em"}}>
                 <Button variant="contained" color="secondary">Add external contact</Button>
             </Grid>
             <Grid item style={{marginTop: "1em"}}>
@@ -115,7 +115,7 @@ export default function IntakeDetailsEdit(props){
             </Grid>
             <Grid item style={{marginTop: "1em"}}>
                 <UploadButton buttonText="Upload Documents" toLink=""/>
-            </Grid>
+            </Grid> */}
         </Grid>
     </Grid>
     )
