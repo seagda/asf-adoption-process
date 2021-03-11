@@ -309,7 +309,7 @@ export default function ProfileForm(props){
                     <Button variant="contained" color="secondary" onClick={onClick}>Add external contact</Button>
                 </Grid>
             </Grid>
-            {/* {contactFormVis ? null : 
+            {contactFormVis ? null : 
                 <React.Fragment>
                     <Grid item style={{marginTop: "3em"}}>
                         <Typography variant="h5">External Contact</Typography>
@@ -331,7 +331,7 @@ export default function ProfileForm(props){
                         <TextField label="Zip" InputLabelProps={{shrink: true}} onChange={handleExternalAddress} value={addedAddressData.zip5} name="zip5"/>
                     </Grid>
                 </React.Fragment>
-            } */}
+            }
             {/* <Grid item style={{marginTop: "1em"}}>
                 <Button variant="contained" color="secondary">Add external contact</Button>
             </Grid> */}
@@ -480,7 +480,8 @@ export default function ProfileForm(props){
         behaviorValue={dogIntakeData.behaviorialIssues}
         originContactChange={handleOriginContact}
         originValue={originContactData.originId}
-        onClick={onClick}
+        addContactChange={handleAddedExternalContactChange}
+        fullNameValue={addedExternalContactData.fullName}
         />
         {window.location.href.includes("create") ? intakeDetails : null}
 

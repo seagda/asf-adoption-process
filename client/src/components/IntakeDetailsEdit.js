@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
@@ -31,6 +31,9 @@ const useStyles = makeStyles((theme) => ({
 
 export default function IntakeDetailsEdit(props){
     const classes = useStyles();
+
+    const [contactFormVis, setContactFormVis] = useState(true)
+    const onClick = () => setContactFormVis(false)
 
     return(
         <Grid item container className={classes.itemContainer}>
@@ -72,7 +75,7 @@ export default function IntakeDetailsEdit(props){
                 {/* THIS IS ON PURPOSE! Coming back soon to repair */}
                 <Grid item>
                     <Typography>Or</Typography>
-                    <Button variant="contained" color="secondary" onClick={props.onClick}>Add external contact</Button>
+                    <Button variant="contained" color="secondary" onClick={onClick}>Add external contact</Button>
                 </Grid>
             </Grid>
             {contactFormVis ? null : 
@@ -83,10 +86,10 @@ export default function IntakeDetailsEdit(props){
                     </Grid>
                     <Grid item container style={{marginTop: "1em"}}>
                         <Grid item container justify="space-evenly">
-                            <TextField variant="outlined" label="Name" InputLabelProps={{shrink: true}} style={{marginTop: "1em"}} onChange={handleAddedExternalContactChange} value={addedExternalContactData.fullName} name="fullName"/>
-                            <TextField variant="outlined" label="Email" InputLabelProps={{shrink: true}} style={{marginTop: "1em"}} onChange={handleAddedExternalContactChange} value={addedExternalContactData.email} name="email"/>
-                            <TextField variant="outlined" label="Phone" InputLabelProps={{shrink: true}} style={{marginTop: "1em"}} onChange={handleAddedExternalContactChange} value={addedExternalContactData.phone} name="phone"/>
-                            <TextField variant="outlined" label="Type" InputLabelProps={{shrink: true}} style={{marginTop: "1em"}} onChange={handleAddedExternalContactChange} value={addedExternalContactData.contactType} name="contactType"/>
+                            <TextField variant="outlined" label="Name" InputLabelProps={{shrink: true}} style={{marginTop: "1em"}} onChange={props.addContactChange} value={props.fullNameValue} name="fullName"/>
+                            <TextField variant="outlined" label="Email" InputLabelProps={{shrink: true}} style={{marginTop: "1em"}} onChange={props.addContactChange} value={addedExternalContactData.email} name="email"/>
+                            <TextField variant="outlined" label="Phone" InputLabelProps={{shrink: true}} style={{marginTop: "1em"}} onChange={props.addContactChange} value={addedExternalContactData.phone} name="phone"/>
+                            <TextField variant="outlined" label="Type" InputLabelProps={{shrink: true}} style={{marginTop: "1em"}} onChange={props.addContactChange} value={addedExternalContactData.contactType} name="contactType"/>
                         </Grid>
                     </Grid>
                     <Grid item container direction="column" style={{marginTop: "2em"}} xs={10} sm={10} md={6} lg={6}>
