@@ -12,7 +12,6 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import API from "../utils/API";
-import NumberFormat from 'react-number-format';
 import Button from "@material-ui/core/Button";
 
 import Image from "../components/Image";
@@ -20,7 +19,6 @@ import EditButton from "../components/EditButton";
 import SaveButton from "../components/SaveButton";
 import DogStatusEdit from "../components/DogStatusEdit";
 import IntakeDetailsEdit from "../components/IntakeDetailsEdit";
-import BehaviorForm from "../components/BehaviorForm";
 import HealthRecordEdit from "../components/HealthRecordEdit";
 import RecordCards from "../components/RecordCards";
 import SingleSelect from "../components/SingleSelect";
@@ -266,35 +264,6 @@ export default function ProfileForm(props){
         })
     }
 
-    const healthRecord = (
-        <Grid item container className={classes.itemContainer}>
-        <Grid container>
-            <Grid item style={{marginTop: "3em"}}>
-                <Typography variant="h4">Medical Issues</Typography>
-                <Divider/>
-            </Grid>
-        </Grid>
-        <Grid container>
-            {/* <Grid item style={{marginTop: "1em"}}>
-                <SingleSelect title="Vaccinations"/>
-            </Grid>
-            <Grid item style={{marginTop: "1em"}}>
-                <SingleSelect title="Has Vet"/>
-            </Grid>
-            <Grid item style={{marginTop: "1em"}}>
-                <SingleSelect title="Has Medical Issues"/>
-            </Grid> */}
-            <Grid item container style={{marginTop: "1em"}} justify="center">
-                <TextField className={classes.largeTextfield} label="Known medical issues" InputLabelProps={{shrink: true}} rows={6} multiline variant="outlined" onChange={createDogInputChange} value={dogIntakeData.medicalIssues} name="medicalIssues"/>
-            </Grid>
-        </Grid>
-        <Grid container>
-            <Grid item style={{marginTop: "1em"}}>
-                <UploadButton buttonText="Upload Documents" toLink=""/>
-            </Grid>
-        </Grid>
-    </Grid>
-    )
 
     return (
         <form onSubmit={handleDogIntakeFormSubmit}>
@@ -409,9 +378,10 @@ export default function ProfileForm(props){
         zipValue={addedAddressData.zip5}
         /> : null}
 
-        {/* <BehaviorForm/> */}
-        {/* <HealthRecordEdit/> */}
-        {healthRecord}
+        <HealthRecordEdit
+        dogInputChange={createDogInputChange}
+        medIssuesValue={dogIntakeData.medicalIssues}
+        />
         {/* <RecordCards/> */}
         
         <Grid item container className={classes.formItem} justify={"flex-end"}>
