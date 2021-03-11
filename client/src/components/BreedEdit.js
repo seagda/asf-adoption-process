@@ -67,8 +67,8 @@ export default function BreedEdit(props){
                     <Select
                     labelId="coat"
                     id="coat"
-                    onChange={handleCoatColorChange}
-                    value={coatColorData.coat}
+                    onChange={props.coatColorChange}
+                    value={props.coatColorData}
                     name="coat"
                     label="coat"
                     InputLabelProps={{shrink: true}}
