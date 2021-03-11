@@ -2,6 +2,7 @@ const db = require("../../models");
 const ac = require("../../helpers/ac");
 const router = require("express").Router();
 const sId = require("../../scripts/staticIds");
+const dogController = require("../../controllers/dog");
 const alertController = require("../../controllers/alert");
 
 router.use("/assess", require("./behavioralAssessment"));
@@ -149,12 +150,14 @@ router.put("/:id", (req, res) => {
                 if (dog.currentlyWithId === req.userId) updates = permissionOwn.filter(req.body);
                 else if (permissionAny.granted) updates = permissionAny.filter(req.body);
                 else return res.status(403).send({ message: "Not authorized to update this dog" });
-                const promises = [dog, updates];
-                if (updates.name && updates.name !== dog.name) promises[2] = dog.createDogAlias({ name: dog.name });
-                if (updates.DogStatusId && updates.DogStatusId !== dog.DogStatusId) generateStatusAlerts(dog);
+                const { name, CurrentlyWithId, DogStatusId, ...other } = updates;
+                const promises = [];
+                if (Object.entries(other).length) promises[0] = dogController.update(dog, other);
+                if (CurrentlyWithId) promises[1] = dogController.updateCurrentlyWith(dog, CurrentlyWithId);
+                if (DogStatusId) promises[2] = dogController.updateStatus(dog, DogStatusId);
+                if (name) promises[3] = dogController.updateName(dog, name);
                 return Promise.all(promises);
             })
-            .then(([dog, updates, alias]) => dog.update(updates))
             .then(() => res.sendStatus(200))
             .catch(err => {
                 console.error(err);
@@ -179,7 +182,7 @@ router.delete("/archive/:id", (req, res) => {
 
 // Generate ALERTS
 
-function generateStatusAlerts(dog) {
+/* function generateStatusAlerts(dog) {
     dog.getRegion().then(Region => {
         const or = [
             { "$Roles.id$": sId.ROLES.ADMIN },
@@ -204,7 +207,7 @@ function generateStatusAlerts(dog) {
         return Promise.all([db.User.findAll({
             where: {
                 [db.Sequelize.Op.or]: or
-            }, include: db.Role
+            }, include: [db.Role, { association: "AssignedRegions" }]
         }),
         dog.getDogStatus()
         ]);
@@ -212,6 +215,6 @@ function generateStatusAlerts(dog) {
         .then(([users, DogStatus]) => Promise.all(users.map(user => user.createAlert({ message: `${dog.name} is ${DogStatus.name}`, AboutDogId: dog.id }))))
         .then(alerts => alertController.notifyUsers(alerts))
         .catch(console.error);
-}
+} */
 
 module.exports = router;
