@@ -16,12 +16,16 @@ import RoleTitles from "../components/RoleTitles";
 
 const useStyles = makeStyles((theme) => ({
     itemContainer: {
-        width: "100%",
         [theme.breakpoints.down("xs")]:{
             justifyContent: "center",
-            alignItems: "center",
-            padding: "1em"
-        }
+            alignItems: "center"
+        },
+        marginBottom: "5em"
+    },
+    formControl: {
+        margin: theme.spacing(1),
+        minWidth: 300,
+        // fullWidth: true
     }
 }));
 
@@ -41,7 +45,7 @@ export default function RoleTitleEdit(props){
                 <Grid item style={{marginTop: "1em"}}>
                     <Chip label={props.statusLabel}/>
                     <br/>
-                    <TextField style={{marginTop: "1em"}} variant="outlined" label="Add Details" rows={4}/>
+                    {/* <TextField style={{marginTop: "1em"}} variant="outlined" label="Add Details" rows={4}/> */}
                 </Grid>
                 <Grid item>
                         <div>
