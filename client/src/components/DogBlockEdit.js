@@ -25,6 +25,7 @@ import SingleSelect from "../components/SingleSelect";
 import UploadButton from "../components/UploadButton";
 import MultiLineText from "../components/MultiLineText";
 import BreedEdit from "../components/BreedEdit";
+import DogMainInfoEdit from "../components/DogMainInfoEdit";
 
 import dog from "../assets/Cool_Dog.png";
 
