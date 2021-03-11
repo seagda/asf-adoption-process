@@ -84,7 +84,7 @@ export default function BreedEdit(props){
                 </div>
             </Grid>
             <Grid item style={{marginTop: "1em"}}>
-                <TextField className={classes.formControl} type="number" variant="outlined" label="weight" InputLabelProps={{shrink: true}} onChange={createDogInputChange} value={dogIntakeData.weight} name="weight"/>
+                <TextField className={classes.formControl} type="number" variant="outlined" label="weight" InputLabelProps={{shrink: true}} onChange={props.dogInputChange} value={props.weightValue} name="weight"/>
             </Grid>
             <Grid item style={{marginTop: "1em"}}>
                 <div>

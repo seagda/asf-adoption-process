@@ -587,6 +587,7 @@ export default function ProfileForm(props){
         secondBreedValue={dogIntakeData.secondaryBreed}
         coatColorChange={handleCoatColorChange}
         coatColorValue={coatColorData.coat}
+        weightValue={dogIntakeData.weight}
         />
         {window.location.href.includes("create") ? null : dogStatus}
         {/* <IntakeDetailsEdit/> */}
