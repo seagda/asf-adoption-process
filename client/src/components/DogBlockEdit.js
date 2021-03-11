@@ -304,10 +304,10 @@ export default function ProfileForm(props){
                     </FormControl>
                 </Grid>
                 {/* THIS IS ON PURPOSE! Coming back soon to repair */}
-                {/* <Grid item>
+                <Grid item>
                     <Typography>Or</Typography>
                     <Button variant="contained" color="secondary" onClick={onClick}>Add external contact</Button>
-                </Grid> */}
+                </Grid>
             </Grid>
             {/* {contactFormVis ? null : 
                 <React.Fragment>
@@ -461,6 +461,9 @@ export default function ProfileForm(props){
         weightValue={dogIntakeData.weight}
         sizeChange={handleSizeChange}
         sizeValue={sizeData.size}
+        originList= {origins.map((origin)=>(
+            <MenuItem value={origin.id}>{origin.fullName}</MenuItem>
+        ))}
         />
 
         {window.location.href.includes("create") ? null : 
@@ -475,6 +478,9 @@ export default function ProfileForm(props){
         dogInputChange={createDogInputChange}
         pullCostValue={dogIntakeData.pullCost}
         behaviorValue={dogIntakeData.behaviorialIssues}
+        originContactChange={handleOriginContact}
+        originValue={originContactData.originId}
+        onClick={onClick}
         />
         {window.location.href.includes("create") ? intakeDetails : null}
 

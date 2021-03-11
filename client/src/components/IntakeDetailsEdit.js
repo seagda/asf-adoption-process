@@ -54,8 +54,8 @@ export default function IntakeDetailsEdit(props){
                     <Select
                     labelId="originId"
                     id="originId"
-                    onChange={handleOriginContact}
-                    value={originContactData.originId}
+                    onChange={props.originContactChange}
+                    value={props.originValue}
                     name="originId"
                     label="Dog Origin"
                     InputLabelProps={{shrink: true}}
@@ -63,9 +63,7 @@ export default function IntakeDetailsEdit(props){
                         <MenuItem value={0}>
                             <em>Select contact</em>
                         </MenuItem>
-                    {origins.map((origin)=>(
-                        <MenuItem value={origin.id}>{origin.fullName}</MenuItem>
-                    ))}
+                    {props.originList}
                     </Select>
                     </FormControl>
                 </Grid>
@@ -74,7 +72,7 @@ export default function IntakeDetailsEdit(props){
                 {/* THIS IS ON PURPOSE! Coming back soon to repair */}
                 <Grid item>
                     <Typography>Or</Typography>
-                    <Button variant="contained" color="secondary" onClick={onClick}>Add external contact</Button>
+                    <Button variant="contained" color="secondary" onClick={props.onClick}>Add external contact</Button>
                 </Grid>
             </Grid>
             {contactFormVis ? null : 
