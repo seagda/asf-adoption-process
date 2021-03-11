@@ -495,6 +495,9 @@ export default function ProfileForm(props){
         
         <DogStatusEdit
         statusLabel={(dogStatusList.find((status)=>status.id === dogIntakeData.DogStatusId)|| {}).name}
+        statusValue={dogStatusNew}
+        statusChange={handleStatusChange}
+        statusList ={dogStatusList.map((status)=><MenuItem value={status.id}>{status.name}</MenuItem>)}
         />
         <BreedEdit 
         purebredChange={handlePurebredChange} 

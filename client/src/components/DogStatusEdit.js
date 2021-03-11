@@ -50,15 +50,15 @@ export default function RoleTitleEdit(props){
                             <Select
                             labelId="demo-simple-select-outlined-label"
                             id="demo-simple-select-outlined"
-                            value={dogStatusNew}
-                            onChange={handleStatusChange}
+                            value={props.statusValue}
+                            onChange={props.statusChange}
                             name="dogStatusNew"
                             label="Select Status"
                             >
                             <MenuItem value="">
                             <em>None</em>
                             </MenuItem>
-                            {dogStatusList.map((status)=><MenuItem value={status.id}>{status.name}</MenuItem>)}
+                            {props.statusList}
                             </Select>
                             </FormControl>
 
