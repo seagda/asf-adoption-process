@@ -471,7 +471,11 @@ export default function ProfileForm(props){
         statusList ={dogStatusList.map((status)=><MenuItem value={status.id}>{status.name}</MenuItem>)}
         />}
 
-        <IntakeDetailsEdit/>
+        <IntakeDetailsEdit
+        dogInputChange={createDogInputChange}
+        pullCostValue={dogIntakeData.pullCost}
+        behaviorValue={dogIntakeData.behaviorialIssues}
+        />
         {window.location.href.includes("create") ? intakeDetails : null}
 
         {/* <BehaviorForm/> */}

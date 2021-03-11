@@ -8,6 +8,7 @@ import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
+import Button from "@material-ui/core/Button";
 
 import SingleSelect from "../components/SingleSelect";
 import UploadButton from "../components/UploadButton";
@@ -28,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function IntakeDetailsEdit(){
+export default function IntakeDetailsEdit(props){
     const classes = useStyles();
 
     return(
@@ -41,10 +42,10 @@ export default function IntakeDetailsEdit(){
         </Grid>
         <Grid container justify="space-evenly">
             <Grid item style={{marginTop: "1em"}}>
-                <TextField className={classes.formControl} type="number" variant="outlined" label="Pull Cost" InputLabelProps={{shrink: true}} onChange={createDogInputChange} value={dogIntakeData.pullCost} name="pullCost"/>
+                <TextField className={classes.formControl} type="number" variant="outlined" label="Pull Cost" InputLabelProps={{shrink: true}} onChange={props.dogInputChange} value={props.pullCostValue} name="pullCost"/>
             </Grid>
             <Grid item style={{marginTop: "1em"}}>
-                <TextField className={classes.formControl} variant="outlined" label="Behavioral Issues" InputLabelProps={{shrink: true}} onChange={createDogInputChange} value={dogIntakeData.behaviorialIssues} name="behaviorialIssues"/>
+                <TextField className={classes.formControl} variant="outlined" label="Behavioral Issues" InputLabelProps={{shrink: true}} onChange={props.dogInputChange} value={props.behaviorValue} name="behaviorialIssues"/>
             </Grid>
             <Grid item container style={{marginTop: "1em"}} align="center" direction="column">
                 <Grid item>
@@ -68,13 +69,15 @@ export default function IntakeDetailsEdit(){
                     </Select>
                     </FormControl>
                 </Grid>
+
+
                 {/* THIS IS ON PURPOSE! Coming back soon to repair */}
-                {/* <Grid item>
+                <Grid item>
                     <Typography>Or</Typography>
                     <Button variant="contained" color="secondary" onClick={onClick}>Add external contact</Button>
-                </Grid> */}
+                </Grid>
             </Grid>
-            {/* {contactFormVis ? null : 
+            {contactFormVis ? null : 
                 <React.Fragment>
                     <Grid item style={{marginTop: "3em"}}>
                         <Typography variant="h5">External Contact</Typography>
@@ -96,11 +99,11 @@ export default function IntakeDetailsEdit(){
                         <TextField label="Zip" InputLabelProps={{shrink: true}} onChange={handleExternalAddress} value={addedAddressData.zip5} name="zip5"/>
                     </Grid>
                 </React.Fragment>
-            } */}
-            {/* <Grid item style={{marginTop: "1em"}}>
+            }
+            <Grid item style={{marginTop: "1em"}}>
                 <Button variant="contained" color="secondary">Add external contact</Button>
-            </Grid> */}
-            {/* <Grid item style={{marginTop: "1em"}}>
+            </Grid>
+            <Grid item style={{marginTop: "1em"}}>
                 <SingleSelect title="Current Location"/>
             </Grid>
             <Grid item style={{marginTop: "1em"}}>
@@ -111,7 +114,7 @@ export default function IntakeDetailsEdit(){
             </Grid>
             <Grid item style={{marginTop: "1em"}}>
                 <UploadButton buttonText="Upload Documents" toLink=""/>
-            </Grid> */}
+            </Grid>
         </Grid>
     </Grid>
     )
