@@ -580,7 +580,7 @@ export default function ProfileForm(props){
         
         {/* <DogStatusEdit/> */}
         {breedInfo}
-        <BreedEdit onChange={handlePurebredChange} value={isPurebredData.isPurebred}/>
+        <BreedEdit purebredChange={handlePurebredChange} purebredValue={isPurebredData.isPurebred} dogInputChange={createDogInputChange} secondBreedValue={dogIntakeData.secondaryBreed}/>
         {window.location.href.includes("create") ? null : dogStatus}
         {/* <IntakeDetailsEdit/> */}
         {window.location.href.includes("create") ? intakeDetails : null}

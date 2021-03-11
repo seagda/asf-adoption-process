@@ -44,8 +44,8 @@ export default function BreedEdit(props){
                     <Select
                     labelId="isPurebred"
                     id="isPurebred"
-                    onChange={props.onChange}
-                    value={props.value}
+                    onChange={props.purebredChange}
+                    value={props.purebredValue}
                     name="isPurebred"
                     label="Select Status"
                     InputLabelProps={{shrink: true}}
@@ -58,7 +58,7 @@ export default function BreedEdit(props){
                 </div>
             </Grid>
             <Grid item style={{marginTop: "1em"}}>
-                <TextField className={classes.formControl} variant="outlined" label="Secondary Breed" InputLabelProps={{shrink: true}} onChange={createDogInputChange} value={dogIntakeData.secondaryBreed} name="secondaryBreed"/>
+                <TextField className={classes.formControl} variant="outlined" label="Secondary Breed" InputLabelProps={{shrink: true}} onChange={props.dogInputChange} value={props.secondBreedValue} name="secondaryBreed"/>
             </Grid>
             <Grid item style={{marginTop: "1em"}}>
                 <div>
