@@ -87,9 +87,9 @@ export default function IntakeDetailsEdit(props){
                     <Grid item container style={{marginTop: "1em"}}>
                         <Grid item container justify="space-evenly">
                             <TextField variant="outlined" label="Name" InputLabelProps={{shrink: true}} style={{marginTop: "1em"}} onChange={props.addContactChange} value={props.fullNameValue} name="fullName"/>
-                            <TextField variant="outlined" label="Email" InputLabelProps={{shrink: true}} style={{marginTop: "1em"}} onChange={props.addContactChange} value={addedExternalContactData.email} name="email"/>
-                            <TextField variant="outlined" label="Phone" InputLabelProps={{shrink: true}} style={{marginTop: "1em"}} onChange={props.addContactChange} value={addedExternalContactData.phone} name="phone"/>
-                            <TextField variant="outlined" label="Type" InputLabelProps={{shrink: true}} style={{marginTop: "1em"}} onChange={props.addContactChange} value={addedExternalContactData.contactType} name="contactType"/>
+                            <TextField variant="outlined" label="Email" InputLabelProps={{shrink: true}} style={{marginTop: "1em"}} onChange={props.addContactChange} value={props.emailValue} name="email"/>
+                            <TextField variant="outlined" label="Phone" InputLabelProps={{shrink: true}} style={{marginTop: "1em"}} onChange={props.addContactChange} value={props.phoneValue} name="phone"/>
+                            <TextField variant="outlined" label="Type" InputLabelProps={{shrink: true}} style={{marginTop: "1em"}} onChange={props.addContactChange} value={props.typeValue} name="contactType"/>
                         </Grid>
                     </Grid>
                     <Grid item container direction="column" style={{marginTop: "2em"}} xs={10} sm={10} md={6} lg={6}>

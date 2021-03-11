@@ -482,6 +482,9 @@ export default function ProfileForm(props){
         originValue={originContactData.originId}
         addContactChange={handleAddedExternalContactChange}
         fullNameValue={addedExternalContactData.fullName}
+        emailValue={addedExternalContactData.email}
+        phoneValue={addedExternalContactData.phone}
+        typeValue={addedExternalContactData.contactType}
         />
         {window.location.href.includes("create") ? intakeDetails : null}
 
