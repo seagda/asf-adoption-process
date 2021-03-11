@@ -462,6 +462,7 @@ export default function ProfileForm(props){
         sizeChange={handleSizeChange}
         sizeValue={sizeData.size}
         />
+
         {window.location.href.includes("create") ? null : 
         <DogStatusEdit
         statusLabel={(dogStatusList.find((status)=>status.id === dogIntakeData.DogStatusId)|| {}).name}
@@ -469,8 +470,10 @@ export default function ProfileForm(props){
         statusChange={handleStatusChange}
         statusList ={dogStatusList.map((status)=><MenuItem value={status.id}>{status.name}</MenuItem>)}
         />}
-        {/* <IntakeDetailsEdit/> */}
+
+        <IntakeDetailsEdit/>
         {window.location.href.includes("create") ? intakeDetails : null}
+
         {/* <BehaviorForm/> */}
         {/* <HealthRecordEdit/> */}
         {healthRecord}
