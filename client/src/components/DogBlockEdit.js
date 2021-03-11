@@ -27,6 +27,8 @@ import SingleSelect from "../components/SingleSelect";
 import UploadButton from "../components/UploadButton";
 import MultiLineText from "../components/MultiLineText";
 
+import BreedEdit from "../components/BreedEdit";
+
 import dog from "../assets/Cool_Dog.png";
 
 const useStyles = makeStyles(theme => ({
@@ -578,6 +580,7 @@ export default function ProfileForm(props){
         
         {/* <DogStatusEdit/> */}
         {breedInfo}
+        <BreedEdit onChange={handlePurebredChange} value={isPurebredData.isPurebred}/>
         {window.location.href.includes("create") ? null : dogStatus}
         {/* <IntakeDetailsEdit/> */}
         {window.location.href.includes("create") ? intakeDetails : null}
