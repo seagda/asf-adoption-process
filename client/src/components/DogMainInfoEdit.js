@@ -61,11 +61,11 @@ export default function DogMainInfoEdit(props){
             <Grid item>
                 <div className={classes.form}>
                     <Grid item container className={classes.formItem}>
-                        <TextField variant="outlined" label="Name" InputLabelProps={{shrink: true}} onChange={createDogInputChange} value={dogIntakeData.name} name="name"/>
+                        <TextField variant="outlined" label="Name" InputLabelProps={{shrink: true}} onChange={props.dogInputChange} value={props.nameValue} name="name"/>
                     </Grid>
                     <Grid item container className={classes.formItem} direction="column">
                         <InputLabel id="birthday">Date of birth</InputLabel>
-                        <TextField type="date" variant="outlined" labelId="birthday" InputLabelProps={{shrink: true}} onChange={createDogInputChange} value={dogIntakeData.dob} name="dob"/>
+                        <TextField type="date" variant="outlined" labelId="birthday" InputLabelProps={{shrink: true}} onChange={props.dogInputChange} value={props.dobValue} name="dob"/>
                     </Grid>
                         <Grid item style={{marginTop: "1em"}}>
                             <div>
@@ -74,8 +74,8 @@ export default function DogMainInfoEdit(props){
                                     <Select
                                         labelId="gender"
                                         id="gender"
-                                        onChange={handleGenderChange}
-                                        value={genderData.gender}
+                                        onChange={props.genderChange}
+                                        value={props.genderValue}
                                         name="gender"
                                         label="Gender"
                                         InputLabelProps={{shrink: true}}
@@ -99,17 +99,17 @@ export default function DogMainInfoEdit(props){
                                         InputLabelProps={{shrink: true}}
                                         name="microchipMfgList"
                                     >
-                                        {microchipMfgList.map((mfg)=><MenuItem value={mfg.id}>{mfg.name}</MenuItem>)}
+                                        {props.mfgList}
                                     </Select>
                                 </FormControl>
                             </div>
                         </Grid>
                     </Grid>
                     <Grid item container className={classes.numberItem}>
-                        <TextField type="number" variant="outlined" label="Microchip ID" InputLabelProps={{shrink: true}} onChange={createDogInputChange} value={dogIntakeData.microchipId} name="microchipId"/>
+                        <TextField type="number" variant="outlined" label="Microchip ID" InputLabelProps={{shrink: true}} onChange={props.dogInputChange} value={props.microchipValue} name="microchipId"/>
                     </Grid>
                     <Grid item container className={classes.formItem}>
-                        <TextField type="number" variant="outlined" label="ASF ID" InputLabelProps={{shrink: true}} onChange={createDogInputChange} value={dogIntakeData.asfId} name="asfId"/>
+                        <TextField type="number" variant="outlined" label="ASF ID" InputLabelProps={{shrink: true}} onChange={props.dogInputChange} value={props.asfIdValue} name="asfId"/>
                     </Grid>
                     {/* <Grid item container className={classes.formItem}>
                         <TextField rows={4} multiline variant="outlined" label="About" onChange={e => setAbout(e.target.value)}/>

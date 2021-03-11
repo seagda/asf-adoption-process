@@ -269,71 +269,16 @@ export default function ProfileForm(props){
     return (
         <form onSubmit={handleDogIntakeFormSubmit}>
         <Grid item container className={classes.itemContainer}>
-        <Grid container justify="space-evenly" className={classes.picContainer}>
-            <Grid item>
-                <Image alt={"cool dog"} pic={dog} />
-                <EditButton buttonText="Change Photo" toLink=""/>
-            </Grid>
-            <Grid item>
-                <div className={classes.form}>
-                    <Grid item container className={classes.formItem}>
-                        <TextField variant="outlined" label="Name" InputLabelProps={{shrink: true}} onChange={createDogInputChange} value={dogIntakeData.name} name="name"/>
-                    </Grid>
-                    <Grid item container className={classes.formItem} direction="column">
-                        <InputLabel id="birthday">Date of birth</InputLabel>
-                        <TextField type="date" variant="outlined" labelId="birthday" InputLabelProps={{shrink: true}} onChange={createDogInputChange} value={dogIntakeData.dob} name="dob"/>
-                    </Grid>
-                        <Grid item style={{marginTop: "1em"}}>
-                            <div>
-                                <FormControl variant="outlined" style={{minWidth: 195, marginBottom: "1em"}}>
-                                    <InputLabel id="gender">Gender</InputLabel>
-                                    <Select
-                                        labelId="gender"
-                                        id="gender"
-                                        onChange={handleGenderChange}
-                                        value={genderData.gender}
-                                        name="gender"
-                                        label="Gender"
-                                        InputLabelProps={{shrink: true}}
-                                    >
-                                        <MenuItem value="female">Female</MenuItem>
-                                        <MenuItem value="male">Male</MenuItem>
-                                    </Select>
-                                </FormControl>
-
-                            </div>
-                        </Grid>
-                    <Grid item container className={classes.numberItem}>
-                        <Grid item style={{marginTop: "1em"}}>
-                            <div>
-                                <FormControl variant="outlined" style={{minWidth: 195, marginBottom: "1em"}}>
-                                    <InputLabel id="microchipMfgList">Microchip Company</InputLabel>
-                                    <Select
-                                        labelId="microchipMfgList"
-                                        id="microchipMfgList"
-                                        label="Microchip Manufacturer"
-                                        InputLabelProps={{shrink: true}}
-                                        name="microchipMfgList"
-                                    >
-                                        {microchipMfgList.map((mfg)=><MenuItem value={mfg.id}>{mfg.name}</MenuItem>)}
-                                    </Select>
-                                </FormControl>
-                            </div>
-                        </Grid>
-                    </Grid>
-                    <Grid item container className={classes.numberItem}>
-                        <TextField type="number" variant="outlined" label="Microchip ID" InputLabelProps={{shrink: true}} onChange={createDogInputChange} value={dogIntakeData.microchipId} name="microchipId"/>
-                    </Grid>
-                    <Grid item container className={classes.formItem}>
-                        <TextField type="number" variant="outlined" label="ASF ID" InputLabelProps={{shrink: true}} onChange={createDogInputChange} value={dogIntakeData.asfId} name="asfId"/>
-                    </Grid>
-                    {/* <Grid item container className={classes.formItem}>
-                        <TextField rows={4} multiline variant="outlined" label="About" onChange={e => setAbout(e.target.value)}/>
-                    </Grid> */}
-                </div>
-            </Grid>
-            
-        </Grid>
+            <DogMainInfoEdit
+            dogInputChange={createDogInputChange}
+            nameValue={dogIntakeData.name}
+            dobValue={dogIntakeData.dob}
+            genderChange={handleGenderChange}
+            genderValue={genderData.gender}
+            mfgList={microchipMfgList.map((mfg)=><MenuItem value={mfg.id}>{mfg.name}</MenuItem>)}
+            microchipValue={dogIntakeData.microchipId}
+            asfIdValue={dogIntakeData.asfId}
+        />
         
         
         <BreedEdit 
