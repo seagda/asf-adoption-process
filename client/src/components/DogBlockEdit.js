@@ -26,7 +26,6 @@ import RecordCards from "../components/RecordCards";
 import SingleSelect from "../components/SingleSelect";
 import UploadButton from "../components/UploadButton";
 import MultiLineText from "../components/MultiLineText";
-
 import BreedEdit from "../components/BreedEdit";
 
 import dog from "../assets/Cool_Dog.png";
@@ -494,7 +493,9 @@ export default function ProfileForm(props){
             
         </Grid>
         
-        {/* <DogStatusEdit/> */}
+        <DogStatusEdit
+        statusLabel={(dogStatusList.find((status)=>status.id === dogIntakeData.DogStatusId)|| {}).name}
+        />
         <BreedEdit 
         purebredChange={handlePurebredChange} 
         purebredValue={isPurebredData.isPurebred} 
