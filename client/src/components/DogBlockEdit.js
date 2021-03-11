@@ -310,90 +310,6 @@ export default function ProfileForm(props){
     </Grid>
     )
 
-    const breedInfo = (
-        <Grid item container className={classes.itemContainer}>
-        <Grid container>
-            <Grid item style={{marginTop: "3em"}}>
-                <Typography variant="h4">Breed Info</Typography>
-                <Divider/>
-            </Grid>
-        </Grid>
-        <Grid container justify="space-evenly">
-            <Grid item style={{marginTop: "1em"}}>
-                <div>
-                    <FormControl variant="outlined" className={classes.formControl}>
-                    <InputLabel id="isPurebred">Purebred?</InputLabel>
-                    <Select
-                    labelId="isPurebred"
-                    id="isPurebred"
-                    onChange={handlePurebredChange}
-                    value={isPurebredData.isPurebred}
-                    name="isPurebred"
-                    label="Select Status"
-                    InputLabelProps={{shrink: true}}
-                    >
-                    <MenuItem value="true">Yes</MenuItem>
-                    <MenuItem value="false">No</MenuItem>
-                    </Select>
-                    </FormControl>
-
-                </div>
-            </Grid>
-            <Grid item style={{marginTop: "1em"}}>
-                <TextField className={classes.formControl} variant="outlined" label="Secondary Breed" InputLabelProps={{shrink: true}} onChange={createDogInputChange} value={dogIntakeData.secondaryBreed} name="secondaryBreed"/>
-            </Grid>
-            <Grid item style={{marginTop: "1em"}}>
-                <div>
-                    <FormControl variant="outlined" className={classes.formControl}>
-                    <InputLabel id="coat">Coat Color</InputLabel>
-                    <Select
-                    labelId="coat"
-                    id="coat"
-                    onChange={handleCoatColorChange}
-                    value={coatColorData.coat}
-                    name="coat"
-                    label="coat"
-                    InputLabelProps={{shrink: true}}
-                    >
-                    <MenuItem value="blue merle">Blue Merle</MenuItem>
-                    <MenuItem value="red merle">Red Merle</MenuItem>
-                    <MenuItem value="red">Red</MenuItem>
-                    <MenuItem value="tri-color">Tri-Color</MenuItem>
-                    <MenuItem value="black">Black</MenuItem>
-                    </Select>
-                    </FormControl>
-
-                </div>
-            </Grid>
-            <Grid item style={{marginTop: "1em"}}>
-                <TextField className={classes.formControl} type="number" variant="outlined" label="weight" InputLabelProps={{shrink: true}} onChange={createDogInputChange} value={dogIntakeData.weight} name="weight"/>
-            </Grid>
-            <Grid item style={{marginTop: "1em"}}>
-                <div>
-                    <FormControl variant="outlined" className={classes.formControl}>
-                    <InputLabel id="size">Size</InputLabel>
-                    <Select
-                    labelId="size"
-                    id="size"
-                    onChange={handleSizeChange}
-                    value={sizeData.size}
-                    name="size"
-                    label="Size"
-                    InputLabelProps={{shrink: true}}
-                    >
-                    <MenuItem value="mini">Mini</MenuItem>
-                    <MenuItem value="small">Small</MenuItem>
-                    <MenuItem value="medium">Medium</MenuItem>
-                    <MenuItem value="large">Large</MenuItem>
-                    </Select>
-                    </FormControl>
-
-                </div>
-            </Grid>
-        </Grid>
-    </Grid>
-    )
-
     const intakeDetails = (
         <Grid item container className={classes.itemContainer}>
         <Grid container>
@@ -579,7 +495,6 @@ export default function ProfileForm(props){
         </Grid>
         
         {/* <DogStatusEdit/> */}
-        {breedInfo}
         <BreedEdit 
         purebredChange={handlePurebredChange} 
         purebredValue={isPurebredData.isPurebred} 
@@ -588,6 +503,8 @@ export default function ProfileForm(props){
         coatColorChange={handleCoatColorChange}
         coatColorValue={coatColorData.coat}
         weightValue={dogIntakeData.weight}
+        sizeChange={handleSizeChange}
+        sizeValue={sizeData.size}
         />
         {window.location.href.includes("create") ? null : dogStatus}
         {/* <IntakeDetailsEdit/> */}

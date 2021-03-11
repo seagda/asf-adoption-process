@@ -93,8 +93,8 @@ export default function BreedEdit(props){
                     <Select
                     labelId="size"
                     id="size"
-                    onChange={handleSizeChange}
-                    value={sizeData.size}
+                    onChange={props.sizeChange}
+                    value={props.sizeValue}
                     name="size"
                     label="Size"
                     InputLabelProps={{shrink: true}}
