@@ -25,10 +25,19 @@ module.exports.dogStatus = (dog, region) => {
         db.User.findAll({
             where: {
                 [db.Sequelize.Op.or]: or
-            }, include: [db.Role, { association: "AssignedRegions" }]
+            }, include: [db.Role, { association: "AssignedRegions" }, db.Setting]
         }),
         dog.getDogStatus()
-    ]).then(([users, dogStatus]) => console.log(users))
+    ]).then(([users, dogStatus]) => Promise.all(users.map(user => {
+        const message = `${dog.name} is ${dogStatus.name}`;
+        const promises = [user.createAlert({ message, AboutDogId: dog.id })];
+        if (user.Setting.email) promises[1] = mail.sendMail({
+            from: '"Australian Shepherds Furever" <aussiesfurever@outlook.com>',
+            to: user.email,
+            subject: message
+        })
+        return Promise.all(promises);
+    })))
 }
 
 module.exports.markAsRead = (alert) => alert.update({ read: true });
