@@ -30,3 +30,5 @@ module.exports.dogStatus = (dog, region) => {
         dog.getDogStatus()
     ]).then(([users, dogStatus]) => console.log(users))
 }
+
+module.exports.markAsRead = (alert) => alert.update({ read: true });
