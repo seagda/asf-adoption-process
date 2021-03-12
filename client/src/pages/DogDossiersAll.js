@@ -12,6 +12,7 @@ import OverviewTable from '../components/OverviewTable';
 import SearchBar from '../components/SearchBar';
 import Hidden from '@material-ui/core/Hidden';
 import API from '../utils/API';
+import MapBox from '../components/MapBox';
 
 const useStyles=makeStyles(theme => ({
     mainContainer: {
@@ -129,6 +130,9 @@ export default function DogDossiersAll() {
                         return true;
 
                     })}/>
+                </Grid>
+                <Grid item xs={12}>
+                    <MapBox />
                 </Grid>
             </Grid>
         </Grid>

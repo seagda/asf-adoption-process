@@ -80,7 +80,7 @@ export default function DashboardMain(){
                     <Divider />
                 </Typography>
 
-                {/* If Admin credentials, display these quick actions */}
+                {/* update if the quick actions item being sent is true */}
                 {user.roles.some( (role) => ["regional", "admin", "superAdmin"].includes(role)) ? 
                 <Grid item xs={12}>
                     <QuickActionsAdmin/>
