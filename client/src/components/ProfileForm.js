@@ -24,6 +24,7 @@ import RoleTitles from "../components/RoleTitles";
 import MultiSelectChips from "../components/MultiSelectChips";
 import HoldCheckbox from "../components/HoldCheckbox";
 import UserStatusEdit from "../components/UserStatusEdit";
+import UserCapacityEdit from "../components/UserCapacityEdit";
 
 import ashley from "../assets/ashley.jpg";
 
@@ -512,7 +513,13 @@ export default function ProfileForm(props){
             />
 
         </Grid>
-        {capacity}
+        {/* {capacity} */}
+
+        <UserCapacityEdit
+        createUserChange={createUserInputChange} 
+        maxValue={userIntakeData.maxCapacity}
+        />
+
         {caresFor}
         {/* <Grid item>
             <Typography variant="h4">References</Typography>
