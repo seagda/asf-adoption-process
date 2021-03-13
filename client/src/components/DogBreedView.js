@@ -27,16 +27,16 @@ export default function DogBreedView(props){
                     </Grid>
                     <Grid item container style={{marginTop: "1em"}}>
                         <Grid item xs={6} sm={6} md={8} lg={6}>
-                            <Typography style={{marginTop: "1em"}}>Coat:  {props.coat}</Typography>
+                            <Typography style={{marginTop: "1em", fontWeight: "bold"}}>Coat: <Typography>{props.coat}</Typography> </Typography>
                         </Grid>
                         <Grid item xs={6} sm={6} md={8} lg={6}>
-                            <Typography style={{marginTop: "1em"}}>Weight:{props.weight}</Typography>
+                            <Typography style={{marginTop: "1em", fontWeight: "bold"}}>Weight: <Typography>{props.weight}</Typography></Typography>
                         </Grid>
                         <Grid item xs={6} sm={6} md={8} lg={6}>
-                            {props.purebred ? <Typography style={{marginTop: "1em"}}> Purebred</Typography> : <Typography>Mixed Breed</Typography>}
+                            {props.purebred ? <Typography style={{marginTop: "1em", fontWeight: "bold"}}> Purebred</Typography> : <Typography style={{marginTop: "1em", fontWeight: "bold"}}>Mixed Breed</Typography>}
                         </Grid>
                         <Grid item xs={6} sm={6} md={8} lg={6}>
-                            {props.secondary ? <Typography style={{marginTop: "1em"}}>Secondary Breed:{props.secondary}</Typography> : null}
+                            {props.secondary ? <Typography style={{marginTop: "1em", fontWeight: "bold"}}>Secondary Breed:<Typography>{props.secondary}</Typography></Typography> : null}
                         </Grid>
                     </Grid>
             </Grid>
