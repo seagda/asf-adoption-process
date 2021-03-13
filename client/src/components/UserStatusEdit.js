@@ -7,7 +7,6 @@ import Divider from "@material-ui/core/Divider";
 import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
-import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
 
 const useStyles = makeStyles((theme) => ({
@@ -22,6 +21,11 @@ const useStyles = makeStyles((theme) => ({
         margin: theme.spacing(1),
         minWidth: 300,
         // fullWidth: true
+    },
+    marginFix: {
+        [theme.breakpoints.down("sm")]: {
+            marginLeft: "2.5em"
+        }
     }
 }));
 

@@ -4,11 +4,7 @@ import Grid from "@material-ui/core/Grid";
 
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
-import FormControl from "@material-ui/core/FormControl";
-import InputLabel from "@material-ui/core/InputLabel";
-import Select from "@material-ui/core/Select";
 import TextField from "@material-ui/core/TextField";
-import MenuItem from "@material-ui/core/MenuItem";
 
 const useStyles = makeStyles((theme) => ({
     itemContainer: {
@@ -17,11 +13,6 @@ const useStyles = makeStyles((theme) => ({
             alignItems: "center"
         },
         marginBottom: "5em"
-    },
-    formControl: {
-        margin: theme.spacing(1),
-        minWidth: 300,
-        // fullWidth: true
     },
     marginFix: {
         [theme.breakpoints.down("sm")]: {
