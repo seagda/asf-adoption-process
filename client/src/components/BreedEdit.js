@@ -73,11 +73,19 @@ export default function BreedEdit(props){
                     label="coat"
                     InputLabelProps={{shrink: true}}
                     >
+                    <MenuItem value="self merle">Self Merle</MenuItem>
+                    <MenuItem value="double merle">Double Merle</MenuItem>
                     <MenuItem value="blue merle">Blue Merle</MenuItem>
                     <MenuItem value="red merle">Red Merle</MenuItem>
+                    <MenuItem value="red tri">Red Tri</MenuItem>
+                    <MenuItem value="red bi">Red Bi</MenuItem>
                     <MenuItem value="red">Red</MenuItem>
-                    <MenuItem value="tri-color">Tri-Color</MenuItem>
+                    <MenuItem value="black tri">Black Tri</MenuItem>
+                    <MenuItem value="black bi">Black Bi</MenuItem>
                     <MenuItem value="black">Black</MenuItem>
+                    <MenuItem value="tri-color">Tri-Color</MenuItem>              
+                    <MenuItem value="white">White</MenuItem>
+                    <MenuItem value="brown">Brown</MenuItem>
                     </Select>
                     </FormControl>
 
