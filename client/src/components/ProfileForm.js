@@ -5,20 +5,11 @@ import TextField from '@material-ui/core/TextField';
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import Card from "@material-ui/core/Card";
-import CardActions from "@material-ui/core/CardActionArea";
 import CardContent from "@material-ui/core/CardContent";
-import FormControl from "@material-ui/core/FormControl";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
 import InputLabel from "@material-ui/core/InputLabel";
-import Select from "@material-ui/core/Select";
-import MenuItem from "@material-ui/core/MenuItem";
-import API from "../utils/API";
 
-import PhoneInput from "../components/PhoneInput";
 import Image from "../components/Image";
-import AddButton from "../components/AddButton";
 import EditButton from "../components/EditButton";
-import MultiLineText from "../components/MultiLineText";
 import SaveButton from "../components/SaveButton";
 import RoleTitles from "../components/RoleTitles";
 import MultiSelectChips from "../components/MultiSelectChips";
@@ -64,11 +55,6 @@ const useStyles = makeStyles(theme => ({
             width: '25ch',
         }
     },
-    formControl: {
-        margin: theme.spacing(1),
-        minWidth: 300,
-        // fullWidth: true
-    },
     largeTextfield: {
         minWidth: "60em",
         [theme.breakpoints.down("sm")]:{
@@ -78,18 +64,6 @@ const useStyles = makeStyles(theme => ({
     marginFix: {
         [theme.breakpoints.down("sm")]: {
             marginLeft: "2.5em"
-        }
-    },
-    seniorContainer: {
-        marginTop: "3em",
-        [theme.breakpoints.down("xs")]: {
-            marginTop: "1em"
-        }
-    },
-    seniorItem: {
-        marginTop: "4.25em",
-        [theme.breakpoints.down("xs")]: {
-            marginTop: "0.5em"
         }
     }
 }))
