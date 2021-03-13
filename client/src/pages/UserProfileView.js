@@ -11,6 +11,7 @@ import DogProfileActions from "../components/DogProfileActions";
 import DogBreedView from "../components/DogBreedView";
 import DogOriginView from "../components/DogOriginView";
 import DogInfoCurrent from "../components/DogInfoCurrent";
+import ProfileBlock from "../components/ProfileBlock";
 
 const useStyles=makeStyles(theme => ({
     mainContainer: {
@@ -58,10 +59,19 @@ export default function UserProfileView(){
 
     return(
         <Grid container className={classes.mainContainer}>
-            {/* <Grid item style={{marginBottom: "3em"}}>
-                <Typography variant="h4" color="primary">{dogData.name}'s details</Typography>
+            <Grid item style={{marginBottom: "3em"}}>
+                <Typography variant="h4" color="primary">{userData.firstName}'s details</Typography>
                 <Divider/>
-            </Grid> */}
+            </Grid>
+
+            <ProfileBlock
+            image={userData.photoUrl}
+            firstName={userData.firstName}
+            lastname={userData.lastName}
+            phone={userData.phone}
+            email={userData.email}
+            dob={userData.dob}
+            />
 
             {/* <DogBlockView 
             name={dogData.name} 
