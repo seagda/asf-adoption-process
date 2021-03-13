@@ -36,7 +36,7 @@ export default function DogInfoCurrent(props){
                             {props.behaviorIssues ? <Typography style={{marginTop: "1em", fontWeight: "bold"}}>Medical Issues:<Typography>Yes</Typography></Typography> : <Typography style={{marginTop: "1em", fontWeight: "bold"}}>Medical Issues:<Typography>No</Typography></Typography>}
                         </Grid>
                         <Grid item xs={10} sm={6} md={8} lg={6}>
-                            {props.blocked ? <Typography style={{marginTop: "1em", color: "red"}}>Dog is BLOCKED</Typography> : null}
+                            {props.blocked ? <Typography style={{marginTop: "1em", color: "red", fontWeight: "bold"}}>Dog is BLOCKED</Typography> : null}
                         </Grid>
                     </Grid>
             </Grid>
