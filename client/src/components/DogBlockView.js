@@ -21,7 +21,7 @@ const useStyles = makeStyles(theme => ({
         }
     },
     formItem: {
-        marginBottom: "2em"
+        marginBottom: "1.25em"
     },
     picContainer: {
         [theme.breakpoints.down("xs")]:{
@@ -41,22 +41,22 @@ export default function DogBlockView(props){
             </Grid>
             <Grid item className={classes.form}>
                 <Grid item container className={classes.formItem}>
-                    <Typography>Name: {props.name}</Typography>
+                    <Typography style={{fontWeight: "bold"}}>Name: <Typography>{props.name}</Typography> </Typography>
                 </Grid>
                 <Grid item container className={classes.formItem}>
-                     <Typography>DOB: {props.dob}</Typography>
+                     <Typography style={{fontWeight: "bold"}}>DOB: <Typography>{props.dob}</Typography> </Typography>
                 </Grid>
                 <Grid item container className={classes.formItem}>
-                     <Typography>Gender: {props.gender}</Typography>
+                     <Typography style={{fontWeight: "bold"}}>Gender: <Typography>{props.gender}</Typography> </Typography>
                 </Grid>
                 <Grid item container className={classes.formItem}>
-                    <Typography>Size: {props.size}</Typography>
+                    <Typography style={{fontWeight: "bold"}}>Size: <Typography>{props.size}</Typography> </Typography>
                 </Grid>
                 <Grid item container className={classes.formItem}>
                      <Typography style={{fontWeight: "bold"}}>Microchip Info: <Typography>{props.mfgCompany}, {props.microchipId}</Typography></Typography>
                  </Grid>
                 <Grid item container className={classes.formItem}>
-                     <Typography>ASF ID: {props.asfId}</Typography>
+                     <Typography style={{fontWeight: "bold"}}>ASF ID: <Typography>{props.asfId}</Typography> </Typography>
                 </Grid>
             </Grid>
         </Grid>
