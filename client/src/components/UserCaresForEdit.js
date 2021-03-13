@@ -17,11 +17,6 @@ const useStyles = makeStyles((theme) => ({
         },
         marginBottom: "5em"
     },
-    marginFix: {
-        [theme.breakpoints.down("sm")]: {
-            marginLeft: "2.5em"
-        }
-    },
     formControl: {
         margin: theme.spacing(1),
         minWidth: 300,

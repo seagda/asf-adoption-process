@@ -249,125 +249,6 @@ export default function ProfileForm(props){
     // </Grid>
     // )
 
-    const caresFor = (
-        <Grid item container className={classes.itemContainer}>
-            <Grid item container xs={10} sm={6} md={6} lg={6} style={{marginTop: "3em"}} direction="column">
-                <Grid item>
-                    <Typography variant="h4">Cares for:</Typography>
-                    <Divider/>
-                </Grid>
-                <Grid item container style={{marginTop: "1em"}}>
-                    <Grid item style={{marginTop: "1em"}}>
-                    <div>
-                    <FormControl variant="outlined" className={classes.formControl}>
-                    <InputLabel id="puppies">Puppies?</InputLabel>
-                    <Select
-                    labelId="puppies"
-                    id="puppies"
-                    onChange={handlePuppiesChange}
-                    value={caresForPuppiesData.puppies}
-                    name="puppies"
-                    label="Puppies?"
-                    InputLabelProps={{shrink: true}}
-                    >
-                    <MenuItem value={true}>Yes</MenuItem>
-                    <MenuItem value={false}>No</MenuItem>
-                    </Select>
-                    </FormControl>
-                    </div>
-                    </Grid>
-                </Grid>
-                <Grid item container style={{marginTop: "1em"}}>
-                    <Grid item style={{marginTop: "1em"}}>
-                    <div>
-                    <FormControl variant="outlined" className={classes.formControl}>
-                    <InputLabel id="adults">Adults?</InputLabel>
-                    <Select
-                    labelId="adults"
-                    id="adults"
-                    onChange={handleAdultsChange}
-                    value={caresForAdultsData.adults}
-                    name="adults"
-                    label="Adults?"
-                    InputLabelProps={{shrink: true}}
-                    >
-                    <MenuItem value={true}>Yes</MenuItem>
-                    <MenuItem value={false}>No</MenuItem>
-                    </Select>
-                    </FormControl>
-                    </div>
-                    </Grid>
-                </Grid>
-            </Grid>
-            <Grid item container xs={10} sm={6} md={6} lg={6} className={classes.seniorContainer} direction="column">
-                <Grid item container className={classes.seniorItem}>
-                    <Grid item style={{marginTop: "1em"}}>
-                    <div>
-                    <FormControl variant="outlined" className={classes.formControl}>
-                    <InputLabel id="seniors">Seniors?</InputLabel>
-                    <Select
-                    labelId="seniors"
-                    id="seniors"
-                    onChange={handleSeniorsChange}
-                    value={caresForSeniorsData.seniors}
-                    name="active"
-                    label="Seniors?"
-                    InputLabelProps={{shrink: true}}
-                    >
-                    <MenuItem value={true}>Yes</MenuItem>
-                    <MenuItem value={false}>No</MenuItem>
-                    </Select>
-                    </FormControl>
-                    </div>
-                    </Grid>
-                </Grid>
-                <Grid item container style={{marginTop: "1em"}}>
-                    <Grid item style={{marginTop: "1em"}}>
-                    <div>
-                    <FormControl variant="outlined" className={classes.formControl}>
-                    <InputLabel id="withBehaviorIssues">Behaviorial Issues?</InputLabel>
-                    <Select
-                    labelId="withBehaviorIssues"
-                    id="withBehaviorIssues"
-                    onChange={handleBehaviorChange}
-                    value={withBehaviorIssuesData.withBehaviorIssues}
-                    name="withBehaviorIssues"
-                    label="With behaviorial issues?"
-                    InputLabelProps={{shrink: true}}
-                    >
-                    <MenuItem value={true}>Yes</MenuItem>
-                    <MenuItem value={false}>No</MenuItem>
-                    </Select>
-                    </FormControl>
-                    </div>
-                    </Grid>
-                </Grid>
-            </Grid>
-            <Grid item container xs={10} sm={6} md={6} lg={6} style={{marginTop: "1em"}} direction="column">
-                <Grid item container style={{marginTop: "1em"}}>
-                    <Grid item>
-                    <div>
-                    <FormControl variant="outlined" className={classes.formControl}>
-                    <InputLabel id="withMedicalIssues">Medical Issues?</InputLabel>
-                    <Select
-                    labelId="withMedicalIssues"
-                    id="withMedicalIssues"
-                    onChange={handleMedIssuesChange}
-                    value={withMedIssuesData.withMedicalIssues}
-                    name="withMedicalIssues"
-                    label="Medical Issues?"
-                    InputLabelProps={{shrink: true}}
-                    >
-                    <MenuItem value={true}>Yes</MenuItem>
-                    <MenuItem value={false}>No</MenuItem>
-                    </Select>
-                    </FormControl>
-                    </div>
-                    </Grid>
-                </Grid>
-            </Grid>
-    </Grid>
-    )
 
     // const references = (
     //     <Grid item container justify="space-evenly" className={classes.references}>
@@ -491,8 +372,6 @@ export default function ProfileForm(props){
         createUserChange={createUserInputChange} 
         maxValue={userIntakeData.maxCapacity}
         />
-
-        {/* {caresFor} */}
 
         <UserCaresForEdit
         puppiesChange={handlePuppiesChange}
