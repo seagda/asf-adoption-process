@@ -181,12 +181,12 @@ export default function ProfileForm(props){
 
     useEffect(()=>{
         setUserIntakeData({
-            firstName: props.userData.firstName, 
-            lastName: props.userData.lastName,
-            phone: props.userData.phone,
-            email: props.userData.email,
-            dob: props.userData.dob,
-            maxCapacity: props.userData.maxCapacity
+            firstName: props.userData?.firstName, 
+            lastName: props.userData?.lastName,
+            phone: props.userData?.phone,
+            email: props.userData?.email,
+            dob: props.userData?.dob,
+            maxCapacity: props.userData?.maxCapacity
         })
         setIsActiveData({active: false})
         console.log(isActiveData)

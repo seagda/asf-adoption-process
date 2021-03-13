@@ -1,33 +1,16 @@
 import React, {useState, useEffect, Component} from 'react';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import {matchPath} from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
-import TextField from '@material-ui/core/TextField';
-import Typography from "@material-ui/core/Typography";
-import Divider from "@material-ui/core/Divider";
-import Chip from "@material-ui/core/Chip";
-import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
 import API from "../utils/API";
-import Button from "@material-ui/core/Button";
 
-import Image from "../components/Image";
-import EditButton from "../components/EditButton";
 import SaveButton from "../components/SaveButton";
 import DogStatusEdit from "../components/DogStatusEdit";
 import IntakeDetailsEdit from "../components/IntakeDetailsEdit";
 import HealthRecordEdit from "../components/HealthRecordEdit";
-import RecordCards from "../components/RecordCards";
-import SingleSelect from "../components/SingleSelect";
-import UploadButton from "../components/UploadButton";
-import MultiLineText from "../components/MultiLineText";
 import BreedEdit from "../components/BreedEdit";
 import DogMainInfoEdit from "../components/DogMainInfoEdit";
 
-import dog from "../assets/Cool_Dog.png";
 
 const useStyles = makeStyles(theme => ({
     itemContainer: {
