@@ -6,12 +6,9 @@ import API from "../utils/API";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 
-import DogBlockView from "../components/DogBlockView";
-import DogProfileActions from "../components/DogProfileActions";
-import DogBreedView from "../components/DogBreedView";
-import DogOriginView from "../components/DogOriginView";
-import DogInfoCurrent from "../components/DogInfoCurrent";
 import ProfileBlock from "../components/ProfileBlock";
+import ProfileActions from "../components/ProfileActions";
+import CapacityView from "../components/CapacityView";
 
 const useStyles=makeStyles(theme => ({
     mainContainer: {
@@ -38,19 +35,22 @@ export default function UserProfileView(){
     let {id} = useParams();
     console.log(id)
 
-    // const [dogData, setDogData] = useState({
-    //     MicrochipMfg:{}, 
-    //     DogStatus:{}, 
-    //     DogPhotos: [], 
-    //     origin: {Region: {}, Address: {}}
-    // })
-
     const [userData, setUserData] = useState({})
+    const [puppiesData, setPuppiesData] = useState(false)
+    const [seniorsData, setSeniorsData] = useState(false)
+    const [adultsData, setAdultsData] = useState(false)
+    const [behaviorData, setBehaviorData] = useState(false)
+    const [medicalIssuesData, setMedicalIssuesData] = useState(false)
 
     useEffect(()=>{
         API.getSingleUser(id).then(res =>{
             console.log(res.data)
             setUserData(res.data)
+            setPuppiesData(res.data.puppies)
+            setSeniorsData(res.data.seniors)
+            setAdultsData(res.data.adults)
+            setBehaviorData(res.data.withBehaviorIssues)
+            setMedicalIssuesData(res.data.withMedicalIssues)
         }).catch(err=>{
             console.error(err)
             // alert("get data failed")
@@ -73,40 +73,17 @@ export default function UserProfileView(){
             dob={userData.dob}
             />
 
-            {/* <DogBlockView 
-            name={dogData.name} 
-            dob={dogData.dob} 
-            gender={dogData.gender} 
-            size={dogData.size} 
-            mfgCompany={dogData.MicrochipMfg.name}
-            microchipId={dogData.microchipId} 
-            asfId={dogData.asfId} 
-            // microchipName={dogData.MicrochipMfg.name} 
-            image={(dogData.DogPhotos.find((photo)=> photo.profilePhoto)||{}).url}/> */}
+            {userData.canEdit ? <ProfileActions/> : null}
 
-            {/* {dogData.canEdit ? <DogProfileActions id={id}/> : null} */}
-{/* 
-            <DogBreedView 
-            coat={dogData.coat} 
-            weight={dogData.weight} 
-            purebred={dogData.isPurebred} 
-            secondary={dogData.secondaryBreed}/> */}
+            <CapacityView style={{marginBottom: "5em"}} 
+            maxCapacity={userData.maxCapacity} 
+            puppies={puppiesData} 
+            seniors={seniorsData} 
+            adults={adultsData} 
+            behavior={behaviorData} 
+            medical={medicalIssuesData}
+            />
 
-            {/* <DogOriginView 
-            originName={dogData.origin.fullName} 
-            originRegion={dogData.origin.Region.name} 
-            originStreet={dogData.origin.Address.street} 
-            originCity={dogData.origin.Address.city} 
-            originState={dogData.origin.Address.state} 
-            originZip={dogData.origin.Address.zip5} 
-            originPhone={dogData.origin.phone} 
-            pullCost={dogData.pullCost}/> */}
-
-            {/* <DogInfoCurrent 
-            currentlyWith={dogData.currentlyWith} 
-            behaviorIssues={dogData.behaviorIssues} 
-            medicalIssues={dogData.medicalIssues} 
-            blocked={dogData.blocked}/> */}
         </Grid>
     )
 }
