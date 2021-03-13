@@ -65,6 +65,7 @@ export default function DogProfileView(){
             dob={dogData.dob} 
             gender={dogData.gender} 
             size={dogData.size} 
+            mfgCompany={dogData.MicrochipMfg.name}
             microchipId={dogData.microchipId} 
             asfId={dogData.asfId} 
             // microchipName={dogData.MicrochipMfg.name} 

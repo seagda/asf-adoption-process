@@ -53,7 +53,7 @@ export default function DogBlockView(props){
                     <Typography>Size: {props.size}</Typography>
                 </Grid>
                 <Grid item container className={classes.formItem}>
-                     <Typography>Microchip Info: {props.microchipName} {props.microchipId}</Typography>
+                     <Typography style={{fontWeight: "bold"}}>Microchip Info: <Typography>{props.mfgCompany}, {props.microchipId}</Typography></Typography>
                  </Grid>
                 <Grid item container className={classes.formItem}>
                      <Typography>ASF ID: {props.asfId}</Typography>
