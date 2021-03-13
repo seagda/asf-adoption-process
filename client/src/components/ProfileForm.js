@@ -25,6 +25,7 @@ import MultiSelectChips from "../components/MultiSelectChips";
 import HoldCheckbox from "../components/HoldCheckbox";
 import UserStatusEdit from "../components/UserStatusEdit";
 import UserCapacityEdit from "../components/UserCapacityEdit";
+import UserCaresForEdit from "../components/UserCaresForEdit";
 
 import ashley from "../assets/ashley.jpg";
 
@@ -491,7 +492,21 @@ export default function ProfileForm(props){
         maxValue={userIntakeData.maxCapacity}
         />
 
-        {caresFor}
+        {/* {caresFor} */}
+
+        <UserCaresForEdit
+        puppiesChange={handlePuppiesChange}
+        puppiesValue={caresForPuppiesData.puppies}
+        adultsChange={handleAdultsChange}
+        adultsValue={caresForAdultsData.adults}
+        seniorsChange={handleSeniorsChange}
+        seniorsValue={caresForSeniorsData.seniors}
+        behaviorChange={handleBehaviorChange}
+        behaviorValue={withBehaviorIssuesData.withBehaviorIssues}
+        medicalChange={handleMedIssuesChange}
+        medicalValue={withMedIssuesData.withMedicalIssues}
+        />
+
         {/* <Grid item>
             <Typography variant="h4">References</Typography>
             <Divider/>
