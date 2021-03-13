@@ -23,6 +23,7 @@ import SaveButton from "../components/SaveButton";
 import RoleTitles from "../components/RoleTitles";
 import MultiSelectChips from "../components/MultiSelectChips";
 import HoldCheckbox from "../components/HoldCheckbox";
+import UserStatusEdit from "../components/UserStatusEdit";
 
 import ashley from "../assets/ashley.jpg";
 
