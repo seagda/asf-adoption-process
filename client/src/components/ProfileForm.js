@@ -571,7 +571,17 @@ export default function ProfileForm(props){
                 </div>
             </Grid>
             {/* {admin ? roleEdit : null} */}
-            {userStatus}
+            {/* {userStatus} */}
+
+            <UserStatusEdit
+            activeChange={handleActiveChange}
+            activeValue={isActiveData.active}
+            blockChange={handleBlockedChange}
+            blockedValue={isBlockedData.blocked}
+            holdChange={handleHoldChange}
+            holdValue={onHoldData.hold}
+            />
+
         </Grid>
         {capacity}
         {caresFor}

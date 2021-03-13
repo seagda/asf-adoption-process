@@ -44,8 +44,8 @@ export default function UserStatusEdit(props){
                     <Select
                     labelId="active"
                     id="active"
-                    onChange={handleActiveChange}
-                    value={isActiveData.active}
+                    onChange={props.activeChange}
+                    value={props.activeValue}
                     name="active"
                     label="Is active?"
                     InputLabelProps={{shrink: true}}
@@ -63,8 +63,8 @@ export default function UserStatusEdit(props){
                     <Select
                     labelId="blocked"
                     id="blocked"
-                    onChange={handleBlockedChange}
-                    value={isBlockedData.blocked}
+                    onChange={props.blockChange}
+                    value={props.blockedValue}
                     name="blocked"
                     label="Is blocked?"
                     InputLabelProps={{shrink: true}}
@@ -82,8 +82,8 @@ export default function UserStatusEdit(props){
                     <Select
                     labelId="hold"
                     id="hold"
-                    onChange={handleHoldChange}
-                    value={onHoldData.hold}
+                    onChange={props.holdChange}
+                    value={props.holdValue}
                     name="hold"
                     label="On hold?"
                     InputLabelProps={{shrink: true}}
