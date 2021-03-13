@@ -247,76 +247,6 @@ export default function ProfileForm(props){
     // </Grid>
     // )
 
-    const userStatus = (
-        <Grid item container className={classes.itemContainer, classes.marginFix}>
-        <Grid container style={{marginTop: "1em"}}>
-            <Grid item>
-                <Typography variant="h4">Status</Typography>
-                <Divider/>
-            </Grid>
-        </Grid>
-        <Grid container justify="space-between">
-            <Grid item style={{marginTop: "1em"}}>
-                <div>
-                    <FormControl variant="outlined" className={classes.formControl}>
-                    <InputLabel id="active">Active?</InputLabel>
-                    <Select
-                    labelId="active"
-                    id="active"
-                    onChange={handleActiveChange}
-                    value={isActiveData.active}
-                    name="active"
-                    label="Is active?"
-                    InputLabelProps={{shrink: true}}
-                    >
-                    <MenuItem value={true}>Yes</MenuItem>
-                    <MenuItem value={false}>No</MenuItem>
-                    </Select>
-                    </FormControl>
-                </div>
-            </Grid>
-            <Grid item style={{marginTop: "1em"}}>
-                <div>
-                    <FormControl variant="outlined" className={classes.formControl}>
-                    <InputLabel id="blocked">Blocked?</InputLabel>
-                    <Select
-                    labelId="blocked"
-                    id="blocked"
-                    onChange={handleBlockedChange}
-                    value={isBlockedData.blocked}
-                    name="blocked"
-                    label="Is blocked?"
-                    InputLabelProps={{shrink: true}}
-                    >
-                    <MenuItem value={true}>Yes</MenuItem>
-                    <MenuItem value={false}>No</MenuItem>
-                    </Select>
-                    </FormControl>
-                </div>
-            </Grid>
-            <Grid item style={{marginTop: "1em"}}>
-                <div>
-                    <FormControl variant="outlined" className={classes.formControl}>
-                    <InputLabel id="hold">On Hold?</InputLabel>
-                    <Select
-                    labelId="hold"
-                    id="hold"
-                    onChange={handleHoldChange}
-                    value={onHoldData.hold}
-                    name="hold"
-                    label="On hold?"
-                    InputLabelProps={{shrink: true}}
-                    >
-                    <MenuItem value={true}>Yes</MenuItem>
-                    <MenuItem value={false}>No</MenuItem>
-                    </Select>
-                    </FormControl>
-                </div>
-            </Grid>
-        </Grid>
-    </Grid>
-    )
-
     const capacity = (
         <Grid item container className={classes.itemContainer, classes.marginFix}>
             <Grid container direction="row" justify={"space-between"}>
@@ -571,7 +501,6 @@ export default function ProfileForm(props){
                 </div>
             </Grid>
             {/* {admin ? roleEdit : null} */}
-            {/* {userStatus} */}
 
             <UserStatusEdit
             activeChange={handleActiveChange}
