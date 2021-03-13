@@ -20,6 +20,7 @@ import Settings from "./pages/Settings";
 import FosterApplication from "./pages/FosterApplication";
 import DogProfileEdit from "./pages/DogProfileEdit";
 import BehaviorAssessment from "./pages/BehaviorAssessment";
+import UserProfileView from "./pages/UserProfileView";
 
 export default function App() {
     const admin = true;
@@ -46,6 +47,7 @@ export default function App() {
                     <Route path="/signup"><SignUp/></Route>
                     <Route path="/editDog/:id"><DogProfileEdit/></Route>
                     <Route path="/behavior/:id"><BehaviorAssessment/></Route>
+                    <Route path="/userView/:id"><UserProfileView/></Route>
                 </Switch>
             </BrowserRouter>
         </ThemeProvider>
