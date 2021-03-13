@@ -89,6 +89,9 @@ const API = {
     },
     getDashboardData: function(){
         return axios.get(`/api/dashboard`, getHeaders())
+    },
+    getSingleUser: function (userId){
+        return axios.get(`/api/user/${userId}`, getHeaders())
     }
 }
 
