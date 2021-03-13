@@ -26,6 +26,7 @@ const useStyles = makeStyles(theme => ({
     picContainer: {
         [theme.breakpoints.down("xs")]:{
             justifyContent: "center",
+            padding: 5
         }
     }
 }))
