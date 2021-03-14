@@ -14,36 +14,14 @@ router.get("/", (req, res) => {
     const permissionOwn = ac.can(req.roles).readOwn("Dog");
     const permissionAny = ac.can(req.roles).readAny("Dog");
     if (permissionAny.granted || permissionOwn.granted) {
-        const currentlyWith = { association: "currentlyWith", include: [db.Address, { association: "ResidesInRegion" }] };
-        if (!permissionAny.granted) currentlyWith.where = { id: req.userId };
-        db.Dog.findAll({
-            include: [
-                currentlyWith,
-                db.DogStatus,
-                { association: "origin", include: [db.Address, db.Region] },
-                { model: db.DogPhoto, required: false, where: { profilePhoto: true } }
-            ]
-        }).then(dogs => {
-            const dogRes = dogs.map(dog => {
-                const dogJson = permissionAny.granted ? permissionAny.filter(dog.toJSON()) : permissionOwn.filter(dog.toJSON());
-                if (dogJson.currentlyWithId) {
-                    dogJson.city = dogJson.currentlyWith.Address.city;
-                    dogJson.state = dogJson.currentlyWith.Address.state;
-                    dogJson.Region = dogJson.currentlyWith.ResidesInRegion;
-                } else {
-                    dogJson.city = dogJson.origin.Address.city;
-                    dogJson.state = dogJson.origin.Address.state;
-                    dogJson.Region = dogJson.origin.Region;
-                }
-                const { currentlyWith, ...dogToSend } = dogJson;
-                if (dogJson.currentlyWith) dogToSend.currentlyWith = { firstName: currentlyWith.firstName, lastName: currentlyWith.lastName, id: currentlyWith.id };
-                return dogToSend;
+        const withFilter = {};
+        if (!permissionAny.granted) withFilter.id = req.userId;
+        dogController.getAll(null, withFilter)
+            .then(dogs => res.json(permissionAny.granted ? permissionAny.filter(dogs) : permissionOwn.filter(dogs)))
+            .catch(err => {
+                console.error(err);
+                res.sendStatus(500);
             });
-            res.json(dogRes);
-        }).catch(err => {
-            console.error(err);
-            res.sendStatus(500);
-        });
     } else return res.status(403).send({ message: "Not authorized to view dogs" });
 });
 
