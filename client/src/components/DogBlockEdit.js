@@ -241,7 +241,7 @@ export default function ProfileForm(props){
         <Grid item container className={classes.itemContainer}>
             <DogMainInfoEdit
             handleInputChange={props.handleInputChange}
-            // mfgList={microchipMfgList.map((mfg)=><MenuItem value={mfg.id}>{mfg.name}</MenuItem>)}
+            mfgList={microchipMfgList.map((mfg)=><MenuItem value={mfg.id}>{mfg.name}</MenuItem>)}
             // mfgList={[<MenuItem value={1}>24PetWatch Pet Protection Services</MenuItem>,
             //     <MenuItem value={2}>911PetChip &amp; Free Pet Chip Registry</MenuItem>,
             //     <MenuItem value={3}>ACA MARRS</MenuItem>,

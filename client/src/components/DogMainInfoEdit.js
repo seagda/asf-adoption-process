@@ -121,9 +121,10 @@ export default function DogMainInfoEdit(props){
                                         value={selectData.MicrochipMfgId}
                                         onChange={handleSelectChange}
                                     >
-                                        {/* {props.mfgList} */}
                                         <MenuItem disabled value="">Microchip Manufacturer</MenuItem>
-                                        <MenuItem value={1}>24PetWatch Pet Protection Services</MenuItem>
+                                        {props.mfgList}
+                                        
+                                        {/* <MenuItem value={1}>24PetWatch Pet Protection Services</MenuItem>
                 <MenuItem value={2}>911PetChip &amp; Free Pet Chip Registry</MenuItem>
                 <MenuItem value={3}>ACA MARRS</MenuItem>
                 <MenuItem value={4}>AKC Reunite</MenuItem>
@@ -151,7 +152,7 @@ export default function DogMainInfoEdit(props){
                 <MenuItem value={26}>Prime Trackr</MenuItem>
                 <MenuItem value={27}>Save This Life</MenuItem>
                 <MenuItem value={28}>SmartTag Microchip</MenuItem>
-                <MenuItem value={29}>uPet</MenuItem>
+                <MenuItem value={29}>uPet</MenuItem> */}
                                     </Select>
                                 </FormControl>
                             </div>
