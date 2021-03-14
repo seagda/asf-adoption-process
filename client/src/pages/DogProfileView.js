@@ -61,13 +61,13 @@ export default function DogProfileView(){
             </Grid>
 
             <DogBlockView 
-            name={dogData.name} 
-            dob={dogData.dob} 
-            gender={dogData.gender} 
-            size={dogData.size} 
-            mfgCompany={dogData.MicrochipMfg.name}
-            microchipId={dogData.microchipId} 
-            asfId={dogData.asfId} 
+            name={dogData?.name} 
+            dob={dogData?.dob} 
+            gender={dogData?.gender} 
+            size={dogData?.size} 
+            mfgCompany={dogData?.MicrochipMfg?.name}
+            microchipId={dogData?.microchipId} 
+            asfId={dogData?.asfId} 
             // microchipName={dogData.MicrochipMfg.name} 
             image={(dogData.DogPhotos.find((photo)=> photo.profilePhoto)||{}).url}/>
 

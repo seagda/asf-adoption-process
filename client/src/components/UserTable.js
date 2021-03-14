@@ -315,11 +315,11 @@ export default function UserTable(props) {
                       <TableCell component="th" id={labelId} scope="row" padding="none">
                         <NavLink gutterBottom style={{textDecoration: "none"}} to={`/userView/${row.id}`}>{row.firstName}</NavLink> 
                       </TableCell>
-                      <TableCell >{row.lastName}</TableCell>
-                      <TableCell >{row.email}</TableCell>
-                      <TableCell >{row.city}</TableCell>
-                      <TableCell >{row.state}</TableCell>
-                      <TableCell >{row.ResidesInRegion.name}</TableCell>
+                      <TableCell >{row?.lastName}</TableCell>
+                      <TableCell >{row?.email}</TableCell>
+                      <TableCell >{row?.city}</TableCell>
+                      <TableCell >{row?.state}</TableCell>
+                      <TableCell >{row?.ResidesInRegion?.name}</TableCell>
                       <TableCell >{row.Roles.map( (role) => role.name).join(", ")}</TableCell>
                     </TableRow>
                   );
