@@ -1,13 +1,18 @@
 const db = require("../models");
 const alertController = require("./alert");
 
-module.exports.getAll = (originFilter, withFilter, regionFilter) => db.Dog.findAll({
+module.exports.getAll = (originFilter, withFilter, regionIdFilter) => db.Dog.findAll({
     include: [
         db.DogStatus,
-        { association: "Origin", where: originFilter, include: [db.Address, { model: db.Region, where: regionFilter }] },
-        { association: "CurrentlyWith", where: withFilter, include: [db.Address, { association: "ResidesInRegion", where: regionFilter }] },
+        { association: "Origin", where: originFilter, include: [db.Address, { model: db.Region }] },
+        { association: "CurrentlyWith", where: withFilter, include: [db.Address, { association: "ResidesInRegion" }] },
         { model: db.DogPhoto, required: false, where: { profilePhoto: true } }
-    ]
+    ],
+    where: {
+        [db.Sequelize.Op.or]: [
+            { "$CurrentlyWith.ResidesInRegion.id$": regionIdFilter },
+            { [db.Sequelize.Op.and]: [{ CurrentlyWithId: { [db.Sequelize.Op.is]: null } }, { "$Origin.Region.id$": regionIdFilter }] }]
+    }
 }).then(dogs => dogs.map(dog => {
     const dogJson = dog.toJSON();
     if (dogJson.CurrentlyWithId) {
