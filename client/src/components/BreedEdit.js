@@ -58,7 +58,7 @@ export default function BreedEdit(props){
                 </div>
             </Grid>
             <Grid item style={{marginTop: "1em"}}>
-                <TextField className={classes.formControl} variant="outlined" label="Secondary Breed" InputLabelProps={{shrink: true}} onChange={props.dogInputChange} value={props.secondBreedValue} name="secondaryBreed"/>
+                <TextField className={classes.formControl} variant="outlined" label="Secondary Breed" InputLabelProps={{shrink: true}} onChange={props.handleInputChange} value={props.dogData?.secondaryBreed} name="secondaryBreed"/>
             </Grid>
             <Grid item style={{marginTop: "1em"}}>
                 <div>
@@ -83,7 +83,7 @@ export default function BreedEdit(props){
                     <MenuItem value="black tri">Black Tri</MenuItem>
                     <MenuItem value="black bi">Black Bi</MenuItem>
                     <MenuItem value="black">Black</MenuItem>
-                    <MenuItem value="tri-color">Tri-Color</MenuItem>              
+                    <MenuItem value="tri color">Tri Color</MenuItem>              
                     <MenuItem value="white">White</MenuItem>
                     <MenuItem value="brown">Brown</MenuItem>
                     </Select>
@@ -92,7 +92,7 @@ export default function BreedEdit(props){
                 </div>
             </Grid>
             <Grid item style={{marginTop: "1em"}}>
-                <TextField className={classes.formControl} type="number" variant="outlined" label="weight" InputLabelProps={{shrink: true}} onChange={props.dogInputChange} value={props.weightValue} name="weight"/>
+                <TextField className={classes.formControl} type="number" variant="outlined" label="weight" InputLabelProps={{shrink: true}} onChange={props.handleInputChange} value={props.dogData?.weight} name="weight"/>
             </Grid>
             <Grid item style={{marginTop: "1em"}}>
                 <div>

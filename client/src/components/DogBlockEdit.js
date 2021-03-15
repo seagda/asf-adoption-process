@@ -241,41 +241,14 @@ export default function ProfileForm(props){
         <Grid item container className={classes.itemContainer}>
             <DogMainInfoEdit
             handleInputChange={props.handleInputChange}
-            mfgList={microchipMfgList.map((mfg)=><MenuItem value={mfg.id}>{mfg.name}</MenuItem>)}
-            // mfgList={[<MenuItem value={1}>24PetWatch Pet Protection Services</MenuItem>,
-            //     <MenuItem value={2}>911PetChip &amp; Free Pet Chip Registry</MenuItem>,
-            //     <MenuItem value={3}>ACA MARRS</MenuItem>,
-            //     <MenuItem value={4}>AKC Reunite</MenuItem>,
-            //     <MenuItem value={5}>aZoo.me Identification</MenuItem>,
-            //     <MenuItem value={6}>BC Pet Registry</MenuItem>,
-            //     <MenuItem value={7}>BeKind PetFind</MenuItem>,
-            //     <MenuItem value={8}>BuddyID</MenuItem>,
-            //     <MenuItem value={9}>EIDAP</MenuItem>,
-            //     <MenuItem value={10}>Emili</MenuItem>,
-            //     <MenuItem value={11}>Fi</MenuItem>,
-            //     <MenuItem value={12}>Found Animals</MenuItem>,
-            //     <MenuItem value={13}>Furreka</MenuItem>,
-            //     <MenuItem value={14}>HomeAgain</MenuItem>,
-            //     <MenuItem value={15}>Homeward Bound Pet</MenuItem>,
-            //     <MenuItem value={16}>Identrac Inc.</MenuItem>,
-            //     <MenuItem value={17}>International Pet Registry</MenuItem>,
-            //     <MenuItem value={18}>Microchip I.D. Solutions</MenuItem>,
-            //     <MenuItem value={19}>MyPetsChip</MenuItem>,
-            //     <MenuItem value={20}>Nanochip ID Inc.</MenuItem>,
-            //     <MenuItem value={21}>National Animal Identification Center</MenuItem>,
-            //     <MenuItem value={22}>Peeva</MenuItem>,
-            //     <MenuItem value={23}>PetKey</MenuItem>,
-            //     <MenuItem value={24}>PetLink</MenuItem>,
-            //     <MenuItem value={25}>Petstablished</MenuItem>,
-            //     <MenuItem value={26}>Prime Trackr</MenuItem>,
-            //     <MenuItem value={27}>Save This Life</MenuItem>,
-            //     <MenuItem value={28}>SmartTag Microchip</MenuItem>,
-            //     <MenuItem value={29}>uPet</MenuItem>]}
             dogData={props.dogData}
+            mfgList={microchipMfgList.map((mfg)=><MenuItem value={mfg.id}>{mfg.name}</MenuItem>)}
         />
         
         
-        <BreedEdit 
+        <BreedEdit
+        handleInputChange={props.handleInputChange}
+        dogData={props.dogData} 
         purebredChange={handlePurebredChange} 
         purebredValue={isPurebredData.isPurebred} 
         dogInputChange={createDogInputChange} 
