@@ -48,14 +48,14 @@ router.get("/:id", (req, res) => {
     if (permissionReadOwn.granted || permissionReadAny.granted) {
         db.Dog.findByPk(req.params.id, {
             include: [
-                { association: "currentlyWith", include: [db.Address, { association: "ResidesInRegion" }] },
-                { association: "origin", include: [db.Address, db.Region] },
+                { association: "CurrentlyWith", include: [db.Address, { association: "ResidesInRegion" }] },
+                { association: "Origin", include: [db.Address, db.Region] },
                 db.MicrochipMfg, db.DogPhoto
             ],
         }).then(dog => {
-            // TODO: also check permissions for currently with and origin
+            // TODO: also check permissions for CurrentlyWith and Origin
             let dogJson;
-            if (dog.currentlyWithId === req.userId) {
+            if (dog.CurrentlyWithId === req.userId) {
                 dogJson = { ...permissionReadOwn.filter(dog.toJSON()), canEdit: permissionUpdateOwn.granted }
             } else if (permissionReadAny.granted) {
                 dogJson = { ...permissionReadAny.filter(dog.toJSON()), canEdit: permissionUpdateAny.granted }
@@ -75,8 +75,8 @@ router.post("/", (req, res) => {
     const permissionAny = ac.can(req.roles).createAny("Dog");
     console.log(permissionAny.filter(req.body))
     if (permissionAny.granted) {
-        db.Dog.create({ ...permissionAny.filter(req.body), DogStatusId: 1 }, { include: { model: db.ExtContact, as: "origin", include: db.Address } })
-            // currentlyWith always starts null
+        db.Dog.create({ ...permissionAny.filter(req.body), DogStatusId: 1 }, { include: { model: db.ExtContact, as: "Origin", include: db.Address } })
+            // CurrentlyWith always starts null
             .then(dog => res.status(200).send({ id: dog.id }))
             .catch(err => {
                 console.error(err);
@@ -89,7 +89,7 @@ router.post("/", (req, res) => {
 router.post("/:DogId/photo", (req, res) => {
     const permissionOwn = ac.can(req.roles).updateOwn("Dog");
     const permissionAny = ac.can(req.roles).updateAny("Dog");
-    Promise.resolve((() => permissionOwn.granted && !permissionAny.granted ? db.Dog.findByPk(req.params.DogId).then(dog => dog.currentlyWithId === req.userId) : permissionAny.granted)())
+    Promise.resolve((() => permissionOwn.granted && !permissionAny.granted ? db.Dog.findByPk(req.params.DogId).then(dog => dog.CurrentlyWithId === req.userId) : permissionAny.granted)())
         .then(granted => granted ? (req.body.profilePhoto ? db.DogPhoto.update({ profilePhoto: false }, { where: { DogId: req.params.DogId } }).then(() => true) : true) : false)
         .then(granted => granted
             ? db.DogPhoto.create({ DogId: req.params.DogId, url: req.body.url, profilePhoto: req.body.profilePhoto }).then(() => res.status(200).send({ message: "Successfully added photo" }))
@@ -104,7 +104,7 @@ router.post("/:DogId/photo", (req, res) => {
 router.put("/:DogId/profile-photo/:PhotoId", (req, res) => {
     const permissionOwn = ac.can(req.roles).updateOwn("Dog");
     const permissionAny = ac.can(req.roles).updateAny("Dog");
-    Promise.resolve((() => permissionOwn.granted && !permissionAny.granted ? db.Dog.findByPk(req.params.DogId).then(dog => dog.currentlyWithId === req.userId) : permissionAny.granted)())
+    Promise.resolve((() => permissionOwn.granted && !permissionAny.granted ? db.Dog.findByPk(req.params.DogId).then(dog => dog.CurrentlyWithId === req.userId) : permissionAny.granted)())
         .then(granted => granted ? Promise.all([
             db.DogPhoto.update({ profilePhoto: false }, { where: { DogId: req.params.DogId, id: { [db.Sequelize.Op.ne]: req.params.PhotoId } } }),
             db.DogPhoto.update({ profilePhoto: true }, { where: { DogId: req.params.DogId, id: req.params.PhotoId } })
@@ -125,7 +125,7 @@ router.put("/:id", (req, res) => {
         db.Dog.findByPk(req.params.id)
             .then(dog => {
                 let updates;
-                if (dog.currentlyWithId === req.userId) updates = permissionOwn.filter(req.body);
+                if (dog.CurrentlyWithId === req.userId) updates = permissionOwn.filter(req.body);
                 else if (permissionAny.granted) updates = permissionAny.filter(req.body);
                 else return res.status(403).send({ message: "Not authorized to update this dog" });
                 const { name, CurrentlyWithId, DogStatusId, ...other } = updates;
