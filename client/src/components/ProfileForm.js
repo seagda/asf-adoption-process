@@ -84,6 +84,16 @@ export default function ProfileForm(props){
         })
     }
 
+    const [addressFormData, setAddressFormData] = useState({})
+
+    const handleAddressInputChange = event =>{
+        const {name, value} = event.target
+        setAddressFormData({
+            ...addressFormData,
+            [name]: value
+        })
+    }
+
     const [isActiveData, setIsActiveData] = useState({});
     const handleActiveChange = (event) => {
       const {name, value} = event.target
@@ -181,7 +191,8 @@ export default function ProfileForm(props){
             ...caresForSeniorsData,
             ...withMedIssuesData,
             ...withBehaviorIssuesData,
-            ...onHoldData
+            ...onHoldData,
+            Address: addressFormData
         })
         .then(res =>{
             console.log(res.data)
@@ -194,6 +205,7 @@ export default function ProfileForm(props){
             setWithMedIssuesData({})
             setWithBehaviorIssuesData({})
             setOnHoldData({})
+            setAddressFormData({})
             window.location = "/Manage-ASF-Users"
         }).catch(err=>{
             console.error(err.response.data.message)
