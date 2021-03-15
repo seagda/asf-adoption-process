@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 const db = require("../../models");
 const ac = require("../../helpers/ac");
 const mail = require("../../helpers/mail");
-
+const controllers = require("../../controllers");
 const router = require("express").Router();
 
 router.use("/alert", require("./alert"));
@@ -38,14 +38,15 @@ router.get("/", (req, res) => {
 
 // get own user data
 router.get("/me", (req, res) => {
-    // everyone has this permission but we check to get the filter
-    const permission = ac.can(req.roles).readOwn("User");
-    if (permission.granted) {
-        db.User.findByPk(req.userId).then(user => res.json(permission.filter(user.toJSON()))).catch(err => {
+    controllers.user.get(req.userId)
+        .then(user => res.json({
+            ...ac.can(req.roles).readOwn("User").filter(user),
+            editable: ac.can(req.roles).updateOwn("User").attributes
+        }))
+        .catch(err => {
             console.error(err);
-            res.status(500).send({ message: "Server error finding this user" });
+            res.status(500).send({ message: "Database error finding this user" });
         });
-    } else return res.status(403).send({ message: "whoops we broke something, everyone should have readOwn user" });
 });
 
 // edit own user data
