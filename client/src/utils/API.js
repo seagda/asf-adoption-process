@@ -91,7 +91,7 @@ const API = {
         return axios.get(`/api/dashboard`, getHeaders())
     },
     getDogDossierDocs: function(){
-        return axios.get(`/api/dog/dossierdocs`, getHeaders())
+        return axios.get(`/api/dog/document`, getHeaders())
     }
 }
 

@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import API from '../utils/API';
-
+import SwipeBar from '../components/SwipeBar';
 
 
 const useStyles=makeStyles(theme => ({
@@ -59,6 +59,7 @@ export default function DogDossierDocs(){
                     Documents and Development
                     <Divider />
                 </Typography>
+                <SwipeBar />
             </Grid>
             <Grid item xs={12} s={10}>
                 <Typography variant="h5" component="h6" gutterBottom color="primary">
