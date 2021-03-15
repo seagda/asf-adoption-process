@@ -75,7 +75,7 @@ export default function DogMainInfoEdit(props){
     return(
         <Grid container justify="space-evenly" className={classes.picContainer}>
             <Grid item>
-                <Image alt={"cool dog"} pic={dog} />
+                <Image alt={props.dogData?.DogPhotos[0].url + "'s profile picture"} pic={props.dogData?.DogPhotos[0].url} />
                 <EditButton buttonText="Change Photo" toLink=""/>
             </Grid>
             <Grid item>
