@@ -47,7 +47,8 @@ module.exports = (sequelize, DataTypes, Model) => {
         blocked: {
             type: DataTypes.BOOLEAN,
             defaultValue: false
-        }
+        },
+        currentlyWithSince: DataTypes.DATEONLY
     }, { sequelize, initialAutoIncrement: 2801 });
 
     return Dog;
