@@ -28,9 +28,10 @@ module.exports.get = (id) => db.Dog.findByPk(id, {
     include: [
         { association: "Origin", include: [db.Address, { model: db.Region }] },
         { association: "CurrentlyWith", include: [db.Address, { association: "ResidesInRegion" }] },
+        { association: "AppsFor" },
         db.DogPhoto, db.DogStatus, db.MicrochipMfg
     ]
-}).then(dog => dog.toJSON());
+}).then(dog => ({ ...dog.toJSON(), AppsFor: dog.AppsFor.length }));
 
 module.exports.update = (dog, updates) => { };
 
