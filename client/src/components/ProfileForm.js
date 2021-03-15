@@ -323,12 +323,6 @@ export default function ProfileForm(props){
             <UserMainInfoEdit
             handleInputChange={props.handleInputChange}
             userData={props.userData}
-            createUserChange={createUserInputChange}
-            firstNameValue={userIntakeData.firstName}
-            lastNameValue={userIntakeData.lastName}
-            phoneValue={userIntakeData.phone}
-            emailValue={userIntakeData.email}
-            dobValue={userIntakeData.dob}
             addressChange={handleAddressInputChange}
             streetValue={addressFormData.street}
             cityValue={addressFormData.city}
@@ -348,8 +342,8 @@ export default function ProfileForm(props){
         </Grid>
 
         <UserCapacityEdit
-        createUserChange={createUserInputChange} 
-        maxValue={userIntakeData.maxCapacity}
+        handleInputChange={props.handleInputChange}
+        userData={props.userData}
         />
 
         <UserCaresForEdit

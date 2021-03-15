@@ -41,8 +41,8 @@ export default function UserCapacityEdit(props){
                     <Grid item xs={6} sm={6} md={8} lg={6}>
                         <div>
                         <TextField variant="outlined" type="number" style={{marginTop: "0.5em"}} 
-                        onChange={props.createUserChange} 
-                        value={props.maxData} 
+                        onChange={props.handleInputChange} 
+                        value={props.userData.maxCapacity} 
                         name="maxCapacity"></TextField>
                         {/* <TextField type="number" style={{marginTop: "1em"}}></TextField>
                         <TextField type="number" style={{marginTop: "1em"}}></TextField> */}
