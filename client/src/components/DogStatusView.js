@@ -13,6 +13,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import MultiSelectChips from "../components/MultiSelectChips"
 import SingleSelect from "../components/SingleSelect";
 import RoleTitles from "../components/RoleTitles";
+import API from "../utils/API";
 
 const useStyles = makeStyles((theme) => ({
     itemContainer: {
@@ -32,27 +33,26 @@ const useStyles = makeStyles((theme) => ({
 export default function DogStatusView(props){
     const classes = useStyles();
 
-    const [selectData, setSelectData] = useState({
-        DogStatusId: 0
-    })
-
-    const handleSelectChange = (event)=>{
-        setSelectData({
-            ...selectData,
-            [event.target.name]: event.target.value
-        })
-        props.handleInputChange(event)
-    }
+    const [dogStatusList, setDogStatusList] = useState([]);
 
     useEffect(()=>{
-        setSelectData({
-            DogStatusId: props.dogData.DogStatusId
+        LoadStatus();
+    },[])
+
+    function LoadStatus (){
+        API.getDogStatus().then(res =>{
+            setDogStatusList(res.data)
+            // setMicrochipMfgList(res.data)
+            // console.log(res.data)
+        }).catch(err=>{
+            console.error(err.response.data.message)
+            // alert("get data failed")
         })
-    },[props.dogData.DogStatusId])
+    }
 
     return(
         <Grid item container className={classes.itemContainer}>
-        <Grid container style={{marginTop: "1em"}}>
+        <Grid container style={{marginTop: "2em"}}>
             <Grid item>
                 <Typography variant="h4">Dog Status</Typography>
                 <Divider/>
@@ -61,30 +61,7 @@ export default function DogStatusView(props){
         <Grid container>
             <Grid item container justify="space-between">
                 <Grid item style={{marginTop: "1em"}}>
-                    <Chip label={props.statusLabel}/>
-                    <br/>
-                    {/* <TextField style={{marginTop: "1em"}} variant="outlined" label="Add Details" rows={4}/> */}
-                </Grid>
-                <Grid item>
-                        <div>
-                            <FormControl variant="outlined" className={classes.formControl}>
-                            <InputLabel id="demo-simple-select-outlined-label">Select Status</InputLabel>
-                            <Select
-                            labelId="demo-simple-select-outlined-label"
-                            id="demo-simple-select-outlined"
-                            value={selectData.DogStatusId}
-                            onChange={handleSelectChange}
-                            name="dogStatusNew"
-                            label="Select Status"
-                            >
-                            <MenuItem value={0}>Select Status</MenuItem>
-                            {props.statusList}
-                            </Select>
-                            </FormControl>
-
-                        </div>
-                    <br/>
-                    {/* {repeat ? <Typography style={{color: "red", fontWeight: 800}}>Repeated Relocations</Typography> : null} */}
+                    <Chip label={(dogStatusList.find((status)=>status.id === props.dogData?.DogStatusId)|| {}).name}/>
                 </Grid>
             </Grid>
         </Grid>

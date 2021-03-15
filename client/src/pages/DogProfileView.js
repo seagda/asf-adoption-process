@@ -11,6 +11,7 @@ import DogProfileActions from "../components/DogProfileActions";
 import DogBreedView from "../components/DogBreedView";
 import DogOriginView from "../components/DogOriginView";
 import DogInfoCurrent from "../components/DogInfoCurrent";
+import DogStatusView from "../components/DogStatusView";
 
 const useStyles=makeStyles(theme => ({
     mainContainer: {
@@ -94,6 +95,11 @@ export default function DogProfileView(){
             behaviorIssues={dogData.behaviorIssues} 
             medicalIssues={dogData.medicalIssues} 
             blocked={dogData.blocked}/>
+
+            <DogStatusView
+            dogData={dogData}
+            />
+
         </Grid>
     )
 }
