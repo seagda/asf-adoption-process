@@ -20,7 +20,7 @@ router.get("/", (req, res) => {
             if (permissionAnyDog.granted) {
                 dashboardPromises[1] = db.Dog.count({ include: db.DogStatus, group: ["DogStatusId", "DogStatus.name"] });
                 dashboardPromises[2] = db.User.sum("maxCapacity");
-                dashboardPromises[3] = db.Dog.count({ where: { currentlyWithId: { [db.Sequelize.Op.not]: null } } });
+                dashboardPromises[3] = db.Dog.count({ where: { CurrentlyWithId: { [db.Sequelize.Op.not]: null } } });
             }
             if (permissionAnyAppResponse.granted) {
                 dashboardPromises[4] = db.AppResponse.count({ where: { AppStatusId: { [db.Sequelize.Op.lt]: STATIC_IDS.APP_STATUS.APPROVED } }, include: db.AppType, group: ["AppTypeId", "AppType.name"] });
@@ -34,8 +34,8 @@ router.get("/", (req, res) => {
                 //     db.User.findByPk(3).then(user => user.getDogsByStatus("Adopted")).then(console.log) */
             }
             if (permissionAnyUser.granted) {
-                dashboardPromises[5] = db.User.findAll({ include: [{ association: "currentlyWith" }, { model: db.Role, where: { id: STATIC_IDS.ROLES.FOSTER } }] });
-                dashboardPromises[6] = db.User.findAll({ include: [{ association: "currentlyWith" }, { model: db.Role, where: { id: STATIC_IDS.ROLES.ADOPTER } }] });
+                dashboardPromises[5] = db.User.findAll({ include: [{ association: "CurrentlyWith" }, { model: db.Role, where: { id: STATIC_IDS.ROLES.FOSTER } }] });
+                dashboardPromises[6] = db.User.findAll({ include: [{ association: "CurrentlyWith" }, { model: db.Role, where: { id: STATIC_IDS.ROLES.ADOPTER } }] });
                 let roleWhere = { id: { [db.Sequelize.Op.is]: null } };
                 let regionWhere = { id: { [db.Sequelize.Op.is]: null } };
                 if (user.Roles.find(role => role.id === STATIC_IDS.ROLES.SUPERADMIN)) {
@@ -62,7 +62,7 @@ router.get("/", (req, res) => {
             if (totalDogsInOurCare !== undefined) dashboardData.totalDogsInOurCare = totalDogsInOurCare;
             if (pendingAppCounts) dashboardData.pendingAppCounts = pendingAppCounts;
             if (fosters) {
-                const fostersWithSpace = fosters.filter(foster => foster.currentlyWith.length < foster.maxCapacity);
+                const fostersWithSpace = fosters.filter(foster => foster.CurrentlyWith.length < foster.maxCapacity);
                 dashboardData.fosterCounts = [
                     { status: "Pending Applications", number: (pendingAppCounts.find(appCount => appCount.name === "foster") || { count: 0 }).count },
                     { status: "Available Fosters", number: fostersWithSpace.length },
@@ -70,7 +70,7 @@ router.get("/", (req, res) => {
                 ];
             }
             if (adopters) {
-                const adoptersWithSpace = adopters.filter(adopter => adopter.currentlyWith.length < adopter.maxCapacity);
+                const adoptersWithSpace = adopters.filter(adopter => adopter.CurrentlyWith.length < adopter.maxCapacity);
                 dashboardData.adopterCounts = [
                     { status: "Pending Applications", number: (pendingAppCounts.find(appCount => appCount.name === "adopter") || { count: 0 }).count },
                     { status: "Available Adopters", number: adoptersWithSpace.length },
