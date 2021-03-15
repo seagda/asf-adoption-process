@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function DogStatusEdit(props){
+export default function DogStatusView(props){
     const classes = useStyles();
 
     const [selectData, setSelectData] = useState({
