@@ -68,7 +68,7 @@ router.post("/", (req, res) => {
     const permissionAny = ac.can(req.roles).createAny("Dog");
     console.log(permissionAny.filter(req.body))
     if (permissionAny.granted) {
-        db.Dog.create({ ...permissionAny.filter(req.body), DogStatusId: 1 }, { include: { model: db.ExtContact, as: "Origin", include: db.Address } })
+        db.Dog.create({ ...permissionAny.filter(req.body), DogStatusId: 1 }, { include: { association: "Origin", include: db.Address } })
             // CurrentlyWith always starts null
             .then(dog => res.status(200).send({ id: dog.id }))
             .catch(err => {
