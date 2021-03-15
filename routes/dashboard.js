@@ -1,6 +1,7 @@
 const db = require("../models");
 const ac = require("../helpers/ac");
 const router = require("express").Router();
+const controllers = require("../controllers");
 
 const STATIC_IDS = require("../scripts/staticIds");
 
@@ -15,7 +16,7 @@ router.get("/", (req, res) => {
         .then(user => {
             const dashboardPromises = [];
             if (permissionOwnAlerts.granted) {
-                dashboardPromises[0] = user.getAlerts();
+                dashboardPromises[0] = controllers.alert.getUnread({ ToUserId: user.id });
             }
             if (permissionAnyDog.granted) {
                 dashboardPromises[1] = db.Dog.count({ include: db.DogStatus, group: ["DogStatusId", "DogStatus.name"] });
@@ -49,14 +50,14 @@ router.get("/", (req, res) => {
                 dashboardPromises[7] = db.User.findAll({ include: [{ model: db.Role, where: roleWhere }, { association: "ResidesInRegion", where: regionWhere }] });
             }
             if (permissionOwnDog.granted) {
-                dashboardPromises[8] = user.getCurrentlyWith({ include: [{ model: db.DogPhoto, where: { profilePhoto: true } }, db.DogStatus], order: ["DogStatusId"] });
+                dashboardPromises[8] = controllers.dog.getAll(null, { id: user.id });
             }
 
             return Promise.all(dashboardPromises);
         })
-        .then(([Alerts, dogStatusCounts, totalMaxCapacity, totalDogsInOurCare, pendingAppCounts, fosters, adopters, teamMembers, myDogs]) => {
+        .then(([alerts, dogStatusCounts, totalMaxCapacity, totalDogsInOurCare, pendingAppCounts, fosters, adopters, teamMembers, myDogs]) => {
             const dashboardData = {};
-            if (Alerts) dashboardData.alerts = permissionOwnAlerts.filter(Alerts.map(alert => alert.toJSON()));
+            if (alerts) dashboardData.alerts = permissionOwnAlerts.filter(alerts);
             if (dogStatusCounts) dashboardData.dogStatusCounts = dogStatusCounts.map(statusCount => ({ status: statusCount.name, number: statusCount.count }));
             if (totalMaxCapacity !== undefined) dashboardData.totalMaxCapacity = totalMaxCapacity;
             if (totalDogsInOurCare !== undefined) dashboardData.totalDogsInOurCare = totalDogsInOurCare;
@@ -78,7 +79,7 @@ router.get("/", (req, res) => {
                 ];
             }
             if (teamMembers) dashboardData.teamMembers = permissionAnyUser.filter(teamMembers.map(member => member.toJSON()));
-            if (myDogs) dashboardData.myDogs = permissionOwnDog.filter(myDogs.map(dog => dog.toJSON()));
+            if (myDogs) dashboardData.myDogs = permissionOwnDog.filter(myDogs);
             res.json(dashboardData);
         })
         .catch(err => {
