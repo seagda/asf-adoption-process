@@ -102,12 +102,13 @@ router.post("/new", (req, res) => {
 router.get("/:id", (req, res) => {
     const permissionRead = ac.can(req.roles).readAny("User");
     const permissionUpdate = ac.can(req.roles).updateAny("User");
-    if (permissionRead.granted) {
-        db.User.findByPk(req.params.id).then(user => res.json({ ...permissionRead.filter(user.toJSON()), canEdit: permissionUpdate.granted })).catch(err => {
+    if (permissionRead.granted) controllers.user.get(req.params.id)
+        .then(user => res.json({ ...permissionRead.filter(user), editable: permissionUpdate.attributes }))
+        .catch(err => {
             console.error(err);
             res.status(500).send({ message: "Database error" });
         });
-    } else return res.status(403).send({ message: "Not authorized to view this user" });
+    else return res.status(403).send({ message: "Not authorized to view this user" });
 });
 
 // edit user by id
