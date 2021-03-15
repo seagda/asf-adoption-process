@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
@@ -32,6 +32,24 @@ const useStyles = makeStyles((theme) => ({
 export default function RoleTitleEdit(props){
     const classes = useStyles();
 
+    const [selectData, setSelectData] = useState({
+        DogStatusId: 0
+    })
+
+    const handleSelectChange = (event)=>{
+        setSelectData({
+            ...selectData,
+            [event.target.name]: event.target.value
+        })
+        props.handleInputChange(event)
+    }
+
+    useEffect(()=>{
+        setSelectData({
+            DogStatusId: props.dogData.DogStatusId
+        })
+    },[props.dogData.DogStatusId])
+
     return(
         <Grid item container className={classes.itemContainer}>
         <Grid container style={{marginTop: "1em"}}>
@@ -54,14 +72,12 @@ export default function RoleTitleEdit(props){
                             <Select
                             labelId="demo-simple-select-outlined-label"
                             id="demo-simple-select-outlined"
-                            value={props.statusValue}
-                            onChange={props.statusChange}
+                            value={selectData.DogStatusId}
+                            onChange={handleSelectChange}
                             name="dogStatusNew"
                             label="Select Status"
                             >
-                            <MenuItem value="">
-                            <em>None</em>
-                            </MenuItem>
+                            <MenuItem value={0}>Select Status</MenuItem>
                             {props.statusList}
                             </Select>
                             </FormControl>

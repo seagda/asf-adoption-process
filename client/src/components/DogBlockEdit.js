@@ -105,8 +105,6 @@ export default function ProfileForm(props){
     }
 
     const [dogStatusList, setDogStatusList] = useState([]);
-    const [dogStatusNew, setDogStatusNew] = useState(0)
-    const handleStatusChange = (event) => setDogStatusNew(event.target.value)
 
     const [microchipMfgList, setMicrochipMfgList] = useState([]);
     
@@ -168,8 +166,7 @@ export default function ProfileForm(props){
     const handleDogIntakeFormSubmit = event =>{
         event.preventDefault();
         const newDog = {...dogIntakeData, 
-            ...originContactData,
-            DogStatusId: dogStatusNew
+            ...originContactData
         }
         console.log(originContactData, addedExternalContactData, addedAddressData)
         if(!originContactData.originId){
@@ -183,7 +180,6 @@ export default function ProfileForm(props){
             setOriginContactData({})
             setAddedExternalContactData({})
             setAddedAddressData({})
-            setDogStatusNew(0)
             window.location = "/dogView/" + (dogId || res.data.id)
         }).catch(err=>{
             console.error(err)
@@ -209,9 +205,9 @@ export default function ProfileForm(props){
 
         {window.location.href.includes("create") ? null : 
         <DogStatusEdit
+        handleInputChange={props.handleInputChange}
+        dogData={props.dogData}
         statusLabel={(dogStatusList.find((status)=>status.id === props.dogData?.DogStatusId)|| {}).name}
-        statusValue={dogStatusNew}
-        statusChange={handleStatusChange}
         statusList ={dogStatusList.map((status)=><MenuItem value={status.id}>{status.name}</MenuItem>)}
         />}
 
