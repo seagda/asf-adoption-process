@@ -20,6 +20,9 @@ module.exports = (sequelize, DataTypes, Model) => {
             User.belongsTo(db.Auth, { foreignKey: { allowNull: false } });
             db.Auth.hasOne(User, { foreignKey: { allowNull: false } });
 
+            User.belongsTo(db.Setting, { foreignKey: { allowNull: false } });
+            db.Setting.hasOne(User, { foreignKey: { allowNull: false } });
+
             User.belongsToMany(db.Role, { through: "UsersRoles" });
             db.Role.belongsToMany(User, { through: "UsersRoles" });
 
@@ -28,8 +31,6 @@ module.exports = (sequelize, DataTypes, Model) => {
 
             db.Region.hasMany(User, { as: "ResidesInRegion", foreignKey: "ResidesInRegionId" });
             User.belongsTo(db.Region, { as: "ResidesInRegion", foreignKey: "ResidesInRegionId" });
-
-            User.hasMany(db.Alert, { foreignKey: { name: "toUserId", allowNull: false } });
         }
     }
 

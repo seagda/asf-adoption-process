@@ -139,7 +139,7 @@ function generateStatusAlerts(appResp) {
             }),
             appResp.getAppStatus(),
             appResp.getAppType()
-        ]).then(([alertUsers, AppStatus, AppType]) => alertUsers.forEach(alertUser => alertUser.createAlert({ message: `${user.firstName} ${user.lastName}'s ${AppType.name} application: ${AppStatus.name}`, aboutUserId: user.id })))
+        ]).then(([alertUsers, AppStatus, AppType]) => alertUsers.forEach(alertUser => alertUser.createAlert({ message: `${user.firstName} ${user.lastName}'s ${AppType.name} application: ${AppStatus.name}`, AboutUserId: user.id })))
     })
         .catch(console.error);
 }

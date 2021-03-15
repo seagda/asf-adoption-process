@@ -14,11 +14,11 @@ module.exports = (sequelize, DataTypes, Model) => {
             Dog.hasMany(db.DogPhoto, {foreignKey: {allowNull: false}});
             db.DogPhoto.belongsTo(Dog, {foreignKey: {allowNull: false}});
 
-            db.ExtContact.hasMany(Dog, { as: "origin", foreignKey: { name: "originId", allowNull: false } });
-            Dog.belongsTo(db.ExtContact, { as: "origin", foreignKey: { name: "originId", allowNull: false } });
+            db.ExtContact.hasMany(Dog, { as: "Origin", foreignKey: { name: "OriginId", allowNull: false } });
+            Dog.belongsTo(db.ExtContact, { as: "Origin", foreignKey: { name: "OriginId", allowNull: false } });
 
-            db.User.hasMany(Dog, { as: "currentlyWith", foreignKey: "currentlyWithId" });
-            Dog.belongsTo(db.User, { as: "currentlyWith", foreignKey: "currentlyWithId" });
+            db.User.hasMany(Dog, { as: "CurrentlyWith", foreignKey: "CurrentlyWithId" });
+            Dog.belongsTo(db.User, { as: "CurrentlyWith", foreignKey: "CurrentlyWithId" });
 
             db.MicrochipMfg.hasMany(Dog);
             Dog.belongsTo(db.MicrochipMfg);
@@ -29,10 +29,6 @@ module.exports = (sequelize, DataTypes, Model) => {
     }
 
     Dog.init({
-        asfId: {
-            type: DataTypes.INTEGER,
-            unique: true
-        },
         name: {
             type: DataTypes.STRING,
             allowNull: false
@@ -47,12 +43,13 @@ module.exports = (sequelize, DataTypes, Model) => {
         medicalIssues: DataTypes.STRING,
         size: DataTypes.ENUM("mini", "small", "medium", "large"),
         weight: DataTypes.DECIMAL(10, 2),
-        coat: DataTypes.ENUM("double merle", "black and tan", "blue merle", "red merle", "red", "red bi-color", "tri-color", "black", "black bi-color", "brown", "white"),
+        coat: DataTypes.ENUM("self merle", "double merle", "black and tan", "blue merle", "red merle", "red", "red bi-color", "red tri-color", "black", "black bi-color", "black tri-color", "brown", "white"),
         blocked: {
             type: DataTypes.BOOLEAN,
             defaultValue: false
-        }
-    }, { sequelize });
+        },
+        currentlyWithSince: DataTypes.DATEONLY
+    }, { sequelize, initialAutoIncrement: 2801 });
 
     return Dog;
 }

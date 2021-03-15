@@ -1,5 +1,5 @@
 module.exports = ac => {
-    ac.grant("user").grant("rescuer").extend("user")
+    ac.grant("User").grant("Rescuer").extend("User")
       .createAny("Dog")
       .readAny("Dog")
       .readAny("Event")

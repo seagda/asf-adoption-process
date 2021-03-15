@@ -1,5 +1,5 @@
 module.exports = ac => {
-    ac.grant("foster").grant("rescuer").grant("placement").grant("regional").extend("foster").extend("rescuer").extend("placement")
+    ac.grant("Foster").grant("Rescuer").grant("Placement").grant("Regional").extend("Foster").extend("Rescuer").extend("Placement")
         .createAny("Address")
         .readAny("Address")
         .updateAny("Address")
@@ -10,5 +10,5 @@ module.exports = ac => {
         .readAny("Region")
         .readAny("Alert");
 
-    ac.grant("admin").extend("regional");
+    ac.grant("Admin").extend("Regional");
 };

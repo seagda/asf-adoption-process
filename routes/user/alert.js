@@ -1,5 +1,7 @@
 const db = require("../../models");
 const ac = require("../../helpers/ac");
+const controller = require("../../controllers/alert");
+
 const router = require("express").Router();
 
 
@@ -48,6 +50,18 @@ router.post("/new", (req, res) => {
     });
 
     } else return res.status(403).send({ message: "Not authorized to create an Alert" });
+});
+
+// mark alert as read
+router.put("/:id/read", (req, res) => {
+    const permissionAny = ac.can(req.roles).updateAny("Alert");
+    db.Alert.findByPk(req.params.id)
+        .then(alert => alert.ToUserId === req.userId || (permissionAny.attributes.includes("read")) ? controller.markAsRead(alert) : false)
+        .then(updated => updated ? res.sendStatus(200) : res.status(403).send({ message: "Not authorized to mark this alert as read" }))
+        .catch(err => {
+            console.error(err);
+            res.status(500).send({ message: "Database error" });
+        });
 });
 
 // update Alert by id, with correct ROLE permission

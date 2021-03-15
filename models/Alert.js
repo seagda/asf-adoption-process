@@ -8,8 +8,11 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     Alert.associate = db => {
-        Alert.belongsTo(db.Dog, { foreignKey: { name: "aboutDogId", allowNull: true } });
-        Alert.belongsTo(db.User, { foreignKey: { name: "aboutUserId", allowNull: true } });
+        db.User.hasMany(Alert, { foreignKey: { name: "ToUserId", allowNull: false } });
+        Alert.belongsTo(db.User, { as: "ToUser", foreignKey: { name: "ToUserId", allowNull: false } });
+
+        Alert.belongsTo(db.Dog, { as: "AboutDog" });
+        Alert.belongsTo(db.User, { as: "AboutUser" });
     };
 
     return Alert;
