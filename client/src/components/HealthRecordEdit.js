@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
@@ -35,6 +35,26 @@ const useStyles = makeStyles((theme) => ({
 export default function HealthRecordEdit(props){
     const classes = useStyles();
 
+    const [selectData, setSelectData] = useState({
+        MicrochipMfgId: "",
+        gender: ""
+    })
+
+    const handleSelectChange = (event)=>{
+        setSelectData({
+            ...selectData,
+            [event.target.name]: event.target.value
+        })
+        props.handleInputChange(event)
+    }
+
+    useEffect(()=>{
+        setSelectData({
+            gender: props.dogData.gender,
+            MicrochipMfgId: props.dogData.MicrochipMfgId
+        })
+    },[props.dogData.MicrochipMfgId, props.dogData.gender])
+
     return(
         <Grid item container className={classes.itemContainer}>
         <Grid container>
@@ -54,7 +74,7 @@ export default function HealthRecordEdit(props){
                 <SingleSelect title="Has Medical Issues"/>
             </Grid> */}
             <Grid item container style={{marginTop: "1em"}} justify="center">
-                <TextField className={classes.largeTextfield} label="Known medical issues" InputLabelProps={{shrink: true}} rows={6} multiline variant="outlined" onChange={props.dogInputChange} value={props.medIssuesValue} name="medicalIssues"/>
+                <TextField className={classes.largeTextfield} label="Known medical issues" InputLabelProps={{shrink: true}} rows={6} multiline variant="outlined" onChange={props.handleInputChange} value={props.dogData.withMedicalIssues} name="medicalIssues"/>
             </Grid>
         </Grid>
         <Grid container>

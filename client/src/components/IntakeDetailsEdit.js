@@ -45,10 +45,10 @@ export default function IntakeDetailsEdit(props){
         </Grid>
         <Grid container justify="space-evenly">
             <Grid item style={{marginTop: "1em"}}>
-                <TextField className={classes.formControl} type="number" variant="outlined" label="Pull Cost" InputLabelProps={{shrink: true}} onChange={props.dogInputChange} value={props.pullCostValue} name="pullCost"/>
+                <TextField className={classes.formControl} type="number" variant="outlined" label="Pull Cost" InputLabelProps={{shrink: true}} onChange={props.handleInputChange} value={props.dogData.pullCost} name="pullCost"/>
             </Grid>
             <Grid item style={{marginTop: "1em"}}>
-                <TextField className={classes.formControl} variant="outlined" label="Behavioral Issues" InputLabelProps={{shrink: true}} onChange={props.dogInputChange} value={props.behaviorValue} name="behaviorialIssues"/>
+                <TextField className={classes.formControl} variant="outlined" label="Behavioral Issues" InputLabelProps={{shrink: true}} onChange={props.handleInputChange} value={props.dogData.withBehavioralIssues} name="behaviorialIssues"/>
             </Grid>
             <Grid item container style={{marginTop: "1em"}} align="center" direction="column">
                 <Grid item>

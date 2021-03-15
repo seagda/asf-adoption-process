@@ -214,9 +214,9 @@ export default function ProfileForm(props){
 
         {window.location.href.includes("create") ? 
         <IntakeDetailsEdit
+        handleInputChange={props.handleInputChange}
+        dogData={props.dogData}
         dogInputChange={createDogInputChange}
-        pullCostValue={dogIntakeData.pullCost}
-        behaviorValue={dogIntakeData.behaviorialIssues}
         originContactChange={handleOriginContact}
         originValue={originContactData.originId}
         addContactChange={handleAddedExternalContactChange}
@@ -235,6 +235,8 @@ export default function ProfileForm(props){
         /> : null}
 
         <HealthRecordEdit
+        handleInputChange={props.handleInputChange}
+        dogData={props.dogData}
         dogInputChange={createDogInputChange}
         medIssuesValue={dogIntakeData.medicalIssues}
         />
