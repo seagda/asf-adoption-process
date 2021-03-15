@@ -29,7 +29,8 @@ export default function BreedEdit(props){
     const classes = useStyles();
 
     const [selectData, setSelectData] = useState({
-        isPurebred: ""
+        isPurebred: "",
+        coat: ""
     })
 
     const handleSelectChange = (event)=>{
@@ -42,9 +43,10 @@ export default function BreedEdit(props){
 
     useEffect(()=>{
         setSelectData({
-            isPureBred: props.dogData.isPureBred
+            isPureBred: props.dogData.isPureBred,
+            coat: props.dogData.coat
         })
-    },[props.dogData.isPurebred])
+    },[props.dogData.isPurebred, props.dogData.coat])
 
     return(
         <Grid item container className={classes.itemContainer}>
@@ -86,8 +88,8 @@ export default function BreedEdit(props){
                     <Select
                     labelId="coat"
                     id="coat"
-                    onChange={props.coatColorChange}
-                    value={props.coatColorData}
+                    onChange={handleSelectChange}
+                    value={selectData.coat}
                     name="coat"
                     label="coat"
                     InputLabelProps={{shrink: true}}

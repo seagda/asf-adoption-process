@@ -240,8 +240,6 @@ export default function ProfileForm(props){
         dogData={props.dogData} 
         dogInputChange={createDogInputChange} 
         secondBreedValue={dogIntakeData.secondaryBreed}
-        coatColorChange={handleCoatColorChange}
-        coatColorValue={coatColorData.coat}
         weightValue={dogIntakeData.weight}
         sizeChange={handleSizeChange}
         sizeValue={sizeData.size}
