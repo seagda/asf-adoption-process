@@ -27,23 +27,21 @@ export default function DogOriginView(props){
                     </Grid>
                     <Grid item container style={{marginTop: "1em"}}>
                         <Grid item xs={10} sm={6} md={8} lg={6}>
-                            <Typography style={{marginTop: "1em"}}>Region:  {props.originRegion}</Typography>
+                            <Typography style={{marginTop: "1em", fontWeight: "bold"}}>Region:<Typography>{props.originRegion}</Typography></Typography>
                         </Grid>
                         <Grid item xs={10} sm={6} md={8} lg={6}>
-                            <Typography style={{marginTop: "1em"}}>Name:{props.originName}</Typography>
+                            <Typography style={{marginTop: "1em", fontWeight: "bold"}}>Name:<Typography>{props.originName}</Typography></Typography>
                         </Grid>
                         <Grid item xs={10} sm={6} md={8} lg={6}>
-                            <Typography style={{marginTop: "1em"}}>Phone:{props.originPhone}</Typography>
+                            <Typography style={{marginTop: "1em", fontWeight: "bold"}}>Phone:<Typography>{props.originPhone}</Typography></Typography>
                         </Grid>
                         <Grid item xs={10} sm={6} md={8} lg={6}>
-                            <Typography style={{marginTop: "1em"}}>Pull Cost:${props.pullCost}</Typography>
+                            <Typography style={{marginTop: "1em", fontWeight: "bold"}}>Pull Cost:<Typography>${props.pullCost}</Typography></Typography>
                         </Grid>
                         <Grid item xs={10} sm={6} md={8} lg={6}>
-                            <Typography style={{marginTop: "1em"}}>Address</Typography>
-                            <Typography>Street:{props.originStreet}</Typography>
-                            <Typography>City:{props.originCity}</Typography>
-                            <Typography>State:{props.originState}</Typography>
-                            <Typography>Zip:{props.originZip}</Typography>
+                            <Typography style={{marginTop: "1em", fontWeight: "bold"}}>Address</Typography>
+                            <Typography>{props.originStreet}</Typography>
+                            <Typography>{props.originCity}, {props.originState} {props.originZip}</Typography> 
                         </Grid>
                     </Grid>
             </Grid>

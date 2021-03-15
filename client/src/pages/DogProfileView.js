@@ -11,6 +11,7 @@ import DogProfileActions from "../components/DogProfileActions";
 import DogBreedView from "../components/DogBreedView";
 import DogOriginView from "../components/DogOriginView";
 import DogInfoCurrent from "../components/DogInfoCurrent";
+import DogStatusView from "../components/DogStatusView";
 
 const useStyles=makeStyles(theme => ({
     mainContainer: {
@@ -61,12 +62,13 @@ export default function DogProfileView(){
             </Grid>
 
             <DogBlockView 
-            name={dogData.name} 
-            dob={dogData.dob} 
-            gender={dogData.gender} 
-            size={dogData.size} 
-            microchipId={dogData.microchipId} 
-            asfId={dogData.asfId} 
+            name={dogData?.name} 
+            dob={dogData?.dob} 
+            gender={dogData?.gender} 
+            size={dogData?.size} 
+            mfgCompany={dogData?.MicrochipMfg?.name}
+            microchipId={dogData?.microchipId} 
+            asfId={dogData?.asfId} 
             // microchipName={dogData.MicrochipMfg.name} 
             image={(dogData.DogPhotos.find((photo)=> photo.profilePhoto)||{}).url}/>
 
@@ -93,6 +95,11 @@ export default function DogProfileView(){
             behaviorIssues={dogData.behaviorIssues} 
             medicalIssues={dogData.medicalIssues} 
             blocked={dogData.blocked}/>
+
+            <DogStatusView
+            dogData={dogData}
+            />
+
         </Grid>
     )
 }

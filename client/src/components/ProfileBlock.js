@@ -60,19 +60,19 @@ export default function ProfileBlock(props){
             </Grid>
             <Grid item className={classes.form}>
                 <Grid item container className={classes.formItem}>
-                    <Typography>First Name: {props.firstName}</Typography>
+                    <Typography style={{fontWeight: "bold"}}>First Name:<Typography> {props.firstName}</Typography></Typography>
                 </Grid>
                 <Grid item container className={classes.formItem}>
-                    <Typography>Last Name: {props.lastName}</Typography>
+                    <Typography style={{fontWeight: "bold"}}>Last Name:<Typography>{props.lastName}</Typography> </Typography>
                 </Grid>
                 <Grid item container className={classes.formItem}>
-                     <Typography>Phone: {props.phone}</Typography>
+                     <Typography style={{fontWeight: "bold"}}>Phone:<Typography>{props.phone}</Typography> </Typography>
                 </Grid>
                 <Grid item container className={classes.formItem}>
-                     <Typography>Email: {props.email}</Typography>
+                     <Typography style={{fontWeight: "bold"}}>Email:<Typography>{props.email}</Typography> </Typography>
                 </Grid>
                 <Grid item container className={classes.formItem}>
-                     <Typography>DOB: {props.dob}</Typography>
+                     <Typography style={{fontWeight: "bold"}}>DOB:<Typography>{props.dob}</Typography> </Typography>
                 </Grid>
                 {/* <Grid item container className={classes.formItem}>
                     <Typography>City: Camarillo</Typography>
