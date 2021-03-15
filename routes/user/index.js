@@ -3,13 +3,13 @@ const jwt = require("jsonwebtoken");
 const db = require("../../models");
 const ac = require("../../helpers/ac");
 const mail = require("../../helpers/mail");
-
+const controllers = require("../../controllers");
 const router = require("express").Router();
 
-router.use("/alert", require("./alertController"));
-router.use("/app-response", require("./appResponseController"));
-router.use("/family", require("./familymemberController"));
-router.use("/reference", require("./referenceController"));
+router.use("/alert", require("./alert"));
+router.use("/app-response", require("./appResponse"));
+router.use("/family", require("./familymember"));
+router.use("/reference", require("./reference"));
 
 // get all users
 router.get("/", (req, res) => {
@@ -26,7 +26,7 @@ router.get("/", (req, res) => {
                     city: userJson.Address ? userJson.Address.city : "No Address",
                     state: userJson.Address ? userJson.Address.state : "--",
                     ResidesInRegion: userJson.ResidesInRegion,
-                    Roles: userJson.Roles.filter(role => role.name !== "user")
+                    Roles: userJson.Roles.filter(role => role.name !== "User")
                 }
             }))))
             .catch(err => {
@@ -38,14 +38,15 @@ router.get("/", (req, res) => {
 
 // get own user data
 router.get("/me", (req, res) => {
-    // everyone has this permission but we check to get the filter
-    const permission = ac.can(req.roles).readOwn("User");
-    if (permission.granted) {
-        db.User.findByPk(req.userId).then(user => res.json(permission.filter(user.toJSON()))).catch(err => {
+    controllers.user.get(req.userId)
+        .then(user => res.json({
+            ...ac.can(req.roles).readOwn("User").filter(user),
+            editable: ac.can(req.roles).updateOwn("User").attributes
+        }))
+        .catch(err => {
             console.error(err);
-            res.status(500).send({ message: "Server error finding this user" });
+            res.status(500).send({ message: "Database error finding this user" });
         });
-    } else return res.status(403).send({ message: "whoops we broke something, everyone should have readOwn user" });
 });
 
 // edit own user data
@@ -101,12 +102,13 @@ router.post("/new", (req, res) => {
 router.get("/:id", (req, res) => {
     const permissionRead = ac.can(req.roles).readAny("User");
     const permissionUpdate = ac.can(req.roles).updateAny("User");
-    if (permissionRead.granted) {
-        db.User.findByPk(req.params.id).then(user => res.json({ ...permissionRead.filter(user.toJSON()), canEdit: permissionUpdate.granted })).catch(err => {
+    if (permissionRead.granted) controllers.user.get(req.params.id)
+        .then(user => res.json({ ...permissionRead.filter(user), editable: permissionUpdate.attributes }))
+        .catch(err => {
             console.error(err);
             res.status(500).send({ message: "Database error" });
         });
-    } else return res.status(403).send({ message: "Not authorized to view this user" });
+    else return res.status(403).send({ message: "Not authorized to view this user" });
 });
 
 // edit user by id

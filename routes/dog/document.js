@@ -1,5 +1,6 @@
 const db = require("../../models");
 const ac = require("../../helpers/ac");
+const controllers = require("../../controllers");
 const router = require("express").Router();
 
 // show all DOCUMENT for ONE dog, with correct ROLE permission
@@ -7,23 +8,12 @@ router.get("/:id", (req, res) => {
     const permissionOwn = ac.can(req.roles).readOwn("Document");
     const permissionAny = ac.can(req.roles).readAny("Document");
     if (permissionOwn.granted || permissionAny.granted) {
-
-        db.Document
-        .findByPk(req.params.id, {include: db.Dog})
-        .then(doc => {
-            let docJson;
-            if (doc.Dog.currentlyWithId === req.userId) {
-                docJson = permissionOwn.filter(doc.toJSON())
-            } else if (permissionAny.granted) {
-                docJson = permissionAny.filter(doc.toJSON())
-            } else return res.status(403).send({ message: "you can't view this dog's assessments" });
-            res.json(docJson);
+        controllers.document.getForDog(req.params.id).then(docs => {
+            if (docs.CurrentlyWithId == req.userId) res.json(permissionOwn.filter(doc.documents));
+            else if (permissionAny.granted) res.json(permissionAny.filter(docs.documents));
+            else res.status(403).send({ message: "Not authorized to view documents for this dog" });
         })
-        .catch(err => {
-            console.error(err);
-            res.status(422).send({ message: "Error with request" });
-        });
-    } else return res.status(403).send({ message: "Not authorized to view DOCUMENTs" });
+    } else return res.status(403).send({ message: "Not authorized to view documents" });
 });
 
 // create new DOCUMENT, with correct ROLE permission

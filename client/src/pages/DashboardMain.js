@@ -80,20 +80,20 @@ export default function DashboardMain(){
                     <Divider />
                 </Typography>
 
-                {/* update if the quick actions item being sent is true */}
-                {user.roles.some( (role) => ["regional", "admin", "superAdmin"].includes(role)) ? 
+                {/* If Admin credentials, display these quick actions */}
+                {user.roles.some( (role) => ["Regional", "Admin", "Super Admin"].includes(role)) ? 
                 <Grid item xs={12}>
                     <QuickActionsAdmin/>
                 </Grid>: null}
 
                 {/* And/or if Foster credentials, display these quick actions */}
-                {user.roles.includes("foster") ?
+                {user.roles.includes("Foster") ?
                 <Grid item xs={12}>
                     <QuickActionsFoster/>
                 </Grid>: null}
 
                 {/* And/or if Foster credentials, display these quick actions */}
-                {user.roles.includes("adopter") ?
+                {user.roles.includes("Adopter") ?
                 <Grid item xs={12}>
                     <QuickActionsAdopter/>
                 </Grid>: null}

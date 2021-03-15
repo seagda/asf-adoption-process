@@ -1,5 +1,5 @@
 module.exports = ac => {
-    ac.grant("user")
+    ac.grant("User")
         .readOwn("Dog")
         .createOwn("Address")
         .readOwn("Address")
