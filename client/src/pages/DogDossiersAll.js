@@ -43,7 +43,7 @@ export default function DogDossiersAll() {
    
     const [searchDog, setDogSearch] = React.useState("");
     const [dogs, setDogState] = useState([])
-
+    
     useEffect(() => {
     loadDogs()
     }, [])
@@ -132,7 +132,19 @@ export default function DogDossiersAll() {
                     })}/>
                 </Grid>
                 <Grid item xs={12}>
-                    <MapBox />
+                    <MapBox /* dogLocation={dogs.filter( (dog) => {
+                        if (selectedRegions.length > 0 && !selectedRegions.includes(dog.Region.id)) {
+                            return false;
+                        } 
+                        if (selectedDogStatus.length > 0 && !selectedDogStatus.includes(dog.DogStatus.id)) {
+                            return false; 
+                        }
+                        if (!(parseInt(searchDog) === dog.id || dog.name.toLowerCase().includes(searchDog.toLowerCase()))) {
+                            return false; 
+                        }
+                        return true;
+
+                    })} *//>
                 </Grid>
             </Grid>
         </Grid>

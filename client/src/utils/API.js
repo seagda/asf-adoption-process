@@ -89,6 +89,9 @@ const API = {
     },
     getDashboardData: function(){
         return axios.get(`/api/dashboard`, getHeaders())
+    },
+    getDogDossierDocs: function(){
+        return axios.get(`/api/dog/dossierdocs`, getHeaders())
     }
 }
 
