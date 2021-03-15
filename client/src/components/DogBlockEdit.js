@@ -73,25 +73,6 @@ export default function ProfileForm(props){
     const classes = useStyles();
     const repeat = true;
 
-    const [isPurebredData, setIsPurebredData] = useState({});
-    const handlePurebredChange = (event) => {
-      const {name, value} = event.target
-      setIsPurebredData({
-          ...isPurebredData,
-          [name]: value
-      })
-    };
-
-
-    const [sizeData, setSizedata] = useState({});
-    const handleSizeChange = (event) => {
-      const {name, value} = event.target
-      setSizedata({
-          ...sizeData,
-          [name]: value
-      })
-    };
-
     const [contactFormVis, setContactFormVis] = useState(true)
     const onClick = () => setContactFormVis(false)
 
@@ -187,8 +168,6 @@ export default function ProfileForm(props){
     const handleDogIntakeFormSubmit = event =>{
         event.preventDefault();
         const newDog = {...dogIntakeData, 
-            ...isPurebredData,
-            ...sizeData, 
             ...originContactData,
             DogStatusId: dogStatusNew
         }
@@ -201,8 +180,6 @@ export default function ProfileForm(props){
             .then(res =>{
             console.log(res.data)
             setDogIntakeData({})
-            setIsPurebredData({})
-            setSizedata({})
             setOriginContactData({})
             setAddedExternalContactData({})
             setAddedAddressData({})
@@ -228,14 +205,6 @@ export default function ProfileForm(props){
         <BreedEdit
         handleInputChange={props.handleInputChange}
         dogData={props.dogData} 
-        dogInputChange={createDogInputChange} 
-        secondBreedValue={dogIntakeData.secondaryBreed}
-        weightValue={dogIntakeData.weight}
-        sizeChange={handleSizeChange}
-        sizeValue={sizeData.size}
-        originList= {origins.map((origin)=>(
-            <MenuItem value={origin.id}>{origin.fullName}</MenuItem>
-        ))}
         />
 
         {window.location.href.includes("create") ? null : 
@@ -264,6 +233,9 @@ export default function ProfileForm(props){
         cityValue={addedAddressData.city}
         stateValue={addedAddressData.state}
         zipValue={addedAddressData.zip5}
+        originList= {origins.map((origin)=>(
+            <MenuItem value={origin.id}>{origin.fullName}</MenuItem>
+        ))}
         /> : null}
 
         <HealthRecordEdit
