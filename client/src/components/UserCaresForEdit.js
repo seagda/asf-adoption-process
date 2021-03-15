@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from "@material-ui/core/Grid";
 import FormControl from "@material-ui/core/FormControl";
@@ -39,7 +39,33 @@ const useStyles = makeStyles((theme) => ({
 export default function UserCaresForEdit(props){
     const classes = useStyles();
 
-    return(
+    const [selectData, setSelectData] = useState({
+        puppies: null,
+        adults: null,
+        seniors: null,
+        withBehaviorIssues: null,
+        withMedicalIssues: null
+    })
+
+    const handleSelectChange = (event)=>{
+        setSelectData({
+            ...selectData,
+            [event.target.name]: event.target.value
+        })
+        props.handleInputChange(event)
+    }
+
+    useEffect(()=>{
+        setSelectData({
+            puppies: props.userData?.puppies,
+            adults: props.userData?.adults,
+            seniors: props.userData?.seniors,
+            withBehaviorIssues: props.userData?.withBehaviorIssues,
+            withMedicalIssues: props.userData?.withMedicalIssues,
+        })
+    },[props.userData?.puppies, props.userData?.adults, props.userData?.seniors, props.userData?.withBehaviorIssues, props.userData?.withMedicalIssues,])
+
+    return( 
         <Grid item container className={classes.itemContainer}>
             <Grid item container xs={10} sm={6} md={6} lg={6} style={{marginTop: "3em"}} direction="column">
                 <Grid item>
@@ -50,16 +76,17 @@ export default function UserCaresForEdit(props){
                     <Grid item style={{marginTop: "1em"}}>
                     <div>
                     <FormControl variant="outlined" className={classes.formControl}>
-                    <InputLabel id="puppies">Puppies?</InputLabel>
+                    <InputLabel shrink id="puppies">Puppies?</InputLabel>
                     <Select
                     labelId="puppies"
                     id="puppies"
-                    onChange={props.puppiesChange}
-                    value={props.puppiesValue}
+                    onChange={handleSelectChange}
+                    value={selectData.puppies}
                     name="puppies"
                     label="Puppies?"
                     InputLabelProps={{shrink: true}}
                     >
+                    <MenuItem disabled value={null}>Puppies?</MenuItem>
                     <MenuItem value={true}>Yes</MenuItem>
                     <MenuItem value={false}>No</MenuItem>
                     </Select>
@@ -71,16 +98,17 @@ export default function UserCaresForEdit(props){
                     <Grid item style={{marginTop: "1em"}}>
                     <div>
                     <FormControl variant="outlined" className={classes.formControl}>
-                    <InputLabel id="adults">Adults?</InputLabel>
+                    <InputLabel shrink id="adults">Adults?</InputLabel>
                     <Select
                     labelId="adults"
                     id="adults"
-                    onChange={props.adultsChange}
-                    value={props.adultsValue}
+                    onChange={handleSelectChange}
+                    value={selectData.adults}
                     name="adults"
                     label="Adults?"
                     InputLabelProps={{shrink: true}}
                     >
+                    <MenuItem disabled value={null}>Adults?</MenuItem>
                     <MenuItem value={true}>Yes</MenuItem>
                     <MenuItem value={false}>No</MenuItem>
                     </Select>
@@ -94,16 +122,17 @@ export default function UserCaresForEdit(props){
                     <Grid item style={{marginTop: "1em"}}>
                     <div>
                     <FormControl variant="outlined" className={classes.formControl}>
-                    <InputLabel id="seniors">Seniors?</InputLabel>
+                    <InputLabel shrink id="seniors">Seniors?</InputLabel>
                     <Select
                     labelId="seniors"
                     id="seniors"
-                    onChange={props.seniorsChange}
-                    value={props.seniorsValue}
+                    onChange={handleSelectChange}
+                    value={selectData.seniors}
                     name="active"
                     label="Seniors?"
                     InputLabelProps={{shrink: true}}
                     >
+                    <MenuItem disabled value={null}>Seniors?</MenuItem>
                     <MenuItem value={true}>Yes</MenuItem>
                     <MenuItem value={false}>No</MenuItem>
                     </Select>
@@ -115,16 +144,17 @@ export default function UserCaresForEdit(props){
                     <Grid item style={{marginTop: "1em"}}>
                     <div>
                     <FormControl variant="outlined" className={classes.formControl}>
-                    <InputLabel id="withBehaviorIssues">Behaviorial Issues?</InputLabel>
+                    <InputLabel shrink id="withBehaviorIssues">Behaviorial Issues?</InputLabel>
                     <Select
                     labelId="withBehaviorIssues"
                     id="withBehaviorIssues"
-                    onChange={props.behaviorChange}
-                    value={props.behaviorValue}
+                    onChange={handleSelectChange}
+                    value={selectData.withBehaviorIssues}
                     name="withBehaviorIssues"
                     label="With behaviorial issues?"
                     InputLabelProps={{shrink: true}}
                     >
+                    <MenuItem disabled value={null}>Behaviorial Issues?</MenuItem>
                     <MenuItem value={true}>Yes</MenuItem>
                     <MenuItem value={false}>No</MenuItem>
                     </Select>
@@ -138,16 +168,17 @@ export default function UserCaresForEdit(props){
                     <Grid item>
                     <div>
                     <FormControl variant="outlined" className={classes.formControl}>
-                    <InputLabel id="withMedicalIssues">Medical Issues?</InputLabel>
+                    <InputLabel shrink id="withMedicalIssues">Medical Issues?</InputLabel>
                     <Select
                     labelId="withMedicalIssues"
                     id="withMedicalIssues"
-                    onChange={props.medicalChange}
-                    value={props.medicalValue}
+                    onChange={handleSelectChange}
+                    value={selectData.withMedicalIssues}
                     name="withMedicalIssues"
                     label="Medical Issues?"
                     InputLabelProps={{shrink: true}}
                     >
+                    <MenuItem disabled value={null}>Medical Issues?</MenuItem>
                     <MenuItem value={true}>Yes</MenuItem>
                     <MenuItem value={false}>No</MenuItem>
                     </Select>

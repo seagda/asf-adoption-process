@@ -307,6 +307,8 @@ export default function ProfileForm(props){
         />
 
         <UserCaresForEdit
+        handleInputChange={props.handleInputChange}
+        userData={props.userData}
         puppiesChange={handlePuppiesChange}
         puppiesValue={caresForPuppiesData.puppies}
         adultsChange={handleAdultsChange}
