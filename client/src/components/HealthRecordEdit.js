@@ -1,8 +1,9 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
+import TextField from "@material-ui/core/TextField";
 
 import SingleSelect from "../components/SingleSelect";
 import MultiSelectChips from "../components/MultiSelectChips";
@@ -12,45 +13,75 @@ import MultiLineText from "../components/MultiLineText";
 
 const useStyles = makeStyles((theme) => ({
     itemContainer: {
-        width: "100%",
         [theme.breakpoints.down("xs")]:{
             justifyContent: "center",
-            alignItems: "center",
-            padding: "1em"
+            alignItems: "center"
+        },
+        marginBottom: "5em"
+    },
+    formControl: {
+        margin: theme.spacing(1),
+        minWidth: 300,
+        // fullWidth: true
+    },
+    largeTextfield: {
+        minWidth: "60em",
+        [theme.breakpoints.down("sm")]:{
+            minWidth: "20em"
         }
     }
 }));
 
-export default function HealthRecordEdit(){
+export default function HealthRecordEdit(props){
     const classes = useStyles();
+
+    const [selectData, setSelectData] = useState({
+        MicrochipMfgId: "",
+        gender: ""
+    })
+
+    const handleSelectChange = (event)=>{
+        setSelectData({
+            ...selectData,
+            [event.target.name]: event.target.value
+        })
+        props.handleInputChange(event)
+    }
+
+    useEffect(()=>{
+        setSelectData({
+            gender: props.dogData.gender,
+            MicrochipMfgId: props.dogData.MicrochipMfgId
+        })
+    },[props.dogData.MicrochipMfgId, props.dogData.gender])
 
     return(
         <Grid item container className={classes.itemContainer}>
-            <Grid container>
-                <Grid item style={{marginTop: "3em"}}>
-                    <Typography variant="h4">Health Record</Typography>
-                    <Divider/>
-                </Grid>
-            </Grid>
-            <Grid container>
-                <Grid item style={{marginTop: "1em"}}>
-                    <SingleSelect title="Vaccinations"/>
-                </Grid>
-                <Grid item style={{marginTop: "1em"}}>
-                    <SingleSelect title="Has Vet"/>
-                </Grid>
-                <Grid item style={{marginTop: "1em"}}>
-                    <SingleSelect title="Has Medical Issues"/>
-                </Grid>
-                <Grid item style={{marginTop: "1em"}}>
-                    <MultiLineText label="Medical Issues Details"/>
-                </Grid>
-            </Grid>
-            <Grid container>
-                <Grid item style={{marginTop: "1em"}}>
-                    <UploadButton buttonText="Upload Documents" toLink=""/>
-                </Grid>
+        <Grid container>
+            <Grid item style={{marginTop: "3em"}}>
+                <Typography variant="h4">Medical Issues</Typography>
+                <Divider/>
             </Grid>
         </Grid>
+        <Grid container>
+            {/* <Grid item style={{marginTop: "1em"}}>
+                <SingleSelect title="Vaccinations"/>
+            </Grid>
+            <Grid item style={{marginTop: "1em"}}>
+                <SingleSelect title="Has Vet"/>
+            </Grid>
+            <Grid item style={{marginTop: "1em"}}>
+                <SingleSelect title="Has Medical Issues"/>
+            </Grid> */}
+            <Grid item container style={{marginTop: "1em"}} justify="center">
+                <TextField className={classes.largeTextfield} label="Known medical issues" InputLabelProps={{shrink: true}} rows={6} multiline variant="outlined" onChange={props.handleInputChange} value={props.dogData.withMedicalIssues} name="medicalIssues"/>
+            </Grid>
+        </Grid>
+        <Grid container>
+            <Grid item style={{marginTop: "1em"}}>
+                <UploadButton buttonText="Upload Documents" toLink=""/>
+            </Grid>
+        </Grid>
+    </Grid>
     )
 }

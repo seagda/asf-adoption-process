@@ -20,6 +20,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
+import {NavLink} from "react-router-dom";
 
 
 // function createData(id, name, email, city, state, region, role) {
@@ -312,13 +313,13 @@ export default function UserTable(props) {
                         /> */}
                       </TableCell>
                       <TableCell component="th" id={labelId} scope="row" padding="none">
-                        {row.firstName}
+                        <NavLink gutterBottom style={{textDecoration: "none"}} to={`/userView/${row.id}`}>{row.firstName}</NavLink> 
                       </TableCell>
-                      <TableCell >{row.lastName}</TableCell>
-                      <TableCell >{row.email}</TableCell>
-                      <TableCell >{row.city}</TableCell>
-                      <TableCell >{row.state}</TableCell>
-                      <TableCell >{row.ResidesInRegion.name}</TableCell>
+                      <TableCell >{row?.lastName}</TableCell>
+                      <TableCell >{row?.email}</TableCell>
+                      <TableCell >{row?.city}</TableCell>
+                      <TableCell >{row?.state}</TableCell>
+                      <TableCell >{row?.ResidesInRegion?.name}</TableCell>
                       <TableCell >{row.Roles.map( (role) => role.name).join(", ")}</TableCell>
                     </TableRow>
                   );

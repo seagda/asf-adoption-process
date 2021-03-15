@@ -7,6 +7,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
+import {NavLink} from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,7 +29,9 @@ export default function AvatarList(props) {
     <List className={classes.root}>
       <ListItem alignItems="flex-start">
         <ListItemAvatar >
-          <Avatar alt={props.firstName} src={props.image} className={classes.large}/>
+          <NavLink to={`/userView/${props.id}`}>
+            <Avatar alt={props.firstName} src={props.image} className={classes.large}/>
+          </NavLink>
         </ListItemAvatar>
         <ListItemText
           primary={props.firstName + " " + props.lastName} 

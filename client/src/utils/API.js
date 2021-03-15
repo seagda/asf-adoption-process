@@ -92,6 +92,12 @@ const API = {
     },
     getDogDossierDocs: function(){
         return axios.get(`/api/dog/document`, getHeaders())
+    },
+    getSingleUser: function (userId){
+        return axios.get(`/api/user/${userId}`, getHeaders())
+    },
+    updateOtherUser: function (userData, userId){
+        return axios.put(`api/user/${userId}`, userData, getHeaders())
     }
 }
 

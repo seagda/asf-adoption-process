@@ -35,6 +35,18 @@ export default function DogProfileEdit(){
 
     let {id} = useParams();
     const [dogData, setDogData] = useState({})
+
+    const handleInputChange=({target})=>{
+        setDogData({
+            ...dogData,
+            [target.name]: target.value
+        })
+    }
+
+    const submitFunction = (event)=>{
+
+    }
+
     useEffect(()=>{
         API.getSingleDogData(id).then(res =>{
             console.log(res.data)
@@ -47,7 +59,7 @@ export default function DogProfileEdit(){
 
     return(
         <Grid container className={classes.mainContainer}>
-            <DogBlockEdit dogData={dogData} submitFunction={(dogData) => API.updateDogInfo(dogData, id)}/>
+            <DogBlockEdit handleInputChange={handleInputChange} dogData={dogData} submitFunction={API.updateDogInfo}/>
             {/* <DogStatusEdit/> */}
         </Grid>
     )
