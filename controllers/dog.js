@@ -40,4 +40,5 @@ module.exports.updateCurrentlyWith = (dog, CurrentlyWithId) => { };
 module.exports.updateStatus = (dog, DogStatusId) => Promise.resolve(dog.DogStatusId == DogStatusId ? false : Promise.all([dog.update({ DogStatusId }), dog.getRegion()]))
     .then(updated => updated ? alertController.dogStatus(updated[0], updated[1]) : false);
 
-module.exports.updateName = (dog, name) => { };
+module.exports.updateName = (dog, name) => Promise.resolve(dog.name == name ? false : dog.createAlias(dog.name))
+    .then(alias => alias ? dog.update({ name }) : false);
