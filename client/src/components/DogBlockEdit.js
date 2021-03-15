@@ -209,7 +209,7 @@ export default function ProfileForm(props){
 
         {window.location.href.includes("create") ? null : 
         <DogStatusEdit
-        statusLabel={(dogStatusList.find((status)=>status.id === dogIntakeData.DogStatusId)|| {}).name}
+        statusLabel={(dogStatusList.find((status)=>status.id === props.dogData?.DogStatusId)|| {}).name}
         statusValue={dogStatusNew}
         statusChange={handleStatusChange}
         statusList ={dogStatusList.map((status)=><MenuItem value={status.id}>{status.name}</MenuItem>)}
