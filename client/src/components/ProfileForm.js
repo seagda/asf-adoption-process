@@ -325,6 +325,11 @@ export default function ProfileForm(props){
             phoneValue={userIntakeData.phone}
             emailValue={userIntakeData.email}
             dobValue={userIntakeData.dob}
+            addressChange={handleAddressInputChange}
+            streetValue={addressFormData.street}
+            cityValue={addressFormData.city}
+            stateValue={addressFormData.state}
+            zipValue={addressFormData.zip5}
             />
             {/* <Grid item>
                 <Image alt={"Ashley"} pic={ashley} />

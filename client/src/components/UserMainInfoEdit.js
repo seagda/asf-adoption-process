@@ -97,10 +97,10 @@ export default function UserMainInfoEdit(props){
         <Grid container justify="space-evenly">
             <Grid item container direction="column" style={{marginTop: "2em"}} xs={10} sm={10} md={6} lg={6}>
                 <Typography>Address:</Typography>
-                <TextField label="Street" InputLabelProps={{shrink: true}} name="street"/>
-                <TextField label="City" InputLabelProps={{shrink: true}} name="city"/>
-                <TextField label="State" InputLabelProps={{shrink: true}} name="state"/>
-                <TextField label="Zip" InputLabelProps={{shrink: true}} name="zip5"/>
+                <TextField label="Street" InputLabelProps={{shrink: true}} onChange={props.addressChange} value={props.streetValue} name="street"/>
+                <TextField label="City" InputLabelProps={{shrink: true}} onChange={props.addressChange} value={props.cityValue} name="city"/>
+                <TextField label="State" InputLabelProps={{shrink: true}} onChange={props.addressChange} value={props.stateValue} name="state"/>
+                <TextField label="Zip" InputLabelProps={{shrink: true}} onChange={props.addressChange} value={props.zipValue} name="zip5"/>
             </Grid>
         </Grid>
     </Grid>
