@@ -82,14 +82,6 @@ export default function ProfileForm(props){
       })
     };
 
-    const [coatColorData, setCoatColorData]= useState({});
-    const handleCoatColorChange = (event) =>{
-        const {name,value} = event.target
-        setCoatColorData({
-            ...coatColorData,
-            [name]: value
-        })
-    }
 
     const [sizeData, setSizedata] = useState({});
     const handleSizeChange = (event) => {
@@ -196,8 +188,7 @@ export default function ProfileForm(props){
         event.preventDefault();
         const newDog = {...dogIntakeData, 
             ...isPurebredData,
-            ...sizeData,
-            ...coatColorData, 
+            ...sizeData, 
             ...originContactData,
             DogStatusId: dogStatusNew
         }
@@ -212,7 +203,6 @@ export default function ProfileForm(props){
             setDogIntakeData({})
             setIsPurebredData({})
             setSizedata({})
-            setCoatColorData({})
             setOriginContactData({})
             setAddedExternalContactData({})
             setAddedAddressData({})
