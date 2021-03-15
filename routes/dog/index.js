@@ -1,9 +1,7 @@
 const db = require("../../models");
 const ac = require("../../helpers/ac");
 const router = require("express").Router();
-const sId = require("../../scripts/staticIds");
-const dogController = require("../../controllers/dog");
-const alertController = require("../../controllers/alert");
+const controllers = require("../../controllers");
 
 router.use("/assess", require("./behavioralAssessment"));
 router.use("/document", require("./document"));
@@ -16,7 +14,7 @@ router.get("/", (req, res) => {
     if (permissionAny.granted || permissionOwn.granted) {
         const withFilter = {};
         if (!permissionAny.granted) withFilter.id = req.userId;
-        dogController.getAll(null, withFilter)
+        controllers.dog.getAll(null, withFilter)
             .then(dogs => res.json(permissionAny.granted ? permissionAny.filter(dogs) : permissionOwn.filter(dogs)))
             .catch(err => {
                 console.error(err);
@@ -130,10 +128,10 @@ router.put("/:id", (req, res) => {
                 else return res.status(403).send({ message: "Not authorized to update this dog" });
                 const { name, CurrentlyWithId, DogStatusId, ...other } = updates;
                 const promises = [];
-                if (Object.entries(other).length) promises[0] = dogController.update(dog, other);
-                if (CurrentlyWithId) promises[1] = dogController.updateCurrentlyWith(dog, CurrentlyWithId);
-                if (DogStatusId) promises[2] = dogController.updateStatus(dog, DogStatusId);
-                if (name) promises[3] = dogController.updateName(dog, name);
+                if (Object.entries(other).length) promises[0] = controllers.dog.update(dog, other);
+                if (CurrentlyWithId) promises[1] = controllers.dog.updateCurrentlyWith(dog, CurrentlyWithId);
+                if (DogStatusId) promises[2] = controllers.dog.updateStatus(dog, DogStatusId);
+                if (name) promises[3] = controllers.dog.updateName(dog, name);
                 return Promise.all(promises);
             })
             .then(() => res.sendStatus(200))
