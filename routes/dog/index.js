@@ -54,8 +54,10 @@ router.get("/:id", (req, res) => {
             } else return res.status(403).send({ message: "you can't view this dog" });
             if (dogFiltered.CurrentlyWith) dogFiltered.CurrentlyWith = ac.can(req.roles).readAny("User").filter(dogFiltered.CurrentlyWith);
             res.json(dogFiltered);
+        }).catch(err => {
+            console.error(err);
+            res.status(500).send({ message: "Database error" })
         });
-
     } else return res.status(403).send({ message: "Not authorized to view dogs" });
 });
 
