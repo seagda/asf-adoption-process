@@ -132,7 +132,7 @@ export default function DogDossiersAll() {
                     })}/>
                 </Grid>
                 <Grid item xs={12}>
-                    <MapBox /* dogLocation={dogs.filter( (dog) => {
+                    <MapBox dogLocation={dogs.filter( (dog) => {
                         if (selectedRegions.length > 0 && !selectedRegions.includes(dog.Region.id)) {
                             return false;
                         } 
@@ -144,7 +144,7 @@ export default function DogDossiersAll() {
                         }
                         return true;
 
-                    })} *//>
+                    })} />
                 </Grid>
             </Grid>
         </Grid>

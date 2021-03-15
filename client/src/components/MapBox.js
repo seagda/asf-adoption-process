@@ -67,6 +67,8 @@ const scaleControlStyle = {
 
 export default function MapBox(/* props */) {
 
+  
+
   const CITY = /* props.dogLocation.city ||  */"detroit";
   const STATE = /* props.dogLocation.state ||  */ "michigan";
 
@@ -81,6 +83,7 @@ export default function MapBox(/* props */) {
 
   return (
     <>
+    <h3>hellloooo</h3>
       <ReactMapGL
         {...viewport}
         width="100%"
@@ -115,6 +118,6 @@ export default function MapBox(/* props */) {
   );
 }
 
-export function renderToDom(container) {
-  render(<MapBox />, container);
-}
+// export function renderToDom(container) {
+//   render(<MapBox />, container);
+// }
