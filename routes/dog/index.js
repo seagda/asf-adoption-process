@@ -52,6 +52,7 @@ router.get("/:id", (req, res) => {
             } else if (permissionReadAny.granted) {
                 dogFiltered = { ...permissionReadAny.filter(dog), editable: permissionUpdateAny.attributes }
             } else return res.status(403).send({ message: "you can't view this dog" });
+            if (dogFiltered.CurrentlyWith) dogFiltered.CurrentlyWith = ac.can(req.roles).readAny("User").filter(dogFiltered.CurrentlyWith);
             res.json(dogFiltered);
         });
 
