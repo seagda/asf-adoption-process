@@ -94,25 +94,6 @@ export default function ProfileForm(props){
         })
     }
 
-    const [isActiveData, setIsActiveData] = useState({});
-    const handleActiveChange = (event) => {
-      const {name, value} = event.target
-      console.log(value)
-      setIsActiveData({
-          ...isActiveData,
-          [name]: value
-      })
-    };
-
-    const [isBlockedData, setIsBlockedData] = useState({});
-    const handleBlockedChange = (event) => {
-      const {name, value} = event.target
-      setIsBlockedData({
-          ...isBlockedData,
-          [name]: value
-      })
-    };
-
     const [caresForPuppiesData, setCaresForPuppiesData] = useState({});
     const handlePuppiesChange = (event) => {
       const {name, value} = event.target
@@ -158,15 +139,6 @@ export default function ProfileForm(props){
       })
     };
 
-    const [onHoldData, setOnHoldData] = useState({});
-    const handleHoldChange = (event) => {
-      const {name, value} = event.target
-      setOnHoldData({
-          ...onHoldData,
-          [name]: value
-      })
-    };
-
     useEffect(()=>{
         setUserIntakeData({
             firstName: props.userData?.firstName, 
@@ -176,8 +148,6 @@ export default function ProfileForm(props){
             dob: props.userData?.dob,
             maxCapacity: props.userData?.maxCapacity
         })
-        setIsActiveData({active: false})
-        console.log(isActiveData)
     }, [props.userData])
 
 
@@ -185,28 +155,22 @@ export default function ProfileForm(props){
         event.preventDefault();
         const userInfo = {
             ...userIntakeData,
-            ...isActiveData,
-            ...isBlockedData,
             ...caresForPuppiesData,
             ...caresForAdultsData,
             ...caresForSeniorsData,
             ...withMedIssuesData,
             ...withBehaviorIssuesData,
-            ...onHoldData,
             Address: addressFormData
         }
         props.submitFunction(userInfo)
         .then(res =>{
             console.log(res.data)
             setUserIntakeData({})
-            setIsActiveData({})
-            setIsBlockedData({})
             setCaresForPuppiesData({})
             setCaresForAdultsData({})
             setCaresForSeniorsData({})
             setWithMedIssuesData({})
             setWithBehaviorIssuesData({})
-            setOnHoldData({})
             setAddressFormData({})
             window.location = "/Manage-ASF-Users"
         }).catch(err=>{
@@ -333,12 +297,6 @@ export default function ProfileForm(props){
             <UserStatusEdit
             handleInputChange={props.handleInputChange}
             userData={props.userData}
-            activeChange={handleActiveChange}
-            activeValue={isActiveData.active}
-            blockChange={handleBlockedChange}
-            blockedValue={isBlockedData.blocked}
-            holdChange={handleHoldChange}
-            holdValue={onHoldData.hold}
             />
 
         </Grid>
