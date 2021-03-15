@@ -3,10 +3,9 @@ const alertController = require("./alert");
 
 module.exports.getAll = (originFilter, withFilter, regionIdFilter) => db.Dog.findAll({
     include: [
-        db.DogStatus,
         { association: "Origin", where: originFilter, include: [db.Address, { model: db.Region }] },
         { association: "CurrentlyWith", where: withFilter, include: [db.Address, { association: "ResidesInRegion" }] },
-        { model: db.DogPhoto, required: false, where: { profilePhoto: true } }
+        { model: db.DogPhoto, required: false, where: { profilePhoto: true } }, db.DogStatus
     ],
     where: {
         [db.Sequelize.Op.or]: [
@@ -24,6 +23,14 @@ module.exports.getAll = (originFilter, withFilter, regionIdFilter) => db.Dog.fin
     }
     return dogJson;
 }));
+
+module.exports.get = (id) => db.Dog.findByPk(id, {
+    include: [
+        { association: "Origin", include: [db.Address, { model: db.Region }] },
+        { association: "CurrentlyWith", include: [db.Address, { association: "ResidesInRegion" }] },
+        db.DogPhoto, db.DogStatus, db.MicrochipMfg
+    ]
+}).then(dog => dog.toJSON());
 
 module.exports.update = (dog, updates) => { };
 
