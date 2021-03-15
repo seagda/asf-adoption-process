@@ -189,7 +189,7 @@ export default function ProfileForm(props){
 
 
     return (
-        <form onSubmit={handleDogIntakeFormSubmit}>
+        <form onSubmit={props.submitFunction}>
         <Grid item container className={classes.itemContainer}>
             <DogMainInfoEdit
             handleInputChange={props.handleInputChange}

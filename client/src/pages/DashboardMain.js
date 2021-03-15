@@ -143,7 +143,7 @@ export default function DashboardMain(){
                         <ListContainer>
                             {dashboardData.teamMembers.map(teamMember =>{
                                 return (
-                                    <AvatarList firstName={teamMember.firstName} lastName={teamMember.lastName} image={teamMember.photoUrl} roles={teamMember.Roles} ResidesInRegion={teamMember.ResidesInRegion} email={teamMember.email}/>
+                                    <AvatarList firstName={teamMember.firstName} lastName={teamMember.lastName} image={teamMember.photoUrl} roles={teamMember.Roles} ResidesInRegion={teamMember.ResidesInRegion} email={teamMember.email} id={teamMember.id}/>
                                 )
                             })}    
                         </ListContainer>
