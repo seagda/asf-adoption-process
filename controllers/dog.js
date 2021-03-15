@@ -35,7 +35,8 @@ module.exports.get = (id) => db.Dog.findByPk(id, {
 
 module.exports.update = (dog, updates) => dog.update(updates);
 
-module.exports.updateCurrentlyWith = (dog, CurrentlyWithId) => { };
+// TODO: create DogHistory
+module.exports.updateCurrentlyWith = (dog, CurrentlyWithId) => dog.update({ CurrentlyWithId });
 
 module.exports.updateStatus = (dog, DogStatusId) => Promise.resolve(dog.DogStatusId == DogStatusId ? false : Promise.all([dog.update({ DogStatusId }), dog.getRegion()]))
     .then(updated => updated ? alertController.dogStatus(updated[0], updated[1]) : false);
