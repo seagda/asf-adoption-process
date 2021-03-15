@@ -21,7 +21,7 @@ module.exports.getAll = (originFilter, withFilter, regionIdFilter) => db.Dog.fin
         dogJson.Address = dogJson.Origin.Address;
         dogJson.Region = dogJson.Origin.Region;
     }
-    return dogJson;
+    return (({ CurrentlyWith, ...dogToSend }) => dogToSend)(dogJson);
 }));
 
 module.exports.get = (id) => db.Dog.findByPk(id, {
