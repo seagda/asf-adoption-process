@@ -17,6 +17,7 @@ import HoldCheckbox from "../components/HoldCheckbox";
 import UserStatusEdit from "../components/UserStatusEdit";
 import UserCapacityEdit from "../components/UserCapacityEdit";
 import UserCaresForEdit from "../components/UserCaresForEdit";
+import UserMainInfoEdit from "../components/UserMainInfoEdit";
 
 import ashley from "../assets/ashley.jpg";
 
@@ -305,7 +306,15 @@ export default function ProfileForm(props){
         <form onSubmit={handleUserIntakeFormSubmit}>
         <Grid item container className={classes.itemContainer}>
         <Grid container justify="space-evenly" className={classes.picContainer}>
-            <Grid item>
+            <UserMainInfoEdit
+            createUserChange={createUserInputChange}
+            firstNameValue={userIntakeData.firstName}
+            lastNameValue={userIntakeData.lastName}
+            phoneValue={userIntakeData.phone}
+            emailValue={userIntakeData.email}
+            dobValue={userIntakeData.dob}
+            />
+            {/* <Grid item>
                 <Image alt={"Ashley"} pic={ashley} />
                 <EditButton buttonText="Change Photo" toLink="/"/>
             </Grid>
@@ -328,7 +337,7 @@ export default function ProfileForm(props){
                         <TextField type="date" variant="outlined" InputLabelProps={{shrink: true}} labelId="birthday" onChange={createUserInputChange} value={userIntakeData.dob} name="dob"/>
                     </Grid>
                 </div>
-            </Grid>
+            </Grid> */}
             {/* {admin ? roleEdit : null} */}
 
             <UserStatusEdit
