@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
+import {useParams} from "react-router-dom";
 
 import ProfileForm from "../components/ProfileForm";
 import API from "../utils/API";
@@ -25,9 +26,10 @@ const useStyles=makeStyles(theme => ({
 }))
 
 
-export default function EditProfile() {
+export default function EditOtherUserProfile() {
     const classes = useStyles()
 
+    let {id} = useParams();
     const [userData, setUserData] = useState({})
 
     const handleInputChange=({target})=>{
@@ -38,18 +40,17 @@ export default function EditProfile() {
     }
 
     useEffect(()=>{
-        API.getMyUserData().then(res =>{
+        API.getSingleUser(id).then(res =>{
             console.log(res.data)
             setUserData(res.data)
         }).catch(err=>{
             console.error(err.response.data.message)
-            // alert("get data failed")
         })
     }, [])
 
     return (
         <Grid container className={classes.mainContainer}>
-            <ProfileForm handleInputChange={handleInputChange} submitFunction={API.updateMyUserData} userData={userData}/>
+            <ProfileForm handleInputChange={handleInputChange} submitFunction={API.updateOtherUser} userData={userData}/>
         </Grid>
        
     )
