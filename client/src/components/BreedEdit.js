@@ -29,7 +29,7 @@ export default function BreedEdit(props){
     const classes = useStyles();
 
     const [selectData, setSelectData] = useState({
-        isPurebred: "",
+        isPurebred: null,
         coat: "",
         size: ""
     })
@@ -62,17 +62,16 @@ export default function BreedEdit(props){
             <Grid item style={{marginTop: "1em"}}>
                 <div>
                     <FormControl variant="outlined" className={classes.formControl}>
-                    <InputLabel id="isPurebred">Purebred?</InputLabel>
+                    <InputLabel id="demo-simple-select-outlined-label">Purebred?</InputLabel>
                     <Select
-                    labelId="isPurebred"
-                    id="isPurebred"
+                    labelId="demo-simple-select-outlined-label"
+                    id="demo-simple-select-outlined"
                     onChange={handleSelectChange}
                     value={selectData.isPurebred}
                     name="isPurebred"
                     label="Select Status"
-                    InputLabelProps={{shrink: true}}
                     >
-                    <MenuItem disabled value="">PureBred?</MenuItem>
+                    <MenuItem disabled value={null}>PureBred?</MenuItem>
                     <MenuItem value={true}>Yes</MenuItem>
                     <MenuItem value={false}>No</MenuItem>
                     </Select>

@@ -112,11 +112,11 @@ export default function DogMainInfoEdit(props){
                         <Grid item style={{marginTop: "1em"}}>
                             <div>
                                 <FormControl variant="outlined" style={{minWidth: 195, marginBottom: "1em"}}>
-                                    <InputLabel id="microchipMfgList">Microchip Company</InputLabel>
+                                    <InputLabel id="demo-simple-select-outlined-label">Microchip Company</InputLabel>
                                     <Select
-                                        labelId="microchipMfgList"
-                                        id="microchipMfgList"
-                                        InputLabelProps={{shrink: true}}
+                                        labelId="demo-simple-select-outlined-label"
+                                        id="demo-simple-select-outlined"
+                                        // InputLabelProps={{shrink: true}}
                                         name="MicrochipMfgId"
                                         value={selectData.MicrochipMfgId}
                                         onChange={handleSelectChange}

@@ -71,9 +71,6 @@ const useStyles = makeStyles(theme => ({
 
 export default function ProfileForm(props){
     const classes = useStyles();
-    const admin = true;
-    const roles = [{role: "Adopter"}, {role: "Foster"}];
-    const names = ["Adopter", "Foster", "Regional", "Volunteer", "Rescuer", "Transporter", "Placement"]
 
     const [userIntakeData, setUserIntakeData] = useState({})
     const createUserInputChange = event =>{
@@ -96,14 +93,7 @@ export default function ProfileForm(props){
 
 
     useEffect(()=>{
-        setUserIntakeData({
-            firstName: props.userData?.firstName, 
-            lastName: props.userData?.lastName,
-            phone: props.userData?.phone,
-            email: props.userData?.email,
-            dob: props.userData?.dob,
-            maxCapacity: props.userData?.maxCapacity
-        })
+        setUserIntakeData({})
     }, [props.userData])
 
 
@@ -227,7 +217,7 @@ export default function ProfileForm(props){
     // )
 
     return (
-        <form onSubmit={handleUserIntakeFormSubmit}>
+        <form onSubmit={props.submitFunction}>
         <Grid item container className={classes.itemContainer}>
         <Grid container justify="space-evenly" className={classes.picContainer}>
             <UserMainInfoEdit
