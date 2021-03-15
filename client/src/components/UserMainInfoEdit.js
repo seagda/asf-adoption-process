@@ -70,7 +70,7 @@ export default function UserMainInfoEdit(props){
         </Grid> */}
     <Grid container justify="space-evenly" className={classes.picContainer}>
         <Grid item>
-                <Image alt={"Ashley"} pic={ashley} />
+                <Image alt={props.userData?.firstName + "'s profile picture"} pic={props.userData?.photoUrl} />
                 <EditButton buttonText="Change Photo" toLink="/"/>
             </Grid>
         <Grid item>
