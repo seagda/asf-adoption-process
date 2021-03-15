@@ -29,10 +29,6 @@ module.exports = (sequelize, DataTypes, Model) => {
     }
 
     Dog.init({
-        asfId: {
-            type: DataTypes.INTEGER,
-            unique: true
-        },
         name: {
             type: DataTypes.STRING,
             allowNull: false
@@ -52,7 +48,7 @@ module.exports = (sequelize, DataTypes, Model) => {
             type: DataTypes.BOOLEAN,
             defaultValue: false
         }
-    }, { sequelize });
+    }, { sequelize, initialAutoIncrement: 2801 });
 
     return Dog;
 }
