@@ -2,11 +2,11 @@ const db = require("../models");
 const mail = require("../helpers/mail");
 const STATIC_IDS = require("../scripts/staticIds");
 
-module.exports.getAll = (filter) => db.Alert.findAll({ where: filter });
+module.exports.getAll = (filter) => db.Alert.findAll({ where: filter }).then(alerts => alerts.map(alert => alert.toJSON()));
 
-module.exports.getUnread = (filter) => db.Alert.findAll({ where: { ...filter, read: false } });
+module.exports.getUnread = (filter) => module.exports.getAll({ ...filter, read: false });
 
-module.exports.getRead = (filter) => db.Alert.findAll({ where: { ...filter, read: true } });
+module.exports.getRead = (filter) => module.exports.getAll({ ...filter, read: true });
 
 module.exports.dogStatus = (dog, region) => {
     const or = [
