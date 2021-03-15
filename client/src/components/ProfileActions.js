@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function ProfileActions(){
+export default function ProfileActions(props){
     const classes = useStyles();
 
     const userString = localStorage.getItem("user")
@@ -27,10 +27,12 @@ export default function ProfileActions(){
     }
     const user = JSON.parse(userString)
 
+    // const id = 
+
     return(
         <Grid container justify="space-evenly" style={{marginTop: "4em"}}>
             <Grid item>
-                <EditButton toLink="/editprofile" buttonText="Edit Profile"/> 
+                <EditButton toLink={"/editOtherUser/" + props.id} buttonText="Edit Profile"/> 
             </Grid>
             <Grid item>
                <UpdateButton toLink="/" buttonText="Update Password"/>

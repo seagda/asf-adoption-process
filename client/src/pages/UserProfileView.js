@@ -73,7 +73,7 @@ export default function UserProfileView(){
             dob={userData.dob}
             />
 
-            {userData.canEdit ? <ProfileActions/> : null}
+            {userData.canEdit ? <ProfileActions id={id}/> : null}
 
             <CapacityView style={{marginBottom: "5em"}} 
             maxCapacity={userData.maxCapacity} 
