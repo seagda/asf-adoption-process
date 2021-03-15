@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
         db.User.hasMany(AppResponse, { foreignKey: { allowNull: false } });
         AppResponse.belongsTo(db.User);
 
-        db.Dog.hasMany(AppResponse, { as: "ForDog", foreignKey: "ForDogId" });
+        db.Dog.hasMany(AppResponse, { as: "AppsFor", foreignKey: "ForDogId" });
         AppResponse.belongsTo(db.Dog, { as: "ForDog", foreignKey: "ForDogId" });
     };
 
