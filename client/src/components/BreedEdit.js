@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from "@material-ui/core/Grid";
 
@@ -28,6 +28,24 @@ const useStyles = makeStyles((theme) => ({
 export default function BreedEdit(props){
     const classes = useStyles();
 
+    const [selectData, setSelectData] = useState({
+        isPurebred: ""
+    })
+
+    const handleSelectChange = (event)=>{
+        setSelectData({
+            ...selectData,
+            [event.target.name]: event.target.value
+        })
+        props.handleInputChange(event)
+    }
+
+    useEffect(()=>{
+        setSelectData({
+            isPureBred: props.dogData.isPureBred
+        })
+    },[props.dogData.isPurebred])
+
     return(
         <Grid item container className={classes.itemContainer}>
         <Grid container>
@@ -44,12 +62,13 @@ export default function BreedEdit(props){
                     <Select
                     labelId="isPurebred"
                     id="isPurebred"
-                    onChange={props.purebredChange}
-                    value={props.purebredValue}
+                    onChange={handleSelectChange}
+                    value={selectData.isPurebred}
                     name="isPurebred"
                     label="Select Status"
                     InputLabelProps={{shrink: true}}
                     >
+                    <MenuItem disabled value="">PureBred?</MenuItem>
                     <MenuItem value="true">Yes</MenuItem>
                     <MenuItem value="false">No</MenuItem>
                     </Select>

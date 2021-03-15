@@ -131,15 +131,6 @@ export default function ProfileForm(props){
         })
     }
 
-    const [genderData, setGenderData] = useState({});
-    const handleGenderChange = (event) => {
-      const {name, value} = event.target
-      setGenderData({
-          ...genderData,
-          [name]: value
-      })
-    };
-
     const [dogStatusList, setDogStatusList] = useState([]);
     const [dogStatusNew, setDogStatusNew] = useState(0)
     const handleStatusChange = (event) => setDogStatusNew(event.target.value)
@@ -204,8 +195,7 @@ export default function ProfileForm(props){
     const handleDogIntakeFormSubmit = event =>{
         event.preventDefault();
         const newDog = {...dogIntakeData, 
-            ...isPurebredData, 
-            ...genderData,
+            ...isPurebredData,
             ...sizeData,
             ...coatColorData, 
             ...originContactData,
@@ -221,7 +211,6 @@ export default function ProfileForm(props){
             console.log(res.data)
             setDogIntakeData({})
             setIsPurebredData({})
-            setGenderData({})
             setSizedata({})
             setCoatColorData({})
             setOriginContactData({})
@@ -249,8 +238,6 @@ export default function ProfileForm(props){
         <BreedEdit
         handleInputChange={props.handleInputChange}
         dogData={props.dogData} 
-        purebredChange={handlePurebredChange} 
-        purebredValue={isPurebredData.isPurebred} 
         dogInputChange={createDogInputChange} 
         secondBreedValue={dogIntakeData.secondaryBreed}
         coatColorChange={handleCoatColorChange}
