@@ -29,6 +29,14 @@ export default function EditProfile() {
     const classes = useStyles()
 
     const [userData, setUserData] = useState({})
+
+    const handleInputChange=({target})=>{
+        setUserData({
+            ...userData,
+            [target.name]: target.value
+        })
+    }
+
     useEffect(()=>{
         API.getMyUserData().then(res =>{
             console.log(res.data)
@@ -41,7 +49,7 @@ export default function EditProfile() {
 
     return (
         <Grid container className={classes.mainContainer}>
-            <ProfileForm submitFunction={API.updateMyUserData} userData={userData}/>
+            <ProfileForm handleInputChange={handleInputChange} submitFunction={API.updateMyUserData} userData={userData}/>
         </Grid>
        
     )

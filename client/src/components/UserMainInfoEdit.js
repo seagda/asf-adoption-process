@@ -76,20 +76,20 @@ export default function UserMainInfoEdit(props){
         <Grid item>
                 <div className={classes.form}>
                     <Grid item container className={classes.formItem}>
-                        <TextField variant="outlined" InputLabelProps={{shrink: true}} label="First Name" onChange={props.createUserChange} value={props.firstNameValue} name="firstName"/>
+                        <TextField variant="outlined" InputLabelProps={{shrink: true}} label="First Name" onChange={props.handleInputChange} value={props.userData.firstName} name="firstName"/>
                     </Grid>
                     <Grid item container className={classes.formItem}>
-                        <TextField variant="outlined" InputLabelProps={{shrink: true}} label="Last Name" onChange={props.createUserChange} value={props.lastNameValue} name="lastName"/>
+                        <TextField variant="outlined" InputLabelProps={{shrink: true}} label="Last Name" onChange={props.handleInputChange} value={props.userData.lastName} name="lastName"/>
                     </Grid>
                     <Grid item container className={classes.formItem}>
-                        <TextField variant="outlined" InputLabelProps={{shrink: true}} label="Phone" onChange={props.createUserChange} value={props.phoneValue} name="phone"/>
+                        <TextField variant="outlined" InputLabelProps={{shrink: true}} label="Phone" onChange={props.handleInputChange} value={props.userData.phone} name="phone"/>
                     </Grid>
                     <Grid item container className={classes.formItem}>
-                        <TextField type="email" variant="outlined" InputLabelProps={{shrink: true}} label="Email" onChange={props.createUserChange} value={props.emailValue} name="email"/>
+                        <TextField type="email" variant="outlined" InputLabelProps={{shrink: true}} label="Email" onChange={props.handleInputChange} value={props.userData.email} name="email"/>
                     </Grid>
                     <Grid item container className={classes.formItem} direction="column">
                         <InputLabel id="birthday">Date of birth</InputLabel>
-                        <TextField type="date" variant="outlined" InputLabelProps={{shrink: true}} labelId="birthday" onChange={props.createUserChange} value={props.dobValue} name="dob"/>
+                        <TextField type="date" variant="outlined" InputLabelProps={{shrink: true}} labelId="birthday" onChange={props.handleInputChange} value={props.userData.dob} name="dob"/>
                     </Grid>
                 </div>
             </Grid>

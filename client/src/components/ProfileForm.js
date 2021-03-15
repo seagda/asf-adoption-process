@@ -183,7 +183,8 @@ export default function ProfileForm(props){
 
     const handleUserIntakeFormSubmit = event =>{
         event.preventDefault();
-        props.submitFunction({...userIntakeData,
+        const userInfo = {
+            ...userIntakeData,
             ...isActiveData,
             ...isBlockedData,
             ...caresForPuppiesData,
@@ -193,7 +194,8 @@ export default function ProfileForm(props){
             ...withBehaviorIssuesData,
             ...onHoldData,
             Address: addressFormData
-        })
+        }
+        props.submitFunction(userInfo)
         .then(res =>{
             console.log(res.data)
             setUserIntakeData({})
@@ -319,6 +321,8 @@ export default function ProfileForm(props){
         <Grid item container className={classes.itemContainer}>
         <Grid container justify="space-evenly" className={classes.picContainer}>
             <UserMainInfoEdit
+            handleInputChange={props.handleInputChange}
+            userData={props.userData}
             createUserChange={createUserInputChange}
             firstNameValue={userIntakeData.firstName}
             lastNameValue={userIntakeData.lastName}
