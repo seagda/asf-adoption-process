@@ -7,11 +7,11 @@ module.exports.getAll = (originFilter, withFilter, regionIdFilter) => db.Dog.fin
         { association: "CurrentlyWith", where: withFilter, include: [db.Address, { association: "ResidesInRegion" }] },
         { model: db.DogPhoto, required: false, where: { profilePhoto: true } }, db.DogStatus
     ],
-    where: {
-        [db.Sequelize.Op.or]: [
-            { "$CurrentlyWith.ResidesInRegion.id$": regionIdFilter },
-            { [db.Sequelize.Op.and]: [{ CurrentlyWithId: { [db.Sequelize.Op.is]: null } }, { "$Origin.Region.id$": regionIdFilter }] }]
-    }
+    // where: {
+    //     [db.Sequelize.Op.or]: [
+    //         { "$CurrentlyWith.ResidesInRegion.id$": regionIdFilter },
+    //         { [db.Sequelize.Op.and]: [{ CurrentlyWithId: { [db.Sequelize.Op.is]: null } }, { "$Origin.Region.id$": regionIdFilter }] }]
+    // }
 }).then(dogs => dogs.map(dog => {
     const dogJson = dog.toJSON();
     if (dogJson.CurrentlyWithId) {
@@ -21,7 +21,7 @@ module.exports.getAll = (originFilter, withFilter, regionIdFilter) => db.Dog.fin
         dogJson.Address = dogJson.Origin.Address;
         dogJson.Region = dogJson.Origin.Region;
     }
-    return (({ CurrentlyWith, ...dogToSend }) => dogToSend)(dogJson);
+    return (dogJson);
 }));
 
 module.exports.get = (id) => db.Dog.findByPk(id, {
