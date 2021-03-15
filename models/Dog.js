@@ -47,7 +47,7 @@ module.exports = (sequelize, DataTypes, Model) => {
         medicalIssues: DataTypes.STRING,
         size: DataTypes.ENUM("mini", "small", "medium", "large"),
         weight: DataTypes.DECIMAL(10, 2),
-        coat: DataTypes.ENUM("double merle", "black and tan", "blue merle", "red merle", "red", "red bi-color", "tri-color", "black", "black bi-color", "brown", "white"),
+        coat: DataTypes.ENUM("self merle", "double merle", "black and tan", "blue merle", "red merle", "red", "red bi-color", "red tri-color", "black", "black bi-color", "black tri-color", "brown", "white"),
         blocked: {
             type: DataTypes.BOOLEAN,
             defaultValue: false
