@@ -92,6 +92,9 @@ const API = {
     },
     getSingleUser: function (userId){
         return axios.get(`/api/user/${userId}`, getHeaders())
+    },
+    updateOtherUser: function (userId, userData){
+        return axios.put(`api/user/${userId}`, userData, getHeaders())
     }
 }
 
