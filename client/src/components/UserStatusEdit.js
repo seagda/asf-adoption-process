@@ -33,7 +33,9 @@ export default function UserStatusEdit(props){
     const classes = useStyles();
 
     const [selectData, setSelectData] = useState({
-        active: null
+        active: null,
+        blocked: null,
+        hold: null
     })
 
     const handleSelectChange = (event)=>{
@@ -46,9 +48,11 @@ export default function UserStatusEdit(props){
 
     useEffect(()=>{
         setSelectData({
-            active: props.userData?.active
+            active: props.userData?.active,
+            blocked: props.userData?.blocked,
+            hold: props.userData?.hold
         })
-    },[props.userData?.active])
+    },[props.userData?.active, props.userData?.blocked, props.userData?.hold])
 
     return(
         <Grid item container className={classes.itemContainer, classes.marginFix}>
@@ -62,7 +66,7 @@ export default function UserStatusEdit(props){
             <Grid item style={{marginTop: "1em"}}>
                 <div>
                     <FormControl variant="outlined" className={classes.formControl}>
-                    <InputLabel id="active">Active?</InputLabel>
+                    <InputLabel shrink id="active">Active?</InputLabel>
                     <Select
                     labelId="active"
                     id="active"
@@ -70,7 +74,6 @@ export default function UserStatusEdit(props){
                     value={selectData.active}
                     name="active"
                     label="Is active?"
-                    InputLabelProps={{shrink: true}}
                     >
                     <MenuItem disabled value={null}>Active?</MenuItem>
                     <MenuItem value={true}>Yes</MenuItem>
@@ -82,16 +85,17 @@ export default function UserStatusEdit(props){
             <Grid item style={{marginTop: "1em"}}>
                 <div>
                     <FormControl variant="outlined" className={classes.formControl}>
-                    <InputLabel id="blocked">Blocked?</InputLabel>
+                    <InputLabel shrink id="blocked">Blocked?</InputLabel>
                     <Select
                     labelId="blocked"
                     id="blocked"
-                    onChange={props.blockChange}
-                    value={props.blockedValue}
+                    onChange={handleSelectChange}
+                    value={selectData.blocked}
                     name="blocked"
                     label="Is blocked?"
                     InputLabelProps={{shrink: true}}
                     >
+                    <MenuItem disabled value={null}>Blocked?</MenuItem>
                     <MenuItem value={true}>Yes</MenuItem>
                     <MenuItem value={false}>No</MenuItem>
                     </Select>
@@ -101,12 +105,12 @@ export default function UserStatusEdit(props){
             <Grid item style={{marginTop: "1em"}}>
                 <div>
                     <FormControl variant="outlined" className={classes.formControl}>
-                    <InputLabel id="hold">On Hold?</InputLabel>
+                    <InputLabel shrink id="hold">On Hold?</InputLabel>
                     <Select
                     labelId="hold"
                     id="hold"
-                    onChange={props.holdChange}
-                    value={props.holdValue}
+                    onChange={handleSelectChange}
+                    value={selectData.hold}
                     name="hold"
                     label="On hold?"
                     InputLabelProps={{shrink: true}}
