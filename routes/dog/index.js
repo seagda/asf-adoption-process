@@ -44,21 +44,15 @@ router.get("/:id", (req, res) => {
     const permissionUpdateOwn = ac.can(req.roles).updateOwn("Dog");
     const permissionUpdateAny = ac.can(req.roles).updateAny("Dog");
     if (permissionReadOwn.granted || permissionReadAny.granted) {
-        db.Dog.findByPk(req.params.id, {
-            include: [
-                { association: "CurrentlyWith", include: [db.Address, { association: "ResidesInRegion" }] },
-                { association: "Origin", include: [db.Address, db.Region] },
-                db.MicrochipMfg, db.DogPhoto
-            ],
-        }).then(dog => {
+        controllers.dog.get(req.params.id).then(dog => {
             // TODO: also check permissions for CurrentlyWith and Origin
-            let dogJson;
+            let dogFiltered;
             if (dog.CurrentlyWithId === req.userId) {
-                dogJson = { ...permissionReadOwn.filter(dog.toJSON()), canEdit: permissionUpdateOwn.granted }
+                dogFiltered = { ...permissionReadOwn.filter(dog), editable: permissionUpdateOwn.attributes }
             } else if (permissionReadAny.granted) {
-                dogJson = { ...permissionReadAny.filter(dog.toJSON()), canEdit: permissionUpdateAny.granted }
+                dogFiltered = { ...permissionReadAny.filter(dog), editable: permissionUpdateAny.attributes }
             } else return res.status(403).send({ message: "you can't view this dog" });
-            res.json(dogJson);
+            res.json(dogFiltered);
         });
 
     } else return res.status(403).send({ message: "Not authorized to view dogs" });
