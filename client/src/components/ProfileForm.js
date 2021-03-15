@@ -94,50 +94,6 @@ export default function ProfileForm(props){
         })
     }
 
-    const [caresForPuppiesData, setCaresForPuppiesData] = useState({});
-    const handlePuppiesChange = (event) => {
-      const {name, value} = event.target
-      setCaresForPuppiesData({
-          ...caresForPuppiesData,
-          [name]: value
-      })
-    };
-
-    const [caresForAdultsData, setCaresForAdultsData] = useState({});
-    const handleAdultsChange = (event) => {
-      const {name, value} = event.target
-      setCaresForAdultsData({
-          ...caresForAdultsData,
-          [name]: value
-      })
-    };
-
-    const [caresForSeniorsData, setCaresForSeniorsData] = useState({});
-    const handleSeniorsChange = (event) => {
-      const {name, value} = event.target
-      setCaresForSeniorsData({
-          ...caresForSeniorsData,
-          [name]: value
-      })
-    };
-
-    const [withMedIssuesData, setWithMedIssuesData] = useState({});
-    const handleMedIssuesChange = (event) => {
-      const {name, value} = event.target
-      setWithMedIssuesData({
-          ...withMedIssuesData,
-          [name]: value
-      })
-    };
-
-    const [withBehaviorIssuesData, setWithBehaviorIssuesData] = useState({});
-    const handleBehaviorChange = (event) => {
-      const {name, value} = event.target
-      setWithBehaviorIssuesData({
-          ...withBehaviorIssuesData,
-          [name]: value
-      })
-    };
 
     useEffect(()=>{
         setUserIntakeData({
@@ -155,22 +111,12 @@ export default function ProfileForm(props){
         event.preventDefault();
         const userInfo = {
             ...userIntakeData,
-            ...caresForPuppiesData,
-            ...caresForAdultsData,
-            ...caresForSeniorsData,
-            ...withMedIssuesData,
-            ...withBehaviorIssuesData,
             Address: addressFormData
         }
         props.submitFunction(userInfo)
         .then(res =>{
             console.log(res.data)
             setUserIntakeData({})
-            setCaresForPuppiesData({})
-            setCaresForAdultsData({})
-            setCaresForSeniorsData({})
-            setWithMedIssuesData({})
-            setWithBehaviorIssuesData({})
             setAddressFormData({})
             window.location = "/Manage-ASF-Users"
         }).catch(err=>{
@@ -309,16 +255,6 @@ export default function ProfileForm(props){
         <UserCaresForEdit
         handleInputChange={props.handleInputChange}
         userData={props.userData}
-        puppiesChange={handlePuppiesChange}
-        puppiesValue={caresForPuppiesData.puppies}
-        adultsChange={handleAdultsChange}
-        adultsValue={caresForAdultsData.adults}
-        seniorsChange={handleSeniorsChange}
-        seniorsValue={caresForSeniorsData.seniors}
-        behaviorChange={handleBehaviorChange}
-        behaviorValue={withBehaviorIssuesData.withBehaviorIssues}
-        medicalChange={handleMedIssuesChange}
-        medicalValue={withMedIssuesData.withMedicalIssues}
         />
 
         {/* <Grid item>
