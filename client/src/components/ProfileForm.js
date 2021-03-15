@@ -331,31 +331,6 @@ export default function ProfileForm(props){
             stateValue={addressFormData.state}
             zipValue={addressFormData.zip5}
             />
-            {/* <Grid item>
-                <Image alt={"Ashley"} pic={ashley} />
-                <EditButton buttonText="Change Photo" toLink="/"/>
-            </Grid>
-            <Grid item>
-                <div className={classes.form}>
-                    <Grid item container className={classes.formItem}>
-                        <TextField variant="outlined" InputLabelProps={{shrink: true}} label="First Name" onChange={createUserInputChange} value={userIntakeData.firstName} name="firstName"/>
-                    </Grid>
-                    <Grid item container className={classes.formItem}>
-                        <TextField variant="outlined" InputLabelProps={{shrink: true}} label="Last Name" onChange={createUserInputChange} value={userIntakeData.lastName} name="lastName"/>
-                    </Grid>
-                    <Grid item container className={classes.formItem}>
-                        <TextField variant="outlined" InputLabelProps={{shrink: true}} label="Phone" onChange={createUserInputChange} value={userIntakeData.phone} name="phone"/>
-                    </Grid>
-                    <Grid item container className={classes.formItem}>
-                        <TextField type="email" variant="outlined" InputLabelProps={{shrink: true}} label="Email" onChange={createUserInputChange} value={userIntakeData.email} name="email"/>
-                    </Grid>
-                    <Grid item container className={classes.formItem} direction="column">
-                        <InputLabel id="birthday">Date of birth</InputLabel>
-                        <TextField type="date" variant="outlined" InputLabelProps={{shrink: true}} labelId="birthday" onChange={createUserInputChange} value={userIntakeData.dob} name="dob"/>
-                    </Grid>
-                </div>
-            </Grid> */}
-            {/* {admin ? roleEdit : null} */}
 
             <UserStatusEdit
             activeChange={handleActiveChange}
