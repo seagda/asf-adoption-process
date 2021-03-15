@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from "@material-ui/core/Grid";
 
@@ -32,6 +32,24 @@ const useStyles = makeStyles((theme) => ({
 export default function UserStatusEdit(props){
     const classes = useStyles();
 
+    const [selectData, setSelectData] = useState({
+        active: null
+    })
+
+    const handleSelectChange = (event)=>{
+        setSelectData({
+            ...selectData,
+            [event.target.name]: event.target.value
+        })
+        props.handleInputChange(event)
+    }
+
+    useEffect(()=>{
+        setSelectData({
+            active: props.userData?.active
+        })
+    },[props.userData?.active])
+
     return(
         <Grid item container className={classes.itemContainer, classes.marginFix}>
         <Grid container style={{marginTop: "1em"}}>
@@ -48,12 +66,13 @@ export default function UserStatusEdit(props){
                     <Select
                     labelId="active"
                     id="active"
-                    onChange={props.activeChange}
-                    value={props.activeValue}
+                    onChange={handleSelectChange}
+                    value={selectData.active}
                     name="active"
                     label="Is active?"
                     InputLabelProps={{shrink: true}}
                     >
+                    <MenuItem disabled value={null}>Active?</MenuItem>
                     <MenuItem value={true}>Yes</MenuItem>
                     <MenuItem value={false}>No</MenuItem>
                     </Select>

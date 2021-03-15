@@ -42,7 +42,7 @@ export default function UserCapacityEdit(props){
                         <div>
                         <TextField variant="outlined" type="number" style={{marginTop: "0.5em"}} 
                         onChange={props.handleInputChange} 
-                        value={props.userData.maxCapacity} 
+                        value={props.userData?.maxCapacity} 
                         name="maxCapacity"></TextField>
                         {/* <TextField type="number" style={{marginTop: "1em"}}></TextField>
                         <TextField type="number" style={{marginTop: "1em"}}></TextField> */}

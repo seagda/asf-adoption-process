@@ -331,6 +331,8 @@ export default function ProfileForm(props){
             />
 
             <UserStatusEdit
+            handleInputChange={props.handleInputChange}
+            userData={props.userData}
             activeChange={handleActiveChange}
             activeValue={isActiveData.active}
             blockChange={handleBlockedChange}
