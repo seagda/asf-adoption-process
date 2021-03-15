@@ -33,7 +33,7 @@ module.exports.get = (id) => db.Dog.findByPk(id, {
     ]
 }).then(dog => ({ ...dog.toJSON(), AppsFor: dog.AppsFor.length }));
 
-module.exports.update = (dog, updates) => { };
+module.exports.update = (dog, updates) => dog.update(updates);
 
 module.exports.updateCurrentlyWith = (dog, CurrentlyWithId) => { };
 
