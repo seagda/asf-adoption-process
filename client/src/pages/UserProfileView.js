@@ -5,10 +5,12 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 import API from "../utils/API";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
+import Chip from "@material-ui/core/Chip";
 
 import ProfileBlock from "../components/ProfileBlock";
 import ProfileActions from "../components/ProfileActions";
 import CapacityView from "../components/CapacityView";
+import Roles from "../components/Roles";
 
 const useStyles=makeStyles(theme => ({
     mainContainer: {
@@ -41,6 +43,7 @@ export default function UserProfileView(){
     const [adultsData, setAdultsData] = useState(false)
     const [behaviorData, setBehaviorData] = useState(false)
     const [medicalIssuesData, setMedicalIssuesData] = useState(false)
+    const [rolesList, setRolesListData] = useState([])
 
     useEffect(()=>{
         API.getSingleUser(id).then(res =>{
@@ -51,6 +54,7 @@ export default function UserProfileView(){
             setAdultsData(res.data.adults)
             setBehaviorData(res.data.withBehaviorIssues)
             setMedicalIssuesData(res.data.withMedicalIssues)
+            setRolesListData(res.data.Roles)
         }).catch(err=>{
             console.error(err)
             // alert("get data failed")
@@ -74,6 +78,10 @@ export default function UserProfileView(){
             />
 
             {userData.canEdit ? <ProfileActions id={id}/> : null}
+
+            <Roles
+            roles={rolesList.map((role)=><Chip label={role.name}/>)}
+            />
 
             <CapacityView style={{marginBottom: "5em"}} 
             maxCapacity={userData.maxCapacity} 

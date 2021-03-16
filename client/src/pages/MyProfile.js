@@ -74,7 +74,6 @@ export default function MyProfile(){
             setBehaviorData(res.data.withBehaviorIssues)
             setMedicalIssuesData(res.data.withMedicalIssues)
             setRolesListData(res.data.Roles)
-            console.log("roles", res.data.Roles)
         }).catch(err=>{
             console.error(err.response.data.message)
             // alert("get data failed")
