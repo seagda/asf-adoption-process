@@ -100,7 +100,8 @@ export default function DogProfileView(){
 
             <DogInfoCurrent 
             currentlyWith={dogData.CurrentlyWith}
-            region={dogData.CurrentlyWith.ResidesInRegion} 
+            region={dogData.CurrentlyWith.ResidesInRegion}
+            address={dogData.CurrentlyWith.Address} 
             behaviorIssues={dogData.behaviorIssues} 
             medicalIssues={dogData.medicalIssues} 
             blocked={dogData.blocked}/>

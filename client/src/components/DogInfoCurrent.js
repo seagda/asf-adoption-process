@@ -31,14 +31,20 @@ export default function DogInfoCurrent(props){
                             <Typography style={{marginTop: "1em", fontWeight: "bold"}}>Currently With:  
                                 <Typography>{props.currentlyWith.firstName} {props.currentlyWith.lastName}</Typography>
                                 <Typography>{props.region?.name}</Typography>
+                                <Typography>{props.address?.street}</Typography>
+                                <Typography>{props.address?.street2}</Typography>
+                                <Typography>{props.address?.city}, {props.address?.state}</Typography>
+                                <Typography>{props.currentlyWith.phone}</Typography>
+                                <Typography>{props.currentlyWith.email}</Typography>
                             </Typography> : 
                             <Typography style={{fontWeight: "bold"}}>Dog not currently assigned to ASF team member</Typography>}
                         </Grid>
                         <Grid item xs={10} sm={6} md={8} lg={6}>
                             {props.behaviorIssues ? <Typography style={{fontWeight: "bold"}}>Behaviorial Issues:<Typography>Yes</Typography> </Typography> : <Typography style={{fontWeight: "bold"}}>Behaviorial Issues: <Typography>No</Typography></Typography>}
+                            {props.behaviorIssues ? <Typography style={{marginTop: "1em", fontWeight: "bold"}}>Medical Issues:<Typography>Yes</Typography></Typography> : <Typography style={{marginTop: "1em", fontWeight: "bold"}}>Medical Issues:<Typography>No</Typography></Typography>}
                         </Grid>
                         <Grid item xs={10} sm={6} md={8} lg={6}>
-                            {props.behaviorIssues ? <Typography style={{marginTop: "1em", fontWeight: "bold"}}>Medical Issues:<Typography>Yes</Typography></Typography> : <Typography style={{marginTop: "1em", fontWeight: "bold"}}>Medical Issues:<Typography>No</Typography></Typography>}
+                            
                         </Grid>
                         <Grid item xs={10} sm={6} md={8} lg={6}>
                             {props.blocked ? <Typography style={{marginTop: "1em", color: "red", fontWeight: "bold"}}>Dog is BLOCKED</Typography> : null}
