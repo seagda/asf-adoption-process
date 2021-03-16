@@ -27,7 +27,12 @@ export default function DogInfoCurrent(props){
                     </Grid>
                     <Grid item container style={{marginTop: "1em"}}>
                         <Grid item xs={10} sm={6} md={8} lg={6}>
-                            {props.currentlyWith ? <Typography style={{marginTop: "1em"}}>Currently With:  {props.currentlyWith.firstName} {props.currentlyWith.lastName}</Typography> : <Typography style={{fontWeight: "bold"}}>Dog not currently assigned to ASF team member</Typography>}
+                            {props.currentlyWith ? 
+                            <Typography style={{marginTop: "1em", fontWeight: "bold"}}>Currently With:  
+                                <Typography>{props.currentlyWith.firstName} {props.currentlyWith.lastName}</Typography>
+                                <Typography>{props.region?.name}</Typography>
+                            </Typography> : 
+                            <Typography style={{fontWeight: "bold"}}>Dog not currently assigned to ASF team member</Typography>}
                         </Grid>
                         <Grid item xs={10} sm={6} md={8} lg={6}>
                             {props.behaviorIssues ? <Typography style={{fontWeight: "bold"}}>Behaviorial Issues:<Typography>Yes</Typography> </Typography> : <Typography style={{fontWeight: "bold"}}>Behaviorial Issues: <Typography>No</Typography></Typography>}

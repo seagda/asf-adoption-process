@@ -42,7 +42,15 @@ export default function DogProfileView(){
         MicrochipMfg:{}, 
         DogStatus:{}, 
         DogPhotos: [], 
-        origin: {Region: {}, Address: {}}
+        origin: {Region: {}, Address: {}},
+        CurrentlyWith: {
+            firstName: "",
+            lastName: "",
+            ResidesInRegion: {},
+            Address: {},
+            phone: "",
+            email: ""
+        }
     })
     useEffect(()=>{
         API.getSingleDogData(id).then(res =>{
@@ -91,7 +99,8 @@ export default function DogProfileView(){
             pullCost={dogData?.pullCost}/>
 
             <DogInfoCurrent 
-            currentlyWith={dogData.currentlyWith} 
+            currentlyWith={dogData.CurrentlyWith}
+            region={dogData.CurrentlyWith.ResidesInRegion} 
             behaviorIssues={dogData.behaviorIssues} 
             medicalIssues={dogData.medicalIssues} 
             blocked={dogData.blocked}/>
