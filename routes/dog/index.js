@@ -12,8 +12,8 @@ router.get("/", (req, res) => {
     const permissionOwn = ac.can(req.roles).readOwn("Dog");
     const permissionAny = ac.can(req.roles).readAny("Dog");
     if (permissionAny.granted || permissionOwn.granted) {
-        const withFilter = {};
-        if (!permissionAny.granted) withFilter.id = req.userId;
+        let withFilter;
+        if (!permissionAny.granted) withFilter = { id: req.userId };
         controllers.dog.getAll(null, withFilter)
             .then(dogs => res.json(permissionAny.granted ? permissionAny.filter(dogs) : permissionOwn.filter(dogs)))
             .catch(err => {
