@@ -11,6 +11,7 @@ import ProfileBlock from "../components/ProfileBlock";
 import ProfileActions from "../components/ProfileActions";
 import CapacityView from "../components/CapacityView";
 import Roles from "../components/Roles";
+import UserAddress from "../components/UserAddress";
 
 const useStyles=makeStyles(theme => ({
     mainContainer: {
@@ -44,6 +45,7 @@ export default function UserProfileView(){
     const [behaviorData, setBehaviorData] = useState(false)
     const [medicalIssuesData, setMedicalIssuesData] = useState(false)
     const [rolesList, setRolesListData] = useState([])
+    const [userAddress, setUserAddressData] = useState({})
 
     useEffect(()=>{
         API.getSingleUser(id).then(res =>{
@@ -55,6 +57,7 @@ export default function UserProfileView(){
             setBehaviorData(res.data.withBehaviorIssues)
             setMedicalIssuesData(res.data.withMedicalIssues)
             setRolesListData(res.data.Roles)
+            setUserAddressData(res.data.Address)
         }).catch(err=>{
             console.error(err)
             // alert("get data failed")
@@ -78,6 +81,14 @@ export default function UserProfileView(){
             />
 
             {userData.canEdit ? <ProfileActions id={id}/> : null}
+
+            <UserAddress
+            street={userAddress.street}
+            street2={userAddress.street2}
+            city={userAddress.city}
+            state={userAddress.state}
+            zip={userAddress.zip5}
+            />
 
             <Roles
             roles={rolesList.map((role)=><Chip label={role.name}/>)}

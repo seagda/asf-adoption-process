@@ -74,15 +74,6 @@ export default function ProfileBlock(props){
                 <Grid item container className={classes.formItem}>
                      <Typography style={{fontWeight: "bold"}}>DOB:<Typography>{props.dob}</Typography> </Typography>
                 </Grid>
-                {/* <Grid item container className={classes.formItem}>
-                    <Typography>City: Camarillo</Typography>
-                </Grid>
-                <Grid item container className={classes.formItem}>
-                     <Typography>State: CA</Typography>
-                 </Grid> */}
-                {/* <Grid item container className={classes.formItem}>
-                     <Typography>About Me: Passionate about animal rescue!</Typography>
-                </Grid> */}
             </Grid>
         </Grid>
     </Grid>
