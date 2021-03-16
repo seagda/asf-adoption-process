@@ -81,14 +81,14 @@ export default function DogProfileView(){
             secondary={dogData.secondaryBreed}/>
 
             <DogOriginView 
-            originName={dogData.origin.fullName} 
-            originRegion={dogData.origin.Region.name} 
-            originStreet={dogData.origin.Address.street} 
-            originCity={dogData.origin.Address.city} 
-            originState={dogData.origin.Address.state} 
-            originZip={dogData.origin.Address.zip5} 
-            originPhone={dogData.origin.phone} 
-            pullCost={dogData.pullCost}/>
+            originName={dogData.origin?.fullName} 
+            originRegion={dogData.origin?.Region.name} 
+            originStreet={dogData.origin?.Address.street} 
+            originCity={dogData.origin?.Address.city} 
+            originState={dogData.origin?.Address.state} 
+            originZip={dogData.origin?.Address.zip5} 
+            originPhone={dogData.origin?.phone} 
+            pullCost={dogData?.pullCost}/>
 
             <DogInfoCurrent 
             currentlyWith={dogData.currentlyWith} 
