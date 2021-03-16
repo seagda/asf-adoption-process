@@ -37,7 +37,7 @@ router.get("/microchip-mfg", (req, res) => db.MicrochipMfg.findAll().then(microc
 }));
 
 // show all DOCUMENTs for ONE dog, with correct ROLE permission
-router.get("/:DogId/docs", (req, res) => {
+router.get("/:DogId/documents", (req, res) => {
     const permissionOwn = ac.can(req.roles).readOwn("Document");
     const permissionAny = ac.can(req.roles).readAny("Document");
     if (permissionOwn.granted || permissionAny.granted) {
