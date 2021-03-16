@@ -21,12 +21,15 @@ export default function UserAddress(props){
         <Grid item container className={classes.itemContainer}>
             <Grid item container style={{marginTop: "3em"}} direction="column">
                     <Grid item>
-                        <Typography variant="h4">Address</Typography>
+                        <Typography variant="h4">Location</Typography>
                         <Divider/>
                     </Grid>
                     <Grid item container>
                         <Grid container>
                             <Grid item container direction="column" style={{marginTop: "2em"}} xs={10} sm={10} md={6} lg={6}>
+                                <Typography style={{fontWeight: "bold"}}>Region:</Typography>
+                                <Typography style={{marginBottom: "1em"}}>{props.region}</Typography>
+                                <Typography style={{fontWeight: "bold"}}>Address:</Typography>
                                 <Typography name="street">{props.street}</Typography>
                                 <Typography name="street2">{props.street2}</Typography>
                                 <Typography name="city">{props.city}</Typography>

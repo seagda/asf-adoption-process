@@ -46,6 +46,7 @@ export default function UserProfileView(){
     const [medicalIssuesData, setMedicalIssuesData] = useState(false)
     const [rolesList, setRolesListData] = useState([])
     const [userAddress, setUserAddressData] = useState({})
+    const [userRegion, setUserRegion] = useState({})
 
     useEffect(()=>{
         API.getSingleUser(id).then(res =>{
@@ -58,6 +59,7 @@ export default function UserProfileView(){
             setMedicalIssuesData(res.data.withMedicalIssues)
             setRolesListData(res.data.Roles)
             setUserAddressData(res.data.Address)
+            setUserRegion(res.data.ResidesInRegion)
         }).catch(err=>{
             console.error(err)
             // alert("get data failed")
@@ -83,6 +85,7 @@ export default function UserProfileView(){
             {userData.canEdit ? <ProfileActions id={id}/> : null}
 
             <UserAddress
+            region={userRegion.name}
             street={userAddress.street}
             street2={userAddress.street2}
             city={userAddress.city}

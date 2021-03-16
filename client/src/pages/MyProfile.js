@@ -6,6 +6,7 @@ import Divider from "@material-ui/core/Divider";
 import Chip from "@material-ui/core/Chip";
 
 import API from "../utils/API";
+import UserAddress from "../components/UserAddress";
 
 // Both user/admin
 
@@ -63,6 +64,7 @@ export default function MyProfile(){
     const [appResponseData, setAppResponseData] = useState([]);
 
     const [rolesList, setRolesListData] = useState([])
+    const [userAddress, setUserAddressData] = useState({})
 
     useEffect(()=>{
         API.getMyUserData().then(res =>{
@@ -74,6 +76,7 @@ export default function MyProfile(){
             setBehaviorData(res.data.withBehaviorIssues)
             setMedicalIssuesData(res.data.withMedicalIssues)
             setRolesListData(res.data.Roles)
+            setUserAddressData(res.data.Address)
         }).catch(err=>{
             console.error(err.response.data.message)
             // alert("get data failed")
@@ -95,6 +98,13 @@ export default function MyProfile(){
             {/* <ProfileForm/> */}
             <ProfileBlock firstName={userData.firstName} lastName={userData.lastName} phone={userData.phone} email={userData.email} dob={userData.dob} image={userData.photoUrl}/>
             <ProfileActions/>
+            <UserAddress
+            street={userAddress.street}
+            street2={userAddress.street2}
+            city={userAddress.city}
+            state={userAddress.state}
+            zip={userAddress.zip5}
+            />
             <Roles
             roles={rolesList.map((role)=><Chip label={role.name}/>)}
             />
