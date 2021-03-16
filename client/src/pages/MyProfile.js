@@ -3,6 +3,7 @@ import Grid from '@material-ui/core/Grid';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
+import Chip from "@material-ui/core/Chip";
 
 import API from "../utils/API";
 
@@ -61,6 +62,8 @@ export default function MyProfile(){
 
     const [appResponseData, setAppResponseData] = useState([]);
 
+    const [rolesList, setRolesListData] = useState([])
+
     useEffect(()=>{
         API.getMyUserData().then(res =>{
             console.log(res.data)
@@ -70,6 +73,8 @@ export default function MyProfile(){
             setAdultsData(res.data.adults)
             setBehaviorData(res.data.withBehaviorIssues)
             setMedicalIssuesData(res.data.withMedicalIssues)
+            setRolesListData(res.data.Roles)
+            console.log("roles", res.data.Roles)
         }).catch(err=>{
             console.error(err.response.data.message)
             // alert("get data failed")
@@ -91,7 +96,9 @@ export default function MyProfile(){
             {/* <ProfileForm/> */}
             <ProfileBlock firstName={userData.firstName} lastName={userData.lastName} phone={userData.phone} email={userData.email} dob={userData.dob} image={userData.photoUrl}/>
             <ProfileActions/>
-            {/* <Roles/> */}
+            <Roles
+            roles={rolesList.map((role)=><Chip label={role.name}/>)}
+            />
             <CapacityView style={{marginBottom: "5em"}} maxCapacity={userData.maxCapacity} puppies={puppiesData} seniors={seniorsData} adults={adultsData} behavior={behaviorData} medical={medicalIssuesData}/>
             {/* <References/> */}
             {admin ? <AdminNotes/> : null}

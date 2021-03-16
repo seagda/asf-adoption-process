@@ -33,7 +33,7 @@ export default function Roles(props){
             </Grid>
             <Grid container>
                 <Grid item style={{marginTop: "1em"}}>
-                    <Chip/>
+                    {props.roles}
                 </Grid>
             </Grid>
         </Grid>
