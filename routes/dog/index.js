@@ -36,8 +36,20 @@ router.get("/microchip-mfg", (req, res) => db.MicrochipMfg.findAll().then(microc
     res.status(500).send({ message: "Database error" });
 }));
 
-// show one DOG, with correct ROLE permission
+// show all DOCUMENTs for ONE dog, with correct ROLE permission
+router.get("/:DogId/docs", (req, res) => {
+    const permissionOwn = ac.can(req.roles).readOwn("Document");
+    const permissionAny = ac.can(req.roles).readAny("Document");
+    if (permissionOwn.granted || permissionAny.granted) {
+        controllers.document.getForDog(req.params.DogId).then(docs => {
+            if (docs.CurrentlyWithId == req.userId) res.json(permissionOwn.filter(doc.documents));
+            else if (permissionAny.granted) res.json(permissionAny.filter(docs.documents));
+            else res.status(403).send({ message: "Not authorized to view documents for this dog" });
+        })
+    } else return res.status(403).send({ message: "Not authorized to view documents" });
+});
 
+// show one DOG, with correct ROLE permission
 router.get("/:id", (req, res) => {
     const permissionReadOwn = ac.can(req.roles).readOwn("Dog");
     const permissionReadAny = ac.can(req.roles).readAny("Dog");
