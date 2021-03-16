@@ -29,10 +29,15 @@ export default function EditProfile() {
     const classes = useStyles()
 
     const [userData, setUserData] = useState({})
+    const [addressData, setAddressData] = useState({})
 
     const handleInputChange=({target})=>{
         setUserData({
             ...userData,
+            [target.name]: target.value
+        })
+        setAddressData({
+            ...addressData,
             [target.name]: target.value
         })
     }
@@ -41,6 +46,7 @@ export default function EditProfile() {
         API.getMyUserData().then(res =>{
             console.log(res.data)
             setUserData(res.data)
+            setAddressData(res.data.Address)
         }).catch(err=>{
             console.error(err.response.data.message)
             // alert("get data failed")
@@ -49,7 +55,12 @@ export default function EditProfile() {
 
     return (
         <Grid container className={classes.mainContainer}>
-            <ProfileForm handleInputChange={handleInputChange} submitFunction={API.updateMyUserData} userData={userData}/>
+            <ProfileForm 
+            handleInputChange={handleInputChange} 
+            submitFunction={API.updateMyUserData} 
+            userData={userData}
+            addressData={addressData}
+            />
         </Grid>
        
     )

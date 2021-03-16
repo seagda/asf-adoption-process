@@ -223,11 +223,7 @@ export default function ProfileForm(props){
             <UserMainInfoEdit
             handleInputChange={props.handleInputChange}
             userData={props.userData}
-            addressChange={handleAddressInputChange}
-            streetValue={addressFormData.street}
-            cityValue={addressFormData.city}
-            stateValue={addressFormData.state}
-            zipValue={addressFormData.zip5}
+            addressData={props.addressData}
             />
 
             <UserStatusEdit

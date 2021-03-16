@@ -26,7 +26,7 @@ export default function Roles(props){
     return(
         <Grid item container className={classes.itemContainer}>
             <Grid item container style={{marginTop: "3em"}} direction="column">
-                <Grid item style={{marginTop: "3em"}}>
+                <Grid item>
                     <Typography variant="h4">Role Title(s)</Typography>
                     <Divider/>
                 </Grid>

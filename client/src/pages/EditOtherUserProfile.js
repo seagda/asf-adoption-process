@@ -31,18 +31,25 @@ export default function EditOtherUserProfile() {
 
     let {id} = useParams();
     const [userData, setUserData] = useState({})
+    const [addressData, setAddressData] = useState({})
 
     const handleInputChange=({target})=>{
         setUserData({
             ...userData,
             [target.name]: target.value
         })
+        setAddressData({
+            ...addressData,
+            [target.name]: target.value
+        })
     }
 
     useEffect(()=>{
         API.getSingleUser(id).then(res =>{
-            console.log(res.data)
+            // console.log(res.data)
             setUserData(res.data)
+            setAddressData(res.data.Address)
+            console.log(res.data.Address)
         }).catch(err=>{
             console.error(err.response.data.message)
         })
@@ -50,7 +57,12 @@ export default function EditOtherUserProfile() {
 
     return (
         <Grid container className={classes.mainContainer}>
-            <ProfileForm handleInputChange={handleInputChange} submitFunction={API.updateOtherUser} userData={userData}/>
+            <ProfileForm 
+            handleInputChange={handleInputChange} 
+            submitFunction={API.updateOtherUser} 
+            userData={userData} 
+            addressData={addressData}
+            />
         </Grid>
        
     )
