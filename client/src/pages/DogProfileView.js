@@ -81,7 +81,7 @@ export default function DogProfileView(){
             // microchipName={dogData.MicrochipMfg.name} 
             image={(dogData.DogPhotos.find((photo)=> photo.profilePhoto)||{}).url}/>
 
-            {dogData.canEdit ? <DogProfileActions id={id}/> : null}
+            {dogData.editable ? <DogProfileActions id={id}/> : null}
 
             <DogBreedView 
             coat={dogData.coat} 
