@@ -3,6 +3,25 @@ const ac = require("../../helpers/ac");
 const controllers = require("../../controllers");
 const router = require("express").Router();
 
+// get document by id
+router.get("/:id", (req, res) => {
+    const permissionOwn = ac.can(req.roles).readOwn("Document");
+    const permissionAny = ac.can(req.roles).readAny("Document");
+    controllers.document.get(req.params.id).then(([doc, file, metadata]) => {
+        if (!permissionAny.granted && !(permissionOwn.granted && doc.Dog.CurrentlyWithId == req.userId))
+            return res.status(403).send({ message: "Not authorized to view this document" })
+        res.set({
+            "Content-Type": metadata[0].contentType,
+            "Content-Disposition": `attachment; filename=${metadata[0].name.substring(metadata[0].name.lastIndexOf("/") + 1)}`
+        });
+        file.createReadStream().pipe(res);
+    }).catch(err => {
+        console.error(err);
+        if (err.name == "Error" && err.message == "Document not found") res.sendStatus(404);
+        else res.status(500).send({ message: "Server error" });
+    });
+});
+
 // create new DOCUMENT, with correct ROLE permission
 router.post("/:id", (req, res) => {
     const permissionOwn = ac.can(req.roles).createOwn("Document");
