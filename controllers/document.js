@@ -6,7 +6,7 @@ const docsBucket = storage.bucket("dog-dossier-documents");
 module.exports.get = (id) => db.Document.findByPk(id, { include: db.Dog })
     .then(doc => {
         if (!doc) throw new Error("Document not found");
-        const file = docsBucket.file(`dog1/name.docx`);
+        const file = docsBucket.file(`${doc.DogId}/${doc.name}`);
         return Promise.all([doc, file, file.getMetadata()]);
     });
 
