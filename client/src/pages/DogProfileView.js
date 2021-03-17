@@ -49,7 +49,8 @@ export default function DogProfileView(){
             ResidesInRegion: {},
             Address: {},
             phone: "",
-            email: ""
+            email: "",
+            id: 0
         }
     })
     useEffect(()=>{
@@ -104,7 +105,9 @@ export default function DogProfileView(){
             address={dogData.CurrentlyWith.Address} 
             behaviorIssues={dogData.behaviorIssues} 
             medicalIssues={dogData.medicalIssues} 
-            blocked={dogData.blocked}/>
+            blocked={dogData.blocked}
+            currentlyWithId={dogData.CurrentlyWith.id}
+            />
 
             <DogStatusView
             dogData={dogData}

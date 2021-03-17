@@ -1,6 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from "@material-ui/core/Grid";
+import {NavLink} from "react-router-dom";
 
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
@@ -16,7 +17,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function DogInfoCurrent(props){
     const classes = useStyles();
-    const admin = true;
 
     return(
         <Grid item container className={classes.itemContainer}>
@@ -28,8 +28,10 @@ export default function DogInfoCurrent(props){
                     <Grid item container style={{marginTop: "1em"}}>
                         <Grid item xs={10} sm={6} md={8} lg={6}>
                             {props.currentlyWith ? 
-                            <Typography style={{marginTop: "1em", fontWeight: "bold"}}>Currently With:  
+                            <Typography style={{marginTop: "1em", fontWeight: "bold"}}>Currently With:
+                            <NavLink gutterBottom style={{textDecoration: "none"}} to={`/userView/${props.currentlyWithId}`}> 
                                 <Typography>{props.currentlyWith.firstName} {props.currentlyWith.lastName}</Typography>
+                            </NavLink> 
                                 <Typography>{props.region?.name}</Typography>
                                 <Typography>{props.address?.street}</Typography>
                                 <Typography>{props.address?.street2}</Typography>
