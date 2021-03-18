@@ -10,6 +10,8 @@ module.exports = ac => {
         .createOwn("AppResponse", ["*", "!AppStatus", "!AppStatusId", "!invoicePaid"])
         .readOwn("AppResponse", ["*"])
         .readAny("AppType", ["*"])
+        .createOwn("Document", ["name", "DogId", "MediStatusId"])
+        .readOwn("Document", ["name", "DogId", "MediStatusId"])
         .createOwn("Familymember", ["*"])
         .readOwn("Event", ["*"])
         .readOwn("ExtContact", ["*"])
