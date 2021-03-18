@@ -1,6 +1,6 @@
 module.exports = ac => {
     ac.grant("User")
-        .readOwn("Dog", ["*", "!pull_cost", "!adminNotes"])
+        .readOwn("Dog", ["*", "!pullCost", "!adminNotes"])
         .createOwn("Address", ["*"])
         .readOwn("Address", ["*"])
         .updateOwn("Address", ["*"])
