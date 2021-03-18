@@ -76,7 +76,7 @@ router.post("/new", (req, res) => {
                 if (user && user.Auth.createKey) {
                     return Promise.all([user.update(permission.filter(req.body)), user.Auth.update({ createKey })]).then(([user]) => user);
                 } else if (!user) {
-                    return db.User.create({ ...permission.filter(req.body), Auth: { createKey } }, { include: db.Auth });
+                    return db.User.create({ ...permission.filter(req.body), Auth: { createKey }, Setting: {} }, { include: [db.Auth, db.Setting] });
                 } else res.status(409).send({ message: "There is already an account associated with that email" });
             })
             .then(user => user.setRoles([1, ...(req.body.roles || [])]))
