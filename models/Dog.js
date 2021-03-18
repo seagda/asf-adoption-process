@@ -38,6 +38,8 @@ module.exports = (sequelize, DataTypes, Model) => {
         microchipId: DataTypes.STRING,
         isPurebred: DataTypes.BOOLEAN,
         secondaryBreed: DataTypes.STRING,
+        adminNotes: DataTypes.STRING,
+        aboutDog: DataTypes.STRING,
         pullCost: DataTypes.INTEGER,
         behaviorIssues: DataTypes.STRING,
         medicalIssues: DataTypes.STRING,
