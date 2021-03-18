@@ -6,29 +6,30 @@ const containerStyle = {
   height: '400px'
 };
 
-// pass in geocoded lat and log here 
-const center = {
-  lat: 42.3145186,
-  lng: -71.1103681
-};
 
-const practiceMarker = [{
-  key: 1,
-  lat: 42.3145186,
-  lng: -71.1103681
-},{
-  key: 2,
-  lat: 42,
-  lng: -71
-}]
 
-function MyComponent() {
+function MapBox(props) {
 
+    // pass in geocoded lat and log here 
+    const center = {
+      lat: 42.3145186,
+      lng: -71.1103681
+    };
 
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
     googleMapsApiKey: "AIzaSyD4asyu8x4XuPg6QiohWopYCl3OokWFfEU"
   })
+
+// const practiceMarker = [{
+//   key: 1,
+//   lat: 42.3145186,
+//   lng: -71.1103681
+// },{
+//   key: 2,
+//   lat: 42,
+//   lng: -71
+// }]
 
   const [map, setMap] = React.useState(null)
 
@@ -50,12 +51,12 @@ function MyComponent() {
         onLoad={onLoad}
         onUnmount={onUnmount}
       >
-        {practiceMarker.map((location) => (
-          <Marker key={location.key} position={{lat: location.lat, lng: location.lng}}/>
+        {props.dogs.map((dog) => (
+          <Marker position={dog.coordinates}/>
         ))}
         
       </GoogleMap>
   ) : <></>
 }
 
-export default React.memo(MyComponent)
+export default React.memo(MapBox)

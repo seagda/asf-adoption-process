@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import API from '../utils/API';
 import SwipeBar from '../components/SwipeBar';
+import BehaviorCard from '../components/BehaviorCards';
 
 
 const useStyles=makeStyles(theme => ({
@@ -30,6 +31,10 @@ export default function DogDossierDocs(){
     const classes = useStyles();
 
     const [dogDossierDocs, setDogDossierDocsState] = useState({})
+
+    // request for behavioral assessments
+    // seperate request for the docs (array name, id and no link / hit another route to recieve the doc)
+    //request for dog data / general dossier 
   
     function loadDogDossierDocs() {
     API.getDogDossierDocs()
@@ -68,6 +73,25 @@ export default function DogDossierDocs(){
                 </Typography>
             </Grid>
 
+            {/* {dashboardData.myDogs && dashboardData.myDogs.length ? (
+                <React.Fragment>
+                    <Grid item xs={12} s={10}>
+                        <Typography variant="h5" component="h6" gutterBottom color="primary">
+                            My Dogs
+                            <Divider />
+                        </Typography>
+                    </Grid>
+                    <Grid container className={classes.cardContainer} justify="center">
+                            {dashboardData.myDogs.map(dog =>{
+                                return (
+                                    <Grid item xs={10} s={10} m={6} lg={3}>
+                                        <BehaviorCard id={dog.id} name={dog.name} gender={dog.gender} dob={dog.dob} image={dog.DogPhotos[0].url} />
+                                    </Grid>
+                                )
+                            })}    
+                    </Grid>
+                </React.Fragment>
+                    ):null}  */}
         </Grid>
     )
 }
