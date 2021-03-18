@@ -49,9 +49,11 @@ export default function MediaCard(props) {
         </CardContent>
       </CardActionArea>
       <CardActions>
+      <NavLink style={{textDecoration: "none"}} to={`/dogView/${props.id}`}>
         <Button size="small" color="primary" to={props.dossierLink}>
           View Dossier
         </Button>
+      </NavLink>
       </CardActions>
     </Card>
   );
