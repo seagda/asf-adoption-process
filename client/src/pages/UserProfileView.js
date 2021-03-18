@@ -76,7 +76,7 @@ export default function UserProfileView(){
             <ProfileBlock
             image={userData.photoUrl}
             firstName={userData.firstName}
-            lastname={userData.lastName}
+            lastName={userData.lastName}
             phone={userData.phone}
             email={userData.email}
             dob={userData.dob}
