@@ -81,6 +81,9 @@ export default function DogMainInfoEdit(props){
             <Grid item>
                 <div className={classes.form}>
                     <Grid item container className={classes.formItem}>
+                        <Typography style={{fontWeight: "bold"}}>ASF ID: <Typography>{props.dogData.id}</Typography> </Typography>
+                    </Grid>
+                    <Grid item container className={classes.formItem}>
                         <TextField variant="outlined" label="Name" InputLabelProps={{shrink: true}} onChange={props.handleInputChange} value={props.dogData?.name} name="name"/>
                     </Grid>
                     <Grid item container className={classes.formItem} direction="column">
