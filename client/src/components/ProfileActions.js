@@ -39,7 +39,7 @@ export default function ProfileActions(props){
             </Grid>
             {window.location.href.includes("userView") ? null : 
                 <React.Fragment>
-                    {props.roles.includes("Super Admin") ? null : 
+                    {props.roles.includes("Super Admin" && "Regional") ? null : 
                         <React.Fragment>
                             <Grid item>
                                 <ApplyButton toLink="/adopterApplication" buttonText="Apply To Adopt" color="secondary" icon={<PlayArrowIcon />} />
