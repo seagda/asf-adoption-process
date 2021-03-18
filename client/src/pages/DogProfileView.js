@@ -100,13 +100,13 @@ export default function DogProfileView(){
             pullCost={dogData?.pullCost}/>
 
             <DogInfoCurrent 
-            currentlyWith={dogData.CurrentlyWith}
-            region={dogData.CurrentlyWith.ResidesInRegion}
-            address={dogData.CurrentlyWith.Address} 
-            behaviorIssues={dogData.behaviorIssues} 
-            medicalIssues={dogData.medicalIssues} 
-            blocked={dogData.blocked}
-            currentlyWithId={dogData.CurrentlyWith.id}
+            currentlyWith={dogData?.CurrentlyWith}
+            region={dogData.CurrentlyWith?.ResidesInRegion}
+            address={dogData.CurrentlyWith?.Address} 
+            behaviorIssues={dogData?.behaviorIssues} 
+            medicalIssues={dogData?.medicalIssues} 
+            blocked={dogData?.blocked}
+            currentlyWithId={dogData.CurrentlyWith?.id}
             />
 
             <DogStatusView
