@@ -30,10 +30,16 @@ export default function CreateUser() {
     const classes = useStyles();
 
     const [userData, setUserData] = useState({})
+    const [addressData, setAddressData] = useState({})
+
     const handleInputChange = event =>{
         const {name,value} = event.target
         setUserData({
             ...userData,
+            [name]: value
+        })
+        setAddressData({
+            ...addressData,
             [name]: value
         })
     }
@@ -42,6 +48,7 @@ export default function CreateUser() {
         event.preventDefault();
         API.createUser(userData).then(res=>{
             setUserData({})
+            setAddressData({})
             window.location = `/`
         }).catch(err=>{
             console.error(err.response.data.message)
