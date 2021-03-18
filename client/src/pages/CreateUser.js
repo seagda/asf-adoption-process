@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 
@@ -29,9 +29,18 @@ const useStyles=makeStyles(theme => ({
 export default function CreateUser() {
     const classes = useStyles();
 
+    const [userData, setUserData] = useState({})
+    const handleInputChange = event =>{
+        const {name,value} = event.target
+        setUserData({
+            ...userData,
+            [name]: value
+        })
+    }
+
     return (
         <Grid container className={classes.mainContainer}>
-            <ProfileForm submitFunction={API.createUser}/>
+            <ProfileForm handleInputChange={handleInputChange} submitFunction={API.createUser}/>
             {/* <RoleAssignment/> */}
         </Grid>
     )
