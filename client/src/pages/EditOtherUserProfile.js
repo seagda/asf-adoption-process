@@ -55,11 +55,26 @@ export default function EditOtherUserProfile() {
         })
     }, [])
 
+    const submitFunction = event =>{
+        event.preventDefault();
+        const userInfo = {
+            ...userData,
+            ...addressData
+        }
+        API.updateOtherUser(userInfo, id).then(res=>{
+            setUserData({})
+            setAddressData({})
+            window.location = `/`
+        }).catch(err=>{
+            console.error(err.response.data.message)
+        })
+    }
+
     return (
         <Grid container className={classes.mainContainer}>
             <ProfileForm 
             handleInputChange={handleInputChange} 
-            submitFunction={API.updateOtherUser} 
+            submitFunction={submitFunction} 
             userData={userData} 
             addressData={addressData}
             />
