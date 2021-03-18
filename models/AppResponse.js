@@ -3,7 +3,8 @@ module.exports = (sequelize, DataTypes) => {
         response: {
             type: DataTypes.JSON,
             allowNull: false
-        }
+        },
+        invoicePaid: DataTypes.BOOLEAN
     });
 
     AppResponse.associate = db => {

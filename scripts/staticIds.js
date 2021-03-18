@@ -20,7 +20,8 @@ const STATIC_IDS =
         REF_CHECKED:3,
         APPROVED:4,
         AUTO_REJECT:5,
-        ASF_DECLINE:6
+        ASF_DECLINE:6,
+        INV_SENT:7
     },
 
     DOG_STATUS: {
@@ -29,7 +30,8 @@ const STATIC_IDS =
         IN_FOSTER:3,
         ALMOST_READY:4,
         READY_TO_ADOPT:5,
-        ADOPTED:6
+        FOSTER_TO_ADOPT:6,
+        ADOPTED:7
     }}
 
 module.exports = STATIC_IDS;
