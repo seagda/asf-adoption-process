@@ -68,13 +68,13 @@ export default function DogStatusEdit(props){
                 <Grid item>
                         <div>
                             <FormControl variant="outlined" className={classes.formControl}>
-                            <InputLabel id="demo-simple-select-outlined-label">Select Status</InputLabel>
+                            <InputLabel id="DogStatusId">Select Status</InputLabel>
                             <Select
-                            labelId="demo-simple-select-outlined-label"
-                            id="demo-simple-select-outlined"
+                            labelId="DogStatusId"
+                            id="DogStatusId"
                             value={selectData.DogStatusId}
                             onChange={handleSelectChange}
-                            name="dogStatusNew"
+                            name="DogStatusId"
                             label="Select Status"
                             >
                             <MenuItem value={0}>Select Status</MenuItem>
