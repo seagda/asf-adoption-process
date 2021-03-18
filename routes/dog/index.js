@@ -42,7 +42,7 @@ router.get("/:DogId/documents", (req, res) => {
     const permissionAny = ac.can(req.roles).readAny("Document");
     if (permissionOwn.granted || permissionAny.granted) {
         controllers.document.getForDog(req.params.DogId).then(docs => {
-            if (docs.CurrentlyWithId == req.userId) res.json(permissionOwn.filter(doc.documents));
+            if (docs.CurrentlyWithId == req.userId) res.json(permissionOwn.filter(docs.documents));
             else if (permissionAny.granted) res.json(permissionAny.filter(docs.documents));
             else res.status(403).send({ message: "Not authorized to view documents for this dog" });
         })
