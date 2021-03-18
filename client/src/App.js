@@ -23,6 +23,8 @@ import BehaviorAssessment from "./pages/BehaviorAssessment";
 import DogDossierDocs from "./pages/DogDossierDocs";
 import UserProfileView from "./pages/UserProfileView";
 import EditOtherUserProfile from "./pages/EditOtherUserProfile";
+import AppAnswersAdopt from "./pages/AppAnswersAdopt";
+import AppAnswersFoster from "./pages/AppAnswersFoster";
 
 export default function App() {
     const admin = true;
@@ -52,6 +54,8 @@ export default function App() {
                     <Route path="/dogDocument/:id"><DogDossierDocs/></Route>
                     <Route path="/userView/:id"><UserProfileView/></Route>
                     <Route path="/editOtherUser/:id"><EditOtherUserProfile/></Route>
+                    <Route path="/appAnswersAdopt"><AppAnswersAdopt/></Route>
+                    <Route path="/appAnswersFoster"><AppAnswersFoster/></Route>
                 </Switch>
             </BrowserRouter>
         </ThemeProvider>
