@@ -53,13 +53,13 @@ export default function IntakeDetailsEdit(props){
             <Grid item container style={{marginTop: "1em"}} align="center" direction="column">
                 <Grid item>
                     <FormControl variant="outlined" className={classes.formControl}>
-                    <InputLabel id="originId">Dog Origin</InputLabel>
+                    <InputLabel id="OriginId">Dog Origin</InputLabel>
                     <Select
-                    labelId="originId"
-                    id="originId"
-                    onChange={props.originContactChange}
-                    value={props.originValue}
-                    name="originId"
+                    labelId="OriginId"
+                    id="OriginId"
+                    onChange={props.handleInputChange}
+                    value={props.originContactData.id}
+                    name="OriginId"
                     label="Dog Origin"
                     InputLabelProps={{shrink: true}}
                     >

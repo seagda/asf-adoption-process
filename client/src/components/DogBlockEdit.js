@@ -216,9 +216,11 @@ export default function ProfileForm(props){
         <IntakeDetailsEdit
         handleInputChange={props.handleInputChange}
         dogData={props.dogData}
-        dogInputChange={createDogInputChange}
-        originContactChange={handleOriginContact}
-        originValue={originContactData.originId}
+        originContactData={props.originContactData}
+        originList={props.originList}
+
+        // dogInputChange={createDogInputChange}
+        // originContactChange={handleOriginContact}
         addContactChange={handleAddedExternalContactChange}
         fullNameValue={addedExternalContactData.fullName}
         emailValue={addedExternalContactData.email}
@@ -229,9 +231,9 @@ export default function ProfileForm(props){
         cityValue={addedAddressData.city}
         stateValue={addedAddressData.state}
         zipValue={addedAddressData.zip5}
-        originList= {origins.map((origin)=>(
-            <MenuItem value={origin.id}>{origin.fullName}</MenuItem>
-        ))}
+        // originList= {origins.map((origin)=>(
+        //     <MenuItem value={origin.id}>{origin.fullName}</MenuItem>
+        // ))}
         /> : null}
 
         <HealthRecordEdit
