@@ -12,7 +12,17 @@ import OverviewTable from '../components/OverviewTable';
 import SearchBar from '../components/SearchBar';
 import Hidden from '@material-ui/core/Hidden';
 import API from '../utils/API';
+import Geocode from "react-geocode";
 import MapBox from '../components/MapBox';
+
+
+// set Google Maps Geocoding API for purposes of quota management. Its optional but recommended.
+Geocode.setApiKey("AIzaSyD4asyu8x4XuPg6QiohWopYCl3OokWFfEU");
+
+// set response language. Defaults to english.
+Geocode.setLanguage("en");
+Geocode.setRegion("us");
+Geocode.setLocationType("ROOFTOP");
 
 const useStyles=makeStyles(theme => ({
     mainContainer: {
@@ -51,8 +61,13 @@ export default function DogDossiersAll() {
     function loadDogs() {
         API.getDogDossiersAll()
             .then(res => {
-            setDogState(res.data)
             console.log(res)
+            return  Promise.all(res.data.map(dog => Geocode.fromAddress(`${dog.Address.street} ${dog.Address.street2} ${dog.Address.city}, ${dog.Address.state} ${dog.Address.zip5}`).then (response => {
+                const { lat, lng } = response.results[0].geometry.location;
+                return {...dog, coordinates: {lat, lng}}
+            }))).then(dogs => {
+                setDogState(dogs)
+            })
             })
             .catch(err => console.log(err));
 
@@ -132,7 +147,7 @@ export default function DogDossiersAll() {
                     })}/>
                 </Grid>
                 <Grid item xs={12}>
-                    <MapBox dogLocation={dogs.filter( (dog) => {
+                    <MapBox dogs={dogs.filter( (dog) => {
                         if (selectedRegions.length > 0 && !selectedRegions.includes(dog.Region.id)) {
                             return false;
                         } 
