@@ -95,7 +95,8 @@ const appStatusSeed = [
  // Seed the Dog Status table
  const dogStatusSeed = [
     { name: "Pending Intake" }, 
-    { name: "Foster Ready" }, 
+    { name: "Foster Ready" },
+    { name: "In Treatment" }, 
     { name: "In Foster" }, 
     { name: "Almost Adoption Ready" }, 
     { name: "Adoption Ready" }, 
