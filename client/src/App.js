@@ -25,6 +25,7 @@ import UserProfileView from "./pages/UserProfileView";
 import EditOtherUserProfile from "./pages/EditOtherUserProfile";
 import AppAnswersAdopt from "./pages/AppAnswersAdopt";
 import AppAnswersFoster from "./pages/AppAnswersFoster";
+import BehaveAssessAnswers from "./pages/BehavAssessAnswers";
 
 export default function App() {
     const admin = true;
@@ -56,6 +57,7 @@ export default function App() {
                     <Route path="/editOtherUser/:id"><EditOtherUserProfile/></Route>
                     <Route path="/appAnswersAdopt"><AppAnswersAdopt/></Route>
                     <Route path="/appAnswersFoster"><AppAnswersFoster/></Route>
+                    <Route path="/behaveAnswers"><BehaveAssessAnswers/></Route>
                 </Switch>
             </BrowserRouter>
         </ThemeProvider>

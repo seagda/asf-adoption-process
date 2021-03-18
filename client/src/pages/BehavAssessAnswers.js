@@ -24,12 +24,12 @@ const useStyles=makeStyles(theme => ({
 }))
 
 
-export default function AppAnswersFoster() {
+export default function BehaveAssessAnswers() {
     const classes = useStyles();
 
     return (
         <Grid container className={classes.mainContainer}>
-            <h1>Foster!</h1>
+            <h1>Behavior!</h1>
         </Grid>
     )
 }

@@ -2,8 +2,6 @@ import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 
-import ProfileForm from "../components/ProfileForm";
-import RoleAssignment from "../components/RoleAssignment";
 import API from '../utils/API';
 
 
