@@ -31,7 +31,7 @@ const useStyles=makeStyles(theme => ({
 export default function DogDossierDocs(){
     const classes = useStyles();
 
-    const [dogDossierDocs, setDogDossierDocsState] = useState({});
+    const [dogDossierDocs, setDogDossierDocsState] = useState([]);
     const {id} = useParams();
     const fileInput = createRef();
 
@@ -44,7 +44,7 @@ export default function DogDossierDocs(){
     //request for dog data / general dossier 
   
     function loadDogDossierDocs() {
-    API.getDogDossierDocs()
+    API.getDogDossierDocs(id)
         .then(res => {
         console.log(res.data)
         setDogDossierDocsState(res.data)
