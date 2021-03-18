@@ -1,13 +1,14 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import { useState, useEffect } from "react";
+import { useState, useEffect, createRef } from "react";
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import API from '../utils/API';
 import SwipeBar from '../components/SwipeBar';
 import BehaviorCard from '../components/BehaviorCards';
-
+import UploadFiles from '../components/UploadFiles';
+import {useParams} from 'react-router-dom';
 
 const useStyles=makeStyles(theme => ({
     mainContainer: {
@@ -30,7 +31,13 @@ const useStyles=makeStyles(theme => ({
 export default function DogDossierDocs(){
     const classes = useStyles();
 
-    const [dogDossierDocs, setDogDossierDocsState] = useState({})
+    const [dogDossierDocs, setDogDossierDocsState] = useState({});
+    const {id} = useParams();
+    const fileInput = createRef();
+
+    const handleFileSubmit = () => {
+        API.createDocuments(fileInput.current.files, id).then(console.log).catch(console.error)
+    }
 
     // request for behavioral assessments
     // seperate request for the docs (array name, id and no link / hit another route to recieve the doc)
@@ -71,6 +78,7 @@ export default function DogDossierDocs(){
                     Behavior Assessments
                     <Divider />
                 </Typography>
+                <UploadFiles handleSubmit={handleFileSubmit} fileInput={fileInput}/>
             </Grid>
 
             {/* {dashboardData.myDogs && dashboardData.myDogs.length ? (
