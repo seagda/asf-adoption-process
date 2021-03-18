@@ -103,6 +103,9 @@ const API = {
         const formData = new FormData()
         for (let i = 0; i < files.length; i++) formData.append(i, files[i])
         return axios.post(`/api/dog/document/${dogId}`, formData, getHeaders())
+    },
+    getDocument: function (id){
+         return axios.get(`/api/dog/document/${id}`, {...getHeaders(), responseType: "blob"})
     }
 }
 
