@@ -37,16 +37,13 @@ export default function ProfileActions(props){
             <Grid item>
                <UpdateButton toLink="/" buttonText="Update Password"/>
             </Grid>
-            {!user.roles.includes("adopter") ? (
                 <Grid item>
                     <ApplyButton toLink="/adopterApplication" buttonText="Apply To Adopt" color="secondary" icon={<PlayArrowIcon />} />
-                </Grid>)
-            : null}
-            {!user.roles.includes("foster") ? (
+                </Grid>
+
                 <Grid item>
                     <ApplyButton toLink="/fosterApplication" buttonText="Apply To Foster" color="secondary" icon={<PlayArrowIcon />} />
-                </Grid>)
-            : null}
+                </Grid>
             {/* <Grid item>
                 {admin ? <ContactButton toLink="/" buttonText="Contact"/> : <ContactButton toLink="/" buttonText="Contact Admin"/>}
             </Grid> */}
