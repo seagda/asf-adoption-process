@@ -43,12 +43,18 @@ export default function DogProfileCreate(){
     }
 
     const submitFunction = (event)=>{
-
+        event.preventDefault();
+        API.createDog(dogData).then(res=>{
+            setDogData({})
+            window.location = `/`
+        }).catch(err=>{
+            console.error(err.response.data.message)
+        })
     }
 
     return(
         <Grid container className={classes.mainContainer}>
-            <DogBlockEdit handleInputChange={handleInputChange} dogData={{dogData}} submitFunction={API.createDog} />
+            <DogBlockEdit handleInputChange={handleInputChange} dogData={{dogData}} submitFunction={submitFunction} />
             {/* <DogStatusEdit/> */}
         </Grid>
     )

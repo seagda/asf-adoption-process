@@ -44,7 +44,13 @@ export default function DogProfileEdit(){
     }
 
     const submitFunction = (event)=>{
-
+        event.preventDefault();
+        API.updateDogInfo(dogData, id).then(res=>{
+            setDogData({})
+            window.location = `/`
+        }).catch(err=>{
+            console.error(err.response.data.message)
+        })
     }
 
     useEffect(()=>{
@@ -59,7 +65,7 @@ export default function DogProfileEdit(){
 
     return(
         <Grid container className={classes.mainContainer}>
-            <DogBlockEdit handleInputChange={handleInputChange} dogData={dogData} submitFunction={API.updateDogInfo}/>
+            <DogBlockEdit handleInputChange={handleInputChange} dogData={dogData} submitFunction={submitFunction}/>
             {/* <DogStatusEdit/> */}
         </Grid>
     )
