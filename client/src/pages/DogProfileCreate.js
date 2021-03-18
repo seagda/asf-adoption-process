@@ -34,17 +34,26 @@ export default function DogProfileCreate(){
 
     // let {id} = useParams();
     const [dogData, setDogData] = useState({})
+    const [originContactData, setOriginContactData] = useState({});
 
     const handleInputChange=({target})=>{
         setDogData({
             ...dogData,
             [target.name]: target.value
         })
+        setOriginContactData({
+            ...originContactData,
+            [target.name]: target.value
+        })
     }
 
     const submitFunction = (event)=>{
         event.preventDefault();
-        API.createDog(dogData).then(res=>{
+        const newDog = {
+            ...dogData,
+            ...originContactData
+        }
+        API.createDog(newDog).then(res=>{
             setDogData({})
             window.location = `/`
         }).catch(err=>{
@@ -54,7 +63,12 @@ export default function DogProfileCreate(){
 
     return(
         <Grid container className={classes.mainContainer}>
-            <DogBlockEdit handleInputChange={handleInputChange} dogData={{dogData}} submitFunction={submitFunction} />
+            <DogBlockEdit 
+            originContactData={originContactData} 
+            handleInputChange={handleInputChange} 
+            dogData={{dogData}} 
+            submitFunction={submitFunction} 
+            />
             {/* <DogStatusEdit/> */}
         </Grid>
     )

@@ -46,7 +46,11 @@ export default function CreateUser() {
 
     const submitFunction = event =>{
         event.preventDefault();
-        API.createUser(userData).then(res=>{
+        const newUser = {
+            ...userData,
+            ...addressData
+        }
+        API.createUser(newUser).then(res=>{
             setUserData({})
             setAddressData({})
             window.location = `/`
@@ -57,7 +61,7 @@ export default function CreateUser() {
 
     return (
         <Grid container className={classes.mainContainer}>
-            <ProfileForm handleInputChange={handleInputChange} submitFunction={submitFunction}/>
+            <ProfileForm userData={userData} addressData={addressData} handleInputChange={handleInputChange} submitFunction={submitFunction}/>
             {/* <RoleAssignment/> */}
         </Grid>
     )
