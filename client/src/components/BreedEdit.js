@@ -62,10 +62,10 @@ export default function BreedEdit(props){
             <Grid item style={{marginTop: "1em"}}>
                 <div>
                     <FormControl variant="outlined" className={classes.formControl}>
-                    <InputLabel id="demo-simple-select-outlined-label">Purebred?</InputLabel>
+                    <InputLabel shrink id="isPurebred">Purebred?</InputLabel>
                     <Select
-                    labelId="demo-simple-select-outlined-label"
-                    id="demo-simple-select-outlined"
+                    labelId="isPurebred"
+                    id="isPurebred"
                     onChange={handleSelectChange}
                     value={selectData.isPurebred}
                     name="isPurebred"
