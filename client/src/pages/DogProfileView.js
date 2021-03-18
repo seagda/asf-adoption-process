@@ -77,7 +77,7 @@ export default function DogProfileView(){
             size={dogData?.size} 
             mfgCompany={dogData?.MicrochipMfg?.name}
             microchipId={dogData?.microchipId} 
-            asfId={dogData?.asfId} 
+            asfId={dogData?.id} 
             // microchipName={dogData.MicrochipMfg.name} 
             image={(dogData.DogPhotos.find((photo)=> photo.profilePhoto)||{}).url}/>
 
