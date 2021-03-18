@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useParams} from 'react';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import SaveButton from "../components/SaveButton";
@@ -32,9 +32,23 @@ const useStyles=makeStyles(theme => ({
 export default function DogProfileCreate(){
     const classes = useStyles();
 
+    // let {id} = useParams();
+    const [dogData, setDogData] = useState({})
+
+    const handleInputChange=({target})=>{
+        setDogData({
+            ...dogData,
+            [target.name]: target.value
+        })
+    }
+
+    const submitFunction = (event)=>{
+
+    }
+
     return(
         <Grid container className={classes.mainContainer}>
-            <DogBlockEdit dogData={{}} submitFunction={API.createDog} />
+            <DogBlockEdit handleInputChange={handleInputChange} dogData={{dogData}} submitFunction={API.createDog} />
             {/* <DogStatusEdit/> */}
         </Grid>
     )
