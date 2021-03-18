@@ -12,6 +12,8 @@ Geocode.setRegion("us");
 
 Geocode.setLocationType("ROOFTOP");
 
+export default function GeoCode(){
+
 // Get latitude & longitude from address.
 Geocode.fromAddress("Eiffel Tower").then(
     (response) => {
@@ -22,3 +24,4 @@ Geocode.fromAddress("Eiffel Tower").then(
       console.error(error);
     }
   );
+}

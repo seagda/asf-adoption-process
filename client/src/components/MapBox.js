@@ -1,18 +1,30 @@
 import React from 'react'
-import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
+import { GoogleMap, useJsApiLoader, Marker } from '@react-google-maps/api';
 
 const containerStyle = {
   width: '100%',
   height: '400px'
 };
 
-function MyComponent(props) {
-
 // pass in geocoded lat and log here 
 const center = {
   lat: 42.3145186,
   lng: -71.1103681
 };
+
+const practiceMarker = [{
+  key: 1,
+  lat: 42.3145186,
+  lng: -71.1103681
+},{
+  key: 2,
+  lat: 42,
+  lng: -71
+}]
+
+function MyComponent() {
+
+
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
     googleMapsApiKey: "AIzaSyD4asyu8x4XuPg6QiohWopYCl3OokWFfEU"
@@ -38,8 +50,10 @@ const center = {
         onLoad={onLoad}
         onUnmount={onUnmount}
       >
-        { /* Child components, such as markers, info windows, etc. */ }
-        <></>
+        {practiceMarker.map((location) => (
+          <Marker key={location.key} position={{lat: location.lat, lng: location.lng}}/>
+        ))}
+        
       </GoogleMap>
   ) : <></>
 }
