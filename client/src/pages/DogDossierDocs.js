@@ -9,6 +9,7 @@ import SwipeBar from '../components/SwipeBar';
 import BehaviorCard from '../components/BehaviorCards';
 import UploadFiles from '../components/UploadFiles';
 import {useParams} from 'react-router-dom';
+import FileDownload from 'js-file-download';
 
 const useStyles=makeStyles(theme => ({
     mainContainer: {
@@ -57,6 +58,12 @@ export default function DogDossierDocs(){
         loadDogDossierDocs()
     }, [])
 
+    function download(docId) {
+        API.getDocument(docId).then(res => {
+            FileDownload(res.data, res.headers["content-disposition"].match(/(?:filename=)(.+)$/i)[1])
+        }).catch(console.error);
+    }
+
     const userString = localStorage.getItem("user")
     if(!userString){
         window.location = "/"
@@ -79,6 +86,14 @@ export default function DogDossierDocs(){
                     <Divider />
                 </Typography>
                 <UploadFiles handleSubmit={handleFileSubmit} fileInput={fileInput}/>
+            </Grid>
+            <Grid item xs={12} s={10}>
+                <Typography variant="h5" component="h6" gutterBottom color="primary">
+                    Documents
+                    <Divider />
+                </Typography>
+                {/* TODO: make this look good */}
+                {dogDossierDocs.map(doc => <p key={doc.id} onClick={() => download(doc.id)}>{doc.name}, {doc.createdAt}</p>)}
             </Grid>
 
             {/* {dashboardData.myDogs && dashboardData.myDogs.length ? (
