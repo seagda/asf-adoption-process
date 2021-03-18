@@ -37,13 +37,17 @@ export default function ProfileActions(props){
             <Grid item>
                <UpdateButton toLink="/" buttonText="Update Password"/>
             </Grid>
-                <Grid item>
-                    <ApplyButton toLink="/adopterApplication" buttonText="Apply To Adopt" color="secondary" icon={<PlayArrowIcon />} />
-                </Grid>
+            {window.location.href.includes("userView") ? null : 
+                <React.Fragment>
+                    <Grid item>
+                        <ApplyButton toLink="/adopterApplication" buttonText="Apply To Adopt" color="secondary" icon={<PlayArrowIcon />} />
+                    </Grid>
+                    <Grid item>
+                        <ApplyButton toLink="/fosterApplication" buttonText="Apply To Foster" color="secondary" icon={<PlayArrowIcon />} />
+                    </Grid>
+                </React.Fragment>
+            }
 
-                <Grid item>
-                    <ApplyButton toLink="/fosterApplication" buttonText="Apply To Foster" color="secondary" icon={<PlayArrowIcon />} />
-                </Grid>
             {/* <Grid item>
                 {admin ? <ContactButton toLink="/" buttonText="Contact"/> : <ContactButton toLink="/" buttonText="Contact Admin"/>}
             </Grid> */}
