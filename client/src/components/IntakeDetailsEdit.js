@@ -73,10 +73,10 @@ export default function IntakeDetailsEdit(props){
 
 
                 {/* THIS IS ON PURPOSE! Coming back soon to repair */}
-                <Grid item>
+                {/* <Grid item>
                     <Typography>Or</Typography>
                     <Button variant="contained" color="secondary" onClick={onClick}>Add external contact</Button>
-                </Grid>
+                </Grid> */}
             </Grid>
             {contactFormVis ? null : 
                 <React.Fragment>

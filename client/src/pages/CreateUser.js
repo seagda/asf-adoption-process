@@ -61,7 +61,12 @@ export default function CreateUser() {
 
     return (
         <Grid container className={classes.mainContainer}>
-            <ProfileForm userData={userData} addressData={addressData} handleInputChange={handleInputChange} submitFunction={submitFunction}/>
+            <ProfileForm 
+            userData={userData} 
+            addressData={addressData} 
+            handleInputChange={handleInputChange} 
+            submitFunction={submitFunction}
+            />
             {/* <RoleAssignment/> */}
         </Grid>
     )

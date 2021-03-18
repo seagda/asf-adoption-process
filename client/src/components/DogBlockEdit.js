@@ -236,12 +236,12 @@ export default function ProfileForm(props){
         // ))}
         /> : null}
 
-        <HealthRecordEdit
+        {/* <HealthRecordEdit
         handleInputChange={props.handleInputChange}
         dogData={props.dogData}
         dogInputChange={createDogInputChange}
         medIssuesValue={dogIntakeData.medicalIssues}
-        />
+        /> */}
         {/* <RecordCards/> */}
         
         <Grid item container className={classes.formItem} justify={"flex-end"}>
