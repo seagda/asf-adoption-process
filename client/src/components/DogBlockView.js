@@ -45,6 +45,9 @@ export default function DogBlockView(props){
                     <Typography style={{fontWeight: "bold"}}>Name: <Typography>{props.name}</Typography> </Typography>
                 </Grid>
                 <Grid item container className={classes.formItem}>
+                     <Typography style={{fontWeight: "bold"}}>ASF ID: <Typography>{props.asfId}</Typography> </Typography>
+                </Grid>
+                <Grid item container className={classes.formItem}>
                      <Typography style={{fontWeight: "bold"}}>DOB: <Typography>{props.dob}</Typography> </Typography>
                 </Grid>
                 <Grid item container className={classes.formItem}>
@@ -56,9 +59,6 @@ export default function DogBlockView(props){
                 <Grid item container className={classes.formItem}>
                      <Typography style={{fontWeight: "bold"}}>Microchip Info: <Typography>{props.mfgCompany}, {props.microchipId}</Typography></Typography>
                  </Grid>
-                <Grid item container className={classes.formItem}>
-                     <Typography style={{fontWeight: "bold"}}>ASF ID: <Typography>{props.asfId}</Typography> </Typography>
-                </Grid>
             </Grid>
         </Grid>
     </Grid>
