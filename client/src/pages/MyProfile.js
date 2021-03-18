@@ -99,7 +99,9 @@ export default function MyProfile(){
             </Grid>
             {/* <ProfileForm/> */}
             <ProfileBlock firstName={userData.firstName} lastName={userData.lastName} phone={userData.phone} email={userData.email} dob={userData.dob} image={userData.photoUrl}/>
-            <ProfileActions/>
+            <ProfileActions
+            roles={rolesList.map((role)=>role.name)}
+            />
             <UserAddress
             region={userRegion.name}
             street={userAddress.street}
