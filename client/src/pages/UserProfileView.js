@@ -82,7 +82,7 @@ export default function UserProfileView(){
             dob={userData.dob}
             />
 
-            {userData.canEdit ? <ProfileActions id={id}/> : null}
+            {userData.editable ? <ProfileActions id={id}/> : null}
 
             <UserAddress
             region={userRegion.name}

@@ -132,9 +132,9 @@ export default function DogMainInfoEdit(props){
                     <Grid item container className={classes.numberItem}>
                         <TextField type="number" variant="outlined" label="Microchip ID" InputLabelProps={{shrink: true}} onChange={props.handleInputChange} value={props.dogData?.microchipId} name="microchipId"/>
                     </Grid>
-                    <Grid item container className={classes.formItem}>
+                    {/* <Grid item container className={classes.formItem}>
                         <TextField type="number" variant="outlined" label="ASF ID" InputLabelProps={{shrink: true}} onChange={props.handleInputChange} value={props.dogData?.asfId} name="asfId"/>
-                    </Grid>
+                    </Grid> */}
                     {/* <Grid item container className={classes.formItem}>
                         <TextField rows={4} multiline variant="outlined" label="About" onChange={e => setAbout(e.target.value)}/>
                     </Grid> */}
