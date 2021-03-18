@@ -90,14 +90,19 @@ const API = {
     getDashboardData: function(){
         return axios.get(`/api/dashboard`, getHeaders())
     },
-    getDogDossierDocs: function(){
-        return axios.get(`/api/dog/document`, getHeaders())
+    getDogDossierDocs: function(dogId){
+        return axios.get(`/api/dog/${dogId}/documents`, getHeaders())
     },
     getSingleUser: function (userId){
         return axios.get(`/api/user/${userId}`, getHeaders())
     },
     updateOtherUser: function (userData, userId){
-        return axios.put(`api/user/${userId}`, userData, getHeaders())
+        return axios.put(`/api/user/${userId}`, userData, getHeaders())
+    },
+    createDocuments: function (files, dogId){
+        const formData = new FormData()
+        for (let i = 0; i < files.length; i++) formData.append(i, files[i])
+        return axios.post(`/api/dog/document/${dogId}`, formData, getHeaders())
     }
 }
 
