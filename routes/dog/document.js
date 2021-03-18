@@ -3,44 +3,44 @@ const ac = require("../../helpers/ac");
 const controllers = require("../../controllers");
 const router = require("express").Router();
 
-// show all DOCUMENT for ONE dog, with correct ROLE permission
+// get document by id
 router.get("/:id", (req, res) => {
     const permissionOwn = ac.can(req.roles).readOwn("Document");
     const permissionAny = ac.can(req.roles).readAny("Document");
-    if (permissionOwn.granted || permissionAny.granted) {
-        controllers.document.getForDog(req.params.id).then(docs => {
-            if (docs.CurrentlyWithId == req.userId) res.json(permissionOwn.filter(doc.documents));
-            else if (permissionAny.granted) res.json(permissionAny.filter(docs.documents));
-            else res.status(403).send({ message: "Not authorized to view documents for this dog" });
-        })
-    } else return res.status(403).send({ message: "Not authorized to view documents" });
+    controllers.document.get(req.params.id).then(([doc, file, metadata]) => {
+        if (!permissionAny.granted && !(permissionOwn.granted && doc.Dog.CurrentlyWithId == req.userId))
+            return res.status(403).send({ message: "Not authorized to view this document" })
+        res.set({
+            "Content-Type": metadata[0].contentType,
+            "Content-Disposition": `attachment; filename=${metadata[0].name.substring(metadata[0].name.lastIndexOf("/") + 1)}`
+        });
+        file.createReadStream().pipe(res);
+    }).catch(err => {
+        console.error(err);
+        if (err.name == "Error" && err.message == "Document not found") res.sendStatus(404);
+        else res.status(500).send({ message: "Server error" });
+    });
 });
 
-// create new DOCUMENT, with correct ROLE permission
-router.post("/:id", (req, res) => {
+// create new DOCUMENTs, with correct ROLE permission
+router.post("/:DogId", require("express-fileupload")(), (req, res) => {
     const permissionOwn = ac.can(req.roles).createOwn("Document");
     const permissionAny = ac.can(req.roles).createAny("Document");
-    db.Dog.findByPk(req.params.id)
-    .then(dog => {
-        if (permissionOwn.granted || permissionAny.granted) {
-            let docJson;
-            if (dog.currentlyWithId === req.userId) {
-                docJson = permissionOwn.filter(req.body)
-            } else if (permissionAny.granted) {
-                docJson = permissionAny.filter(req.body)
-            } else return res.status(403).send({ message: "you can't create assessments" })
-    
-        dog
-          .createDocument(docJson) 
-          .then(() => res.status(200).send({message: "DOCUMENT successfully created"}))
-          .catch(err => {
-            console.error(err)  
-            res.status(422).send({ message: "Error with request" })
+    Promise.resolve(permissionAny.granted || (permissionOwn.granted && db.Dog.findByPk(req.params.DogId).then(dog => dog.CurrentlyWithId === req.userId)))
+        .then(granted => granted ?
+            Promise.allSettled(Object.values(req.files).map(file => controllers.document.create(req.params.DogId, file)))
+                .then(results => {
+                    if (results.filter(result => result.status === "rejected").some(result => result.reason.message !== "File already exists")) {
+                        console.error(results);
+                        res.sendStatus(500);
+                    }
+                    res.send(results.filter(result => result.status === "fulfilled").map(result => result.value));
+                }) :
+            res.status(403).send({ message: "Not authorized to add documents to this dog" }))
+        .catch(err => {
+            console.error(err);
+            res.sendStatus(500);
         });
-    
-        } else return res.status(403).send({ message: "Not authorized to create DOCUMENTs" })
-
-    })
 });
 
 // update DOCUMENT by id, with correct ROLE permission
@@ -48,9 +48,9 @@ router.put("/:id", (req, res) => {
     const permissionOwn = ac.can(req.roles).updateOwn("Document");
     const permissionAny = ac.can(req.roles).updateAny("Document");
     if (permissionOwn.granted || permissionAny.granted) {
-        
+
         db.Document
-        .findByPk(req.params.id, {include: db.Dog})
+            .findByPk(req.params.id, { include: db.Dog })
             .then(doc => {
                 let docJson;
                 if (doc.Dog.currentlyWithId === req.userId) {
@@ -65,7 +65,7 @@ router.put("/:id", (req, res) => {
                 console.error(err);
                 res.status(422).send({ message: "Error with request" })
             });
-    } else return res.status(403).send({ message: "Not authorized to update DOCUMENTs"});
+    } else return res.status(403).send({ message: "Not authorized to update DOCUMENTs" });
 });
 
 // delete DOCUMENT by id, with SuperAdmin ONLY permission
@@ -73,15 +73,16 @@ router.delete("/:id", (req, res) => {
     const permission = ac.can(req.roles).deleteAny("Document");
     if (permission.granted) {
         db.Document
-            .destroy({ where: {id: req.params.id} })
+            .destroy({ where: { id: req.params.id } })
             .then(deletedDoc => {
                 res.sendStatus(200);
-                console.log(`Assessment successfully deleted? 1 means yes, 0 means no: ${deletedDoc}`)})
+                console.log(`Assessment successfully deleted? 1 means yes, 0 means no: ${deletedDoc}`)
+            })
             .catch(err => {
                 console.error(err);
-              res.status(422).send({ message: "Error with request" })
-        });
-    } else return res.status(403).send({ message: "Not authorized to delete DOCUMENTs"});
+                res.status(422).send({ message: "Error with request" })
+            });
+    } else return res.status(403).send({ message: "Not authorized to delete DOCUMENTs" });
 });
 
 

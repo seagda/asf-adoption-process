@@ -88,16 +88,19 @@ const appStatusSeed = [
     { name: "Reference Check Complete"}, 
     { name: "Approved" }, 
     { name: "Auto Rejected" },
-    { name: "Declined" }
- ];
- 
+    { name: "Declined" },
+    { name: "Invoice Sent" }
+];
+
  // Seed the Dog Status table
  const dogStatusSeed = [
     { name: "Pending Intake" }, 
-    { name: "Foster Ready" }, 
+    { name: "Foster Ready" },
+    { name: "In Treatment" }, 
     { name: "In Foster" }, 
     { name: "Almost Adoption Ready" }, 
     { name: "Adoption Ready" }, 
+    { name: "Foster-to-Adopt" }, 
     { name: "Adopted" }
  ];
 
