@@ -27,11 +27,12 @@ const STATIC_IDS =
     DOG_STATUS: {
         PENDING:1,
         FOSTER_READY:2,
-        IN_FOSTER:3,
-        ALMOST_READY:4,
-        READY_TO_ADOPT:5,
-        FOSTER_TO_ADOPT:6,
-        ADOPTED:7
+        IN_TREATMENT:3,
+        IN_FOSTER:4,
+        ALMOST_READY:5,
+        READY_TO_ADOPT:6,
+        FOSTER_TO_ADOPT:7,
+        ADOPTED:8
     }}
 
 module.exports = STATIC_IDS;
