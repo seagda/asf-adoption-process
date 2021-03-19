@@ -1,5 +1,6 @@
 const db = require("../models");
 const alertController = require("./alert");
+const photoController = require("./photo");
 
 module.exports.getAll = (originFilter, withFilter, regionIdFilter) => db.Dog.findAll({
     include: [
@@ -32,6 +33,8 @@ module.exports.get = (id) => db.Dog.findByPk(id, {
         db.DogPhoto, db.DogStatus, db.MicrochipMfg
     ]
 }).then(dog => ({ ...dog.toJSON(), AppsFor: dog.AppsFor.length }));
+
+module.exports.getPhoto = (PhotoId) => db.DogPhoto.findByPk(PhotoId).then(photo => photoController.getDogPhoto(photo.DogId, photo.name));
 
 module.exports.update = (dog, updates) => dog.update(updates);
 
