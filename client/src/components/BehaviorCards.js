@@ -31,10 +31,13 @@ export default function BehaviorCard(props) {
     <Card className={classes.root} variant="outlined">
       <CardContent>
         <Typography className={classes.title} color="textSecondary" gutterBottom>
-          Behavior Assessment Score: 
+         Date: {props.date}
         </Typography>
         <Typography variant="h5" component="h2">
-          Date: {props.date}
+        <b>Behavior Assessment Grade: A </b>
+        </Typography>
+        <Typography className={classes.pos} color="textSecondary">
+        (200 points earned out of 215 total)
         </Typography>
         <Typography className={classes.pos} color="textSecondary">
           Created By: {props.firstName} {props.lastName}

@@ -16,9 +16,9 @@ import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 const theme = createMuiTheme();
 
 theme.typography.h2 = {
-  fontSize: '1.2rem',
+  fontSize: '6.2rem',
   '@media (min-width:600px)': {
-    fontSize: '1.5rem',
+    fontSize: '6.5rem',
   },
   [theme.breakpoints.up('md')]: {
     fontSize: '2rem',
