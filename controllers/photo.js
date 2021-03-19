@@ -9,6 +9,7 @@ function getPhoto(path) {
 module.exports.getUserProfilePhoto = (UserId) => getPhoto(`user/${UserId}`);
 
 module.exports.setUserProfilePhoto = (UserId, photo) => {
+    if (!photo.mimetype.startsWith("image/")) throw new Error("File must have an image mimetype");
     const gcsPhoto = photosBucket.file(`user/${UserId}`);
     return gcsPhoto.save(photo.data, { metadata: { contentType: photo.mimetype } });
 };
