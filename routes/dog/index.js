@@ -57,7 +57,6 @@ router.get("/:id", (req, res) => {
     const permissionUpdateAny = ac.can(req.roles).updateAny("Dog");
     if (permissionReadOwn.granted || permissionReadAny.granted) {
         controllers.dog.get(req.params.id).then(dog => {
-            // TODO: also check permissions for CurrentlyWith and Origin
             let dogFiltered;
             if (dog.CurrentlyWithId === req.userId) {
                 dogFiltered = { ...permissionReadOwn.filter(dog), editable: permissionUpdateOwn.attributes }
@@ -65,6 +64,7 @@ router.get("/:id", (req, res) => {
                 dogFiltered = { ...permissionReadAny.filter(dog), editable: permissionUpdateAny.attributes }
             } else return res.status(403).send({ message: "you can't view this dog" });
             if (dogFiltered.CurrentlyWith) dogFiltered.CurrentlyWith = ac.can(req.roles).readAny("User").filter(dogFiltered.CurrentlyWith);
+            if (dogFiltered.Origin) dogFiltered.Origin = ac.can(req.roles).readAny("ExtContact").filter(dogFiltered.Origin);
             res.json(dogFiltered);
         }).catch(err => {
             console.error(err);
