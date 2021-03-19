@@ -69,9 +69,12 @@ export default function DogInfoCurrentEdit(props){
                             </div>
                         </Grid>
                         <Grid item xs={10} sm={6} md={8} lg={6}>
-                            <Grid item container style={{marginTop: "1em"}} justify="center">
-                                <TextField label="Behavior Issues" InputLabelProps={{shrink: true}} variant="outlined" onChange={props.handleInputChange} value={props.dogData.behaviorIssues} name="behaviorIssues"/>
-                            </Grid>
+                            {window.location.href.includes("createdog") ? null :
+                                <Grid item container style={{marginTop: "1em"}} justify="center">
+                                    <TextField label="Behavior Issues" InputLabelProps={{shrink: true}} variant="outlined" onChange={props.handleInputChange} value={props.dogData.behaviorIssues} name="behaviorIssues"/>
+                                </Grid>
+                            }
+
                         </Grid>
                         {/* <Grid item xs={10} sm={6} md={8} lg={6}>
 
