@@ -47,17 +47,12 @@ router.post("/:DogId", require("express-fileupload")(), (req, res) => {
 router.delete("/:id", (req, res) => {
     const permission = ac.can(req.roles).deleteAny("Document");
     if (permission.granted) {
-        db.Document
-            .destroy({ where: { id: req.params.id } })
-            .then(deletedDoc => {
-                res.sendStatus(200);
-                console.log(`Assessment successfully deleted? 1 means yes, 0 means no: ${deletedDoc}`)
-            })
-            .catch(err => {
-                console.error(err);
-                res.status(422).send({ message: "Error with request" })
-            });
-    } else return res.status(403).send({ message: "Not authorized to delete DOCUMENTs" });
+        controllers.document.delete(req.params.id).then(() => res.sendStatus(200)).catch(err => {
+            console.error(err);
+            if (err.name == "Error" && err.message == "Document not found") res.sendStatus(404);
+            else res.status(500).send({ message: "Server error" });
+        });
+    } else return res.status(403).send({ message: "Not authorized to delete documents" });
 });
 
 
