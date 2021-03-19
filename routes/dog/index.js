@@ -49,6 +49,27 @@ router.get("/:DogId/documents", (req, res) => {
     } else return res.status(403).send({ message: "Not authorized to view documents" });
 });
 
+// show all BEHAVIORAL ASSESSMENT for ONE dog, with correct ROLE permission
+router.get("/:DogId/assessments", (req, res) => {
+    const permissionOwn = ac.can(req.roles).readOwn("BehavioralAssessment");
+    const permissionAny = ac.can(req.roles).readAny("BehavioralAssessment");
+    if (permissionOwn.granted || permissionAny.granted) {
+        db.Dog.findByPk(req.params.DogId, { include: db.BehavioralAssessment }).then(dog => {
+            let behAssJson = dog.BehavioralAssessments.map(behAss => behAss.toJSON());
+            if (dog.CurrentlyWithId === req.userId) {
+                behAssJson = permissionOwn.filter(behAssJson)
+            } else if (permissionAny.granted) {
+                behAssJson = permissionAny.filter(behAssJson)
+            } else return res.status(403).send({ message: "you can't view this dog's assessments" });
+            // TODO: Calculate score
+            res.json(behAssJson);
+        }).catch(err => {
+            console.error(err);
+            res.status(422).send({ message: "Error with request" });
+        });
+    } else return res.status(403).send({ message: "Not authorized to view Behavioral Assessments" });
+});
+
 // show one DOG, with correct ROLE permission
 router.get("/:id", (req, res) => {
     const permissionReadOwn = ac.can(req.roles).readOwn("Dog");

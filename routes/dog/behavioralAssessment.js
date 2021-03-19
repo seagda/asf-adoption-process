@@ -12,27 +12,6 @@ router.get("/questions", (req, res) => {
     }))))
 });
 
-// show all BEHAVIORAL ASSESSMENT for ONE dog, with correct ROLE permission
-router.get("/:id", (req, res) => {
-    const permissionOwn = ac.can(req.roles).readOwn("BehavioralAssessment");
-    const permissionAny = ac.can(req.roles).readAny("BehavioralAssessment");
-    if (permissionOwn.granted || permissionAny.granted) {
-        db.Dog.findByPk(req.params.id, { include: db.BehavioralAssessment }).then(dog => {
-            let behAssJson = dog.BehavioralAssessments.map(behAss => behAss.toJSON());
-            if (dog.CurrentlyWithId === req.userId) {
-                behAssJson = permissionOwn.filter(behAssJson)
-            } else if (permissionAny.granted) {
-                behAssJson = permissionAny.filter(behAssJson)
-            } else return res.status(403).send({ message: "you can't view this dog's assessments" });
-            // TODO: Calculate score
-            res.json(behAssJson);
-        }).catch(err => {
-            console.error(err);
-            res.status(422).send({ message: "Error with request" });
-        });
-    } else return res.status(403).send({ message: "Not authorized to view Behavioral Assessments" });
-});
-
 // create new BEHAVIORAL ASSESSMENT, with correct ROLE permission
 router.post("/:id", (req, res) => {
     const permissionOwn = ac.can(req.roles).createOwn("BehavioralAssessment");
