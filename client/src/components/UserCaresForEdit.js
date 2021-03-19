@@ -128,7 +128,7 @@ export default function UserCaresForEdit(props){
                     id="seniors"
                     onChange={handleSelectChange}
                     value={selectData.seniors}
-                    name="active"
+                    name="seniors"
                     label="Seniors?"
                     InputLabelProps={{shrink: true}}
                     >
