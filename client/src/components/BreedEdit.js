@@ -99,13 +99,14 @@ export default function BreedEdit(props){
                     <MenuItem value="double merle">Double Merle</MenuItem>
                     <MenuItem value="blue merle">Blue Merle</MenuItem>
                     <MenuItem value="red merle">Red Merle</MenuItem>
-                    <MenuItem value="red tri-color">Red Tri</MenuItem>
-                    <MenuItem value="red bi-color">Red Bi</MenuItem>
+                    <MenuItem value="red tri-color">Red Tri Color</MenuItem>
+                    <MenuItem value="red bi-color">Red Bi Color</MenuItem>
                     <MenuItem value="red">Red</MenuItem>
-                    <MenuItem value="black tri-color">Black Tri</MenuItem>
-                    <MenuItem value="black bi-color">Black Bi</MenuItem>
+                    <MenuItem value="black tri-color">Black Tri Color</MenuItem>
+                    <MenuItem value="black bi-color">Black Bi Color</MenuItem>
                     <MenuItem value="black">Black</MenuItem>
-                    <MenuItem value="tri-color">Tri Color</MenuItem>              
+                    <MenuItem value="black and tan">Black and Tan</MenuItem>
+                    {/* <MenuItem value="tri-color">Tri Color</MenuItem>               */}
                     <MenuItem value="white">White</MenuItem>
                     <MenuItem value="brown">Brown</MenuItem>
                     </Select>
