@@ -6,6 +6,7 @@ import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
+import TextField from "@material-ui/core/TextField";
 
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
@@ -48,7 +49,7 @@ export default function DogInfoCurrentEdit(props){
                         <Divider/>
                     </Grid>
                     <Grid item container style={{marginTop: "1em"}}>
-                        <Grid item xs={10} sm={6} md={8} lg={6}>
+                        <Grid item xs={10} sm={6} md={8} lg={6} style={{marginTop: "1em"}}>
                             <div>
                                 <FormControl variant="outlined" style={{minWidth: 195, marginBottom: "1em"}}>
                                     <InputLabel id="demo-simple-select-outlined-label">Currently With</InputLabel>
@@ -67,10 +68,12 @@ export default function DogInfoCurrentEdit(props){
                                 </FormControl>
                             </div>
                         </Grid>
-                        {/* <Grid item xs={10} sm={6} md={8} lg={6}>
-                            
-                        </Grid>
                         <Grid item xs={10} sm={6} md={8} lg={6}>
+                            <Grid item container style={{marginTop: "1em"}} justify="center">
+                                <TextField label="Behavior Issues" InputLabelProps={{shrink: true}} variant="outlined" onChange={props.handleInputChange} value={props.dogData.behaviorIssues} name="behaviorIssues"/>
+                            </Grid>
+                        </Grid>
+                        {/* <Grid item xs={10} sm={6} md={8} lg={6}>
 
                         </Grid> */}
                     </Grid>

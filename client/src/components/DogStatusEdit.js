@@ -59,7 +59,7 @@ export default function DogStatusEdit(props){
             </Grid>
         </Grid>
         <Grid container>
-            <Grid item container justify="space-between">
+            <Grid item container justify="space-around">
                 <Grid item style={{marginTop: "1em"}}>
                     <Chip label={props.statusLabel}/>
                     <br/>
