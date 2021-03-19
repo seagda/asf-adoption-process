@@ -110,7 +110,7 @@ export default function ProfileForm(props){
 
     const [microchipMfgList, setMicrochipMfgList] = useState([]);
 
-    const [asfUsers, setAsfUsers] = useState([])
+    const [asfUsersList, setAsfUsers] = useState([])
     
     const [origins, setOrigins] = useState([])
 
@@ -215,7 +215,7 @@ export default function ProfileForm(props){
         <DogInfoCurrentEdit
         handleInputChange={props.handleInputChange}
         dogData={props.dogData}
-        asfUsers={asfUsers.map((user)=><MenuItem value={user.id}>{user.firstName} {user.lastName}</MenuItem>)}
+        asfUsers={asfUsersList.map((user)=><MenuItem value={user.id}>{user.firstName} {user.lastName}</MenuItem>)}
         />
         
         <BreedEdit

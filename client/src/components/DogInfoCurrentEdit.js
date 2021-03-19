@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from "@material-ui/core/Grid";
 import {NavLink} from "react-router-dom";
@@ -22,6 +22,24 @@ const useStyles = makeStyles((theme) => ({
 export default function DogInfoCurrentEdit(props){
     const classes = useStyles();
 
+    const [selectData, setSelectData] = useState({
+        CurrentlyWithId: 0
+    })
+
+    const handleSelectChange = (event)=>{
+        setSelectData({
+            ...selectData,
+            [event.target.name]: event.target.value
+        })
+        props.handleInputChange(event)
+    }
+
+    useEffect(()=>{
+        setSelectData({
+            CurrentlyWithId: props.dogData?.CurrentlyWithId
+        })
+    },[props.dogData?.CurrentlyWithId])
+
     return(
         <Grid item container className={classes.itemContainer}>
             <Grid item container xs={10} sm={8} md={8} lg={10} style={{marginTop: "3em"}} direction="column">
@@ -31,35 +49,30 @@ export default function DogInfoCurrentEdit(props){
                     </Grid>
                     <Grid item container style={{marginTop: "1em"}}>
                         <Grid item xs={10} sm={6} md={8} lg={6}>
-                            <Typography style={{fontWeight: "bold"}}>Currently With:
-
-                            </Typography> 
-                        </Grid>
-                        <Grid item style={{marginTop: "1em"}}>
                             <div>
                                 <FormControl variant="outlined" style={{minWidth: 195, marginBottom: "1em"}}>
-                                    <InputLabel id="demo-simple-select-outlined-label">Microchip Company</InputLabel>
+                                    <InputLabel id="demo-simple-select-outlined-label">Currently With</InputLabel>
                                     <Select
                                         labelId="demo-simple-select-outlined-label"
                                         id="demo-simple-select-outlined"
                                         // InputLabelProps={{shrink: true}}
-                                        name="MicrochipMfgId"
-                                        // value={selectData.MicrochipMfgId}
-                                        // onChange={handleSelectChange}
+                                        name="CurrentlyWithId"
+                                        value={selectData.CurrentlyWithId}
+                                        onChange={handleSelectChange}
                                     >
-                                        <MenuItem disabled value="">Microchip Manufacturer</MenuItem>
-                                        {props.mfgList}
+                                        <MenuItem disabled value="">Currently with?</MenuItem>
+                                        {props.asfUsers}
                                         
                                     </Select>
                                 </FormControl>
                             </div>
                         </Grid>
-                        <Grid item xs={10} sm={6} md={8} lg={6}>
+                        {/* <Grid item xs={10} sm={6} md={8} lg={6}>
                             
                         </Grid>
                         <Grid item xs={10} sm={6} md={8} lg={6}>
 
-                        </Grid>
+                        </Grid> */}
                     </Grid>
             </Grid>
         </Grid>
