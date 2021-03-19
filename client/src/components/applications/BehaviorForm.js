@@ -15,7 +15,7 @@ export default function BehaviorForm(props) {
 
     useEffect(()=>{
         API.getBehaviorQuestions().then(res=>{
-            setAppQuestions(res.data.map((question)=>({type: "rating", name: question.desc, title: question.desc, rateMin: 0, rateMax: 5})))
+            setAppQuestions(res.data)
             console.log(res.data)
         }).catch(err=>{
             console.error(err.response.data.message)
@@ -26,7 +26,7 @@ export default function BehaviorForm(props) {
     return (
         <Survey.Survey
             className="sv_main sv_body"
-            json={{questions: appQuestions}}
+            json={{elements: appQuestions}}
             showCompletedPage={false}
             onComplete={data => props.showCompletedPage(data.valuesHash)}
         />

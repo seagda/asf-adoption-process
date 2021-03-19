@@ -4,10 +4,12 @@ const router = require("express").Router();
 
 // get all ALL BEHAVIORAL ASSESSMENT QUESTIONS
 router.get("/questions", (req, res) => {
-    db.AssessQuestion.findAll().then(questions => res.json(questions)).catch(err => {
-        console.error(err);
-        res.status(500).send({ message: "whoops" });
-    });
+    db.AssessQuestionCategory.findAll({ include: [db.AssessQuestion] }).then(categories => res.json(categories.map(category => ({
+        title: category.name,
+        type: "panel",
+        name: `panel${category.id}`,
+        questions: category.AssessQuestions.map(question => ({ name: question.desc, title: question.desc, type: "rating", rateMin: 0, rateMax: 5 }))
+    }))))
 });
 
 // show all BEHAVIORAL ASSESSMENT for ONE dog, with correct ROLE permission
