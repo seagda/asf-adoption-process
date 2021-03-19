@@ -106,6 +106,9 @@ const API = {
     },
     getDocument: function (id){
          return axios.get(`/api/dog/document/${id}`, {...getHeaders(), responseType: "blob"})
+    },
+    getProfilePhoto: function (id){
+        return axios.get(`/api/user/${id}/photo`, {...getHeaders(), responseType: "blob"})
     }
 }
 
