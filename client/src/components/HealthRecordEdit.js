@@ -35,26 +35,6 @@ const useStyles = makeStyles((theme) => ({
 export default function HealthRecordEdit(props){
     const classes = useStyles();
 
-    const [selectData, setSelectData] = useState({
-        MicrochipMfgId: "",
-        gender: ""
-    })
-
-    const handleSelectChange = (event)=>{
-        setSelectData({
-            ...selectData,
-            [event.target.name]: event.target.value
-        })
-        props.handleInputChange(event)
-    }
-
-    useEffect(()=>{
-        setSelectData({
-            gender: props.dogData.gender,
-            MicrochipMfgId: props.dogData.MicrochipMfgId
-        })
-    },[props.dogData.MicrochipMfgId, props.dogData.gender])
-
     return(
         <Grid item container className={classes.itemContainer}>
         <Grid container>
@@ -74,13 +54,13 @@ export default function HealthRecordEdit(props){
                 <SingleSelect title="Has Medical Issues"/>
             </Grid> */}
             <Grid item container style={{marginTop: "1em"}} justify="center">
-                <TextField className={classes.largeTextfield} label="Known medical issues" InputLabelProps={{shrink: true}} rows={6} multiline variant="outlined" onChange={props.handleInputChange} value={props.dogData.withMedicalIssues} name="medicalIssues"/>
+                <TextField className={classes.largeTextfield} label="Known medical issues" InputLabelProps={{shrink: true}} rows={4} multiline variant="outlined" onChange={props.handleInputChange} value={props.dogData.medicalIssues} name="medicalIssues"/>
             </Grid>
         </Grid>
         <Grid container>
-            <Grid item style={{marginTop: "1em"}}>
+            {/* <Grid item style={{marginTop: "1em"}}>
                 <UploadButton buttonText="Upload Documents" toLink=""/>
-            </Grid>
+            </Grid> */}
         </Grid>
     </Grid>
     )
