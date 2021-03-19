@@ -96,28 +96,28 @@ export default function DogDossierDocs(){
                 </Typography>
                 <UploadFiles handleSubmit={handleFileSubmit} buttonText="Select Files" multiple fileInput={fileInput}/>
                 {/* TODO: make this look good */}
-                {dogDocs.map(doc => <p key={doc.id} onClick={() => download(doc.id)}>{doc.name}, {doc.createdAt}</p>)}
-            </Grid>
 
-            {/* {dashboardData.myDogs && dashboardData.myDogs.length ? (
+                {dogDocs ? (
                 <React.Fragment>
                     <Grid item xs={12} s={10}>
-                        <Typography variant="h5" component="h6" gutterBottom color="primary">
-                            My Dogs
-                            <Divider />
-                        </Typography>
-                    </Grid>
-                    <Grid container className={classes.cardContainer} justify="center">
-                            {dashboardData.myDogs.map(dog =>{
-                                return (
-                                    <Grid item xs={10} s={10} m={6} lg={3}>
-                                        <BehaviorCard id={dog.id} name={dog.name} gender={dog.gender} dob={dog.dob} image={dog.DogPhotos[0].url} />
-                                    </Grid>
-                                )
-                            })}    
-                    </Grid>
+                    <Typography variant="h5" component="h6" gutterBottom color="primary">
+                        Documents and Medical Records
+                        <Divider />
+                    </Typography>
+                </Grid>
+                <Grid container>
+                {dogDocs.map(doc => {
+                    return (
+                        <SimpleAccordion name={doc.name} createdAt={doc.createdAt} />
+                    )
+                })}
+                </Grid>
                 </React.Fragment>
-                    ):null}  */}
+                ):null}
+
+                
+                {/* {dogDocs.map(doc => <p key={doc.id} onClick={() => download(doc.id)}>{doc.name}, {doc.createdAt}</p>)} */}
+            </Grid>
         </Grid>
     )
 }
