@@ -142,7 +142,7 @@ router.put("/:id", (req, res) => {
     const permission = ac.can(req.roles).updateAny("User");
     if (permission.granted) {
         db.User.findByPk(req.params.id)
-            .then(user => user.update(permission.filter(req.body)))
+            .then(user => user.update(permission.filter(req.body), { include: [db.Address] }))
             .then(() => res.sendStatus(200))
             .catch(err => {
                 console.error(err);
