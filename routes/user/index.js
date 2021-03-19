@@ -36,6 +36,16 @@ router.get("/", (req, res) => {
     } else return res.status(403).send({ message: "not authorized to view all users" });
 });
 
+router.get("/me/photo", (req, res) => {
+    controllers.user.getProfilePhoto(req.userId).then(([photo, metadata]) => {
+        res.set({ "Content-Type": metadata[0].contentType });
+        photo.createReadStream().pipe(res);
+    }).catch(err => {
+        console.error(err);
+        res.sendStatus(500);
+    });
+});
+
 // get own user data
 router.get("/me", (req, res) => {
     controllers.user.get(req.userId)
