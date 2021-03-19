@@ -48,7 +48,7 @@ router.post("/:id", (req, res) => {
                 } else return res.status(403).send({ message: "you can't create assessments" })
 
                 dog
-                    .createBehavioralAssessment(behAssJson)
+                    .createBehavioralAssessment({...behAssJson, UserId: req.userId})
                     .then(() => res.status(200).send({ message: "Behavioral Assessment successfully created" }))
                     .catch(err => {
                         console.error(err)
