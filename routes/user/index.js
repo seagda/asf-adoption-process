@@ -46,6 +46,15 @@ router.get("/me/photo", (req, res) => {
     });
 });
 
+router.post("/me/photo", require("express-fileupload")(), (req, res) => {
+    if (ac.can(req.roles).updateOwn("User").granted) controllers.user.setProfilePhoto(req.userId, req.files.photo)
+        .then(() => res.sendStatus(200))
+        .catch(err => {
+            console.error(err);
+            res.sendStatus(500);
+        });
+});
+
 // get own user data
 router.get("/me", (req, res) => {
     controllers.user.get(req.userId)
@@ -116,6 +125,15 @@ router.get("/:id/photo", (req, res) => {
         console.error(err);
         res.sendStatus(500);
     });
+});
+
+router.post("/:id/photo", require("express-fileupload")(), (req, res) => {
+    if (ac.can(req.roles).updateAny("User").granted) controllers.user.setProfilePhoto(req.params.id, req.files.photo)
+        .then(() => res.sendStatus(200))
+        .catch(err => {
+            console.error(err);
+            res.sendStatus(500);
+        });
 });
 
 // view user profile by id
