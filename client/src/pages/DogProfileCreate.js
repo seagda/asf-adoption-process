@@ -71,7 +71,7 @@ export default function DogProfileCreate(){
         }
         API.createDog(newDog).then(res=>{
             setDogData({})
-            window.location = `/`
+            window.location = `/Dog-Dossiers`
         }).catch(err=>{
             console.error(err.response.data.message)
         })
