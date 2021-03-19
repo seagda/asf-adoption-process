@@ -110,8 +110,16 @@ const API = {
     getProfilePhoto: function (id){
         return axios.get(`/api/user/${id}/photo`, {...getHeaders(), responseType: "blob"})
     },
+    setProfilePhoto: function (photo, id){
+        const formData = new FormData()
+        formData.append("photo", photo)
+        return axios.post(`/api/user/${id}/photo`, formData, getHeaders())
+    },
     getMyProfilePhoto: function (){
-        return axios.get(`/api/user/me/photo`, {...getHeaders(), responseType: "blob"})
+        return this.getProfilePhoto("me");
+    },
+    setMyProfilePhoto: function (photo){
+        return this.setProfilePhoto(photo, "me");
     }
 }
 
