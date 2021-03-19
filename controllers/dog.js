@@ -30,7 +30,7 @@ module.exports.get = (id) => db.Dog.findByPk(id, {
         { association: "Origin", include: [db.Address, { model: db.Region }] },
         { association: "CurrentlyWith", include: [db.Address, { association: "ResidesInRegion" }] },
         { association: "AppsFor" },
-        db.DogPhoto, db.DogStatus, db.MicrochipMfg
+        db.DogPhoto, db.DogStatus, db.MicrochipMfg, db.MediStatus
     ]
 }).then(dog => ({ ...dog.toJSON(), AppsFor: dog.AppsFor.length }));
 
