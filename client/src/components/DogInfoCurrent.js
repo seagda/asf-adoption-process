@@ -39,7 +39,7 @@ export default function DogInfoCurrent(props){
                                 <Typography>{props.currentlyWith.phone}</Typography>
                                 <Typography>{props.currentlyWith.email}</Typography>
                             </Typography> : 
-                            <Typography style={{fontWeight: "bold"}}>Dog not currently assigned to ASF team member</Typography>}
+                            <Typography style={{fontWeight: "bold", marginRight: "3em"}}>Dog not currently assigned to ASF team member</Typography>}
                         </Grid>
                         <Grid item xs={10} sm={6} md={8} lg={6}>
                             {props.behaviorIssues ? <Typography style={{fontWeight: "bold"}}>Behaviorial Issues:<Typography>{props.behaviorIssues}</Typography> </Typography> : <Typography style={{fontWeight: "bold"}}>Behaviorial Issues: <Typography>No</Typography></Typography>}
