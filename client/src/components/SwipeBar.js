@@ -69,7 +69,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SwipeBar() {
+export default function SwipeBar(props) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
@@ -97,7 +97,7 @@ export default function SwipeBar() {
          </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
-        Ready to Adopt
+        {props.dogStatus}
       </TabPanel>
       <TabPanel value={value} index={1}>
         Current Score: A (200 / 215 Total Points) 

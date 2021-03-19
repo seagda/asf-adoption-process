@@ -1,5 +1,7 @@
 module.exports = ac => {
     ac.grant("User").grant("Rescuer").extend("User")
+      .createAny("BehavioralAssessment")
+      .readAny("BehavioralAssessment")
       .createAny("Dog")
       .readAny("Dog")
       .createAny("Document", ["name", "DogId", "MediStatusId"])

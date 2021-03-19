@@ -34,8 +34,12 @@ export default function BehaviorAssessment (){
     let {id} = useParams();
 
     const onCompletePage = useCallback((data)=>{
-        API.sendBehaviorForm(data, id, date)
-        setShowPage(!showPage)
+        API.sendBehaviorForm(data, id, date).catch(err => {
+            console.error(err.response.data);
+            setShowPage(true);
+            alert("Error submitting assessment, please try again");
+        });
+        setShowPage(false)
     }, [showPage])
 
     const setFinalPage = ()=>{
@@ -51,7 +55,7 @@ export default function BehaviorAssessment (){
         <Grid container className={classes.mainContainer}>
             
             {showPage ? <Typography variant="h4" color="primary">Behavior Assessment</Typography> && <BehaviorForm
-            showCompletedPage={data=>onCompletePage(data)}
+            showCompletedPage={onCompletePage}
             /> : setFinalPage()}
         </Grid>
     )

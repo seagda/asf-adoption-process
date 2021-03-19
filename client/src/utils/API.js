@@ -90,8 +90,11 @@ const API = {
     getDashboardData: function(){
         return axios.get(`/api/dashboard`, getHeaders())
     },
-    getDogDossierDocs: function(dogId){
+    getDogDocs: function(dogId){
         return axios.get(`/api/dog/${dogId}/documents`, getHeaders())
+    },
+    getBehaviorAnswers: function(dogId){
+        return axios.get(`/api/dog/${dogId}/assessments`, getHeaders())
     },
     getSingleUser: function (userId){
         return axios.get(`/api/user/${userId}`, getHeaders())
@@ -103,6 +106,23 @@ const API = {
         const formData = new FormData()
         for (let i = 0; i < files.length; i++) formData.append(i, files[i])
         return axios.post(`/api/dog/document/${dogId}`, formData, getHeaders())
+    },
+    getDocument: function (id){
+         return axios.get(`/api/dog/document/${id}`, {...getHeaders(), responseType: "blob"})
+    },
+    getProfilePhoto: function (id){
+        return axios.get(`/api/user/${id}/photo`, {...getHeaders(), responseType: "blob"})
+    },
+    setProfilePhoto: function (photo, id){
+        const formData = new FormData()
+        formData.append("photo", photo)
+        return axios.post(`/api/user/${id}/photo`, formData, getHeaders())
+    },
+    getMyProfilePhoto: function (){
+        return this.getProfilePhoto("me");
+    },
+    setMyProfilePhoto: function (photo){
+        return this.setProfilePhoto(photo, "me");
     }
 }
 

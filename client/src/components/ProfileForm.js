@@ -224,6 +224,8 @@ export default function ProfileForm(props){
             handleInputChange={props.handleInputChange}
             userData={props.userData}
             addressData={props.addressData}
+            photoUrl={props.photoUrl}
+            handlePhotoChange={props.handlePhotoChange}
             />
 
             <UserStatusEdit

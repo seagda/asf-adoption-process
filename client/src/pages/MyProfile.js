@@ -60,6 +60,7 @@ export default function MyProfile(){
     const [medicalIssuesData, setMedicalIssuesData] = useState(false)
 
     const [userData, setUserData] = useState({})
+    const [photo, setPhoto] = useState(new Blob())
 
     const [appResponseData, setAppResponseData] = useState([]);
 
@@ -89,6 +90,10 @@ export default function MyProfile(){
             console.error(err.response.data.message)
             // alert("get data failed")
         });
+
+        API.getMyProfilePhoto().then(res => {
+            setPhoto(res.data);
+        }).catch(console.error);
     }, [])
 
     return(
@@ -98,7 +103,7 @@ export default function MyProfile(){
                 <Divider/>
             </Grid>
             {/* <ProfileForm/> */}
-            <ProfileBlock firstName={userData.firstName} lastName={userData.lastName} phone={userData.phone} email={userData.email} dob={userData.dob} image={userData.photoUrl}/>
+            <ProfileBlock firstName={userData.firstName} lastName={userData.lastName} phone={userData.phone} email={userData.email} dob={userData.dob} image={URL.createObjectURL(photo)}/>
             <ProfileActions
             roles={rolesList.map((role)=>role.name)}
             />

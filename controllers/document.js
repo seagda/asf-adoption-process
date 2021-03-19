@@ -19,5 +19,12 @@ module.exports.create = (DogId, file) => {
     }).then(doc => doc || db.Document.create({ DogId, name: file.name }));
 };
 
+module.exports.delete = (id) => db.Document.findByPk(id)
+    .then(doc => {
+        if (!doc) throw new Error("Document not found");
+        const file = docsBucket.file(`${doc.DogId}/${doc.name}`);
+        return Promise.all([doc.destroy(), file.delete({ ignoreNotFound: true })]);
+    });
+
 module.exports.getForDog = (id) => db.Dog.findByPk(id, { include: db.Document })
     .then(dog => ({ documents: dog.toJSON().Documents, CurrentlyWithId: dog.CurrentlyWithId }));

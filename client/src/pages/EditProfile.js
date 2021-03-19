@@ -1,6 +1,7 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, createRef} from 'react';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
+import {useParams} from "react-router-dom";
 
 import ProfileForm from "../components/ProfileForm";
 import API from "../utils/API";
@@ -28,8 +29,13 @@ const useStyles=makeStyles(theme => ({
 export default function EditProfile() {
     const classes = useStyles()
 
+    let {id} = useParams();
     const [userData, setUserData] = useState({})
     const [addressData, setAddressData] = useState({})
+    const [photoUrl, setPhotoUrl] = useState("")
+    const [photo, setPhoto] = useState(new Blob())
+
+    const photoInput = createRef();
 
     const handleInputChange=({target})=>{
         setUserData({
@@ -42,24 +48,53 @@ export default function EditProfile() {
         })
     }
 
+    const handlePhotoChange = event => {
+        setPhoto(event.target.files[0]);
+    }
+
+    useEffect(() => {
+        setPhotoUrl(URL.createObjectURL(photo));
+    }, [photo])
+
     useEffect(()=>{
-        API.getMyUserData().then(res =>{
-            console.log(res.data)
-            setUserData(res.data)
-            setAddressData(res.data.Address)
-        }).catch(err=>{
+        Promise.all([
+            (id ? API.getSingleUser(id) : API.getMyUserData()).then(res =>{
+                setUserData(res.data)
+                setAddressData(res.data.Address)
+            }),
+            (id ? API.getProfilePhoto(id) : API.getMyProfilePhoto()).then(res => {
+                setPhoto(res.data)
+            })
+        ]).catch(err=>{
             console.error(err.response.data.message)
-            // alert("get data failed")
+            alert("get data failed")
         })
     }, [])
+
+    const submitFunction = event =>{
+        event.preventDefault();
+        const userInfo = {
+            ...userData,
+            ...addressData
+        }
+        Promise.all(id ? [API.updateOtherUser(userInfo, id), API.setProfilePhoto(photo, id)] : [API.updateMyUserData(userInfo), API.setMyProfilePhoto(photo)]).then(res=>{
+            setUserData({})
+            setAddressData({})
+            window.location = `/`
+        }).catch(err=>{
+            console.error(err.response.data.message)
+        })
+    }
 
     return (
         <Grid container className={classes.mainContainer}>
             <ProfileForm 
-            handleInputChange={handleInputChange} 
-            submitFunction={API.updateMyUserData} 
+            handleInputChange={handleInputChange}
+            submitFunction={submitFunction}
             userData={userData}
             addressData={addressData}
+            photoUrl={photoUrl}
+            handlePhotoChange={handlePhotoChange}
             />
         </Grid>
        

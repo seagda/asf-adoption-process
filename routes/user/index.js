@@ -16,24 +16,31 @@ router.get("/", (req, res) => {
     const permission = ac.can(req.roles).readAny("User");
     if (permission.granted) {
         db.User.findAll({ include: [db.Address, { association: "ResidesInRegion" }, db.Role] })
-            .then(users => res.json(permission.filter(users.map(user => {
-                userJson = user.toJSON();
-                return {
-                    id: userJson.id,
-                    firstName: userJson.firstName,
-                    lastName: userJson.lastName,
-                    email: userJson.email,
-                    city: userJson.Address ? userJson.Address.city : "No Address",
-                    state: userJson.Address ? userJson.Address.state : "--",
-                    ResidesInRegion: userJson.ResidesInRegion,
-                    Roles: userJson.Roles.filter(role => role.name !== "User")
-                }
-            }))))
+            .then(users => res.json(permission.filter(users.map(user => user.toJSON()))))
             .catch(err => {
                 console.error(err);
                 res.status(500).send({ message: "error getting users from the database" });
             });
     } else return res.status(403).send({ message: "not authorized to view all users" });
+});
+
+router.get("/me/photo", (req, res) => {
+    controllers.user.getProfilePhoto(req.userId).then(([photo, metadata]) => {
+        res.set({ "Content-Type": metadata[0].contentType });
+        photo.createReadStream().pipe(res);
+    }).catch(err => {
+        console.error(err);
+        res.sendStatus(500);
+    });
+});
+
+router.post("/me/photo", require("express-fileupload")(), (req, res) => {
+    if (ac.can(req.roles).updateOwn("User").granted) controllers.user.setProfilePhoto(req.userId, req.files.photo)
+        .then(() => res.sendStatus(200))
+        .catch(err => {
+            console.error(err);
+            res.sendStatus(500);
+        });
 });
 
 // get own user data
@@ -54,7 +61,7 @@ router.put("/me", (req, res) => {
     const permission = ac.can(req.roles).updateOwn("User");
     if (permission.granted) {
         db.User.findByPk(req.userId)
-            .then(user => user.update(permission.filter(req.body), {include: [db.Address]}))
+            .then(user => user.update(permission.filter(req.body), { include: [db.Address] }))
             .then(() => res.sendStatus(200))
             .catch(err => {
                 console.error(err);
@@ -96,6 +103,25 @@ router.post("/new", (req, res) => {
                 res.status(500).send({ message: "Error creating and emailing user", error: err });
             });
     } else return res.status(403).send({ message: "Not authorized to create a user" });
+});
+
+router.get("/:id/photo", (req, res) => {
+    controllers.user.getProfilePhoto(req.params.id).then(([photo, metadata]) => {
+        res.set({ "Content-Type": metadata[0].contentType });
+        photo.createReadStream().pipe(res);
+    }).catch(err => {
+        console.error(err);
+        res.sendStatus(500);
+    });
+});
+
+router.post("/:id/photo", require("express-fileupload")(), (req, res) => {
+    if (ac.can(req.roles).updateAny("User").granted) controllers.user.setProfilePhoto(req.params.id, req.files.photo)
+        .then(() => res.sendStatus(200))
+        .catch(err => {
+            console.error(err);
+            res.sendStatus(500);
+        });
 });
 
 // view user profile by id
