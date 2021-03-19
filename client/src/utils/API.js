@@ -109,6 +109,9 @@ const API = {
     },
     getProfilePhoto: function (id){
         return axios.get(`/api/user/${id}/photo`, {...getHeaders(), responseType: "blob"})
+    },
+    getMyProfilePhoto: function (){
+        return axios.get(`/api/user/me/photo`, {...getHeaders(), responseType: "blob"})
     }
 }
 
