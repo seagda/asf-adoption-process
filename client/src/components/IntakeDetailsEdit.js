@@ -36,7 +36,7 @@ export default function IntakeDetailsEdit(props){
     const onClick = () => setContactFormVis(false)
 
     const [selectData, setSelectData] = useState({
-        behaviorIssues: null
+        behaviorIssues: 1
     })
 
     const handleSelectChange = (event)=>{
@@ -49,9 +49,9 @@ export default function IntakeDetailsEdit(props){
 
     useEffect(()=>{
         setSelectData({
-            behaviorIssues: props.dogData?.behaviorIsses
+            behaviorIssues: props.dogData?.behaviorIssues
         })
-    },[props.dogData?.behaviorIsses])
+    },[props.dogData?.behaviorIssues])
 
     return(
         <Grid item container className={classes.itemContainer}>
@@ -73,13 +73,13 @@ export default function IntakeDetailsEdit(props){
                     labelId="behaviorIssues"
                     id="behaviorIssues"
                     onChange={handleSelectChange}
-                    value={selectData.active}
+                    value={selectData.behaviorIssues}
                     name="behaviorIssues"
                     label="Behavior Issues?"
                     >
-                    <MenuItem disabled value={null}>Behavior Issues?</MenuItem>
-                    <MenuItem value={true}>Yes</MenuItem>
-                    <MenuItem value={false}>No</MenuItem>
+                    <MenuItem disabled value={1}>Behavior Issues?</MenuItem>
+                    <MenuItem value={0}>Yes</MenuItem>
+                    <MenuItem value={1}>No</MenuItem>
                     </Select>
                     </FormControl>
                 </div>
