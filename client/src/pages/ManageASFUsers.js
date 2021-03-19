@@ -60,7 +60,7 @@ export default function ManageASFUsers() {
             API.getUsersAll()
             .then(res => {
                 console.log(res)
-                return  Promise.all(res.data.map(user => Geocode.fromAddress(`${user.city}, ${user.state}`).then (response => {
+                return  Promise.all(res.data.map(user => Geocode.fromAddress(`${user.Address.street} ${user.Address.street2} ${user.Address.city}, ${user.Address.state} ${user.Address.zip5}`).then (response => {
                     const { lat, lng } = response.results[0].geometry.location;
                     return {...user, coordinates: {lat, lng}}
                 }))).then(users => {
