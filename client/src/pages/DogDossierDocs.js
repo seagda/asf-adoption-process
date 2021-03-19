@@ -81,43 +81,55 @@ export default function DogDossierDocs(){
                     Documents and Development
                     <Divider />
                 </Typography>
-                <SwipeBar dogStatus={dogData.DogStatus?.name} />
+                <SwipeBar
+                    dogStatus={dogData.DogStatus?.name} 
+                    currentlyWithFirstName={dogData.currentlyWith?.firstName} 
+                    currentlyWithLastName={dogData.currentlyWith?.lastName} 
+                    currentlyWithEmail={dogData.currentlyWith?.email} 
+                    // currentScore={} 
+                    // lowScores={} 
+                    aboutDog={dogData.aboutDog} 
+                    adminNotes={dogData.adminNotes}>
+                </SwipeBar>
             </Grid>
             <Grid item xs={12} s={10}>
                 <Typography variant="h5" component="h6" gutterBottom color="primary">
                     Behavior Assessments
                     <Divider />
                 </Typography>
+                {dogAssessments ? (
+                <React.Fragment>
+                    <Grid container>
+                    {dogAssessments.map(assessment => {
+                        return (
+                            <BehaviorCard date={assessment.date} firstName={assessment.User.firstName} lastName={assessment.User.lastName}  />
+                        )
+                    })}
+                    </Grid>
+                </React.Fragment>
+                ):null}
+            </Grid>
+            <Grid item xs={4} s={4} m={8} lg={10}/>
+            <Grid item xs={8} s={8} m={4} lg={2}>
+                <UploadFiles handleSubmit={handleFileSubmit} buttonText="Select Files" multiple fileInput={fileInput}/>
             </Grid>
             <Grid item xs={12} s={10}>
                 <Typography variant="h5" component="h6" gutterBottom color="primary">
-                    Documents
+                    Documents and Medical Records
                     <Divider />
                 </Typography>
-                <UploadFiles handleSubmit={handleFileSubmit} buttonText="Select Files" multiple fileInput={fileInput}/>
-                {/* TODO: make this look good */}
-
+            </Grid>
                 {dogDocs ? (
                 <React.Fragment>
-                    <Grid item xs={12} s={10}>
-                    <Typography variant="h5" component="h6" gutterBottom color="primary">
-                        Documents and Medical Records
-                        <Divider />
-                    </Typography>
-                </Grid>
-                <Grid container>
-                {dogDocs.map(doc => {
-                    return (
-                        <SimpleAccordion name={doc.name} createdAt={doc.createdAt} />
-                    )
-                })}
-                </Grid>
+                    <Grid container>
+                    {dogDocs.map(doc => {
+                        return (
+                            <SimpleAccordion name={doc.name} createdAt={doc.createdAt} />
+                        )
+                    })}
+                    </Grid>
                 </React.Fragment>
                 ):null}
-
-                
-                {/* {dogDocs.map(doc => <p key={doc.id} onClick={() => download(doc.id)}>{doc.name}, {doc.createdAt}</p>)} */}
-            </Grid>
         </Grid>
     )
 }
