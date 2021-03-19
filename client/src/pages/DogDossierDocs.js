@@ -115,21 +115,23 @@ export default function DogDossierDocs(){
                     Documents and Medical Records
                     <Divider />
                 </Typography>
-                <Grid item >
-                <UploadFiles handleSubmit={handleFileSubmit} buttonText="Select Files" multiple fileInput={fileInput}/>
+                <Grid item xs={3}>
+                    <UploadFiles handleSubmit={handleFileSubmit} buttonText="Select Files" multiple fileInput={fileInput}/>
+                </Grid>
+                <Grid item xs={9} s={8}>
+                    {dogDocs ? (
+                    <React.Fragment>
+                        <Grid container>
+                        {dogDocs.map(doc => {
+                            return (
+                                <SimpleAccordion name={doc.name} createdAt={doc.createdAt} />
+                            )
+                        })}
+                        </Grid>
+                    </React.Fragment>
+                    ):null}
+                </Grid>
             </Grid>
-            </Grid>
-                {dogDocs ? (
-                <React.Fragment>
-                    <Grid container>
-                    {dogDocs.map(doc => {
-                        return (
-                            <SimpleAccordion name={doc.name} createdAt={doc.createdAt} />
-                        )
-                    })}
-                    </Grid>
-                </React.Fragment>
-                ):null}
         </Grid>
     )
 }
