@@ -52,7 +52,7 @@ export default function DogStatusView(props){
 
     return(
         <Grid item container className={classes.itemContainer}>
-        <Grid container style={{marginTop: "2em"}}>
+        <Grid container xs={10} sm={8} md={8} lg={10} style={{marginTop: "3em"}} direction="column">
             <Grid item>
                 <Typography variant="h4">Dog Status</Typography>
                 <Divider/>

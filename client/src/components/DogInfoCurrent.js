@@ -20,7 +20,7 @@ export default function DogInfoCurrent(props){
 
     return(
         <Grid item container className={classes.itemContainer}>
-            <Grid item container xs={10} sm={8} md={8} lg={10} style={      {marginTop: "3em"}} direction="column">
+            <Grid item container xs={10} sm={8} md={8} lg={10} style={{marginTop: "3em"}} direction="column">
                     <Grid item>
                         <Typography variant="h4">Current Info</Typography>
                         <Divider/>
