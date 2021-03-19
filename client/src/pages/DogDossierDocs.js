@@ -7,6 +7,7 @@ import Divider from '@material-ui/core/Divider';
 import API from '../utils/API';
 import SwipeBar from '../components/SwipeBar';
 import BehaviorCard from '../components/BehaviorCards';
+import SimpleAccordion from '../components/SimpleAccordion';
 import UploadFiles from '../components/UploadFiles';
 import {useParams} from 'react-router-dom';
 import FileDownload from 'js-file-download';
@@ -50,15 +51,19 @@ export default function DogDossierDocs(){
     useEffect(() => Promise.all([
         API.getDogDocs(id)
             .then(res => setDogDocsState(res.data)),
+            console.log(dogDocs),
         API.getSingleDogData(id)
             .then(res => setDogDataState(res.data)),
+            console.log(dogData),
         API.getBehaviorAnswers(id)
             .then(res => setDogAssessmentsState(res.data)),
+            console.log(dogAssessments),
     ]).catch(console.error), [])
 
     function download(docId) {
         API.getDocument(docId).then(res => {
-            FileDownload(res.data, res.headers["content-disposition"].match(/(?:filename=)(.+)$/i)[1])
+            const fileDownload = FileDownload(res.data, res.headers["content-disposition"].match(/(?:filename=)(.+)$/i)[1])
+            console.log(fileDownload)
         }).catch(console.error);
     }
 
