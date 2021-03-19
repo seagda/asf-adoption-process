@@ -54,7 +54,7 @@ router.put("/me", (req, res) => {
     const permission = ac.can(req.roles).updateOwn("User");
     if (permission.granted) {
         db.User.findByPk(req.userId)
-            .then(user => user.update(permission.filter(req.body), {include: [db.Address]}))
+            .then(user => user.update(permission.filter(req.body), { include: [db.Address] }))
             .then(() => res.sendStatus(200))
             .catch(err => {
                 console.error(err);
@@ -96,6 +96,16 @@ router.post("/new", (req, res) => {
                 res.status(500).send({ message: "Error creating and emailing user", error: err });
             });
     } else return res.status(403).send({ message: "Not authorized to create a user" });
+});
+
+router.get("/:id/photo", (req, res) => {
+    controllers.user.getProfilePhoto(req.params.id).then(([photo, metadata]) => {
+        res.set({ "Content-Type": metadata[0].contentType });
+        photo.createReadStream().pipe(res);
+    }).catch(err => {
+        console.error(err);
+        res.sendStatus(500);
+    });
 });
 
 // view user profile by id
