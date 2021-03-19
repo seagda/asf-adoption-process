@@ -11,6 +11,16 @@ import UserTable from '../components/UserTable';
 import Hidden from '@material-ui/core/Hidden';
 import API from '../utils/API';
 import SearchBar from "../components/SearchBar";
+import Geocode from "react-geocode";
+import MapBox from '../components/MapBox';
+
+// set Google Maps Geocoding API for purposes of quota management. Its optional but recommended.
+Geocode.setApiKey("AIzaSyD4asyu8x4XuPg6QiohWopYCl3OokWFfEU");
+
+// set response language. Defaults to english.
+Geocode.setLanguage("en");
+Geocode.setRegion("us");
+Geocode.setLocationType("ROOFTOP");
 
 const useStyles=makeStyles(theme => ({
     mainContainer: {
@@ -48,23 +58,26 @@ export default function ManageASFUsers() {
     
         function loadUsers() {
             API.getUsersAll()
-                .then(res => {
-                setUserState(res.data)
+            .then(res => {
                 console.log(res)
+                return  Promise.all(res.data.map(user => Geocode.fromAddress(`${user.city}, ${user.state}`).then (response => {
+                    const { lat, lng } = response.results[0].geometry.location;
+                    return {...user, coordinates: {lat, lng}}
+                }))).then(users => {
+                    setUserState(users)
+                })
                 })
                 .catch(err => console.log(err));
 
             API.getRegions()
                 .then(res => {
                 setRegionList(res.data)
-                console.log(res)
                 })
                 .catch(err => console.log(err));
 
             API.getRoles()
                 .then(res => {
                 setRoleList(res.data)
-                console.log(res)
                 })
                 .catch(err => console.log(err));
         };
@@ -123,8 +136,22 @@ export default function ManageASFUsers() {
                     </Hidden>
                 </Grid>
                 <Grid item xs={12}>
-                <UserTable rows={users.filter( (user) => {
-                    console.log(user)
+                    <UserTable rows={users.filter( (user) => {
+                            if (selectedRegions.length > 0 && !selectedRegions.includes(user.ResidesInRegion.id)) {
+                                return false;
+                            } 
+                            if (selectedRoles.length > 0 && !selectedRoles.some( (selectedRole) => user.Roles.some(role => role.id === selectedRole))) {
+                                return false; 
+                            }
+                            if (!(parseInt(searchUser) === user.id || (user.firstName + " " + user.lastName).toLowerCase().includes(searchUser.toLowerCase()))) {
+                                return false; 
+                            }
+                            return true;
+
+                    })}/>
+                </Grid>
+                <Grid item xs={12}>
+                    <MapBox displaySubjects={users.filter( (user) => {
                         if (selectedRegions.length > 0 && !selectedRegions.includes(user.ResidesInRegion.id)) {
                             return false;
                         } 
@@ -136,7 +163,7 @@ export default function ManageASFUsers() {
                         }
                         return true;
 
-                    })}/>
+                    })} />
                 </Grid>
             </Grid>
         </Grid>

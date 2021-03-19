@@ -6,8 +6,6 @@ const containerStyle = {
   height: '400px'
 };
 
-
-
 function MapBox(props) {
 
     // pass in geocoded lat and log here 
@@ -20,16 +18,6 @@ function MapBox(props) {
     id: 'google-map-script',
     googleMapsApiKey: "AIzaSyD4asyu8x4XuPg6QiohWopYCl3OokWFfEU"
   })
-
-// const practiceMarker = [{
-//   key: 1,
-//   lat: 42.3145186,
-//   lng: -71.1103681
-// },{
-//   key: 2,
-//   lat: 42,
-//   lng: -71
-// }]
 
   const [map, setMap] = React.useState(null)
 
@@ -51,8 +39,11 @@ function MapBox(props) {
         onLoad={onLoad}
         onUnmount={onUnmount}
       >
-        {props.dogs.map((dog) => (
+        {/* {props.dogs.map((dog) => (
           <Marker position={dog.coordinates}/>
+        ))} */}
+        {props.displaySubjects.map((dogOrUser) => (
+          <Marker position={dogOrUser.coordinates}/>
         ))}
         
       </GoogleMap>
