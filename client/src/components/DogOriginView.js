@@ -43,11 +43,11 @@ export default function DogOriginView(props){
                                     <Typography>{props.originCity}, {props.originState} {props.originZip}</Typography> 
                                 </Grid>
                             </React.Fragment>
-                            :   <Typography style={{marginTop: "1em", fontWeight: "bold"}}>Origin info unknown</Typography>
+                            :   <Typography style={{ fontWeight: "bold"}}>Origin info unknown</Typography>
                         }
 
                         <Grid item xs={10} sm={6} md={8} lg={6}>
-                            <Typography style={{marginTop: "1em", fontWeight: "bold"}}>Pull Cost:<Typography>${props.pullCost}</Typography></Typography>
+                            <Typography style={{fontWeight: "bold"}}>Pull Cost:<Typography>${props.pullCost}</Typography></Typography>
                         </Grid>
 
                     </Grid>

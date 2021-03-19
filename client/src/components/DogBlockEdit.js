@@ -10,6 +10,8 @@ import IntakeDetailsEdit from "../components/IntakeDetailsEdit";
 import HealthRecordEdit from "../components/HealthRecordEdit";
 import BreedEdit from "../components/BreedEdit";
 import DogMainInfoEdit from "../components/DogMainInfoEdit";
+import DogInfoCurrentEdit from "../components/DogInfoCurrentEdit";
+import { Menu } from '@material-ui/core';
 
 
 const useStyles = makeStyles(theme => ({
@@ -107,6 +109,8 @@ export default function ProfileForm(props){
     const [dogStatusList, setDogStatusList] = useState([]);
 
     const [microchipMfgList, setMicrochipMfgList] = useState([]);
+
+    const [asfUsers, setAsfUsers] = useState([])
     
     const [origins, setOrigins] = useState([])
 
@@ -119,6 +123,7 @@ export default function ProfileForm(props){
         LoadContacts();
         LoadStatus();
         LoadMfg();
+        LoadAsfTeam();
     },[])
 
     function LoadStatus (){
@@ -147,6 +152,16 @@ export default function ProfileForm(props){
     function LoadContacts (){
         API.getExtContact().then(res =>{
             setOrigins(res.data)
+            // console.log(res.data)
+        }).catch(err=>{
+            console.error(err.response.data.message)
+            // alert("get data failed")
+        })
+    }
+
+    function LoadAsfTeam (){
+        API.getUsersAll().then(res =>{
+            setAsfUsers(res.data)
             // console.log(res.data)
         }).catch(err=>{
             console.error(err.response.data.message)
@@ -197,6 +212,11 @@ export default function ProfileForm(props){
             mfgList={microchipMfgList.map((mfg)=><MenuItem value={mfg.id}>{mfg.name}</MenuItem>)}
         />
         
+        <DogInfoCurrentEdit
+        handleInputChange={props.handleInputChange}
+        dogData={props.dogData}
+        asfUsers={asfUsers.map((user)=><MenuItem value={user.id}>{user.firstName} {user.lastName}</MenuItem>)}
+        />
         
         <BreedEdit
         handleInputChange={props.handleInputChange}
