@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
@@ -35,6 +35,24 @@ export default function IntakeDetailsEdit(props){
     const [contactFormVis, setContactFormVis] = useState(true)
     const onClick = () => setContactFormVis(false)
 
+    const [selectData, setSelectData] = useState({
+        behaviorIssues: null
+    })
+
+    const handleSelectChange = (event)=>{
+        setSelectData({
+            ...selectData,
+            [event.target.name]: event.target.value
+        })
+        props.handleInputChange(event)
+    }
+
+    useEffect(()=>{
+        setSelectData({
+            behaviorIssues: props.dogData?.behaviorIsses
+        })
+    },[props.dogData?.behaviorIsses])
+
     return(
         <Grid item container className={classes.itemContainer}>
         <Grid container>
@@ -48,7 +66,23 @@ export default function IntakeDetailsEdit(props){
                 <TextField className={classes.formControl} type="number" variant="outlined" label="Pull Cost" InputLabelProps={{shrink: true}} onChange={props.handleInputChange} value={props.dogData.pullCost} name="pullCost"/>
             </Grid>
             <Grid item style={{marginTop: "1em"}}>
-                <TextField className={classes.formControl} variant="outlined" label="Behavioral Issues" InputLabelProps={{shrink: true}} onChange={props.handleInputChange} value={props.dogData.withBehavioralIssues} name="behaviorialIssues"/>
+                <div>
+                    <FormControl variant="outlined" className={classes.formControl}>
+                    <InputLabel shrink id="behaviorIssues">Behavior Issues?</InputLabel>
+                    <Select
+                    labelId="behaviorIssues"
+                    id="behaviorIssues"
+                    onChange={handleSelectChange}
+                    value={selectData.active}
+                    name="behaviorIssues"
+                    label="Behavior Issues?"
+                    >
+                    <MenuItem disabled value={null}>Behavior Issues?</MenuItem>
+                    <MenuItem value={true}>Yes</MenuItem>
+                    <MenuItem value={false}>No</MenuItem>
+                    </Select>
+                    </FormControl>
+                </div>
             </Grid>
             <Grid item container style={{marginTop: "1em"}} align="center" direction="column">
                 <Grid item>

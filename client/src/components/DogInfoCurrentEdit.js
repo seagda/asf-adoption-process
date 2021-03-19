@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function DogInfoCurrent(props){
+export default function DogInfoCurrentEdit(props){
     const classes = useStyles();
 
     return(
@@ -27,7 +27,6 @@ export default function DogInfoCurrent(props){
                     </Grid>
                     <Grid item container style={{marginTop: "1em"}}>
                         <Grid item xs={10} sm={6} md={8} lg={6}>
-                            {props.currentlyWith ? 
                             <Typography style={{fontWeight: "bold"}}>Currently With:
                             <NavLink gutterBottom style={{textDecoration: "none"}} to={`/userView/${props.currentlyWithId}`}> 
                                 <Typography>{props.currentlyWith.firstName} {props.currentlyWith.lastName}</Typography>
@@ -38,12 +37,13 @@ export default function DogInfoCurrent(props){
                                 <Typography>{props.address?.city}, {props.address?.state}</Typography>
                                 <Typography>{props.currentlyWith.phone}</Typography>
                                 <Typography>{props.currentlyWith.email}</Typography>
-                            </Typography> : 
-                            <Typography style={{fontWeight: "bold"}}>Dog not currently assigned to ASF team member</Typography>}
+                            </Typography> 
                         </Grid>
                         <Grid item xs={10} sm={6} md={8} lg={6}>
-                            {props.behaviorIssues ? <Typography style={{fontWeight: "bold"}}>Behaviorial Issues:<Typography>Yes</Typography> </Typography> : <Typography style={{fontWeight: "bold"}}>Behaviorial Issues: <Typography>No</Typography></Typography>}
-                            {props.medicalIssues ? <Typography style={{marginTop: "1em", fontWeight: "bold"}}>Medical Issues:<Typography>Yes</Typography></Typography> : <Typography style={{marginTop: "1em", fontWeight: "bold"}}>Medical Issues:<Typography>No</Typography></Typography>}
+                            {props.behaviorIssues ? 
+                            <Typography style={{fontWeight: "bold"}}>Behaviorial Issues:<Typography>Yes</Typography> </Typography> 
+                            : <Typography style={{fontWeight: "bold"}}>Behaviorial Issues: <Typography>No</Typography></Typography>}
+                            {props.behaviorIssues ? <Typography style={{marginTop: "1em", fontWeight: "bold"}}>Medical Issues:<Typography>Yes</Typography></Typography> : <Typography style={{marginTop: "1em", fontWeight: "bold"}}>Medical Issues:<Typography>No</Typography></Typography>}
                         </Grid>
                         <Grid item xs={10} sm={6} md={8} lg={6}>
                             
