@@ -42,6 +42,9 @@ export default function EditProfile() {
             ...userData,
             [target.name]: target.value
         })
+    }
+
+    const handleAddressChange = ({target})=>{
         setAddressData({
             ...addressData,
             [target.name]: target.value
@@ -80,7 +83,7 @@ export default function EditProfile() {
         Promise.all(id ? [API.updateOtherUser(userInfo, id), API.setProfilePhoto(photo, id)] : [API.updateMyUserData(userInfo), API.setMyProfilePhoto(photo)]).then(res=>{
             setUserData({})
             setAddressData({})
-            window.location = `/`
+            window.location = `/userView/${id}`
         }).catch(err=>{
             console.error(err.response.data.message)
         })
@@ -93,6 +96,7 @@ export default function EditProfile() {
             submitFunction={submitFunction}
             userData={userData}
             addressData={addressData}
+            handleAddressChange={handleAddressChange}
             photoUrl={photoUrl}
             handlePhotoChange={handlePhotoChange}
             />

@@ -26,23 +26,29 @@ export default function DogOriginView(props){
                         <Divider/>
                     </Grid>
                     <Grid item container style={{marginTop: "1em"}}>
-                        <Grid item xs={10} sm={6} md={8} lg={6}>
-                            <Typography style={{marginTop: "1em", fontWeight: "bold"}}>Region:<Typography>{props.originRegion}</Typography></Typography>
-                        </Grid>
-                        <Grid item xs={10} sm={6} md={8} lg={6}>
-                            <Typography style={{marginTop: "1em", fontWeight: "bold"}}>Name:<Typography>{props.originName}</Typography></Typography>
-                        </Grid>
-                        <Grid item xs={10} sm={6} md={8} lg={6}>
-                            <Typography style={{marginTop: "1em", fontWeight: "bold"}}>Phone:<Typography>{props.originPhone}</Typography></Typography>
-                        </Grid>
-                        <Grid item xs={10} sm={6} md={8} lg={6}>
-                            <Typography style={{marginTop: "1em", fontWeight: "bold"}}>Pull Cost:<Typography>${props.pullCost}</Typography></Typography>
-                        </Grid>
-                        <Grid item xs={10} sm={6} md={8} lg={6}>
-                            <Typography style={{marginTop: "1em", fontWeight: "bold"}}>Address</Typography>
-                            <Typography>{props.originStreet}</Typography>
-                            <Typography>{props.originCity}, {props.originState} {props.originZip}</Typography> 
-                        </Grid>
+                        {props.origin ? 
+                            <React.Fragment>
+                                <Grid item xs={10} sm={6} md={8} lg={6}>
+                                    <Typography style={{marginTop: "1em", fontWeight: "bold"}}>Region:<Typography>{props.originRegion}</Typography></Typography>
+                                </Grid>
+                                <Grid item xs={10} sm={6} md={8} lg={6}>
+                                    <Typography style={{marginTop: "1em", fontWeight: "bold"}}>Name:<Typography>{props.originName}</Typography></Typography>
+                                </Grid>
+                                <Grid item xs={10} sm={6} md={8} lg={6}>
+                                    <Typography style={{marginTop: "1em", fontWeight: "bold"}}>Phone:<Typography>{props.originPhone}</Typography></Typography>
+                                </Grid>
+                                <Grid item xs={10} sm={6} md={8} lg={6}>
+                                    <Typography style={{marginTop: "1em", fontWeight: "bold"}}>Pull Cost:<Typography>${props.pullCost}</Typography></Typography>
+                                </Grid>
+                                <Grid item xs={10} sm={6} md={8} lg={6}>
+                                    <Typography style={{marginTop: "1em", fontWeight: "bold"}}>Address</Typography>
+                                    <Typography>{props.originStreet}</Typography>
+                                    <Typography>{props.originCity}, {props.originState} {props.originZip}</Typography> 
+                                </Grid>
+                            </React.Fragment>
+                            :   <Typography style={{marginTop: "1em", fontWeight: "bold"}}>Origin info unknown</Typography>
+                        }
+
                     </Grid>
             </Grid>
         </Grid>

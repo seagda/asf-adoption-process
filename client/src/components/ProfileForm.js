@@ -222,6 +222,7 @@ export default function ProfileForm(props){
         <Grid container justify="space-evenly" className={classes.picContainer}>
             <UserMainInfoEdit
             handleInputChange={props.handleInputChange}
+            handleAddressChange={props.handleAddressChange}
             userData={props.userData}
             addressData={props.addressData}
             photoUrl={props.photoUrl}

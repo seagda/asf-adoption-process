@@ -90,6 +90,7 @@ export default function DogProfileView(){
             secondary={dogData.secondaryBreed}/>
 
             <DogOriginView 
+            origin={dogData?.origin}
             originName={dogData.origin?.fullName} 
             originRegion={dogData.origin?.Region.name} 
             originStreet={dogData.origin?.Address.street} 
