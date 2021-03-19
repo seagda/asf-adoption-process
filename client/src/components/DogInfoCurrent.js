@@ -28,7 +28,7 @@ export default function DogInfoCurrent(props){
                     <Grid item container style={{marginTop: "1em"}}>
                         <Grid item xs={10} sm={6} md={8} lg={6}>
                             {props.currentlyWith ? 
-                            <Typography style={{marginTop: "1em", fontWeight: "bold"}}>Currently With:
+                            <Typography style={{fontWeight: "bold"}}>Currently With:
                             <NavLink gutterBottom style={{textDecoration: "none"}} to={`/userView/${props.currentlyWithId}`}> 
                                 <Typography>{props.currentlyWith.firstName} {props.currentlyWith.lastName}</Typography>
                             </NavLink> 
