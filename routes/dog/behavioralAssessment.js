@@ -16,9 +16,9 @@ router.get("/questions", (req, res) => {
 router.post("/:id", (req, res) => {
     const permissionOwn = ac.can(req.roles).createOwn("BehavioralAssessment");
     const permissionAny = ac.can(req.roles).createAny("BehavioralAssessment");
-    db.Dog.findByPk(req.params.id)
-        .then(dog => {
-            if (permissionOwn.granted || permissionAny.granted) {
+    if (permissionOwn.granted || permissionAny.granted) {
+        db.Dog.findByPk(req.params.id)
+            .then(dog => {
                 let behAssJson;
                 if (dog.CurrentlyWithId === req.userId) {
                     behAssJson = permissionOwn.filter(req.body)
@@ -27,16 +27,16 @@ router.post("/:id", (req, res) => {
                 } else return res.status(403).send({ message: "you can't create assessments" })
 
                 dog
-                    .createBehavioralAssessment({...behAssJson, UserId: req.userId})
+                    .createBehavioralAssessment({ ...behAssJson, UserId: req.userId })
                     .then(() => res.status(200).send({ message: "Behavioral Assessment successfully created" }))
                     .catch(err => {
                         console.error(err)
                         res.status(422).send({ message: "Error with request" })
                     });
 
-            } else return res.status(403).send({ message: "Not authorized to create Behavioral Assessments" })
 
-        })
+            })
+    } else return res.status(403).send({ message: "Not authorized to create Behavioral Assessments" })
 });
 
 // update BEHAVIORAL ASSESSMENT by id, with correct ROLE permission
