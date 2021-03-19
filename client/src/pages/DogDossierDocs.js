@@ -85,7 +85,7 @@ export default function DogDossierDocs(){
                     Behavior Assessments
                     <Divider />
                 </Typography>
-                <UploadFiles handleSubmit={handleFileSubmit} fileInput={fileInput}/>
+                <UploadFiles handleSubmit={handleFileSubmit} buttonText="Select Files" multiple fileInput={fileInput}/>
             </Grid>
             <Grid item xs={12} s={10}>
                 <Typography variant="h5" component="h6" gutterBottom color="primary">
