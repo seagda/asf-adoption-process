@@ -29,8 +29,8 @@ export default function UploadFiles(props) {
             startIcon={<PublishIcon />}
             component="label"
              >
-               Select Files
-               <input type="file" hidden multiple ref={props.fileInput} />
+               {props.buttonText}
+               <input type="file" hidden multiple={props.multiple} ref={props.fileInput} />
             </Button>
             <Button type="submit">Upload</Button>
         </form>

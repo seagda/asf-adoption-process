@@ -9,6 +9,8 @@ import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
 import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
+import Button from "@material-ui/core/Button";
+import PublishIcon from "@material-ui/icons/Publish";
 import Image from "../components/Image";
 import EditButton from "../components/EditButton";
 
@@ -36,6 +38,9 @@ const useStyles = makeStyles((theme) => ({
             justifyContent: "center",
         },
         marginBottom: "2em"
+    },
+    button: {
+        margin: theme.spacing(1),
     }
 }));
 
@@ -70,8 +75,11 @@ export default function UserMainInfoEdit(props){
         </Grid> */}
     <Grid container justify="space-evenly" className={classes.picContainer}>
         <Grid item>
-                <Image alt={props.userData?.firstName + "'s profile picture"} pic={props.userData?.photoUrl} />
-                <EditButton buttonText="Change Photo" toLink="/"/>
+                <Image alt={props.userData?.firstName + "'s profile picture"} pic={props.photoUrl} />
+                <Button className={classes.button} variant="contained" color="secondary" className={classes.button} startIcon={<PublishIcon />} component="label">
+                    Change Photo
+                    <input type="file" hidden onChange={props.handlePhotoChange} />
+                </Button>
             </Grid>
         <Grid item>
                 <div className={classes.form}>
