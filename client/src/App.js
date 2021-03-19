@@ -8,7 +8,6 @@ import DogDossiersAll from "../src/pages/DogDossiersAll"
 import Login from "../src/pages/Login"
 import CreateUser from "../src/pages/CreateUser";
 import AdopterApplication from "./pages/AdopterApplication";
-import MyProfile from "./pages/MyProfile";
 import ManageASFUsers from "./pages/ManageASFUsers";
 import EditProfile from "./pages/EditProfile";
 import DogProfileView from "./pages/DogProfileView";
@@ -34,7 +33,7 @@ export default function App() {
                 <ResponsiveDrawer/>
                 <Switch>
                     <Route exact path="/"><Home /></Route>
-                    <Route path="/My-Profile"><MyProfile/></Route>
+                    <Route path="/My-Profile"><UserProfileView/></Route>
                     <Route path="/My-Dashboard"><DashboardMain/></Route>
                     <Route path="/Settings"><Settings/></Route>
                     <Route path="/Logout" />
