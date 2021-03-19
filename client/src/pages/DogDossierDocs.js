@@ -32,7 +32,9 @@ const useStyles=makeStyles(theme => ({
 export default function DogDossierDocs(){
     const classes = useStyles();
 
-    const [dogDossierDocs, setDogDossierDocsState] = useState([]);
+    const [dogData, setDogDataState] = useState({})
+    const [dogDocs, setDogDocsState] = useState([]);
+    const [dogAssessments, setDogAssessmentsState] = useState([]);
     const {id} = useParams();
     const fileInput = createRef();
 
@@ -44,19 +46,15 @@ export default function DogDossierDocs(){
     // seperate request for the docs (array name, id and no link / hit another route to recieve the doc)
     //request for dog data / general dossier 
   
-    function loadDogDossierDocs() {
-    API.getDogDossierDocs(id)
-        .then(res => {
-        console.log(res.data)
-        setDogDossierDocsState(res.data)
-        
-        })
-        .catch(err => console.log(err));
-    };
 
-    useEffect(() => {
-        loadDogDossierDocs()
-    }, [])
+    useEffect(() => Promise.all([
+        API.getDogDocs(id)
+            .then(res => setDogDocsState(res.data)),
+        API.getSingleDogData(id)
+            .then(res => setDogDataState(res.data)),
+        API.getBehaviorAnswers(id)
+            .then(res => setDogAssessmentsState(res.data)),
+    ]).catch(console.error), [])
 
     function download(docId) {
         API.getDocument(docId).then(res => {
@@ -78,22 +76,22 @@ export default function DogDossierDocs(){
                     Documents and Development
                     <Divider />
                 </Typography>
-                <SwipeBar />
+                <SwipeBar dogStatus={dogData.DogStatus?.name} />
             </Grid>
             <Grid item xs={12} s={10}>
                 <Typography variant="h5" component="h6" gutterBottom color="primary">
                     Behavior Assessments
                     <Divider />
                 </Typography>
-                <UploadFiles handleSubmit={handleFileSubmit} buttonText="Select Files" multiple fileInput={fileInput}/>
             </Grid>
             <Grid item xs={12} s={10}>
                 <Typography variant="h5" component="h6" gutterBottom color="primary">
                     Documents
                     <Divider />
                 </Typography>
+                <UploadFiles handleSubmit={handleFileSubmit} buttonText="Select Files" multiple fileInput={fileInput}/>
                 {/* TODO: make this look good */}
-                {dogDossierDocs.map(doc => <p key={doc.id} onClick={() => download(doc.id)}>{doc.name}, {doc.createdAt}</p>)}
+                {dogDocs.map(doc => <p key={doc.id} onClick={() => download(doc.id)}>{doc.name}, {doc.createdAt}</p>)}
             </Grid>
 
             {/* {dashboardData.myDogs && dashboardData.myDogs.length ? (

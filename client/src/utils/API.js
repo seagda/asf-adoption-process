@@ -90,8 +90,11 @@ const API = {
     getDashboardData: function(){
         return axios.get(`/api/dashboard`, getHeaders())
     },
-    getDogDossierDocs: function(dogId){
+    getDogDocs: function(dogId){
         return axios.get(`/api/dog/${dogId}/documents`, getHeaders())
+    },
+    getBehaviorAnswers: function(dogId){
+        return axios.get(`/api/dog/${dogId}/assessments`, getHeaders())
     },
     getSingleUser: function (userId){
         return axios.get(`/api/user/${userId}`, getHeaders())
