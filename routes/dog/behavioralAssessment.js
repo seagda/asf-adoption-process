@@ -20,7 +20,7 @@ router.post("/:id", (req, res) => {
         .then(dog => {
             if (permissionOwn.granted || permissionAny.granted) {
                 let behAssJson;
-                if (dog.currentlyWithId === req.userId) {
+                if (dog.CurrentlyWithId === req.userId) {
                     behAssJson = permissionOwn.filter(req.body)
                 } else if (permissionAny.granted) {
                     behAssJson = permissionAny.filter(req.body)
@@ -49,7 +49,7 @@ router.put("/:id", (req, res) => {
             .findByPk(req.params.id, { include: db.Dog })
             .then(behAss => {
                 let behAssJson;
-                if (behAss.Dog.currentlyWithId === req.userId) {
+                if (behAss.Dog.CurrentlyWithId === req.userId) {
                     behAssJson = permissionOwn.filter(behAss.toJSON())
                 } else if (permissionAny.granted) {
                     behAssJson = permissionAny.filter(behAss.toJSON())
