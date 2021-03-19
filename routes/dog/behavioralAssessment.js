@@ -12,6 +12,21 @@ router.get("/questions", (req, res) => {
     }))))
 });
 
+// get behavioral assessment by id
+router.get("/:id", (req, res) => {
+    const permissionOwn = ac.can(req.roles).readOwn("BehavioralAssessment");
+    const permissionAny = ac.can(req.roles).readAny("BehavioralAssessment");
+    if (permissionOwn.granted || permissionAny.granted) {
+        db.BehavioralAssessment.findByPk(req.params.id, { include: db.Dog }).then(assess => {
+            if (assess.Dog.CurrentlyWithId === req.userId || permissionAny.granted) res.json(assess);
+            else return res.status(403).send({ message: "Not authorized to view this behavioral assessment" });
+        }).catch(err => {
+            console.error(err);
+            res.sendStatus(500);
+        });
+    } else res.status(403).send({ message: "Not authorized to view behavioral assessments" });
+});
+
 // create new BEHAVIORAL ASSESSMENT, with correct ROLE permission
 router.post("/:id", (req, res) => {
     const permissionOwn = ac.can(req.roles).createOwn("BehavioralAssessment");
