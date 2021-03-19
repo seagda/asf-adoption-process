@@ -43,31 +43,6 @@ router.post("/:DogId", require("express-fileupload")(), (req, res) => {
         });
 });
 
-// update DOCUMENT by id, with correct ROLE permission
-router.put("/:id", (req, res) => {
-    const permissionOwn = ac.can(req.roles).updateOwn("Document");
-    const permissionAny = ac.can(req.roles).updateAny("Document");
-    if (permissionOwn.granted || permissionAny.granted) {
-
-        db.Document
-            .findByPk(req.params.id, { include: db.Dog })
-            .then(doc => {
-                let docJson;
-                if (doc.Dog.currentlyWithId === req.userId) {
-                    docJson = permissionOwn.filter(doc.toJSON())
-                } else if (permissionAny.granted) {
-                    docJson = permissionAny.filter(doc.toJSON())
-                } else return res.status(403).send({ message: "you can't update this dog's assessments" });
-                res.json(docJson);
-            })
-            .then(() => res.sendStatus(200))
-            .catch(err => {
-                console.error(err);
-                res.status(422).send({ message: "Error with request" })
-            });
-    } else return res.status(403).send({ message: "Not authorized to update DOCUMENTs" });
-});
-
 // delete DOCUMENT by id, with SuperAdmin ONLY permission
 router.delete("/:id", (req, res) => {
     const permission = ac.can(req.roles).deleteAny("Document");
