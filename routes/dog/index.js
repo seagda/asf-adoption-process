@@ -54,8 +54,8 @@ router.get("/:DogId/assessments", (req, res) => {
     const permissionOwn = ac.can(req.roles).readOwn("BehavioralAssessment");
     const permissionAny = ac.can(req.roles).readAny("BehavioralAssessment");
     if (permissionOwn.granted || permissionAny.granted) {
-        db.Dog.findByPk(req.params.DogId, { include: { model: db.BehavioralAssessment, include: db.User } }).then(dog => {
-            let behAssJson = dog.BehavioralAssessments.map(behAss => ({ ...behAss.toJSON(), User: { firstName: behAss.User.firstName, lastName: behAss.User.lastName } }));
+        db.Dog.findByPk(req.params.DogId, { include: { model: db.BehavioralAssessment, include: {model: db.User, attributes: ["firstName", "lastName"]} } }).then(dog => {
+            let behAssJson = dog.BehavioralAssessments.map(behAss => behAss.toJSON());
             if (dog.CurrentlyWithId === req.userId) {
                 behAssJson = permissionOwn.filter(behAssJson)
             } else if (permissionAny.granted) {
