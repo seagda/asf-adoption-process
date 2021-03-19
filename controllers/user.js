@@ -14,3 +14,8 @@ module.exports.getProfilePhoto = (id) => {
     const photo = photosBucket.file(`user/${id}`);
     return Promise.all([photo, photo.getMetadata()]);
 };
+
+module.exports.setProfilePhoto = (id, photo) => {
+    const gcsPhoto = photosBucket.file(`user/${id}`);
+    return gcsPhoto.save(photo.data, { metadata: { contentType: photo.mimetype } });
+};
