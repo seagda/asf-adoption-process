@@ -35,10 +35,11 @@ const useStyles=makeStyles(theme => ({
 export default function UserProfileView(){
     const classes = useStyles();
 
-    let {id} = useParams();
+    const {id} = useParams();
     console.log(id)
 
     const [userData, setUserData] = useState({})
+    const [photo, setPhoto] = useState(new Blob())
     const [puppiesData, setPuppiesData] = useState(false)
     const [seniorsData, setSeniorsData] = useState(false)
     const [adultsData, setAdultsData] = useState(false)
@@ -63,7 +64,11 @@ export default function UserProfileView(){
         }).catch(err=>{
             console.error(err)
             // alert("get data failed")
-        })
+        });
+
+        API.getProfilePhoto(id).then(res => {
+            setPhoto(res.data);
+        }).catch(console.error);
     },[])
 
     return(
@@ -74,7 +79,7 @@ export default function UserProfileView(){
             </Grid>
 
             <ProfileBlock
-            image={userData.photoUrl}
+            image={URL.createObjectURL(photo)}
             firstName={userData.firstName}
             lastName={userData.lastName}
             phone={userData.phone}
