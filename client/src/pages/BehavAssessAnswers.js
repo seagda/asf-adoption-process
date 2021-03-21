@@ -25,6 +25,12 @@ const useStyles=makeStyles(theme => ({
             paddingRight: 8,
             paddingLeft: 8
         }
+    },
+    itemContainer: {
+        [theme.breakpoints.down("xs")]:{
+            justifyContent: "center",
+            alignItems: "center"
+        }
     }
 }))
 
@@ -65,6 +71,29 @@ export default function BehaveAssessAnswers() {
                 </Grid>
                 <Grid item>
                     <Typography style={{fontWeight: "bold"}}>Date: <Typography>{behaveData.date}</Typography></Typography>
+                </Grid>
+            </Grid>
+
+            <Grid item container className={classes.itemContainer}>
+                <Grid item container xs={10} sm={8} md={8} lg={7} style={{marginTop: "3em"}} direction="column">
+                    <Grid item>
+                        <Typography variant="h4">Breed Info</Typography>
+                        <Divider/>
+                    </Grid>
+                    <Grid item container style={{marginTop: "1em"}}>
+                        <Grid item xs={6} sm={6} md={8} lg={6}>
+                            
+                        </Grid>
+                        <Grid item xs={6} sm={6} md={8} lg={6}>
+                            
+                        </Grid>
+                        <Grid item xs={6} sm={6} md={8} lg={6}>
+                            
+                        </Grid>
+                        <Grid item xs={6} sm={6} md={8} lg={6}>
+                            
+                        </Grid>
+                    </Grid>
                 </Grid>
             </Grid>
         </Grid>
