@@ -1,5 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {useParams} from "react-router-dom";
+import "survey-react/survey.css";
+import * as Survey from "survey-react";
 import Grid from '@material-ui/core/Grid';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Typography from "@material-ui/core/Typography";
@@ -98,14 +100,20 @@ export default function BehaveAssessAnswers() {
             <Grid item container className={classes.itemContainer}>
                 <Grid item container xs={10} sm={8} md={8} lg={7} style={{marginTop: "3em"}} direction="column">
                     <Grid item>
-                        <Typography variant="h5">Compliance/Commands</Typography>
+                        {/* <Typography variant="h5">Compliance/Commands</Typography> */}
                         <Divider/>
                     </Grid>
                     <Grid item container style={{marginTop: "1em"}}>
                         <Grid item xs={6} sm={4} md={4} lg={4}>
-                            {/* <Typography>Sit: {behaveData.response.Sit}</Typography>
-                            <Divider/>
-                            <Typography>Down: {behaveData.response.Down}</Typography>
+                            {answers.map((answer, index) =>{
+                                return(
+                                    <Typography key={index}>{answer}</Typography>
+                                )
+                            })}
+                            {/* {answers.map((answer)=> <Typography>{answer}</Typography>)}
+                            <Typography>Sit: {behaveData.response.Sit}</Typography>
+                            <Divider/> */}
+                            {/* <Typography>Down: {behaveData.response.Down}</Typography>
                             <Divider/>
                             <Typography>Leave it: {behaveData.response["Leave It"]}</Typography>
                             <Divider/>
