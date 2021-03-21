@@ -41,63 +41,70 @@ export default function BehaveAssessAnswers() {
     let {id} = useParams();
     console.log(id)
 
-    const [behaveData, setBehaveData] = useState({
-        User: {},
-        response: {
-            ["Adult Men"]: 0,
-            ["Adult Women"]: 0,
-            Babies: 0,
-            Belly: 0,
-            Brushing: 0,
-            Cars: 0,
-            Cats: 0,
-            Children: 0,
-            Collar: 0,
-            Dogs: 0,
-            Down: 0,
-            ["Drop it"]: 0,
-            Fetch: 0,
-            Flank: 0,
-            ["Go In Crate"]: 0,
-            Head: 0,
-            Heel: 0,
-            Hindquarters: 0,
-            ["Knocking at the door"]: 0,
-            // ["Leave it"]: 0,
-            Legs: 0,
-            ["Loud Noises"]: 0,
-            Muzzle: 0,
-            Neck: 0,
-            ["New people"]: 0,
-            ["New places"]: 0,
-            ["New things"]: 0,
-            ["People wearing hats"]: 0,
-            ["People wearing hoodies"]: 0,
-            ["People wearing sunglasses"]: 0,
-            ["People with facial hair"]: 0,
-            ["Put leash and collar off and on"]: 0,
-            ["Recall (comes when called)"]: 0,
-            ["Severe Weather"]: 0,
-            Sit: 0,
-            ["Small pets"]: 0,
-            Stay: 0,
-            ["Strange objects, e.g., lawn tractors"]: 0,
-            ["Strangers in public"]: 0,
-            ["Strangers on property"]: 0,
-            Streets: 0,
-            ["Toes for clipping nails"]: 0,
-            ["Touch your dogs at all"]: 0,
-        }
-    })
+    // const [behaveData, setBehaveData] = useState({
+    //     User: {},
+    //     response: {
+    //         ["Adult Men"]: 0,
+    //         ["Adult Women"]: 0,
+    //         Babies: 0,
+    //         Belly: 0,
+    //         Brushing: 0,
+    //         Cars: 0,
+    //         Cats: 0,
+    //         Children: 0,
+    //         Collar: 0,
+    //         Dogs: 0,
+    //         Down: 0,
+    //         ["Drop it"]: 0,
+    //         Fetch: 0,
+    //         Flank: 0,
+    //         ["Go In Crate"]: 0,
+    //         Head: 0,
+    //         Heel: 0,
+    //         Hindquarters: 0,
+    //         ["Knocking at the door"]: 0,
+    //         ["Leave It"]: 0,
+    //         Legs: 0,
+    //         ["Loud Noises"]: 0,
+    //         Muzzle: 0,
+    //         Neck: 0,
+    //         ["New people"]: 0,
+    //         ["New places"]: 0,
+    //         ["New things"]: 0,
+    //         ["People wearing hats"]: 0,
+    //         ["People wearing hoodies"]: 0,
+    //         ["People wearing sunglasses"]: 0,
+    //         ["People with facial hair"]: 0,
+    //         ["Put leash and collar off and on"]: 0,
+    //         ["Recall (comes when called)"]: 0,
+    //         ["Severe Weather"]: 0,
+    //         Sit: 0,
+    //         ["Small pets"]: 0,
+    //         Stay: 0,
+    //         ["Strange objects, e.g., lawn tractors"]: 0,
+    //         ["Strangers in public"]: 0,
+    //         ["Strangers on property"]: 0,
+    //         Streets: 0,
+    //         ["Toes for clipping nails"]: 0,
+    //         ["Touch your dogs at all"]: 0,
+    //     }
+    // })
+
+    const [behaveData, setBehaveData] = useState({})
+    
 
     useEffect(()=>{
-        API.getBehaviorAnswers(id).then(res =>{
-            console.log(res.data[0])
-            setBehaveData(res.data[0])
+        getSingleAssessment()
+    },[])
+
+    function getSingleAssessment (){
+        API.getSingleAssessment(id).then(res =>{
+            console.log(res.data)
+            setBehaveData(res.data)
         }).catch(err=>{
             console.error(err)
         })
-    },[])
+    }
 
     return (
         <Grid container className={classes.mainContainer}>
@@ -107,10 +114,21 @@ export default function BehaveAssessAnswers() {
             </Grid>
             <Grid item container>
                 <Grid item style={{marginRight: "4em"}}>
-                    <Typography style={{fontWeight: "bold"}}>Completed by: <Typography>{behaveData.User.firstName} {behaveData.User.lastName}</Typography></Typography>
+                    {/* <Typography style={{fontWeight: "bold"}}>Completed by: <Typography>{behaveData.User.firstName} {behaveData.User.lastName}</Typography></Typography> */}
                 </Grid>
                 <Grid item>
-                    <Typography style={{fontWeight: "bold"}}>Date: <Typography>{behaveData.date}</Typography></Typography>
+                    {/* <Typography style={{fontWeight: "bold"}}>Date: <Typography>{behaveData.date}</Typography></Typography> */}
+                    <Divider/>
+                </Grid>
+                
+            </Grid>
+            
+            <Grid item container direction="column" style={{marginTop: "2em"}}>
+                <Grid item>
+                    <Typography>All answers are based on a scale of 0-5.</Typography>
+                </Grid>
+                <Grid item>
+                    <Typography>0- the dog has no experience with the subject</Typography>
                 </Grid>
             </Grid>
 
@@ -122,7 +140,10 @@ export default function BehaveAssessAnswers() {
                     </Grid>
                     <Grid item container style={{marginTop: "1em"}}>
                         <Grid item xs={6} sm={6} md={8} lg={6}>
-                            <Typography></Typography>
+                            {/* <Typography>Sit: {behaveData.response.Sit}</Typography> */}
+                            <Divider/>
+                            {/* <Typography>Sit: {behaveData.response.Sit}</Typography> */}
+                            <Divider/>
                         </Grid>
                         <Grid item xs={6} sm={6} md={8} lg={6}>
                             

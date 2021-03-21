@@ -96,6 +96,9 @@ const API = {
     getBehaviorAnswers: function(dogId){
         return axios.get(`/api/dog/${dogId}/assessments`, getHeaders())
     },
+    getSingleAssessment: function(assessId){
+        return axios.get(`/api/dog/assess/${assessId}`, getHeaders())
+    },
     getSingleUser: function (userId){
         return axios.get(`/api/user/${userId}`, getHeaders())
     },
