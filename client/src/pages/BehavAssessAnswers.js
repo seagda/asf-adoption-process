@@ -46,7 +46,47 @@ export default function BehaveAssessAnswers() {
         response: {
             ["Adult Men"]: 0,
             ["Adult Women"]: 0,
-
+            Babies: 0,
+            Belly: 0,
+            Brushing: 0,
+            Cars: 0,
+            Cats: 0,
+            Children: 0,
+            Collar: 0,
+            Dogs: 0,
+            Down: 0,
+            ["Drop it"]: 0,
+            Fetch: 0,
+            Flank: 0,
+            ["Go In Crate"]: 0,
+            Head: 0,
+            Heel: 0,
+            Hindquarters: 0,
+            ["Knocking at the door"]: 0,
+            // ["Leave it"]: 0,
+            Legs: 0,
+            ["Loud Noises"]: 0,
+            Muzzle: 0,
+            Neck: 0,
+            ["New people"]: 0,
+            ["New places"]: 0,
+            ["New things"]: 0,
+            ["People wearing hats"]: 0,
+            ["People wearing hoodies"]: 0,
+            ["People wearing sunglasses"]: 0,
+            ["People with facial hair"]: 0,
+            ["Put leash and collar off and on"]: 0,
+            ["Recall (comes when called)"]: 0,
+            ["Severe Weather"]: 0,
+            Sit: 0,
+            ["Small pets"]: 0,
+            Stay: 0,
+            ["Strange objects, e.g., lawn tractors"]: 0,
+            ["Strangers in public"]: 0,
+            ["Strangers on property"]: 0,
+            Streets: 0,
+            ["Toes for clipping nails"]: 0,
+            ["Touch your dogs at all"]: 0,
         }
     })
 
@@ -77,12 +117,12 @@ export default function BehaveAssessAnswers() {
             <Grid item container className={classes.itemContainer}>
                 <Grid item container xs={10} sm={8} md={8} lg={7} style={{marginTop: "3em"}} direction="column">
                     <Grid item>
-                        <Typography variant="h4">Breed Info</Typography>
+                        <Typography variant="h5">Compliance/Commands</Typography>
                         <Divider/>
                     </Grid>
                     <Grid item container style={{marginTop: "1em"}}>
                         <Grid item xs={6} sm={6} md={8} lg={6}>
-                            
+                            <Typography></Typography>
                         </Grid>
                         <Grid item xs={6} sm={6} md={8} lg={6}>
                             
