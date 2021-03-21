@@ -41,56 +41,13 @@ export default function BehaveAssessAnswers() {
     let {id} = useParams();
     console.log(id)
 
-    // const [behaveData, setBehaveData] = useState({
-    //     User: {},
-    //     response: {
-    //         ["Adult Men"]: 0,
-    //         ["Adult Women"]: 0,
-    //         Babies: 0,
-    //         Belly: 0,
-    //         Brushing: 0,
-    //         Cars: 0,
-    //         Cats: 0,
-    //         Children: 0,
-    //         Collar: 0,
-    //         Dogs: 0,
-    //         Down: 0,
-    //         ["Drop it"]: 0,
-    //         Fetch: 0,
-    //         Flank: 0,
-    //         ["Go In Crate"]: 0,
-    //         Head: 0,
-    //         Heel: 0,
-    //         Hindquarters: 0,
-    //         ["Knocking at the door"]: 0,
-    //         ["Leave It"]: 0,
-    //         Legs: 0,
-    //         ["Loud Noises"]: 0,
-    //         Muzzle: 0,
-    //         Neck: 0,
-    //         ["New people"]: 0,
-    //         ["New places"]: 0,
-    //         ["New things"]: 0,
-    //         ["People wearing hats"]: 0,
-    //         ["People wearing hoodies"]: 0,
-    //         ["People wearing sunglasses"]: 0,
-    //         ["People with facial hair"]: 0,
-    //         ["Put leash and collar off and on"]: 0,
-    //         ["Recall (comes when called)"]: 0,
-    //         ["Severe Weather"]: 0,
-    //         Sit: 0,
-    //         ["Small pets"]: 0,
-    //         Stay: 0,
-    //         ["Strange objects, e.g., lawn tractors"]: 0,
-    //         ["Strangers in public"]: 0,
-    //         ["Strangers on property"]: 0,
-    //         Streets: 0,
-    //         ["Toes for clipping nails"]: 0,
-    //         ["Touch your dogs at all"]: 0,
-    //     }
-    // })
+    const [behaveData, setBehaveData] = useState({
+        Dog: {},
+        response: {}
+    })
 
-    const [behaveData, setBehaveData] = useState({})
+    let answers = [Object.entries(behaveData.response)]
+    console.log(answers)
     
 
     useEffect(()=>{
@@ -109,15 +66,15 @@ export default function BehaveAssessAnswers() {
     return (
         <Grid container className={classes.mainContainer}>
             <Grid item style={{marginBottom: "1em"}}>
-                <Typography variant="h4" color="primary">Dog name's Behavior Assessment</Typography>
+                <Typography variant="h4" color="primary">Behavior Assessment for {behaveData.Dog.name}</Typography>
                 <Divider/>
             </Grid>
             <Grid item container>
                 <Grid item style={{marginRight: "4em"}}>
-                    {/* <Typography style={{fontWeight: "bold"}}>Completed by: <Typography>{behaveData.User.firstName} {behaveData.User.lastName}</Typography></Typography> */}
+                    <Typography style={{fontWeight: "bold"}}>Completed by: <Typography></Typography></Typography>
                 </Grid>
                 <Grid item>
-                    {/* <Typography style={{fontWeight: "bold"}}>Date: <Typography>{behaveData.date}</Typography></Typography> */}
+                    <Typography style={{fontWeight: "bold"}}>Date: <Typography>{behaveData.date}</Typography></Typography>
                     <Divider/>
                 </Grid>
                 
@@ -130,6 +87,12 @@ export default function BehaveAssessAnswers() {
                 <Grid item>
                     <Typography>0- the dog has no experience with the subject</Typography>
                 </Grid>
+                <Grid item>
+                    <Typography>1- the dog performs poorly</Typography>
+                </Grid>
+                <Grid item>
+                    <Typography>5- the dog performs expertly</Typography>
+                </Grid>
             </Grid>
 
             <Grid item container className={classes.itemContainer}>
@@ -139,11 +102,21 @@ export default function BehaveAssessAnswers() {
                         <Divider/>
                     </Grid>
                     <Grid item container style={{marginTop: "1em"}}>
-                        <Grid item xs={6} sm={6} md={8} lg={6}>
-                            {/* <Typography>Sit: {behaveData.response.Sit}</Typography> */}
+                        <Grid item xs={6} sm={4} md={4} lg={4}>
+                            {/* <Typography>Sit: {behaveData.response.Sit}</Typography>
                             <Divider/>
-                            {/* <Typography>Sit: {behaveData.response.Sit}</Typography> */}
+                            <Typography>Down: {behaveData.response.Down}</Typography>
                             <Divider/>
+                            <Typography>Leave it: {behaveData.response["Leave It"]}</Typography>
+                            <Divider/>
+                            <Typography>Drop it: {behaveData.response["Drop it"]}</Typography>
+                            <Divider/>
+                            <Typography>Recall: {behaveData.response["Recall (comes when called)"]}</Typography>
+                            <Divider/>
+                            <Typography>Heel: {behaveData.response.Heel}</Typography>
+                            <Divider/>
+                            <Typography>Fetch: {behaveData.response.Fetch}</Typography>
+                            <Divider/> */}
                         </Grid>
                         <Grid item xs={6} sm={6} md={8} lg={6}>
                             
