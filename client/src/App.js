@@ -56,7 +56,7 @@ export default function App() {
                     <Route path="/editOtherUser/:id"><EditProfile/></Route>
                     <Route path="/appAnswersAdopt"><AppAnswersAdopt/></Route>
                     <Route path="/appAnswersFoster"><AppAnswersFoster/></Route>
-                    <Route path="/behaveAnswers"><BehaveAssessAnswers/></Route>
+                    <Route path="/behaveAnswers/:id"><BehaveAssessAnswers/></Route>
                 </Switch>
             </BrowserRouter>
         </ThemeProvider>
