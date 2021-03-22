@@ -7,7 +7,7 @@ import Typography from "@material-ui/core/Typography";
 import BehaviorForm from "../components/applications/BehaviorForm";
 import API from "../utils/API";
 import Button from "@material-ui/core/Button";
-import PersonIcon from '@material-ui/icons/Person';
+import PetsIcon from '@material-ui/icons/Pets';
 
 const useStyles=makeStyles(theme => ({
     mainContainer: {
@@ -60,7 +60,7 @@ export default function BehaviorAssessment (){
                 variant="contained"
                 color="secondary"
                 className={classes.button}
-                startIcon={<PersonIcon/>}>
+                startIcon={<PetsIcon/>}>
                 My dogs
                 </Button>
                 </NavLink>
