@@ -33,9 +33,9 @@ export default function UserStatusEdit(props){
     const classes = useStyles();
 
     const [selectData, setSelectData] = useState({
-        active: null,
-        blocked: null,
-        hold: null
+        active: "",
+        blocked: "",
+        hold: ""
     })
 
     const handleSelectChange = (event)=>{
@@ -63,64 +63,23 @@ export default function UserStatusEdit(props){
             </Grid>
         </Grid>
         <Grid container justify="space-between">
-            {props.editable.includes("active") || (props.editable.includes("*") && !props.editable.includes("!active")) ? <Grid item style={{marginTop: "1em"}}>
-                <div>
-                    <FormControl variant="outlined" className={classes.formControl}>
-                    <InputLabel shrink id="active">Active?</InputLabel>
+            {[{name: "active", question: "active"}, {name: "blocked", question: "blocked"}, {name: "hold", question: "on hold"}].map(field => props.editable.includes(field.name) || (props.editable.includes("*") && !props.editable.includes(`!${field.name}`)) ? <Grid item style={{ marginTop: "1em" }}>
+                <FormControl variant="outlined" className={classes.formControl}>
+                    <InputLabel id={`${field.name}-label`}>Is {field.question}?</InputLabel>
                     <Select
-                    labelId="active"
-                    id="active"
-                    onChange={handleSelectChange}
-                    value={selectData.active}
-                    name="active"
-                    label="Is active?"
+                        labelId={`${field.name}-label`}
+                        id={field.name}
+                        onChange={handleSelectChange}
+                        value={selectData[field.name]}
+                        name={field.name}
+                        label={`Is ${field.question}?`}
                     >
-                    <MenuItem disabled value={null}>Active?</MenuItem>
-                    <MenuItem value={true}>Yes</MenuItem>
-                    <MenuItem value={false}>No</MenuItem>
+                        <MenuItem disabled value=""><em>None</em></MenuItem>
+                        <MenuItem value={true}>Yes</MenuItem>
+                        <MenuItem value={false}>No</MenuItem>
                     </Select>
-                    </FormControl>
-                </div>
-            </Grid> : null}
-            {props.editable.includes("blocked") || (props.editable.includes("*") && !props.editable.includes("!blocked")) ? <Grid item style={{marginTop: "1em"}}>
-                <div>
-                    <FormControl variant="outlined" className={classes.formControl}>
-                    <InputLabel shrink id="blocked">Blocked?</InputLabel>
-                    <Select
-                    labelId="blocked"
-                    id="blocked"
-                    onChange={handleSelectChange}
-                    value={selectData.blocked}
-                    name="blocked"
-                    label="Is blocked?"
-                    InputLabelProps={{shrink: true}}
-                    >
-                    <MenuItem disabled value={null}>Blocked?</MenuItem>
-                    <MenuItem value={true}>Yes</MenuItem>
-                    <MenuItem value={false}>No</MenuItem>
-                    </Select>
-                    </FormControl>
-                </div>
-            </Grid> : null}
-            {props.editable.includes("hold") || (props.editable.includes("*") && !props.editable.includes("!hold")) ? <Grid item style={{marginTop: "1em"}}>
-                <div>
-                    <FormControl variant="outlined" className={classes.formControl}>
-                    <InputLabel shrink id="hold">On Hold?</InputLabel>
-                    <Select
-                    labelId="hold"
-                    id="hold"
-                    onChange={handleSelectChange}
-                    value={selectData.hold}
-                    name="hold"
-                    label="On hold?"
-                    InputLabelProps={{shrink: true}}
-                    >
-                    <MenuItem value={true}>Yes</MenuItem>
-                    <MenuItem value={false}>No</MenuItem>
-                    </Select>
-                    </FormControl>
-                </div>
-            </Grid> : null}
+                </FormControl>
+            </Grid> : null)}
         </Grid>
     </Grid>
     )
