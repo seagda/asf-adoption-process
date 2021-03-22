@@ -190,8 +190,10 @@ export default function ProfileForm(props){
                 ["active", "blocked", "hold"].some(field => props.editable.includes(field)) ?
                 <UserStatusEdit
                     handleInputChange={props.handleInputChange}
-                    userData={props.userData}
+                    data={props.userData}
                     editable={props.editable}
+                    fields={[{name: "active", label: "Is active?"}, {name: "blocked", label: "Is blocked?"}, {name: "hold", label: "Is on hold?"}]
+                        .filter(field => props.editable.includes(field.name) || (props.editable.includes("*") && !props.editable.includes(`!${field.name}`)))}
                 /> : null
             }
 
