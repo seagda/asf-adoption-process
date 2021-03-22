@@ -29,7 +29,8 @@ const useStyles=makeStyles(theme => ({
 export default function EditProfile(props) {
     const classes = useStyles()
 
-    let {id} = useParams();
+    const id = useParams().id || "me";
+    const [redirect, setRedirect] = useState();
     const [userInputData, setUserInputData] = useState(props.userData);
     const [editable, setEditable] = useState(props.userData?.editable || []);
     const [photo, setPhoto] = useState(new Blob());
@@ -69,13 +70,13 @@ export default function EditProfile(props) {
     }, [props.userData]);
     useEffect(() => setPhotoInputUrl(props.photoUrl), [props.photoUrl]);
 
-    let redirect = null;
-
     const submitFunction = event =>{
         event.preventDefault();
-        Promise.all(id ? [API.updateOtherUser(userInputData, id), API.setProfilePhoto(photo, id)] : [API.updateMyUserData(userInputData), API.setMyProfilePhoto(photo)]).then(res=>{
+        const promises = [API.updateOtherUser(userInputData, id)];
+        if (photo.type.startsWith("image")) promises.push(API.setProfilePhoto(photo, id));
+        Promise.all(promises).then(()=>{
             setUserInputData({})
-            redirect = <Redirect push to={`/user/${id}`} />;
+            setRedirect(<Redirect push to={`/user/${id}`} />);
         }).catch(err=>{
             console.error(err.response.data.message)
         })
