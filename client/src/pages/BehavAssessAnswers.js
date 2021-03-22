@@ -15,6 +15,7 @@ const useStyles=makeStyles(theme => ({
         marginLeft: theme.spacing(35),
         marginTop: theme.spacing(13),
         width: "70%",
+        marginBottom: "4em",
         [theme.breakpoints.down("md")]:{
             width: "80%"
         },
@@ -105,11 +106,15 @@ export default function BehaveAssessAnswers() {
                     </Grid>
                     <Grid item container style={{marginTop: "1em"}}>
                         <Grid item xs={6} sm={4} md={4} lg={4}>
-                            {answers.map((answer, index) =>{
+                            {/* <Survey.Model
+                            json={{elements: behaveData.response}}
+                            mode="display"
+                            /> */}
+                            {/* {answers.map((answer, index) =>{
                                 return(
                                     <Typography key={index}>{answer}</Typography>
                                 )
-                            })}
+                            })} */}
                             {/* {answers.map((answer)=> <Typography>{answer}</Typography>)}
                             <Typography>Sit: {behaveData.response.Sit}</Typography>
                             <Divider/> */}
