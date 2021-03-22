@@ -72,7 +72,7 @@ export default function UserCaresForEdit(props){
                     <Typography variant="h4">Cares for:</Typography>
                     <Divider/>
                 </Grid>
-                <Grid item container style={{marginTop: "1em"}}>
+                {props.editable.includes("puppies") || (props.editable.includes("*") && !props.editable.includes("!puppies")) ? <Grid item container style={{marginTop: "1em"}}>
                     <Grid item style={{marginTop: "1em"}}>
                     <div>
                     <FormControl variant="outlined" className={classes.formControl}>
@@ -93,8 +93,8 @@ export default function UserCaresForEdit(props){
                     </FormControl>
                     </div>
                     </Grid>
-                </Grid>
-                <Grid item container style={{marginTop: "1em"}}>
+                </Grid> : null}
+                {props.editable.includes("adults") || (props.editable.includes("*") && !props.editable.includes("!adults")) ? <Grid item container style={{marginTop: "1em"}}>
                     <Grid item style={{marginTop: "1em"}}>
                     <div>
                     <FormControl variant="outlined" className={classes.formControl}>
@@ -115,10 +115,10 @@ export default function UserCaresForEdit(props){
                     </FormControl>
                     </div>
                     </Grid>
-                </Grid>
+                </Grid> : null}
             </Grid>
             <Grid item container xs={10} sm={6} md={6} lg={6} className={classes.seniorContainer} direction="column">
-                <Grid item container className={classes.seniorItem}>
+                {props.editable.includes("seniors") || (props.editable.includes("*") && !props.editable.includes("!seniors")) ? <Grid item container className={classes.seniorItem}>
                     <Grid item style={{marginTop: "1em"}}>
                     <div>
                     <FormControl variant="outlined" className={classes.formControl}>
@@ -139,8 +139,8 @@ export default function UserCaresForEdit(props){
                     </FormControl>
                     </div>
                     </Grid>
-                </Grid>
-                <Grid item container style={{marginTop: "1em"}}>
+                </Grid> : null}
+                {props.editable.includes("withBehaviorIssues") || (props.editable.includes("*") && !props.editable.includes("!withBehaviorIssues")) ? <Grid item container style={{marginTop: "1em"}}>
                     <Grid item style={{marginTop: "1em"}}>
                     <div>
                     <FormControl variant="outlined" className={classes.formControl}>
@@ -161,10 +161,10 @@ export default function UserCaresForEdit(props){
                     </FormControl>
                     </div>
                     </Grid>
-                </Grid>
+                </Grid> : null}
             </Grid>
             <Grid item container xs={10} sm={6} md={6} lg={6} style={{marginTop: "1em"}} direction="column">
-                <Grid item container style={{marginTop: "1em"}}>
+                {props.editable.includes("withMedicalIssues") || (props.editable.includes("*") && !props.editable.includes("!withMedicalIssues")) ? <Grid item container style={{marginTop: "1em"}}>
                     <Grid item>
                     <div>
                     <FormControl variant="outlined" className={classes.formControl}>
@@ -185,7 +185,7 @@ export default function UserCaresForEdit(props){
                     </FormControl>
                     </div>
                     </Grid>
-                </Grid>
+                </Grid> : null}
             </Grid>
     </Grid>
     )

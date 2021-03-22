@@ -181,6 +181,7 @@ export default function ProfileForm(props){
             <UserMainInfoEdit
             handleInputChange={props.handleInputChange}
             userData={props.userData}
+            editable={props.editable}
             photoUrl={props.photoUrl}
             handlePhotoChange={props.handlePhotoChange}
             />
@@ -188,6 +189,7 @@ export default function ProfileForm(props){
             <UserStatusEdit
             handleInputChange={props.handleInputChange}
             userData={props.userData}
+            editable={props.editable}
             />
 
         </Grid>
@@ -195,12 +197,17 @@ export default function ProfileForm(props){
         <UserCapacityEdit
         handleInputChange={props.handleInputChange}
         userData={props.userData}
+        editable={props.editable}
         />
 
-        <UserCaresForEdit
-        handleInputChange={props.handleInputChange}
-        userData={props.userData}
-        />
+        {(props.editable.includes("*") && !["!puppies", "!adults", "!seniors", "!withBehaviorIssues", "!withMedicalIssues"].every(field => props.editable.includes(field))) ||
+            ["puppies", "adults", "seniors", "withBehaviorIssues", "withMedicalIssues"].some(field => props.editable.includes(field)) ?
+            <UserCaresForEdit
+                handleInputChange={props.handleInputChange}
+                userData={props.userData}
+                editable={props.editable}
+            /> : null
+        }
 
         {/* <Grid item>
             <Typography variant="h4">References</Typography>
