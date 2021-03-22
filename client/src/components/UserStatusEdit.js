@@ -14,18 +14,12 @@ const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.down("xs")]:{
             justifyContent: "center",
             alignItems: "center"
-        },
-        marginBottom: "5em"
+        }
     },
     formControl: {
         margin: theme.spacing(1),
         minWidth: 300,
         // fullWidth: true
-    },
-    marginFix: {
-        [theme.breakpoints.down("sm")]: {
-            marginLeft: "2.5em"
-        }
     }
 }));
 
@@ -55,7 +49,7 @@ export default function UserStatusEdit(props){
     },[props.userData?.active, props.userData?.blocked, props.userData?.hold])
 
     return(
-        <Grid item container className={classes.itemContainer, classes.marginFix}>
+        <Grid item container className={classes.itemContainer}>
         <Grid container style={{marginTop: "1em"}}>
             <Grid item>
                 <Typography variant="h4">Status</Typography>
