@@ -13,7 +13,9 @@ export default function Profile() {
 
     useEffect(() => setPhotoUrl(URL.createObjectURL(photo)), [photo]);
 
-    useEffect(() => {
+    useEffect(loadData, []);
+
+    function loadData() {
         Promise.all([
             API.getSingleUser(id).then(res => {
                 setUserData(res.data)
@@ -24,12 +26,12 @@ export default function Profile() {
         ]).catch(err => {
             console.error(err.response.data.message)
             alert("get data failed")
-        })
-    }, []);
+        });
+    }
 
     return (
         <Switch>
-            <Route path="/user/:id/edit"><EditProfile id={id} userData={userData} photoUrl={photoUrl} /></Route>
+            <Route path="/user/:id/edit"><EditProfile id={id} userData={userData} photoUrl={photoUrl} reload={loadData} /></Route>
             <Route><UserProfileView id={id} userData={userData} photoUrl={photoUrl} /></Route>
         </Switch>
     );

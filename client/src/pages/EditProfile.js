@@ -75,7 +75,8 @@ export default function EditProfile(props) {
         const promises = [API.updateOtherUser(userInputData, id)];
         if (photo.type.startsWith("image")) promises.push(API.setProfilePhoto(photo, id));
         Promise.all(promises).then(()=>{
-            setUserInputData({})
+            setUserInputData({});
+            props.reload();
             setRedirect(<Redirect push to={`/user/${id}`} />);
         }).catch(err=>{
             console.error(err.response.data.message)
