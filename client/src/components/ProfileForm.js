@@ -72,48 +72,6 @@ const useStyles = makeStyles(theme => ({
 export default function ProfileForm(props){
     const classes = useStyles();
 
-    const [userIntakeData, setUserIntakeData] = useState({})
-    const createUserInputChange = event =>{
-        const {name,value} = event.target
-        setUserIntakeData({
-            ...userIntakeData,
-            [name]: value
-        })
-    }
-
-    const [addressFormData, setAddressFormData] = useState({})
-
-    const handleAddressInputChange = event =>{
-        const {name, value} = event.target
-        setAddressFormData({
-            ...addressFormData,
-            [name]: value
-        })
-    }
-
-
-    useEffect(()=>{
-        setUserIntakeData({})
-    }, [props.userData])
-
-
-    const handleUserIntakeFormSubmit = event =>{
-        event.preventDefault();
-        const userInfo = {
-            ...userIntakeData,
-            Address: addressFormData
-        }
-        props.submitFunction(userInfo)
-        .then(res =>{
-            console.log(res.data)
-            setUserIntakeData({})
-            setAddressFormData({})
-            window.location = "/Manage-ASF-Users"
-        }).catch(err=>{
-            console.error(err.response.data.message)
-            // alert("Create dog failed")
-        })
-    }
 
 
     // const roleEdit = (
@@ -223,7 +181,6 @@ export default function ProfileForm(props){
             <UserMainInfoEdit
             handleInputChange={props.handleInputChange}
             userData={props.userData}
-            addressData={props.addressData}
             photoUrl={props.photoUrl}
             handlePhotoChange={props.handlePhotoChange}
             />

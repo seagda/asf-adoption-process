@@ -105,11 +105,11 @@ export default function UserMainInfoEdit(props){
         <Grid container justify="space-evenly">
             <Grid item container direction="column" style={{marginTop: "2em"}} xs={10} sm={10} md={6} lg={6}>
                 <Typography>Address:</Typography>
-                <TextField label="Street" InputLabelProps={{shrink: true}} onChange={props.handleInputChange} value={props.addressData?.street} name="street"/>
-                <TextField label="Street 2" InputLabelProps={{shrink: true}} onChange={props.handleInputChange} value={props.addressData?.street2} name="street2"/>
-                <TextField label="City" InputLabelProps={{shrink: true}} onChange={props.handleInputChange} value={props.addressData?.city} name="city"/>
-                <TextField label="State" InputLabelProps={{shrink: true}} onChange={props.handleInputChange} value={props.addressData?.state} name="state"/>
-                <TextField label="Zip" InputLabelProps={{shrink: true}} onChange={props.handleInputChange} value={props.addressData?.zip5} name="zip5"/>
+                <TextField label="Street" InputLabelProps={{shrink: true}} onChange={props.handleInputChange} value={props.userData?.Address?.street} name="Address.street"/>
+                <TextField label="Street 2" InputLabelProps={{shrink: true}} onChange={props.handleInputChange} value={props.userData?.Address?.street2} name="Address.street2"/>
+                <TextField label="City" InputLabelProps={{shrink: true}} onChange={props.handleInputChange} value={props.userData?.Address?.city} name="Address.city"/>
+                <TextField label="State" InputLabelProps={{shrink: true}} onChange={props.handleInputChange} value={props.userData?.Address?.state} name="Address.state"/>
+                <TextField label="Zip" InputLabelProps={{shrink: true}} onChange={props.handleInputChange} value={props.userData?.Address?.zip5} name="Address.zip5"/>
             </Grid>
         </Grid>
     </Grid>

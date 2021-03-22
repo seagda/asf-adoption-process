@@ -32,69 +32,50 @@ const useStyles=makeStyles(theme => ({
     }
 }))
 
-export default function UserProfileView(){
+export default function UserProfileView(props){
     const classes = useStyles();
-
-    const id = useParams().id || "me";
-
-    const [userData, setUserData] = useState({})
-    const [photo, setPhoto] = useState(new Blob())
-
-    useEffect(()=>{
-        API.getSingleUser(id).then(res =>{
-            console.log(res.data)
-            setUserData(res.data)
-        }).catch(err=>{
-            console.error(err.response.data.message)
-            // alert("get data failed")
-        });
-
-        API.getProfilePhoto(id).then(res => {
-            setPhoto(res.data);
-        }).catch(console.error);
-    }, [])
 
     return(
         <Grid container className={classes.mainContainer}>
             <Grid item style={{marginBottom: "3em"}}>
-                <Typography variant="h4" color="primary">{userData.firstName}'s profile</Typography>
+                <Typography variant="h4" color="primary">{props.userData?.firstName}'s profile</Typography>
                 <Divider/>
             </Grid>
 
             <ProfileBlock
-                image={URL.createObjectURL(photo)}
-                firstName={userData.firstName}
-                lastName={userData.lastName}
-                phone={userData.phone}
-                email={userData.email}
-                dob={userData.dob}
+                image={props.photoUrl}
+                firstName={props.userData?.firstName}
+                lastName={props.userData?.lastName}
+                phone={props.userData?.phone}
+                email={props.userData?.email}
+                dob={props.userData?.dob}
             />
 
-            {userData?.editable?.length ? <ProfileActions roles={userData?.Roles?.map((role)=>role.name)} id={id}/> : null}
+            {props.userData?.editable?.length ? <ProfileActions roles={props.userData?.Roles?.map((role)=>role.name)} id={props.id}/> : null}
 
             <UserAddress
-                region={userData.ResidesInRegion?.name}
-                street={userData.Address?.street}
-                street2={userData.Address?.street2}
-                city={userData.Address?.city}
-                state={userData.Address?.state}
-                zip={userData.Address?.zip5}
+                region={props.userData?.ResidesInRegion?.name}
+                street={props.userData?.Address?.street}
+                street2={props.userData?.Address?.street2}
+                city={props.userData?.Address?.city}
+                state={props.userData?.Address?.state}
+                zip={props.userData?.Address?.zip5}
             />
 
             <Roles
-            roles={userData.Roles?.map((role)=><Chip key={role.id} label={role.name}/>)}
+            roles={props.userData?.Roles?.map((role)=><Chip key={role.id} label={role.name}/>)}
             />
 
             <CapacityView style={{ marginBottom: "5em" }}
-                maxCapacity={userData.maxCapacity}
-                puppies={userData.puppies}
-                seniors={userData.seniors}
-                adults={userData.adults}
-                behavior={userData.withBehaviorIssues}
-                medical={userData.withMedicalIssues}
+                maxCapacity={props.userData?.maxCapacity}
+                puppies={props.userData?.puppies}
+                seniors={props.userData?.seniors}
+                adults={props.userData?.adults}
+                behavior={props.userData?.withBehaviorIssues}
+                medical={props.userData?.withMedicalIssues}
             />
 
-            {userData.adminNotes !== undefined ? <AdminNotes notes={userData.adminNotes} /> : null}
+            {props.userData?.adminNotes !== undefined ? <AdminNotes notes={props.userData?.adminNotes} /> : null}
 
         </Grid>
     )
