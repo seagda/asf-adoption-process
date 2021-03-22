@@ -63,7 +63,7 @@ export default function UserStatusEdit(props){
             </Grid>
         </Grid>
         <Grid container justify="space-between">
-            <Grid item style={{marginTop: "1em"}}>
+            {props.editable.includes("active") || (props.editable.includes("*") && !props.editable.includes("!active")) ? <Grid item style={{marginTop: "1em"}}>
                 <div>
                     <FormControl variant="outlined" className={classes.formControl}>
                     <InputLabel shrink id="active">Active?</InputLabel>
@@ -81,8 +81,8 @@ export default function UserStatusEdit(props){
                     </Select>
                     </FormControl>
                 </div>
-            </Grid>
-            <Grid item style={{marginTop: "1em"}}>
+            </Grid> : null}
+            {props.editable.includes("blocked") || (props.editable.includes("*") && !props.editable.includes("!blocked")) ? <Grid item style={{marginTop: "1em"}}>
                 <div>
                     <FormControl variant="outlined" className={classes.formControl}>
                     <InputLabel shrink id="blocked">Blocked?</InputLabel>
@@ -101,8 +101,8 @@ export default function UserStatusEdit(props){
                     </Select>
                     </FormControl>
                 </div>
-            </Grid>
-            <Grid item style={{marginTop: "1em"}}>
+            </Grid> : null}
+            {props.editable.includes("hold") || (props.editable.includes("*") && !props.editable.includes("!hold")) ? <Grid item style={{marginTop: "1em"}}>
                 <div>
                     <FormControl variant="outlined" className={classes.formControl}>
                     <InputLabel shrink id="hold">On Hold?</InputLabel>
@@ -120,7 +120,7 @@ export default function UserStatusEdit(props){
                     </Select>
                     </FormControl>
                 </div>
-            </Grid>
+            </Grid> : null}
         </Grid>
     </Grid>
     )

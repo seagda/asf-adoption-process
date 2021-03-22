@@ -186,18 +186,23 @@ export default function ProfileForm(props){
             handlePhotoChange={props.handlePhotoChange}
             />
 
-            <UserStatusEdit
-            handleInputChange={props.handleInputChange}
-            userData={props.userData}
-            editable={props.editable}
-            />
+            {(props.editable.includes("*") && !["!active", "!blocked", "!hold"].every(field => props.editable.includes(field))) ||
+                ["active", "blocked", "hold"].some(field => props.editable.includes(field)) ?
+                <UserStatusEdit
+                    handleInputChange={props.handleInputChange}
+                    userData={props.userData}
+                    editable={props.editable}
+                /> : null
+            }
 
         </Grid>
 
-        {props.editable.includes("maxCapacity") || (props.editable.includes("*") && !props.editable.includes("!maxCapacity")) ? <UserCapacityEdit
-        handleInputChange={props.handleInputChange}
-        userData={props.userData}
-        /> : null}
+        {props.editable.includes("maxCapacity") || (props.editable.includes("*") && !props.editable.includes("!maxCapacity")) ?
+            <UserCapacityEdit
+                handleInputChange={props.handleInputChange}
+                userData={props.userData}
+            /> : null
+        }
 
         {(props.editable.includes("*") && !["!puppies", "!adults", "!seniors", "!withBehaviorIssues", "!withMedicalIssues"].every(field => props.editable.includes(field))) ||
             ["puppies", "adults", "seniors", "withBehaviorIssues", "withMedicalIssues"].some(field => props.editable.includes(field)) ?
