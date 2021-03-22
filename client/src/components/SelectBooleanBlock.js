@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function UserStatusEdit(props){
+export default function SelectBooleanBlock(props){
     const classes = useStyles();
 
     const startSelect = {};

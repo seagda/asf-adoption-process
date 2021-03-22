@@ -14,7 +14,7 @@ import SaveButton from "../components/SaveButton";
 import RoleTitles from "../components/RoleTitles";
 import MultiSelectChips from "../components/MultiSelectChips";
 import HoldCheckbox from "../components/HoldCheckbox";
-import UserStatusEdit from "../components/UserStatusEdit";
+import SelectBooleanBlock from "../components/UserStatusEdit";
 import UserCapacityEdit from "../components/UserCapacityEdit";
 import UserCaresForEdit from "../components/UserCaresForEdit";
 import UserMainInfoEdit from "../components/UserMainInfoEdit";
@@ -188,7 +188,7 @@ export default function ProfileForm(props){
 
             {(props.editable.includes("*") && !["!active", "!blocked", "!hold"].every(field => props.editable.includes(field))) ||
                 ["active", "blocked", "hold"].some(field => props.editable.includes(field)) ?
-                <UserStatusEdit
+                <SelectBooleanBlock
                     handleInputChange={props.handleInputChange}
                     data={props.userData}
                     editable={props.editable}
