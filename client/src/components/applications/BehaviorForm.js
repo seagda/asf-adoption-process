@@ -11,11 +11,10 @@ import Divider from "@material-ui/core/Divider";
 
 const useStyles=makeStyles(theme => ({
     mainContainer: {
-        // marginLeft: theme.spacing(35),
-        // marginTop: theme.spacing(13),
-        width: "70%",
+        width: "40%",
+        marginBottom: "4em",
         [theme.breakpoints.down("md")]:{
-            width: "80%"
+            width: "50%"
         },
         [theme.breakpoints.down("sm")]:{
             width: "100%"
@@ -39,7 +38,6 @@ export default function BehaviorForm(props) {
             console.log(res.data)
         }).catch(err=>{
             console.error(err.response.data.message)
-            // alert("get data failed")
         })
     }, [])
 
