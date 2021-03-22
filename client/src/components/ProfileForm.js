@@ -194,11 +194,10 @@ export default function ProfileForm(props){
 
         </Grid>
 
-        <UserCapacityEdit
+        {props.editable.includes("maxCapacity") || (props.editable.includes("*") && !props.editable.includes("!maxCapacity")) ? <UserCapacityEdit
         handleInputChange={props.handleInputChange}
         userData={props.userData}
-        editable={props.editable}
-        />
+        /> : null}
 
         {(props.editable.includes("*") && !["!puppies", "!adults", "!seniors", "!withBehaviorIssues", "!withMedicalIssues"].every(field => props.editable.includes(field))) ||
             ["puppies", "adults", "seniors", "withBehaviorIssues", "withMedicalIssues"].some(field => props.editable.includes(field)) ?
