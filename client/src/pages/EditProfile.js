@@ -64,7 +64,7 @@ export default function EditProfile(props) {
     useEffect(() => {
         (({ editable, ...data }) => {
             setUserInputData(data);
-            setEditable(editable);
+            setEditable(editable || []);
         })(props.userData);
     }, [props.userData]);
     useEffect(() => setPhotoInputUrl(props.photoUrl), [props.photoUrl]);
