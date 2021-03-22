@@ -123,7 +123,7 @@ export default function BehaveAssessAnswers() {
                         <Grid item xs={6} sm={4} md={4} lg={4}>
                             <Survey.Survey
                             model={survey}
-
+                            mode="display"
                             />
                             {/* {answers.map((answer, index) =>{
                                 return(
