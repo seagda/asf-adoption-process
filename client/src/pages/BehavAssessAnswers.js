@@ -40,6 +40,7 @@ const useStyles=makeStyles(theme => ({
 
 export default function BehaveAssessAnswers() {
     const classes = useStyles();
+    const [survey, setSurvey] = useState( new Survey.Model())
 
     let {id} = useParams();
     console.log(id)
@@ -51,19 +52,33 @@ export default function BehaveAssessAnswers() {
 
     let answers = [Object.entries(behaveData.response)]
     console.log(answers)
-    
+
+    const [appQuestions, setAppQuestions] = useState([])
 
     useEffect(()=>{
-        getSingleAssessment()
+        const assessPromise = API.getSingleAssessment(id)
+        API.getBehaviorQuestions().then(res=>{
+            setAppQuestions(res.data)
+            let newSurvey = new Survey.Model({elements: res.data})
+            console.log(res.data)
+            return assessPromise.then(ans =>{
+                console.log(ans.data)
+                setBehaveData(ans.data)
+                newSurvey.data = ans.data.response
+                setSurvey(newSurvey)
+            })
+        }).catch(err=>{
+            console.error(err.response.data.message)
+            // alert("get data failed")
+        })
     },[])
 
     function getSingleAssessment (){
-        API.getSingleAssessment(id).then(res =>{
-            console.log(res.data)
-            setBehaveData(res.data)
-        }).catch(err=>{
-            console.error(err)
-        })
+
+    }
+
+    function getBehaveQuestions (){
+
     }
 
     return (
@@ -106,10 +121,10 @@ export default function BehaveAssessAnswers() {
                     </Grid>
                     <Grid item container style={{marginTop: "1em"}}>
                         <Grid item xs={6} sm={4} md={4} lg={4}>
-                            {/* <Survey.Model
-                            json={{elements: behaveData.response}}
-                            mode="display"
-                            /> */}
+                            <Survey.Survey
+                            model={survey}
+
+                            />
                             {/* {answers.map((answer, index) =>{
                                 return(
                                     <Typography key={index}>{answer}</Typography>
