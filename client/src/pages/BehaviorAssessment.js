@@ -54,7 +54,10 @@ export default function BehaviorAssessment (){
     return(
         <Grid container className={classes.mainContainer}>
             
-            {showPage ? <Typography variant="h4" color="primary">Behavior Assessment</Typography> && <BehaviorForm
+            {showPage ? 
+            <Typography variant="h4" color="primary">Behavior Assessment</Typography> 
+            && 
+            <BehaviorForm
             showCompletedPage={onCompletePage}
             /> : setFinalPage()}
         </Grid>
