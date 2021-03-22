@@ -30,7 +30,8 @@ export default function EditProfile(props) {
     const classes = useStyles()
 
     let {id} = useParams();
-    const [userInputData, setUserInputData] = useState(props.userData)
+    const [userInputData, setUserInputData] = useState(props.userData);
+    const [editable, setEditable] = useState(props.userData?.editable || []);
     const [photo, setPhoto] = useState(new Blob());
     const [photoInputUrl, setPhotoInputUrl] = useState("");
 
@@ -60,7 +61,12 @@ export default function EditProfile(props) {
         setPhoto(event.target.files[0]);
     }
 
-    useEffect(() => setUserInputData(props.userData), [props.userData]);
+    useEffect(() => {
+        (({ editable, ...data }) => {
+            setUserInputData(data);
+            setEditable(editable);
+        })(props.userData);
+    }, [props.userData]);
     useEffect(() => setPhotoInputUrl(props.photoUrl), [props.photoUrl]);
 
     let redirect = null;
@@ -82,6 +88,7 @@ export default function EditProfile(props) {
             handleInputChange={handleInputChange}
             submitFunction={submitFunction}
             userData={userInputData}
+            editable={editable}
             photoUrl={photoInputUrl}
             handlePhotoChange={handlePhotoChange}
             />
