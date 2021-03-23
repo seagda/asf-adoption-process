@@ -98,9 +98,8 @@ export default function SwipeBar(props) {
       </AppBar>
       <TabPanel value={value} index={0}>
         {props.dogStatus}
-        {props.currentlyWithFirstName}
-        {props.currentlyWithLastName}
-        {props.currentlyWithEmail}
+        {props.currentlyWithFirstName ? (`Currently With: ${props.currentlyWithFirstName} ${props.currentlyWithLastName} 
+        ${props.currentlyWithEmail}`): null}
       </TabPanel>
       <TabPanel value={value} index={1}>
         {props.currentScore}

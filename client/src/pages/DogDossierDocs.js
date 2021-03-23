@@ -43,11 +43,6 @@ export default function DogDossierDocs(){
         API.createDocuments(fileInput.current.files, id).then(console.log).catch(console.error)
     }
 
-    // request for behavioral assessments
-    // seperate request for the docs (array name, id and no link / hit another route to recieve the doc)
-    //request for dog data / general dossier 
-  
-
     useEffect(() => Promise.all([
         API.getDogDocs(id)
             .then(res => setDogDocsState(res.data)),
