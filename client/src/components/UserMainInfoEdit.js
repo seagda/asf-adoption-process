@@ -1,20 +1,12 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from "@material-ui/core/Grid";
 
 import Typography from "@material-ui/core/Typography";
-import Divider from "@material-ui/core/Divider";
-import FormControl from "@material-ui/core/FormControl";
-import InputLabel from "@material-ui/core/InputLabel";
-import Select from "@material-ui/core/Select";
 import TextField from "@material-ui/core/TextField";
-import MenuItem from "@material-ui/core/MenuItem";
 import Button from "@material-ui/core/Button";
 import PublishIcon from "@material-ui/icons/Publish";
 import Image from "../components/Image";
-import EditButton from "../components/EditButton";
-
-import ashley from "../assets/ashley.jpg"
 
 const useStyles = makeStyles((theme) => ({
     itemContainer: {
@@ -47,71 +39,46 @@ const useStyles = makeStyles((theme) => ({
 export default function UserMainInfoEdit(props){
     const classes = useStyles();
 
-    const [selectData, setSelectData] = useState({
-        
-    })
-
-    const handleSelectChange = (event)=>{
-        setSelectData({
-            ...selectData,
-            [event.target.name]: event.target.value
-        })
-        props.handleInputChange(event)
-    }
-
-    useEffect(()=>{
-        setSelectData({
-            
-        })
-    },[])
-
-    return(
+    return (
         <Grid item container className={classes.itemContainer}>
-        {/* <Grid container>
-            <Grid item style={{marginTop: "3em"}}>
-                <Typography variant="h4">XXX</Typography>
-                <Divider/>
-            </Grid>
-        </Grid> */}
-    <Grid container justify="space-evenly" className={classes.picContainer}>
-        <Grid item>
-                <Image alt={props.userData?.firstName + "'s profile picture"} pic={props.photoUrl} />
-                <Button className={classes.button} variant="contained" color="secondary" className={classes.button} startIcon={<PublishIcon />} component="label">
-                    Change Photo
+            <Grid container justify="space-evenly" className={classes.picContainer}>
+                <Grid item>
+                    <Image alt={`${props.userData?.firstName}'s profile picture`} pic={props.photoUrl} />
+                    {props.editable.includes("photo") || (props.editable.includes("*") && !props.editable.includes("!photo")) ? <Button className={classes.button} variant="contained" color="secondary" className={classes.button} startIcon={<PublishIcon />} component="label">
+                        Change Photo
                     <input type="file" hidden onChange={props.handlePhotoChange} />
-                </Button>
+                    </Button> : null}
+                </Grid>
+                <Grid item className={classes.form}>
+                    {[
+                        { label: "First Name", name: "firstName" },
+                        { label: "Last Name", name: "lastName" },
+                        { label: "Phone", name: "phone", type: "tel" },
+                        { label: "Email", name: "email", type: "email" },
+                        { label: "Date of Birth", name: "dob", type: "date" }
+                    ].filter(field => props.editable.includes(field.name) || (props.editable.includes("*") && !props.editable.includes(`!${field.name}`))).map(field => (
+                        <Grid item container className={classes.formItem}>
+                            <TextField
+                                variant="outlined"
+                                label={field.label}
+                                InputLabelProps={{ shrink: field.type == "date" || props.userData[field.name] && props.userData[field.name]?.length !== 0 }}
+                                onChange={props.handleInputChange} value={props.userData[field.name]}
+                                name={field.name} type={field.type}
+                            />
+                        </Grid>
+                    ))}
+                </Grid>
             </Grid>
-        <Grid item>
-                <div className={classes.form}>
-                    <Grid item container className={classes.formItem}>
-                        <TextField variant="outlined" InputLabelProps={{shrink: true}} label="First Name" onChange={props.handleInputChange} value={props.userData?.firstName} name="firstName"/>
-                    </Grid>
-                    <Grid item container className={classes.formItem}>
-                        <TextField variant="outlined" InputLabelProps={{shrink: true}} label="Last Name" onChange={props.handleInputChange} value={props.userData?.lastName} name="lastName"/>
-                    </Grid>
-                    <Grid item container className={classes.formItem}>
-                        <TextField variant="outlined" InputLabelProps={{shrink: true}} label="Phone" onChange={props.handleInputChange} value={props.userData?.phone} name="phone"/>
-                    </Grid>
-                    <Grid item container className={classes.formItem}>
-                        <TextField type="email" variant="outlined" InputLabelProps={{shrink: true}} label="Email" onChange={props.handleInputChange} value={props.userData?.email} name="email"/>
-                    </Grid>
-                    <Grid item container className={classes.formItem} direction="column">
-                        <InputLabel id="birthday">Date of birth</InputLabel>
-                        <TextField type="date" variant="outlined" InputLabelProps={{shrink: true}} labelId="birthday" onChange={props.handleInputChange} value={props.userData?.dob} name="dob"/>
-                    </Grid>
-                </div>
-            </Grid>
+            {props.editable.includes("Address") || (props.editable.includes("*") && !props.editable.includes("!Address")) ? <Grid container justify="space-evenly">
+                <Grid container direction="column" style={{ marginTop: "2em" }} xs={10} sm={10} md={6} lg={6}>
+                    <Typography>Address:</Typography>
+                    {[
+                        { label: "Street", name: "street" }, { label: "Street 2", name: "street2" }, { label: "City", name: "city" },
+                        { label: "State", name: "state" }, { label: "Zip Code", name: "zip5" }
+                    ].map(field => <TextField label={field.label} InputLabelProps={{ shrink: props.userData.Address?.[field.name] && props.userData.Address?.[field.name]?.length !== 0 }}
+                        onChange={props.handleInputChange} value={props.userData?.Address?.[field.name]} name={`Address.${field.name}`} />)}
+                </Grid>
+            </Grid> : null}
         </Grid>
-        <Grid container justify="space-evenly">
-            <Grid item container direction="column" style={{marginTop: "2em"}} xs={10} sm={10} md={6} lg={6}>
-                <Typography>Address:</Typography>
-                <TextField label="Street" InputLabelProps={{shrink: true}} onChange={props.handleInputChange} value={props.userData?.Address?.street} name="Address.street"/>
-                <TextField label="Street 2" InputLabelProps={{shrink: true}} onChange={props.handleInputChange} value={props.userData?.Address?.street2} name="Address.street2"/>
-                <TextField label="City" InputLabelProps={{shrink: true}} onChange={props.handleInputChange} value={props.userData?.Address?.city} name="Address.city"/>
-                <TextField label="State" InputLabelProps={{shrink: true}} onChange={props.handleInputChange} value={props.userData?.Address?.state} name="Address.state"/>
-                <TextField label="Zip" InputLabelProps={{shrink: true}} onChange={props.handleInputChange} value={props.userData?.Address?.zip5} name="Address.zip5"/>
-            </Grid>
-        </Grid>
-    </Grid>
     )
 }
