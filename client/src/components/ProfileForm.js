@@ -14,7 +14,7 @@ import SaveButton from "../components/SaveButton";
 import RoleTitles from "../components/RoleTitles";
 import MultiSelectChips from "../components/MultiSelectChips";
 import HoldCheckbox from "../components/HoldCheckbox";
-import SelectBooleanBlock from "../components/UserStatusEdit";
+import SelectBooleanBlock from "../components/SelectBooleanBlock";
 import UserCapacityEdit from "../components/UserCapacityEdit";
 import UserCaresForEdit from "../components/UserCaresForEdit";
 import UserMainInfoEdit from "../components/UserMainInfoEdit";
