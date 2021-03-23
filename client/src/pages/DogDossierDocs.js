@@ -7,6 +7,7 @@ import Divider from '@material-ui/core/Divider';
 import API from '../utils/API';
 import SwipeBar from '../components/SwipeBar';
 import BehaviorCard from '../components/BehaviorCards';
+import SimpleAccordion from '../components/SimpleAccordion';
 import UploadFiles from '../components/UploadFiles';
 import {useParams} from 'react-router-dom';
 import FileDownload from 'js-file-download';
@@ -42,23 +43,22 @@ export default function DogDossierDocs(){
         API.createDocuments(fileInput.current.files, id).then(console.log).catch(console.error)
     }
 
-    // request for behavioral assessments
-    // seperate request for the docs (array name, id and no link / hit another route to recieve the doc)
-    //request for dog data / general dossier 
-  
-
     useEffect(() => Promise.all([
         API.getDogDocs(id)
             .then(res => setDogDocsState(res.data)),
+            console.log(dogDocs),
         API.getSingleDogData(id)
             .then(res => setDogDataState(res.data)),
+            console.log(dogData),
         API.getBehaviorAnswers(id)
             .then(res => setDogAssessmentsState(res.data)),
+            console.log(dogAssessments),
     ]).catch(console.error), [])
 
     function download(docId) {
         API.getDocument(docId).then(res => {
-            FileDownload(res.data, res.headers["content-disposition"].match(/(?:filename=)(.+)$/i)[1])
+            const fileDownload = FileDownload(res.data, res.headers["content-disposition"].match(/(?:filename=)(.+)$/i)[1])
+            console.log(fileDownload)
         }).catch(console.error);
     }
 
@@ -76,43 +76,57 @@ export default function DogDossierDocs(){
                     Documents and Development
                     <Divider />
                 </Typography>
-                <SwipeBar dogStatus={dogData.DogStatus?.name} />
+                <SwipeBar
+                    dogStatus={dogData.DogStatus?.name} 
+                    currentlyWithFirstName={dogData.currentlyWith?.firstName} 
+                    currentlyWithLastName={dogData.currentlyWith?.lastName} 
+                    currentlyWithEmail={dogData.currentlyWith?.email} 
+                    // currentScore={} 
+                    // lowScores={} 
+                    aboutDog={dogData.aboutDog} 
+                    adminNotes={dogData.adminNotes}>
+                </SwipeBar>
             </Grid>
             <Grid item xs={12} s={10}>
                 <Typography variant="h5" component="h6" gutterBottom color="primary">
                     Behavior Assessments
                     <Divider />
                 </Typography>
-            </Grid>
-            <Grid item xs={12} s={10}>
-                <Typography variant="h5" component="h6" gutterBottom color="primary">
-                    Documents
-                    <Divider />
-                </Typography>
-                <UploadFiles handleSubmit={handleFileSubmit} buttonText="Select Files" multiple fileInput={fileInput}/>
-                {/* TODO: make this look good */}
-                {dogDocs.map(doc => <p key={doc.id} onClick={() => download(doc.id)}>{doc.name}, {doc.createdAt}</p>)}
-            </Grid>
-
-            {/* {dashboardData.myDogs && dashboardData.myDogs.length ? (
+                {dogAssessments ? (
                 <React.Fragment>
-                    <Grid item xs={12} s={10}>
-                        <Typography variant="h5" component="h6" gutterBottom color="primary">
-                            My Dogs
-                            <Divider />
-                        </Typography>
-                    </Grid>
-                    <Grid container className={classes.cardContainer} justify="center">
-                            {dashboardData.myDogs.map(dog =>{
-                                return (
-                                    <Grid item xs={10} s={10} m={6} lg={3}>
-                                        <BehaviorCard id={dog.id} name={dog.name} gender={dog.gender} dob={dog.dob} image={dog.DogPhotos[0].url} />
-                                    </Grid>
-                                )
-                            })}    
+                    <Grid container>
+                    {dogAssessments.map(assessment => {
+                        return (
+                            <BehaviorCard date={assessment.date} firstName={assessment.User.firstName} lastName={assessment.User.lastName}  />
+                        )
+                    })}
                     </Grid>
                 </React.Fragment>
-                    ):null}  */}
+                ):null}
+            </Grid>
+            
+            <Grid item xs={12} s={10}>
+                <Typography variant="h5" component="h6" gutterBottom color="primary">
+                    Documents and Medical Records
+                    <Divider />
+                </Typography>
+                <Grid item xs={3}>
+                    <UploadFiles handleSubmit={handleFileSubmit} buttonText="Select Files" multiple fileInput={fileInput}/>
+                </Grid>
+                <Grid item xs={9} s={8}>
+                    {dogDocs ? (
+                    <React.Fragment>
+                        <Grid container>
+                        {dogDocs.map(doc => {
+                            return (
+                                <SimpleAccordion name={doc.name} createdAt={doc.createdAt} />
+                            )
+                        })}
+                        </Grid>
+                    </React.Fragment>
+                    ):null}
+                </Grid>
+            </Grid>
         </Grid>
     )
 }

@@ -16,9 +16,9 @@ import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 const theme = createMuiTheme();
 
 theme.typography.h2 = {
-  fontSize: '1.2rem',
+  fontSize: '6.2rem',
   '@media (min-width:600px)': {
-    fontSize: '1.5rem',
+    fontSize: '6.5rem',
   },
   [theme.breakpoints.up('md')]: {
     fontSize: '2rem',
@@ -98,19 +98,19 @@ export default function SwipeBar(props) {
       </AppBar>
       <TabPanel value={value} index={0}>
         {props.dogStatus}
+        {props.currentlyWithFirstName ? (`Currently With: ${props.currentlyWithFirstName} ${props.currentlyWithLastName} 
+        ${props.currentlyWithEmail}`): null}
       </TabPanel>
       <TabPanel value={value} index={1}>
-        Current Score: A (200 / 215 Total Points) 
-        Based on Behavioral Assessment Score: 2-12-2021
+        {props.currentScore}
       </TabPanel>
       <TabPanel value={value} index={2}>
-        Lowest Scores According to the Most Recent Behioral Assessment: 
-        * Strong reaction to loud noises: 2/5
-        * Aggresive behavior towards children: 2/5
+        {props.lowScores}
       </TabPanel>
       <TabPanel value={value} index={3}>
-       Overall, Odin is a wonderful and well trained dog ready for adoption. An ideal home would be a relatively quiet home without children. 
-      </TabPanel>
+       {props.aboutDog}
+       {props.adminNotes}
+       </TabPanel>
 
     </div>
   );

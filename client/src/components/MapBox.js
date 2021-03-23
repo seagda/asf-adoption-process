@@ -39,9 +39,6 @@ function MapBox(props) {
         onLoad={onLoad}
         onUnmount={onUnmount}
       >
-        {/* {props.dogs.map((dog) => (
-          <Marker position={dog.coordinates}/>
-        ))} */}
         {props.displaySubjects.map((dogOrUser) => (
           <Marker key={dogOrUser.id} position={dogOrUser.coordinates}/>
         ))}

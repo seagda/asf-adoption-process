@@ -23,7 +23,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function BehaviorCard() {
+export default function BehaviorCard(props) {
   const classes = useStyles();
   const bull = <span className={classes.bullet}>•</span>;
 
@@ -31,18 +31,16 @@ export default function BehaviorCard() {
     <Card className={classes.root} variant="outlined">
       <CardContent>
         <Typography className={classes.title} color="textSecondary" gutterBottom>
-          Word of the Day
+         Date: {props.date}
         </Typography>
         <Typography variant="h5" component="h2">
-          be{bull}nev{bull}o{bull}lent
+        <b>Behavior Assessment Grade: A </b>
         </Typography>
         <Typography className={classes.pos} color="textSecondary">
-          adjective
+        (200 points earned out of 215 total)
         </Typography>
-        <Typography variant="body2" component="p">
-          well meaning and kindly.
-          <br />
-          {'"a benevolent smile"'}
+        <Typography className={classes.pos} color="textSecondary">
+          Created By: {props.firstName} {props.lastName}
         </Typography>
       </CardContent>
       <CardActions>
