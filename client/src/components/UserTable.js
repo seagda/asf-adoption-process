@@ -317,8 +317,8 @@ export default function UserTable(props) {
                       </TableCell>
                       <TableCell >{row?.lastName}</TableCell>
                       <TableCell >{row?.email}</TableCell>
-                      <TableCell >{row?.city}</TableCell>
-                      <TableCell >{row?.state}</TableCell>
+                      <TableCell >{row?.Address.city}</TableCell>
+                      <TableCell >{row?.Address.state}</TableCell>
                       <TableCell >{row?.ResidesInRegion?.name}</TableCell>
                       <TableCell >{row.Roles.map( (role) => role.name).join(", ")}</TableCell>
                     </TableRow>
