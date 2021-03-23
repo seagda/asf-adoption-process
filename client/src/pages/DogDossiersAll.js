@@ -17,7 +17,7 @@ import MapBox from '../components/MapBox';
 
 
 // set Google Maps Geocoding API for purposes of quota management. Its optional but recommended.
-Geocode.setApiKey("AIzaSyD4asyu8x4XuPg6QiohWopYCl3OokWFfEU");
+Geocode.setApiKey(process.env.REACT_APP_GOOGLE_MAPS_API_KEY);
 
 // set response language. Defaults to english.
 Geocode.setLanguage("en");
@@ -61,15 +61,17 @@ export default function DogDossiersAll() {
     function loadDogs() {
         API.getDogDossiersAll()
             .then(res => {
-            console.log(res)
-            return  Promise.all(res.data.map(dog => Geocode.fromAddress(`${dog.Address.street} ${dog.Address.street2} ${dog.Address.city}, ${dog.Address.state} ${dog.Address.zip5}`).then (response => {
-                const { lat, lng } = response.results[0].geometry.location;
-                return {...dog, coordinates: {lat, lng}}
-            }))).then(dogs => {
+                console.log(res)
+                return Promise.all(res.data.map(dog => Geocode.fromAddress(`${dog.Address.street} ${dog.Address.street2} ${dog.Address.city}, ${dog.Address.state} ${dog.Address.zip5}`).then(response => {
+                    const { lat, lng } = response.results[0].geometry.location;
+                    return { ...dog, coordinates: { lat, lng } }
+                })));
+            }).then(dogs => {
                 setDogState(dogs)
-            })
-            })
-            .catch(err => console.log(err));
+            }).catch(err => {
+                console.error('here')
+                console.error(err);
+            });
 
         API.getRegions()
             .then(res => {

@@ -16,7 +16,7 @@ function MapBox(props) {
 
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
-    googleMapsApiKey: "AIzaSyD4asyu8x4XuPg6QiohWopYCl3OokWFfEU"
+    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY
   })
 
   const [map, setMap] = React.useState(null)
@@ -43,7 +43,7 @@ function MapBox(props) {
           <Marker position={dog.coordinates}/>
         ))} */}
         {props.displaySubjects.map((dogOrUser) => (
-          <Marker position={dogOrUser.coordinates}/>
+          <Marker key={dogOrUser.id} position={dogOrUser.coordinates}/>
         ))}
         
       </GoogleMap>

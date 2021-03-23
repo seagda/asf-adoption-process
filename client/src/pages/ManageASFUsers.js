@@ -15,7 +15,7 @@ import Geocode from "react-geocode";
 import MapBox from '../components/MapBox';
 
 // set Google Maps Geocoding API for purposes of quota management. Its optional but recommended.
-Geocode.setApiKey("AIzaSyD4asyu8x4XuPg6QiohWopYCl3OokWFfEU");
+Geocode.setApiKey(process.env.REACT_APP_GOOGLE_MAPS_API_KEY);
 
 // set response language. Defaults to english.
 Geocode.setLanguage("en");
@@ -58,16 +58,15 @@ export default function ManageASFUsers() {
     
         function loadUsers() {
             API.getUsersAll()
-            .then(res => {
-                console.log(res)
-                return  Promise.all(res.data.map(user => Geocode.fromAddress(`${user.Address.street} ${user.Address.street2} ${user.Address.city}, ${user.Address.state} ${user.Address.zip5}`).then (response => {
-                    const { lat, lng } = response.results[0].geometry.location;
-                    return {...user, coordinates: {lat, lng}}
-                }))).then(users => {
+                .then(res => {
+                    console.log(res)
+                    return Promise.all(res.data.map(user => Geocode.fromAddress(`${user.Address.street} ${user.Address.street2} ${user.Address.city}, ${user.Address.state} ${user.Address.zip5}`).then(response => {
+                        const { lat, lng } = response.results[0].geometry.location;
+                        return { ...user, coordinates: { lat, lng } }
+                    })));
+                }).then(users => {
                     setUserState(users)
-                })
-                })
-                .catch(err => console.log(err));
+                }).catch(console.error);
 
             API.getRegions()
                 .then(res => {
