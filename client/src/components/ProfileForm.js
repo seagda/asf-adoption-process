@@ -16,7 +16,6 @@ import MultiSelectChips from "../components/MultiSelectChips";
 import HoldCheckbox from "../components/HoldCheckbox";
 import SelectBooleanBlock from "../components/SelectBooleanBlock";
 import UserCapacityEdit from "../components/UserCapacityEdit";
-import UserCaresForEdit from "../components/UserCaresForEdit";
 import UserMainInfoEdit from "../components/UserMainInfoEdit";
 
 import ashley from "../assets/ashley.jpg";
@@ -208,10 +207,12 @@ export default function ProfileForm(props){
 
         {(props.editable.includes("*") && !["!puppies", "!adults", "!seniors", "!withBehaviorIssues", "!withMedicalIssues"].every(field => props.editable.includes(field))) ||
             ["puppies", "adults", "seniors", "withBehaviorIssues", "withMedicalIssues"].some(field => props.editable.includes(field)) ?
-            <UserCaresForEdit
+            <SelectBooleanBlock
                 handleInputChange={props.handleInputChange}
-                userData={props.userData}
+                data={props.userData}
                 editable={props.editable}
+                fields={[{name: "puppies", label: "Puppies?"}, {name: "adults", label: "Adults?"}, {name: "seniors", label: "Seniors?"}, {name: "withBehaviorIssues", label: "With behavior issues?"}, {name: "withMedicalIssues", label: "With medical issues?"}]
+                    .filter(field => props.editable.includes(field.name) || (props.editable.includes("*") && !props.editable.includes(`!${field.name}`)))}
             /> : null
         }
 
