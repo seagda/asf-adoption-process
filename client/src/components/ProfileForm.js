@@ -14,9 +14,8 @@ import SaveButton from "../components/SaveButton";
 import RoleTitles from "../components/RoleTitles";
 import MultiSelectChips from "../components/MultiSelectChips";
 import HoldCheckbox from "../components/HoldCheckbox";
-import UserStatusEdit from "../components/UserStatusEdit";
+import SelectBooleanBlock from "../components/SelectBooleanBlock";
 import UserCapacityEdit from "../components/UserCapacityEdit";
-import UserCaresForEdit from "../components/UserCaresForEdit";
 import UserMainInfoEdit from "../components/UserMainInfoEdit";
 
 import ashley from "../assets/ashley.jpg";
@@ -72,48 +71,6 @@ const useStyles = makeStyles(theme => ({
 export default function ProfileForm(props){
     const classes = useStyles();
 
-    const [userIntakeData, setUserIntakeData] = useState({})
-    const createUserInputChange = event =>{
-        const {name,value} = event.target
-        setUserIntakeData({
-            ...userIntakeData,
-            [name]: value
-        })
-    }
-
-    const [addressFormData, setAddressFormData] = useState({})
-
-    const handleAddressInputChange = event =>{
-        const {name, value} = event.target
-        setAddressFormData({
-            ...addressFormData,
-            [name]: value
-        })
-    }
-
-
-    useEffect(()=>{
-        setUserIntakeData({})
-    }, [props.userData])
-
-
-    const handleUserIntakeFormSubmit = event =>{
-        event.preventDefault();
-        const userInfo = {
-            ...userIntakeData,
-            Address: addressFormData
-        }
-        props.submitFunction(userInfo)
-        .then(res =>{
-            console.log(res.data)
-            setUserIntakeData({})
-            setAddressFormData({})
-            window.location = "/Manage-ASF-Users"
-        }).catch(err=>{
-            console.error(err.response.data.message)
-            // alert("Create dog failed")
-        })
-    }
 
 
     // const roleEdit = (
@@ -224,27 +181,41 @@ export default function ProfileForm(props){
             handleInputChange={props.handleInputChange}
             handleAddressChange={props.handleAddressChange}
             userData={props.userData}
-            addressData={props.addressData}
+            editable={props.editable}
             photoUrl={props.photoUrl}
             handlePhotoChange={props.handlePhotoChange}
             />
 
-            <UserStatusEdit
-            handleInputChange={props.handleInputChange}
-            userData={props.userData}
-            />
+            {(props.editable.includes("*") && !["!active", "!blocked", "!hold"].every(field => props.editable.includes(field))) ||
+                ["active", "blocked", "hold"].some(field => props.editable.includes(field)) ?
+                <SelectBooleanBlock
+                    handleInputChange={props.handleInputChange}
+                    data={props.userData}
+                    editable={props.editable}
+                    fields={[{name: "active", label: "Is active?"}, {name: "blocked", label: "Is blocked?"}, {name: "hold", label: "Is on hold?"}]
+                        .filter(field => props.editable.includes(field.name) || (props.editable.includes("*") && !props.editable.includes(`!${field.name}`)))}
+                /> : null
+            }
 
         </Grid>
 
-        <UserCapacityEdit
-        handleInputChange={props.handleInputChange}
-        userData={props.userData}
-        />
+        {props.editable.includes("maxCapacity") || (props.editable.includes("*") && !props.editable.includes("!maxCapacity")) ?
+            <UserCapacityEdit
+                handleInputChange={props.handleInputChange}
+                userData={props.userData}
+            /> : null
+        }
 
-        <UserCaresForEdit
-        handleInputChange={props.handleInputChange}
-        userData={props.userData}
-        />
+        {(props.editable.includes("*") && !["!puppies", "!adults", "!seniors", "!withBehaviorIssues", "!withMedicalIssues"].every(field => props.editable.includes(field))) ||
+            ["puppies", "adults", "seniors", "withBehaviorIssues", "withMedicalIssues"].some(field => props.editable.includes(field)) ?
+            <SelectBooleanBlock
+                handleInputChange={props.handleInputChange}
+                data={props.userData}
+                editable={props.editable}
+                fields={[{name: "puppies", label: "Puppies?"}, {name: "adults", label: "Adults?"}, {name: "seniors", label: "Seniors?"}, {name: "withBehaviorIssues", label: "With behavior issues?"}, {name: "withMedicalIssues", label: "With medical issues?"}]
+                    .filter(field => props.editable.includes(field.name) || (props.editable.includes("*") && !props.editable.includes(`!${field.name}`)))}
+            /> : null
+        }
 
         {/* <Grid item>
             <Typography variant="h4">References</Typography>

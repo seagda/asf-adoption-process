@@ -2,17 +2,17 @@ import React, {useState, useEffect} from 'react';
 import {useParams} from "react-router-dom";
 import Grid from '@material-ui/core/Grid';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import API from "../utils/API";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import Chip from "@material-ui/core/Chip";
 
+import API from "../utils/API";
 import ProfileBlock from "../components/ProfileBlock";
 import ProfileActions from "../components/ProfileActions";
 import CapacityView from "../components/CapacityView";
 import Roles from "../components/Roles";
 import UserAddress from "../components/UserAddress";
-
+import AdminNotes from "../components/AdminNotes";
 const useStyles=makeStyles(theme => ({
     mainContainer: {
         marginLeft: theme.spacing(35),
@@ -32,84 +32,50 @@ const useStyles=makeStyles(theme => ({
     }
 }))
 
-export default function UserProfileView(){
+export default function UserProfileView(props){
     const classes = useStyles();
-
-    const {id} = useParams();
-    console.log(id)
-
-    const [userData, setUserData] = useState({})
-    const [photo, setPhoto] = useState(new Blob())
-    const [puppiesData, setPuppiesData] = useState(false)
-    const [seniorsData, setSeniorsData] = useState(false)
-    const [adultsData, setAdultsData] = useState(false)
-    const [behaviorData, setBehaviorData] = useState(false)
-    const [medicalIssuesData, setMedicalIssuesData] = useState(false)
-    const [rolesList, setRolesListData] = useState([])
-    const [userAddress, setUserAddressData] = useState({})
-    const [userRegion, setUserRegion] = useState({})
-
-    useEffect(()=>{
-        API.getSingleUser(id).then(res =>{
-            console.log(res.data)
-            setUserData(res.data)
-            setPuppiesData(res.data.puppies)
-            setSeniorsData(res.data.seniors)
-            setAdultsData(res.data.adults)
-            setBehaviorData(res.data.withBehaviorIssues)
-            setMedicalIssuesData(res.data.withMedicalIssues)
-            setRolesListData(res.data.Roles)
-            setUserAddressData(res.data.Address)
-            setUserRegion(res.data.ResidesInRegion)
-        }).catch(err=>{
-            console.error(err)
-            // alert("get data failed")
-        });
-
-        API.getProfilePhoto(id).then(res => {
-            setPhoto(res.data);
-        }).catch(console.error);
-    },[])
 
     return(
         <Grid container className={classes.mainContainer}>
             <Grid item style={{marginBottom: "3em"}}>
-                <Typography variant="h4" color="primary">{userData.firstName}'s details</Typography>
+                <Typography variant="h4" color="primary">{props.userData?.firstName}'s profile</Typography>
                 <Divider/>
             </Grid>
 
             <ProfileBlock
-            image={URL.createObjectURL(photo)}
-            firstName={userData.firstName}
-            lastName={userData.lastName}
-            phone={userData.phone}
-            email={userData.email}
-            dob={userData.dob}
+                image={props.photoUrl}
+                firstName={props.userData?.firstName}
+                lastName={props.userData?.lastName}
+                phone={props.userData?.phone}
+                email={props.userData?.email}
+                dob={props.userData?.dob}
             />
 
-            {userData.editable ? <ProfileActions id={id}/> : null}
+            {props.userData?.editable?.length ? <ProfileActions roles={props.userData?.Roles?.map((role)=>role.name)} id={props.id}/> : null}
 
             <UserAddress
-            region={userRegion.name}
-            street={userAddress.street}
-            street2={userAddress.street2}
-            city={userAddress.city}
-            state={userAddress.state}
-            zip={userAddress.zip5}
+                region={props.userData?.ResidesInRegion?.name}
+                street={props.userData?.Address?.street}
+                street2={props.userData?.Address?.street2}
+                city={props.userData?.Address?.city}
+                state={props.userData?.Address?.state}
+                zip={props.userData?.Address?.zip5}
             />
 
             <Roles
-            roles={rolesList.map((role)=><Chip label={role.name}/>)}
+            roles={props.userData?.Roles?.map((role)=><Chip key={role.id} label={role.name}/>)}
             />
 
-            <CapacityView style={{marginBottom: "5em"}} 
-            maxCapacity={userData.maxCapacity} 
-            puppies={puppiesData} 
-            seniors={seniorsData} 
-            adults={adultsData} 
-            behavior={behaviorData} 
-            medical={medicalIssuesData}
+            <CapacityView style={{ marginBottom: "5em" }}
+                maxCapacity={props.userData?.maxCapacity}
+                puppies={props.userData?.puppies}
+                seniors={props.userData?.seniors}
+                adults={props.userData?.adults}
+                behavior={props.userData?.withBehaviorIssues}
+                medical={props.userData?.withMedicalIssues}
             />
+
+            {props.userData?.adminNotes !== undefined ? <AdminNotes notes={props.userData?.adminNotes} /> : null}
 
         </Grid>
     )

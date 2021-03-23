@@ -1,7 +1,7 @@
 import React, {useState, useEffect, createRef} from 'react';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import {useParams} from "react-router-dom";
+import {useParams, Redirect} from "react-router-dom";
 
 import ProfileForm from "../components/ProfileForm";
 import API from "../utils/API";
@@ -26,29 +26,36 @@ const useStyles=makeStyles(theme => ({
 }))
 
 
-export default function EditProfile() {
+export default function EditProfile(props) {
     const classes = useStyles()
 
-    let {id} = useParams();
-    const [userData, setUserData] = useState({})
-    const [addressData, setAddressData] = useState({})
-    const [photoUrl, setPhotoUrl] = useState("")
-    const [photo, setPhoto] = useState(new Blob())
+    const id = useParams().id || "me";
+    const [redirect, setRedirect] = useState();
+    const [userInputData, setUserInputData] = useState(props.userData);
+    const [editable, setEditable] = useState(props.userData?.editable || []);
+    const [photo, setPhoto] = useState(new Blob());
+    const [photoInputUrl, setPhotoInputUrl] = useState("");
 
-    const photoInput = createRef();
+    useEffect(() => setPhotoInputUrl(URL.createObjectURL(photo)), [photo]);
 
-    const handleInputChange=({target})=>{
-        setUserData({
-            ...userData,
-            [target.name]: target.value
-        })
-    }
-
-    const handleAddressChange = ({target})=>{
-        setAddressData({
-            ...addressData,
-            [target.name]: target.value
-        })
+    const handleInputChange = ({ target: { name, value } }) => {
+        let newData;
+        if (name.includes(".")) {
+            const names = name.split(".")
+            newData = {
+                ...userInputData,
+                [names[0]]: {
+                    ...userInputData[names[0]],
+                    [names[1]]: value
+                }
+            }
+        } else {
+            newData = {
+                ...userInputData,
+                [name]: value
+            }
+        }
+        setUserInputData(newData)
     }
 
     const handlePhotoChange = event => {
@@ -56,34 +63,21 @@ export default function EditProfile() {
     }
 
     useEffect(() => {
-        setPhotoUrl(URL.createObjectURL(photo));
-    }, [photo])
-
-    useEffect(()=>{
-        Promise.all([
-            (id ? API.getSingleUser(id) : API.getMyUserData()).then(res =>{
-                setUserData(res.data)
-                setAddressData(res.data.Address)
-            }),
-            (id ? API.getProfilePhoto(id) : API.getMyProfilePhoto()).then(res => {
-                setPhoto(res.data)
-            })
-        ]).catch(err=>{
-            console.error(err.response.data.message)
-            alert("get data failed")
-        })
-    }, [])
+        (({ editable, ...data }) => {
+            setUserInputData(data);
+            setEditable(editable || []);
+        })(props.userData);
+    }, [props.userData]);
+    useEffect(() => setPhotoInputUrl(props.photoUrl), [props.photoUrl]);
 
     const submitFunction = event =>{
         event.preventDefault();
-        const userInfo = {
-            ...userData,
-            ...addressData
-        }
-        Promise.all(id ? [API.updateOtherUser(userInfo, id), API.setProfilePhoto(photo, id)] : [API.updateMyUserData(userInfo), API.setMyProfilePhoto(photo)]).then(res=>{
-            setUserData({})
-            setAddressData({})
-            window.location = `/userView/${id}`
+        const promises = [API.updateOtherUser(userInputData, id)];
+        if (photo.type.startsWith("image")) promises.push(API.setProfilePhoto(photo, id));
+        Promise.all(promises).then(()=>{
+            setUserInputData({});
+            props.reload();
+            setRedirect(<Redirect push to={`/user/${id}`} />);
         }).catch(err=>{
             console.error(err.response.data.message)
         })
@@ -91,13 +85,13 @@ export default function EditProfile() {
 
     return (
         <Grid container className={classes.mainContainer}>
+            {redirect}
             <ProfileForm 
             handleInputChange={handleInputChange}
             submitFunction={submitFunction}
-            userData={userData}
-            addressData={addressData}
-            handleAddressChange={handleAddressChange}
-            photoUrl={photoUrl}
+            userData={userInputData}
+            editable={editable}
+            photoUrl={photoInputUrl}
             handlePhotoChange={handlePhotoChange}
             />
         </Grid>

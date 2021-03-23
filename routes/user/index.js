@@ -60,8 +60,8 @@ router.get("/me", (req, res) => {
 router.put("/me", (req, res) => {
     const permission = ac.can(req.roles).updateOwn("User");
     if (permission.granted) {
-        db.User.findByPk(req.userId)
-            .then(user => user.update(permission.filter(req.body), { include: [db.Address] }))
+        db.User.findByPk(req.userId, {include: [db.Address]})
+            .then(user => user.update(permission.filter(req.body)).then(() => user.Address.update(permission.filter(req.body).Address)))
             .then(() => res.sendStatus(200))
             .catch(err => {
                 console.error(err);
@@ -141,8 +141,8 @@ router.get("/:id", (req, res) => {
 router.put("/:id", (req, res) => {
     const permission = ac.can(req.roles).updateAny("User");
     if (permission.granted) {
-        db.User.findByPk(req.params.id)
-            .then(user => user.update(permission.filter(req.body), { include: [db.Address] }))
+        db.User.findByPk(req.params.id, {include: [db.Address]})
+        .then(user => user.update(permission.filter(req.body)).then(() => user.Address.update(permission.filter(req.body).Address)))
             .then(() => res.sendStatus(200))
             .catch(err => {
                 console.error(err);

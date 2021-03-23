@@ -32,7 +32,7 @@ export default function ProfileActions(props){
     return(
         <Grid container justify="space-evenly" style={{marginTop: "4em"}}>
             <Grid item>
-                {window.location.href.includes("My-Profile") ? <EditButton toLink={"/editprofile"} buttonText="Edit Profile"/> : <EditButton toLink={"/editOtherUser/" + props.id} buttonText="Edit Profile"/>}
+                <EditButton toLink={`/user/${props.id}/edit`} buttonText="Edit Profile"/>
             </Grid>
             <Grid item>
                <UpdateButton toLink="/" buttonText="Update Password"/>

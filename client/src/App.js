@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import { ThemeProvider } from '@material-ui/styles';
-import {BrowserRouter, Route, Switch} from "react-router-dom";
+import {BrowserRouter, Route, Switch, Redirect} from "react-router-dom";
 
 import theme from "../src/components/Theme";
 import ResponsiveDrawer from "../src/components/Header"; 
@@ -8,7 +8,6 @@ import DogDossiersAll from "../src/pages/DogDossiersAll"
 import Login from "../src/pages/Login"
 import CreateUser from "../src/pages/CreateUser";
 import AdopterApplication from "./pages/AdopterApplication";
-import MyProfile from "./pages/MyProfile";
 import ManageASFUsers from "./pages/ManageASFUsers";
 import EditProfile from "./pages/EditProfile";
 import DogProfileView from "./pages/DogProfileView";
@@ -22,38 +21,39 @@ import DogProfileEdit from "./pages/DogProfileEdit";
 import BehaviorAssessment from "./pages/BehaviorAssessment";
 import DogDossierDocs from "./pages/DogDossierDocs";
 import UserProfileView from "./pages/UserProfileView";
+import Profile from "./pages/Profile";
 import AppAnswersAdopt from "./pages/AppAnswersAdopt";
 import AppAnswersFoster from "./pages/AppAnswersFoster";
 import BehaveAssessAnswers from "./pages/BehavAssessAnswers";
 
 export default function App() {
-    const admin = true;
     return (
         <ThemeProvider theme={theme}>
             <BrowserRouter>
                 <ResponsiveDrawer/>
                 <Switch>
                     <Route exact path="/"><Home /></Route>
-                    <Route path="/My-Profile"><MyProfile/></Route>
+                    <Redirect from="/My-Profile" to="/user/me" />
                     <Route path="/My-Dashboard"><DashboardMain/></Route>
                     <Route path="/Settings"><Settings/></Route>
                     <Route path="/Logout" />
                     <Route path="/Dog-Dossiers"><DogDossiersAll /></Route>
                     <Route path="/Manage-ASF-Users"><ManageASFUsers/></Route>
-                    <Route path="/editprofile"><EditProfile/></Route>
+                    <Redirect from="/editprofile" to="/user/me/edit" />
                     <Route path="/adopterApplication"><AdopterApplication/></Route>
                     <Route path="/fosterApplication"><FosterApplication/></Route>
                     <Route path="/createUser"><CreateUser/></Route>
                     <Route path="/dogView/:id"><DogProfileView/></Route>
-                    <Route path="/viewDog"><p style={{fontSize: 100}}>THE PATH IS DOGVIEW</p></Route>
+                    <Redirect from="/viewDog/:id" to="/dogView/:id" />
                     <Route path="/createdog"><DogProfileCreate/></Route>
                     <Route path="/signin"><Login /></Route>
                     <Route path="/signup"><SignUp/></Route>
                     <Route path="/editDog/:id"><DogProfileEdit/></Route>
                     <Route path="/behavior/:id"><BehaviorAssessment/></Route>
                     <Route path="/dogDocument/:id"><DogDossierDocs/></Route>
-                    <Route path="/userView/:id"><UserProfileView/></Route>
-                    <Route path="/editOtherUser/:id"><EditProfile/></Route>
+                    <Route path="/user/:id"><Profile/></Route>
+                    <Redirect from="/userView/:id" to="/user/:id" />
+                    <Redirect from="/editOtherUser/:id" to="/user/:id/edit" />
                     <Route path="/appAnswersAdopt"><AppAnswersAdopt/></Route>
                     <Route path="/appAnswersFoster"><AppAnswersFoster/></Route>
                     <Route path="/behaveAnswers/:id"><BehaveAssessAnswers/></Route>
