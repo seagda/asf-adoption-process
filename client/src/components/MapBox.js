@@ -1,5 +1,5 @@
 import React from 'react'
-import { GoogleMap, useJsApiLoader, Marker } from '@react-google-maps/api';
+import { GoogleMap, useJsApiLoader, Marker, InfoWindow } from '@react-google-maps/api';
 
 const containerStyle = {
   width: '100%',
@@ -31,6 +31,10 @@ function MapBox(props) {
     setMap(null)
   }, [])
 
+  // marker.addListener("click", () => {
+  //   infowindow.open(map, marker);
+  // });
+
   return isLoaded ? (
       <GoogleMap
         mapContainerStyle={containerStyle}
@@ -40,7 +44,17 @@ function MapBox(props) {
         onUnmount={onUnmount}
       >
         {props.displaySubjects.map((dogOrUser) => (
-          <Marker key={dogOrUser.id} position={dogOrUser.coordinates}/>
+          <Marker key={dogOrUser.id} 
+          name={dogOrUser.id} 
+          position={dogOrUser.coordinates}
+          title={dogOrUser.coordinates}>
+          <InfoWindow>
+            <div>
+              <h1>InfoWindow</h1>
+            </div>
+          </InfoWindow>
+
+          </Marker>
         ))}
         
       </GoogleMap>

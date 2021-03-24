@@ -61,13 +61,13 @@ export default function DogDossiersAll() {
     function loadDogs() {
         API.getDogDossiersAll()
             .then(res => {
-                console.log(res)
                 return Promise.all(res.data.map(dog => Geocode.fromAddress(`${dog.Address.street} ${dog.Address.street2} ${dog.Address.city}, ${dog.Address.state} ${dog.Address.zip5}`).then(response => {
                     const { lat, lng } = response.results[0].geometry.location;
                     return { ...dog, coordinates: { lat, lng } }
                 })));
             }).then(dogs => {
                 setDogState(dogs)
+                console.log(dogs)
             }).catch(err => {
                 console.error('here')
                 console.error(err);
@@ -76,14 +76,14 @@ export default function DogDossiersAll() {
         API.getRegions()
             .then(res => {
             setRegionList(res.data)
-            console.log(res)
+           
             })
             .catch(err => console.log(err));
 
         API.getDogStatus()
             .then(res => {
             setDogStatusList(res.data)
-            console.log(res)
+         
             })
             .catch(err => console.log(err));
     };

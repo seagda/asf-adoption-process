@@ -95,21 +95,21 @@ export default function DogDossierDocs(){
                     <Divider />
                 </Typography>
                 {dogAssessments ? (
-                <React.Fragment>
-                    <Grid container>
-                    {dogAssessments.map(assessment => {
-                        return (
-                            <BehaviorCard 
-                            date={assessment?.date} 
-                            firstName={assessment.User.firstName} 
-                            lastName={assessment.User.lastName}  
-                            id={assessment.id}
-                            currentScore={Object.keys(assessment?.response).reduce( (sum, key) => sum+parseFloat(assessment?.response[key]|| 0),0)}
-                            totalPossible={Object.keys(assessment?.response).length*5}/>
-                        )
-                    })}
-                    </Grid>
-                </React.Fragment>
+                    <React.Fragment>
+                        <Grid container>
+                        {dogAssessments.map(assessment => {
+                            return (
+                                <BehaviorCard 
+                                date={assessment?.date} 
+                                firstName={assessment.User.firstName} 
+                                lastName={assessment.User.lastName}  
+                                id={assessment.id}
+                                currentScore={Object.keys(assessment?.response).reduce( (sum, key) => sum+parseFloat(assessment?.response[key]|| 0),0)}
+                                totalPossible={Object.keys(assessment?.response).length*5}/>
+                            )
+                        })}
+                        </Grid>
+                    </React.Fragment>
                 ):null}
             </Grid>
             
