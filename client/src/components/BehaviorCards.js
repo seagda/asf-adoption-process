@@ -43,9 +43,9 @@ const useStyles = makeStyles({
     color: '#a10505',
   },
   letterGradeStyle: {
-    fontSize: '3.4rem',
+    fontSize: '3rem',
     color: '#122740',
-    alignContent: "center",
+    marginLeft:"45%",
   },
 });
 
@@ -109,7 +109,7 @@ export default function BehaviorCard(props) {
         <Typography className={classes.mainTitle} component="h2">
         <b>Behavior Assessment Grade:</b>
         </Typography>
-        <Typography className={classes.letterGradeStyle} component="h2">
+        <Typography className={classes.letterGradeStyle} component="h2" justifyContent="center">
         <b>{letterGrade} </b>
         </Typography>
         <Typography className={classes.pointsEarnedTitle} component="h2">
@@ -120,7 +120,7 @@ export default function BehaviorCard(props) {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">Learn More</Button>
+        <Button size="small">SEE FULL ASSESSMENT</Button>
       </CardActions>
     </Card>
   );
