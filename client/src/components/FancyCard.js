@@ -41,10 +41,11 @@ const BasicProfile = props => {
   const styles = useBasicProfileStyles();
   return (
     <Row {...props}>
-      <Item><Avatar className={styles.avatar}>S</Avatar></Item>
+      <Item><Avatar className={styles.avatar}>{props.currentlyWithFirstName?.split("").shift()}</Avatar></Item>
       <Item position={'middle'} pl={{ sm: 0.5, lg: 0.5 }}>
-        <Typography className={styles.overline}>CREATOR</Typography>
-        <Typography className={styles.name}>siriwatknp</Typography>
+        <Typography className={styles.overline}>CURRENTLY WITH</Typography>
+        <Typography className={styles.name}>{props.currentlyWithFirstName} {props.currentlyWithLastName}</Typography>
+        <Typography className={styles.name}>{props.currentlyWithEmail}</Typography>
       </Item>
     </Row>
   );
@@ -53,12 +54,13 @@ const BasicProfile = props => {
 const useCardHeaderStyles = makeStyles(() => ({
   root: { paddingBottom: 0 },
   title: {
-    fontSize: '1.25rem',
+    fontSize: '1.4rem',
     color: '#122740',
   },
   subheader: {
-    fontSize: '0.875rem',
+    fontSize: '1rem',
     color: '#495869',
+    margin: '0.4rem',
   },
 }));
 
@@ -72,7 +74,16 @@ const CardHeader = props => {
           <b>{props.dogName}'s Current Report Card</b>
         </Typography>
         <Typography className={styles.subheader}>
-          Similar to firebase theme
+        Current Status: {props.dogStatus}
+        </Typography>
+        <Typography className={styles.subheader}>
+        Latest Behavior Assessment Score: {props.dogStatus}
+        </Typography>
+        <Typography className={styles.subheader}>
+        Current Status: {props.dogStatus}
+        </Typography>
+        <Typography className={styles.subheader}>
+        Current Status: {props.dogStatus}
         </Typography>
       </Item>
       <Item position={'right'} mr={-0.5}>
@@ -110,8 +121,11 @@ export const ShowcaseCardDemo = React.memo(function ShowcaseCard(props) {
             <Box minHeight={200} bgcolor={'#F4F7FA'} borderRadius={8} />
           </Item>
           <Column>
-            <CardHeader dogName={props.dogName} />
-            <BasicProfile position={'bottom'} />
+            <CardHeader dogName={props.dogName} dogStatus={props.dogStatus}/>
+            <BasicProfile position={'bottom'} 
+                currentlyWithFirstName={props.currentlyWithFirstName} 
+                currentlyWithLastName={props.currentlyWithLastName} 
+                currentlyWithEmail={props.currentlyWithEmail}/>
           </Column>
         </Row>
       </Grid>

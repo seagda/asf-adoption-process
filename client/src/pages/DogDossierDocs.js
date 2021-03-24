@@ -76,8 +76,9 @@ export default function DogDossierDocs(){
                     Documents and Development
                     <Divider />
                 </Typography>
-                <FancyCard dogStatus={dogData.DogStatus?.name} 
+                <FancyCard 
                     dogName={dogData.name} 
+                    dogStatus={dogData.DogStatus?.name} 
                     currentlyWithFirstName={dogData.currentlyWith?.firstName} 
                     currentlyWithLastName={dogData.currentlyWith?.lastName} 
                     currentlyWithEmail={dogData.currentlyWith?.email} 
