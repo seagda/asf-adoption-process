@@ -68,7 +68,6 @@ export default function DogDossierDocs(){
     }
     const user = JSON.parse(userString)
 
-
     return(
         <Grid container className={classes.mainContainer} justify="space-evenly" spacing={4}>
             <Grid item xs={12}>
@@ -97,7 +96,12 @@ export default function DogDossierDocs(){
                     <Grid container>
                     {dogAssessments.map(assessment => {
                         return (
-                            <BehaviorCard date={assessment.date} firstName={assessment.User.firstName} lastName={assessment.User.lastName}  />
+                            <BehaviorCard 
+                            date={assessment.date} 
+                            firstName={assessment.User.firstName} 
+                            lastName={assessment.User.lastName}  
+                            currentScore={Object.keys(assessment.response).reduce( (sum, key) => sum+parseFloat(assessment.response[key]|| 0),0)}
+                            totalPossible={Object.keys(assessment.response).length*5}/>
                         )
                     })}
                     </Grid>

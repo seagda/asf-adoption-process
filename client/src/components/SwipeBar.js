@@ -16,12 +16,12 @@ import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 const theme = createMuiTheme();
 
 theme.typography.h2 = {
-  fontSize: '18rem',
+  fontSize: '6.2rem',
   '@media (min-width:600px)': {
     fontSize: '6.5rem',
   },
   [theme.breakpoints.up('md')]: {
-    fontSize: '16rem',
+    fontSize: '2rem',
   },
 };
 
@@ -68,7 +68,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper
   },
   bigFont: {
-    fontSize: '10.2rem',
+    fontSize: '10.2em',
   }
 }));
 
@@ -108,7 +108,7 @@ export default function SwipeBar(props) {
         {props.currentScore}
       </TabPanel>
       <TabPanel value={value} index={2}>
-        {props.lowScores}
+        {props.total}
       </TabPanel>
       <TabPanel value={value} index={3}>
        {props.aboutDog}
