@@ -10,8 +10,8 @@ function MapBox(props) {
 
     // pass in geocoded lat and log here 
     const center = {
-      lat: 42.3145186,
-      lng: -71.1103681
+      lat: 38.624691,
+      lng: -90.184776
     };
 
   const { isLoaded } = useJsApiLoader({
@@ -39,18 +39,17 @@ function MapBox(props) {
       <GoogleMap
         mapContainerStyle={containerStyle}
         center={center}
-        zoom={10}
+        zoom={5}
         onLoad={onLoad}
         onUnmount={onUnmount}
       >
         {props.displaySubjects.map((dogOrUser) => (
-          <Marker key={dogOrUser.id} 
-          name={dogOrUser.id} 
-          position={dogOrUser.coordinates}
-          title={dogOrUser.coordinates}>
+          <Marker 
+          key={dogOrUser.id}
+          position={dogOrUser.coordinates}>
           <InfoWindow>
             <div>
-              <h1>InfoWindow</h1>
+              <h5>InfoWindow</h5>
             </div>
           </InfoWindow>
 
