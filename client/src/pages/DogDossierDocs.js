@@ -46,13 +46,13 @@ export default function DogDossierDocs(){
     useEffect(() => Promise.all([
         API.getDogDocs(id)
             .then(res => {setDogDocsState(res.data) 
-                console.log(dogDocs)}),
+                console.log(res.data)}),
         API.getSingleDogData(id)
             .then(res => {setDogDataState(res.data)
-                console.log(dogData)}),
+                console.log(res.data)}),
         API.getBehaviorAnswers(id)
-            .then(res => {setDogAssessmentsState(res.data)
-                console.log(dogAssessments)}),
+            .then(res => {setDogAssessmentsState(res.data.reverse())
+                console.log(res.data)}),
     ]).catch(console.error), [])
 
     function download(docId) {
@@ -67,6 +67,8 @@ export default function DogDossierDocs(){
         window.location = "/"
     }
     const user = JSON.parse(userString)
+
+
 
     return(
         <Grid container className={classes.mainContainer} justify="space-evenly" spacing={4}>
@@ -83,8 +85,8 @@ export default function DogDossierDocs(){
                     currentlyWithEmail={dogData.currentlyWith?.email} 
                     profilePhoto={dogData.DogPhotos?.[0]?.url} 
                     adminNotes={dogData.adminNotes}
-                    currentScore={Object.keys(dogAssessments[0].response).reduce( (sum, key) => sum+parseFloat(dogAssessments[0].response[key]|| 0),0)}
-                    totalPossible={Object.keys(dogAssessments[0].response).length*5}
+                    currentScore={Object.keys(dogAssessments?.[0]?.response || {}).reduce( (sum, key) => sum+parseFloat(dogAssessments?.[0]?.response[key]|| 0),0)}
+                    totalPossible={Object.keys(dogAssessments?.[0]?.response ||{}).length*5}
                     />
             </Grid>
             <Grid item xs={12} s={10}>
@@ -95,14 +97,15 @@ export default function DogDossierDocs(){
                 {dogAssessments ? (
                 <React.Fragment>
                     <Grid container>
-                    {dogAssessments.reverse().map(assessment => {
+                    {dogAssessments.map(assessment => {
                         return (
                             <BehaviorCard 
-                            date={assessment.date} 
+                            date={assessment?.date} 
                             firstName={assessment.User.firstName} 
                             lastName={assessment.User.lastName}  
-                            currentScore={Object.keys(assessment.response).reduce( (sum, key) => sum+parseFloat(assessment.response[key]|| 0),0)}
-                            totalPossible={Object.keys(assessment.response).length*5}/>
+                            id={assessment.id}
+                            currentScore={Object.keys(assessment?.response).reduce( (sum, key) => sum+parseFloat(assessment?.response[key]|| 0),0)}
+                            totalPossible={Object.keys(assessment?.response).length*5}/>
                         )
                     })}
                     </Grid>

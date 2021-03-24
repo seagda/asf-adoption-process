@@ -128,10 +128,10 @@ export const FancyCard = React.memo(function FancyCard(props) {
             adminNotes={props.adminNotes}
             currentScore={props.currentScore}
             totalPossible={props.totalPossible}/>
-            <BasicProfile position={'bottom'} 
+            {props.currentlyWithFirstName ? (<BasicProfile position={'bottom'} 
                 currentlyWithFirstName={props.currentlyWithFirstName} 
                 currentlyWithLastName={props.currentlyWithLastName} 
-                currentlyWithEmail={props.currentlyWithEmail}/>
+                currentlyWithEmail={props.currentlyWithEmail}/>):null}
           </Column>
         </Row>
       </Grid>

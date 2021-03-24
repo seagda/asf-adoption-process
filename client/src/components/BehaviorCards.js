@@ -5,6 +5,8 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import { NavLink, Link } from 'react-router-dom';
+
 
 const useStyles = makeStyles({
   root: {
@@ -87,15 +89,6 @@ export default function BehaviorCard(props) {
     case percentageScore <= 0.70:
       letterGrade = "N";
       break;
-    // case percentageScore >= 0.67:
-    //   letterGrade = "+D";
-    //   break;
-    // case percentageScore >= 0.65:
-    //   letterGrade = "D";
-    //   break;
-    // case percentageScore <= 0.64:
-    //   letterGrade = "F";
-    //   break;
     default:
       letterGrade = "N/A";
   }
@@ -121,7 +114,9 @@ export default function BehaviorCard(props) {
       </CardContent>
       <CardActions>
         {/* // check this route */}
-        <Button size="small" toLink={`/behaveAnswers/${props.id}`}>SEE FULL ASSESSMENT</Button>
+        <NavLink to={`/behaveAnswers/${props.id}`}>
+        <Button size="small">SEE FULL ASSESSMENT</Button>
+        </NavLink>
       </CardActions>
     </Card>
   );
