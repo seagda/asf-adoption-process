@@ -77,7 +77,7 @@ const CardHeader = props => {
         Current Status: {props.dogStatus}
         </Typography>
         <Typography className={styles.subheader}>
-        Latest Behavior Assessment Score: {props.dogStatus}
+        Latest Behavior Assessment Score: {props.currentScore} of {props.totalPossible} total points possible
         </Typography>
         {props.adminNotes? (<Typography className={styles.subheader}>
         Admin Notes: {props.dogStatus}
@@ -125,7 +125,9 @@ export const FancyCard = React.memo(function FancyCard(props) {
           <Column>
             <CardHeader dogName={props.dogName} 
             dogStatus={props.dogStatus}
-            adminNotes={props.adminNotes}/>
+            adminNotes={props.adminNotes}
+            currentScore={props.currentScore}
+            totalPossible={props.totalPossible}/>
             <BasicProfile position={'bottom'} 
                 currentlyWithFirstName={props.currentlyWithFirstName} 
                 currentlyWithLastName={props.currentlyWithLastName} 

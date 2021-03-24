@@ -45,14 +45,14 @@ export default function DogDossierDocs(){
 
     useEffect(() => Promise.all([
         API.getDogDocs(id)
-            .then(res => setDogDocsState(res.data)),
-            console.log(dogDocs),
+            .then(res => {setDogDocsState(res.data) 
+                console.log(dogDocs)}),
         API.getSingleDogData(id)
-            .then(res => setDogDataState(res.data)),
-            console.log(dogData),
+            .then(res => {setDogDataState(res.data)
+                console.log(dogData)}),
         API.getBehaviorAnswers(id)
-            .then(res => setDogAssessmentsState(res.data)),
-            console.log(dogAssessments),
+            .then(res => {setDogAssessmentsState(res.data)
+                console.log(dogAssessments)}),
     ]).catch(console.error), [])
 
     function download(docId) {
@@ -81,9 +81,11 @@ export default function DogDossierDocs(){
                     currentlyWithFirstName={dogData.currentlyWith?.firstName} 
                     currentlyWithLastName={dogData.currentlyWith?.lastName} 
                     currentlyWithEmail={dogData.currentlyWith?.email} 
-                    // only works when data is already loaded in to the local server
-                    profilePhoto={dogData.DogPhotos[0].url} 
-                    adminNotes={dogData.adminNotes}/>
+                    profilePhoto={dogData.DogPhotos?.[0]?.url} 
+                    adminNotes={dogData.adminNotes}
+                    currentScore={Object.keys(dogAssessments[0].response).reduce( (sum, key) => sum+parseFloat(dogAssessments[0].response[key]|| 0),0)}
+                    totalPossible={Object.keys(dogAssessments[0].response).length*5}
+                    />
             </Grid>
             <Grid item xs={12} s={10}>
                 <Typography variant="h5" component="h6" gutterBottom color="primary">
@@ -93,7 +95,7 @@ export default function DogDossierDocs(){
                 {dogAssessments ? (
                 <React.Fragment>
                     <Grid container>
-                    {dogAssessments.map(assessment => {
+                    {dogAssessments.reverse().map(assessment => {
                         return (
                             <BehaviorCard 
                             date={assessment.date} 

@@ -84,18 +84,18 @@ export default function BehaviorCard(props) {
     case percentageScore >= 0.73:
       letterGrade = "C";
       break;
-    case percentageScore >= 0.70:
-      letterGrade = "-C";
+    case percentageScore <= 0.70:
+      letterGrade = "N";
       break;
-    case percentageScore >= 0.67:
-      letterGrade = "+D";
-      break;
-    case percentageScore >= 0.65:
-      letterGrade = "D";
-      break;
-    case percentageScore <= 0.64:
-      letterGrade = "F";
-      break;
+    // case percentageScore >= 0.67:
+    //   letterGrade = "+D";
+    //   break;
+    // case percentageScore >= 0.65:
+    //   letterGrade = "D";
+    //   break;
+    // case percentageScore <= 0.64:
+    //   letterGrade = "F";
+    //   break;
     default:
       letterGrade = "N/A";
   }
@@ -120,7 +120,8 @@ export default function BehaviorCard(props) {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">SEE FULL ASSESSMENT</Button>
+        {/* // check this route */}
+        <Button size="small" toLink={`/behaveAnswers/${props.id}`}>SEE FULL ASSESSMENT</Button>
       </CardActions>
     </Card>
   );
