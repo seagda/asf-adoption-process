@@ -47,11 +47,11 @@ function MapBox(props) {
           <Marker 
           key={dogOrUser.id}
           position={dogOrUser.coordinates}>
-          <InfoWindow>
+          {/* <InfoWindow>
             <div>
-              <h5>InfoWindow</h5>
+              <h5>{dogOrUser?.name}</h5>
             </div>
-          </InfoWindow>
+          </InfoWindow> */}
 
           </Marker>
         ))}
