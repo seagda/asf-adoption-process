@@ -105,24 +105,26 @@ export default function DogDossierDocs(){
                 ):null}
             </Grid>
             
+            <Grid container>
             <Grid item xs={12} s={10}>
                 <Typography variant="h5" component="h6" gutterBottom color="primary">
                     Documents and Medical Records
                     <Divider />
                 </Typography>
-                <Grid item xs={3}>
+            </Grid>
+                <Grid item xs={12} s={12} m={4} lg={4} >
                     <UploadFiles handleSubmit={handleFileSubmit} buttonText="Select Files" multiple fileInput={fileInput}/>
                 </Grid>
-                <Grid item xs={9} s={8}>
+                <Grid item s={12} m={8} lg>
                     {dogDocs ? (
                     <React.Fragment>
-                        <Grid container>
                         {dogDocs.map(doc => {
                             return (
+                            <Grid item xs={12} style={{margin: "0.5em"}}>
                                 <SimpleAccordion name={doc.name} createdAt={doc.createdAt} />
+                            </Grid>
                             )
                         })}
-                        </Grid>
                     </React.Fragment>
                     ):null}
                 </Grid>

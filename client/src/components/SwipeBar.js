@@ -16,12 +16,12 @@ import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 const theme = createMuiTheme();
 
 theme.typography.h2 = {
-  fontSize: '6.2rem',
+  fontSize: '18rem',
   '@media (min-width:600px)': {
     fontSize: '6.5rem',
   },
   [theme.breakpoints.up('md')]: {
-    fontSize: '2rem',
+    fontSize: '16rem',
   },
 };
 
@@ -67,6 +67,9 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     backgroundColor: theme.palette.background.paper
   },
+  bigFont: {
+    fontSize: '10.2rem',
+  }
 }));
 
 export default function SwipeBar(props) {
@@ -83,7 +86,7 @@ export default function SwipeBar(props) {
         <Tabs
           value={value}
           onChange={handleChange}
-          variant="fullWidth"
+          variant="scrollable"
           scrollButtons="on"
           indicatorColor="primary"
           textColor="primary"
@@ -96,7 +99,7 @@ export default function SwipeBar(props) {
           <Tab label="General Notes" icon={<MessageIcon />} {...a11yProps(3)} />
          </Tabs>
       </AppBar>
-      <TabPanel value={value} index={0}>
+      <TabPanel className={classes.bigFont} value={value} index={0}>
         {props.dogStatus}
         {props.currentlyWithFirstName ? (`Currently With: ${props.currentlyWithFirstName} ${props.currentlyWithLastName} 
         ${props.currentlyWithEmail}`): null}
