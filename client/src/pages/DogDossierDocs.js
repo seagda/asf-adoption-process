@@ -82,9 +82,8 @@ export default function DogDossierDocs(){
                     currentlyWithFirstName={dogData.currentlyWith?.firstName} 
                     currentlyWithLastName={dogData.currentlyWith?.lastName} 
                     currentlyWithEmail={dogData.currentlyWith?.email} 
-                    // currentScore={} 
-                    // lowScores={} 
-                    aboutDog={dogData.aboutDog} 
+                    profilePhoto={dogData.DogPhotos[0]?.url} 
+                    
                     adminNotes={dogData.adminNotes} />
             </Grid>
             <Grid item xs={12} s={10}>

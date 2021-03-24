@@ -1,7 +1,7 @@
 import React from 'react';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
+import CardMedia from '@material-ui/core/CardMedia';
 import Tooltip from '@material-ui/core/Tooltip';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
@@ -79,12 +79,10 @@ const CardHeader = props => {
         <Typography className={styles.subheader}>
         Latest Behavior Assessment Score: {props.dogStatus}
         </Typography>
-        <Typography className={styles.subheader}>
-        Current Status: {props.dogStatus}
-        </Typography>
-        <Typography className={styles.subheader}>
-        Current Status: {props.dogStatus}
-        </Typography>
+        {props.adminNotes? (<Typography className={styles.subheader}>
+        Admin Notes: {props.dogStatus}
+        </Typography>):null
+        }
       </Item>
       <Item position={'right'} mr={-0.5}>
         <StyledTooltip title={'See details'}>
@@ -110,7 +108,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export const ShowcaseCardDemo = React.memo(function ShowcaseCard(props) {
+export const FancyCard = React.memo(function FancyCard(props) {
   const styles = useStyles();
   const gap = { xs: 1, sm: 1.5, lg: 2 }
   return (
@@ -118,10 +116,17 @@ export const ShowcaseCardDemo = React.memo(function ShowcaseCard(props) {
       <Grid item xs={12} sm={8} lg={7}>
         <Row className={styles.card} p={{ xs: 0.5, sm: 0.75, lg: 1 }} gap={gap}>
           <Item grow>
-            <Box minHeight={200} bgcolor={'#F4F7FA'} borderRadius={8} />
+            <CardMedia 
+            component="img"
+            alt="Contemplative Reptile"
+            height="100%"
+            image={props.profilePhoto}
+            title="Contemplative Reptile"/>
           </Item>
           <Column>
-            <CardHeader dogName={props.dogName} dogStatus={props.dogStatus}/>
+            <CardHeader dogName={props.dogName} 
+            dogStatus={props.dogStatus}
+            adminNotes={props.adminNotes}/>
             <BasicProfile position={'bottom'} 
                 currentlyWithFirstName={props.currentlyWithFirstName} 
                 currentlyWithLastName={props.currentlyWithLastName} 
@@ -132,4 +137,4 @@ export const ShowcaseCardDemo = React.memo(function ShowcaseCard(props) {
     </Grid>
   );
 });
-export default ShowcaseCardDemo
+export default FancyCard
