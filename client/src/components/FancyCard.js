@@ -7,6 +7,7 @@ import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import CallMade from '@material-ui/icons/CallMade';
+import Hidden from '@material-ui/core/Hidden';
 
 import { Row, Column, Item } from '@mui-treasury/components/flex';
 import { useSizedIconButtonStyles } from '@mui-treasury/styles/iconButton/sized';
@@ -58,7 +59,7 @@ const useCardHeaderStyles = makeStyles(() => ({
     color: '#122740',
   },
   subheader: {
-    fontSize: '1rem',
+    fontSize: '1.2rem',
     color: '#495869',
     margin: '0.4rem',
   },
@@ -106,7 +107,7 @@ const useStyles = makeStyles(() => ({
       borderColor: '#5B9FED',
     },
   },
-}));
+  }));
 
 export const FancyCard = React.memo(function FancyCard(props) {
   const styles = useStyles();
@@ -116,11 +117,13 @@ export const FancyCard = React.memo(function FancyCard(props) {
       <Grid item xs={12} sm={8} lg={7}>
         <Row className={styles.card} p={{ xs: 0.5, sm: 0.75, lg: 1 }} gap={gap}>
           <Item grow>
-            <CardMedia 
-            component="img"
-            alt="dog profile photo"
-            height="100%"
-            image={props.profilePhoto}/>
+            <Hidden mdDown>
+                <CardMedia 
+                component="img"
+                alt="dog profile photo"
+                height="100%"
+                image={props.profilePhoto}/>
+            </Hidden>
           </Item>
           <Column>
             <CardHeader dogName={props.dogName} 

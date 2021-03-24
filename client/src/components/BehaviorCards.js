@@ -36,7 +36,7 @@ const useStyles = makeStyles({
   },
   pointsEarnedTitle: {
     fontSize: '1.2rem',
-    color: '#122740',
+    color: '#495869',
   },
   pos: {
     marginBottom: 12,
