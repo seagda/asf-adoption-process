@@ -9,6 +9,7 @@ import SwipeBar from '../components/SwipeBar';
 import BehaviorCard from '../components/BehaviorCards';
 import SimpleAccordion from '../components/SimpleAccordion';
 import UploadFiles from '../components/UploadFiles';
+import FancyCard from '../components/FancyCard';
 import {useParams} from 'react-router-dom';
 import FileDownload from 'js-file-download';
 
@@ -75,16 +76,15 @@ export default function DogDossierDocs(){
                     Documents and Development
                     <Divider />
                 </Typography>
-                <SwipeBar
-                    dogStatus={dogData.DogStatus?.name} 
+                <FancyCard dogStatus={dogData.DogStatus?.name} 
+                    dogName={dogData.name} 
                     currentlyWithFirstName={dogData.currentlyWith?.firstName} 
                     currentlyWithLastName={dogData.currentlyWith?.lastName} 
                     currentlyWithEmail={dogData.currentlyWith?.email} 
                     // currentScore={} 
                     // lowScores={} 
                     aboutDog={dogData.aboutDog} 
-                    adminNotes={dogData.adminNotes}>
-                </SwipeBar>
+                    adminNotes={dogData.adminNotes} />
             </Grid>
             <Grid item xs={12} s={10}>
                 <Typography variant="h5" component="h6" gutterBottom color="primary">

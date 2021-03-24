@@ -30,7 +30,7 @@ export default function BehaviorCard(props) {
   const bull = <span className={classes.bullet}>•</span>;
 
   const percentageScore = props.currentScore/props.totalPossible
-  console.log(percentageScore)
+
   let letterGrade = ""
 
   switch (true) {
