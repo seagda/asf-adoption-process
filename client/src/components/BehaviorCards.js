@@ -9,19 +9,43 @@ import Typography from '@material-ui/core/Typography';
 const useStyles = makeStyles({
   root: {
     minWidth: 275,
-    margin: '1rem'
+    margin: '1rem',
+    border: '2px solid',
+    borderColor: '#E7EDF3',
+    borderRadius: 16,
+    transition: '0.4s',
+    boxShadow: '0 8px 16px 0 #BDC9D7',
+    '&:hover': {
+      borderColor: '#5B9FED',
+    },
   },
   bullet: {
     display: 'inline-block',
     margin: '0 2px',
     transform: 'scale(0.8)',
   },
-  title: {
+  date: {
     fontSize: 14,
     marginBottom: 12,
   },
+  mainTitle: {
+    fontSize: '1.4rem',
+    color: '#122740',
+  },
+  pointsEarnedTitle: {
+    fontSize: '1.2rem',
+    color: '#122740',
+  },
   pos: {
     marginBottom: 12,
+  },
+  red: {
+    color: '#a10505',
+  },
+  letterGradeStyle: {
+    fontSize: '3.4rem',
+    color: '#122740',
+    alignContent: "center",
   },
 });
 
@@ -32,6 +56,7 @@ export default function BehaviorCard(props) {
   const percentageScore = props.currentScore/props.totalPossible
 
   let letterGrade = ""
+  let color = ""
 
   switch (true) {
     case percentageScore >= 0.97:
@@ -39,6 +64,7 @@ export default function BehaviorCard(props) {
       break;
     case percentageScore >= 0.93:
       letterGrade = "A";
+      color = "classes.red";
       break;
     case percentageScore >= 0.90:
       letterGrade = "-A";
@@ -77,13 +103,16 @@ export default function BehaviorCard(props) {
   return (
     <Card className={classes.root} variant="outlined">
       <CardContent>
-        <Typography className={classes.title} color="textSecondary" gutterBottom>
+        <Typography className={classes.date} color="textSecondary" gutterBottom>
          Date: {props.date}
         </Typography>
-        <Typography variant="h5" component="h2">
-        <b>Behavior Assessment Grade: {letterGrade} </b>
+        <Typography className={classes.mainTitle} component="h2">
+        <b>Behavior Assessment Grade:</b>
         </Typography>
-        <Typography variant="h5" component="h2">
+        <Typography className={classes.letterGradeStyle} component="h2">
+        <b>{letterGrade} </b>
+        </Typography>
+        <Typography className={classes.pointsEarnedTitle} component="h2">
         {props.currentScore} points earned of {props.totalPossible} possible
         </Typography>
         <Typography className={classes.pos} color="textSecondary">

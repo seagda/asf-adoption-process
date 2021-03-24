@@ -16,7 +16,15 @@ const useStyles = makeStyles(theme => ({
     maxWidth: "90%",
     minWidth: "70%",
     marginTop: theme.spacing(2),
-    flex: "wrap"
+    flex: "wrap",
+    border: '2px solid',
+    borderColor: '#E7EDF3',
+    borderRadius: 16,
+    transition: '0.4s',
+    boxShadow: '0 8px 16px 0 #BDC9D7',
+    '&:hover': {
+      borderColor: '#5B9FED',
+    },
   }
 }));
 

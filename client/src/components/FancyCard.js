@@ -118,10 +118,9 @@ export const FancyCard = React.memo(function FancyCard(props) {
           <Item grow>
             <CardMedia 
             component="img"
-            alt="Contemplative Reptile"
+            alt="dog profile photo"
             height="100%"
-            image={props.profilePhoto}
-            title="Contemplative Reptile"/>
+            image={props.profilePhoto}/>
           </Item>
           <Column>
             <CardHeader dogName={props.dogName} 

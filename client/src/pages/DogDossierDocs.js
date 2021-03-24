@@ -5,7 +5,6 @@ import { useState, useEffect, createRef } from "react";
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import API from '../utils/API';
-import SwipeBar from '../components/SwipeBar';
 import BehaviorCard from '../components/BehaviorCards';
 import SimpleAccordion from '../components/SimpleAccordion';
 import UploadFiles from '../components/UploadFiles';
@@ -82,9 +81,9 @@ export default function DogDossierDocs(){
                     currentlyWithFirstName={dogData.currentlyWith?.firstName} 
                     currentlyWithLastName={dogData.currentlyWith?.lastName} 
                     currentlyWithEmail={dogData.currentlyWith?.email} 
-                    profilePhoto={dogData.DogPhotos[0]?.url} 
-                    
-                    adminNotes={dogData.adminNotes} />
+                    // only works when data is already loaded in to the local server
+                    profilePhoto={dogData.DogPhotos[0].url} 
+                    adminNotes={dogData.adminNotes}/>
             </Grid>
             <Grid item xs={12} s={10}>
                 <Typography variant="h5" component="h6" gutterBottom color="primary">
