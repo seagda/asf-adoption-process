@@ -1,6 +1,8 @@
 import React from 'react'
 import { GoogleMap, useJsApiLoader, Marker, InfoWindow } from '@react-google-maps/api';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
+import CardMedia from '@material-ui/core/CardMedia';
+import {NavLink} from "react-router-dom";
 
 const containerStyle = {
   width: '100%',
@@ -10,7 +12,9 @@ const containerStyle = {
 const useStyles=makeStyles(theme => ({
   markerPhotos: {
     width: '70px',
-    height: '50px'
+    height: '50px',
+    borderRadius: 8,
+    boxShadow: '0 3px 10px 0 #BDC9D7',
   }
 }))
 
@@ -54,6 +58,7 @@ function DogMap(props) {
         onUnmount={onUnmount}
       >
         {props.displaySubjects?.map((dogOrUser) => (
+        <NavLink gutterBottom style={{textDecoration: "none"}} to={`/dogView/${dogOrUser.id}`}>
         <Marker 
           key={dogOrUser?.id}
           position={dogOrUser?.coordinates}>
@@ -61,14 +66,20 @@ function DogMap(props) {
           key={dogOrUser?.id}
           position={dogOrUser?.coordinates}>
             <div>
-              <img src={dogOrUser?.DogPhotos?.[0].url || dogOrUser?.photoUrl} alt="profile photo" className={classes.markerPhotos}/>
-              <h5>{dogOrUser?.name || dogOrUser?.firstName && dogOrUser?.lastName}</h5>
-              <h5>{dogOrUser?.gender || dogOrUser?.email}</h5>
-              <h5>{dogOrUser?.dob || dogOrUser?.phone}</h5>
+              <CardMedia 
+                component="img"
+                alt="profile photo"
+                height="100%"
+                image={dogOrUser?.DogPhotos?.[0].url || dogOrUser?.photoUrl}
+                className={classes.markerPhotos}/>
+              {/* <img src={dogOrUser?.DogPhotos?.[0].url || dogOrUser?.photoUrl} alt="profile photo" /> */}
+              <h3>{dogOrUser?.name || dogOrUser?.firstName && dogOrUser?.lastName}</h3>
+              <p>{dogOrUser?.gender || dogOrUser?.email}</p>
+              <p>{dogOrUser?.dob || dogOrUser?.phone}</p>
             </div>
           </InfoWindow>
-
-          </Marker>)
+          </Marker>
+          </NavLink>)
         )}
         
       </GoogleMap>
