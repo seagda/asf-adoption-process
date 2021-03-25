@@ -20,6 +20,7 @@ const initialElements = [
       color: '#28527A',
       border: '3px solid #28527A',
       width: 150,
+      boxShadow: '0 6px 12px 0 #BDC9D7',
     }
   },
   {
@@ -33,6 +34,7 @@ const initialElements = [
       color: '#28527A',
       border: '3px solid #28527A',
       width: 150,
+      boxShadow: '0 6px 12px 0 #BDC9D7',
     }
   },
   {
@@ -46,6 +48,7 @@ const initialElements = [
       color: '#28527A',
       border: '3px solid #28527A',
       width: 150,
+      boxShadow: '0 6px 12px 0 #BDC9D7',
     }
   },
   {
@@ -59,6 +62,7 @@ const initialElements = [
       color: '#ffffff',
       border: '3px solid #28527A',
       width: 150,
+      boxShadow: '0 6px 12px 0 #BDC9D7',
     }
   },
   {
@@ -72,6 +76,7 @@ const initialElements = [
       color: '#ffffff',
       border: '3px solid #F4D160',
       width: 150,
+      boxShadow: '0 6px 12px 0 #BDC9D7',
     }
   },
   {

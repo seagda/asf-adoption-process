@@ -13,6 +13,7 @@ import BasicList from '../components/BasicList';
 import ListContainer from '../components/ListContainer';
 import API from '../utils/API';
 import MediaCard from '../components/MediaCard';
+import SimpleCard from '../components/SimpleCard';
 
 
 const useStyles=makeStyles(theme => ({
@@ -73,6 +74,9 @@ export default function DashboardMain(){
                     My Dashboard
                     <Divider />
                 </Typography>
+            </Grid>
+            <Grid item xs={12}>
+                <SimpleCard />
             </Grid>
             <Grid item xs={12} s={10}>
                 <Typography variant="h5" component="h6" gutterBottom color="primary">
