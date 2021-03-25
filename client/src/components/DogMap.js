@@ -15,16 +15,15 @@ const useStyles=makeStyles(theme => ({
     height: '50px',
     borderRadius: 8,
     boxShadow: '0 3px 10px 0 #BDC9D7',
+  },
+  cardText: {
+    marginTop: "5%",
+    marginBottom: "5%",
   }
 }))
 
 function DogMap(props) {
 
-    // pass in geocoded lat and log here 
-    const center = {
-      lat: 38.624691,
-      lng: -90.184776
-    };
 
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
@@ -43,43 +42,42 @@ function DogMap(props) {
     setMap(null)
   }, [])
 
-  // marker.addListener("click", () => {
-  //   infowindow.open(map, marker);
-  // });
-
   const classes = useStyles()
 
   return isLoaded ? (
       <GoogleMap
         mapContainerStyle={containerStyle}
-        center={center}
-        zoom={5}
+        center={props.displaySubjects?.[0]?.coordinates}
+        zoom={7}
         onLoad={onLoad}
         onUnmount={onUnmount}
       >
+        {/* component used on DogDossiersAll and ManageASFUsers pages - set up to handle props / object passed for dogs and users */}
         {props.displaySubjects?.map((dogOrUser) => (
-        <NavLink gutterBottom style={{textDecoration: "none"}} to={`/dogView/${dogOrUser.id}`}>
+        
         <Marker 
           key={dogOrUser?.id}
-          position={dogOrUser?.coordinates}>
-          <InfoWindow 
-          key={dogOrUser?.id}
-          position={dogOrUser?.coordinates}>
-            <div>
-              <CardMedia 
-                component="img"
-                alt="profile photo"
-                height="100%"
-                image={dogOrUser?.DogPhotos?.[0].url || dogOrUser?.photoUrl}
-                className={classes.markerPhotos}/>
-              {/* <img src={dogOrUser?.DogPhotos?.[0].url || dogOrUser?.photoUrl} alt="profile photo" /> */}
-              <h3>{dogOrUser?.name || dogOrUser?.firstName && dogOrUser?.lastName}</h3>
-              <p>{dogOrUser?.gender || dogOrUser?.email}</p>
-              <p>{dogOrUser?.dob || dogOrUser?.phone}</p>
-            </div>
-          </InfoWindow>
+          position={dogOrUser?.coordinates} >
+            <NavLink gutterBottom style={{textDecoration: "none"}} to={dogOrUser?.name ? (`/dogView/${dogOrUser.id}`): (`/userView/${dogOrUser.id}`)}>
+                <InfoWindow 
+                  key={dogOrUser?.id}
+                  position={dogOrUser?.coordinates}>
+                    <div>
+                      <CardMedia 
+                        component="img"
+                        alt="profile photo"
+                        height="100%"
+                        image={dogOrUser?.DogPhotos?.[0].url || dogOrUser?.photoUrl}
+                        className={classes.markerPhotos}/>
+                      <h3 className={classes.cardText} >{dogOrUser?.name || dogOrUser?.firstName && dogOrUser?.lastName}</h3>
+                      <p className={classes.cardText} >{dogOrUser?.DogStatus?.name}</p>
+                      <p className={classes.cardText} >{dogOrUser?.gender || dogOrUser?.email}</p>
+                      <p className={classes.cardText} >{dogOrUser?.dob || dogOrUser?.phone}</p>
+                    </div>
+                </InfoWindow>
+              </NavLink>
           </Marker>
-          </NavLink>)
+          )
         )}
         
       </GoogleMap>

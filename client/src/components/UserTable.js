@@ -22,17 +22,6 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import {NavLink} from "react-router-dom";
 
-
-// function createData(id, name, email, city, state, region, role) {
-//   return { id, name, email, city, state, region, role };
-// }
-
-// const rows = [
-//   createData(1, 'Kacey Musgraves', 'dogs12', 'Austen', 'TX', ['Texas'], ['Regional Lead']),
-//   createData(2, 'Dwight Shroot', 'beets22', 'Scranton', 'PA', ['Northeast'], ['Foster']),
-//   createData(3, 'Winston', 'newGirl99', 'Los Angeles', 'CA', ['West Coast'], ['Adopter', 'Foster'])
-// ];
-
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
