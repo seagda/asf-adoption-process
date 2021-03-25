@@ -124,10 +124,9 @@ export default function DogDossiersAll() {
                 <Grid item xs={12}>
                     <Divider />
                 </Grid>
-                <Grid item xs={1} />
-                <Grid item xs={11} justifyContent="center" >
+                <Grid item xs={12} justifyContent="center" >
                     <Hidden smDown>
-                    <div style={{height: 120, width: '80%'}}>
+                    <div style={{height: 120, width: '100%'}}>
                         <DogAdoptionFlow />
                     </div>
                     </Hidden>

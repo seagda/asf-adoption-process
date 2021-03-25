@@ -126,10 +126,9 @@ export default function ManageASFUsers() {
                 <Grid item xs={12}>
                     <Divider />
                 </Grid>
-                <Grid item xs={2}/>
-                <Grid item xs={10}>
+                <Grid item xs={12}>
                     <Hidden smDown>
-                    <div style={{height: 150, width: '80%'}} >
+                    <div style={{height: 150, width: '100%'}} >
                         <UserFlow />
                     </div>
                     </Hidden>
