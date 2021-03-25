@@ -6,7 +6,7 @@ const containerStyle = {
   height: '400px'
 };
 
-function MapBox(props) {
+function UserMap(props) {
 
     // pass in geocoded lat and log here 
     const center = {
@@ -45,13 +45,13 @@ function MapBox(props) {
       >
         {props.displaySubjects.map((dogOrUser) => (
           <Marker 
-          key={dogOrUser.id}
-          position={dogOrUser.coordinates}>
-          {/* <InfoWindow>
+          key={dogOrUser?.id}
+          position={dogOrUser?.coordinates}>
+          <InfoWindow>
             <div>
-              <h5>{dogOrUser?.name}</h5>
+              <h5>{dogOrUser?.id}</h5>
             </div>
-          </InfoWindow> */}
+          </InfoWindow>
 
           </Marker>
         ))}
@@ -60,4 +60,4 @@ function MapBox(props) {
   ) : <></>
 }
 
-export default React.memo(MapBox)
+export default React.memo(UserMap)

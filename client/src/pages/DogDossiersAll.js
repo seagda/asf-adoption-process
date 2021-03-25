@@ -12,9 +12,8 @@ import OverviewTable from '../components/OverviewTable';
 import SearchBar from '../components/SearchBar';
 import Hidden from '@material-ui/core/Hidden';
 import API from '../utils/API';
+import DogMap from '../components/DogMap';
 import Geocode from "react-geocode";
-import MapBox from '../components/MapBox';
-
 
 // set Google Maps Geocoding API for purposes of quota management. Its optional but recommended.
 Geocode.setApiKey(process.env.REACT_APP_GOOGLE_MAPS_API_KEY);
@@ -149,7 +148,7 @@ export default function DogDossiersAll() {
                     })}/>
                 </Grid>
                 <Grid item xs={12}>
-                    <MapBox displaySubjects={dogs.filter( (dog) => {
+                    <DogMap displaySubjects={dogs.filter( (dog) => {
                         if (selectedRegions.length > 0 && !selectedRegions.includes(dog.Region.id)) {
                             return false;
                         } 

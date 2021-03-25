@@ -12,7 +12,7 @@ import Hidden from '@material-ui/core/Hidden';
 import API from '../utils/API';
 import SearchBar from "../components/SearchBar";
 import Geocode from "react-geocode";
-import MapBox from '../components/MapBox';
+import DogMap from '../components/DogMap';
 
 // set Google Maps Geocoding API for purposes of quota management. Its optional but recommended.
 Geocode.setApiKey(process.env.REACT_APP_GOOGLE_MAPS_API_KEY);
@@ -150,7 +150,7 @@ export default function ManageASFUsers() {
                     })}/>
                 </Grid>
                 <Grid item xs={12}>
-                    <MapBox displaySubjects={users.filter( (user) => {
+                    <DogMap displaySubjects={users.filter( (user) => {
                         if (selectedRegions.length > 0 && !selectedRegions.includes(user.ResidesInRegion.id)) {
                             return false;
                         } 
