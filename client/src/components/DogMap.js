@@ -1,10 +1,18 @@
 import React from 'react'
 import { GoogleMap, useJsApiLoader, Marker, InfoWindow } from '@react-google-maps/api';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 
 const containerStyle = {
   width: '100%',
   height: '400px'
 };
+
+const useStyles=makeStyles(theme => ({
+  markerPhotos: {
+    width: '70px',
+    height: '50px'
+  }
+}))
 
 function DogMap(props) {
 
@@ -35,6 +43,8 @@ function DogMap(props) {
   //   infowindow.open(map, marker);
   // });
 
+  const classes = useStyles()
+
   return isLoaded ? (
       <GoogleMap
         mapContainerStyle={containerStyle}
@@ -51,7 +61,10 @@ function DogMap(props) {
           key={dogOrUser?.id}
           position={dogOrUser?.coordinates}>
             <div>
+              <img src={dogOrUser?.DogPhotos?.[0].url || dogOrUser?.photoUrl} alt="profile photo" className={classes.markerPhotos}/>
               <h5>{dogOrUser?.name || dogOrUser?.firstName && dogOrUser?.lastName}</h5>
+              <h5>{dogOrUser?.gender || dogOrUser?.email}</h5>
+              <h5>{dogOrUser?.dob || dogOrUser?.phone}</h5>
             </div>
           </InfoWindow>
 
