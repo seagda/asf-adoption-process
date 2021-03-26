@@ -21,6 +21,7 @@ import ApplyButton from "./ApplyButton";
 import AddIcon from '@material-ui/icons/Add';
 import EditIcon from '@material-ui/icons/Edit';
 import FolderSharedIcon from '@material-ui/icons/FolderShared';
+import VertButtonSet from "../components/VertButtonSet";
 
 import { SocialLink, SocialProvider } from '@mui-treasury/components/socialLink';
 
@@ -80,28 +81,7 @@ export default function RecipeReviewCard(props) {
       />
       <Divider />
       <CardContent>
-      <Grid container justify="space-evenly" style={{marginTop: "1em"}}>
-            <Grid item>
-                <ApplyButton toLink="/createdog" buttonText="Adopt a Dog" color="secondary" icon={<AddIcon />}/>
-            </Grid>
-            <Grid item>
-                <ApplyButton toLink="/editprofile" buttonText="Apply to Foster" color="secondary" icon={<AddIcon />}/>
-            </Grid>
-            <Grid item>
-                <ApplyButton toLink="/Manage-ASF-Users" buttonText="Apply to Transport" color="secondary"  icon={<AddIcon />} />
-            </Grid>
-        </Grid>
-        <Grid container justify="space-evenly" style={{marginTop: "1em"}}>
-            <Grid item>
-                <ApplyButton toLink="/createdog" buttonText="Apply to Internal Roles" color="secondary" icon={<AddIcon />}/>
-            </Grid>
-            <Grid item>
-                <ApplyButton toLink="/editprofile" buttonText="Fundraise" color="secondary" icon={<AddIcon />}/>
-            </Grid>
-            <Grid item>
-                <ApplyButton toLink="/Manage-ASF-Users" buttonText="Donate" color="secondary"  icon={<AddIcon />} />
-            </Grid>
-        </Grid>
+          <VertButtonSet />
       </CardContent>
       <CardActions disableSpacing>
          <IconButton aria-label="share">
