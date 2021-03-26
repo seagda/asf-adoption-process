@@ -71,108 +71,6 @@ const useStyles = makeStyles(theme => ({
 export default function ProfileForm(props){
     const classes = useStyles();
 
-
-
-    // const roleEdit = (
-    //     <Grid item container className={classes.itemContainer}>
-    //     <Grid container style={{marginTop: "1em"}}>
-    //         <Grid item>
-    //             <Typography variant="h4">Role Title</Typography>
-    //         </Grid>
-    //     </Grid>
-    //     <Grid container justify="space-between">
-    //         <Grid item style={{marginTop: "1em"}}>
-    //             {roles.map((role)=> (
-    //                 <RoleTitles
-    //                 label={role.role}
-    //                 />
-    //             ))}
-    //         </Grid>
-    //         <Grid item>
-    //             <MultiSelectChips names={names} title="Add Role(s)"/>
-    //         </Grid>
-    //     </Grid>
-    // </Grid>
-    // )
-
-
-    // const references = (
-    //     <Grid item container justify="space-evenly" className={classes.references}>
-    //         <Grid item style={{marginTop: "1em", marginBottom: "5em"}}> 
-    //             <Card className={classes.root}>
-    //                 <CardContent>
-    //                     <Typography variant="h5" component="h2">
-    //                         Reference #1
-    //                     </Typography>
-    //                     <div>
-    //                     <TextField variant="outlined" label="Name" onChange={e => setRef1Name(e.target.value)}/>
-    //                     <TextField type="number" variant="outlined" label="Phone" onChange={e => setRef1Phone(e.target.value)}/>
-    //                     <TextField variant="outlined" label="Email" onChange={e => setRef1Email(e.target.value)}/>
-    //                     </div>
-    //                 </CardContent>
-    //                     {admin ? <CardContent><HoldCheckbox label="Contaced successfully"/></CardContent> : null}
-    //                     {admin ? <CardContent><HoldCheckbox label="Approved"/></CardContent> : null}
-    //                     {admin ? <CardContent>Notes:</CardContent> : null}
-    //                 <CardContent>
-    //                     {admin ? <div><TextField rows={4} multiline variant="outlined" label="New notes" onChange={e => setRef1Notes(e.target.value)}/></div> : null}
-    //                 </CardContent>
-    //             </Card>
-    //             <Card className={classes.root}>
-    //                 <CardContent>
-    //                     <Typography variant="h5" component="h2">
-    //                         Reference #2
-    //                     </Typography>
-    //                     <div>
-    //                     <TextField variant="outlined" label="Name" onChange={e => setRef2Name(e.target.value)}/>
-    //                     <TextField type="number" variant="outlined" label="Phone" onChange={e => setRef2Phone(e.target.value)}/>
-    //                     <TextField variant="outlined" label="Email" onChange={e => setRef2Email(e.target.value)}/>
-    //                     </div>
-    //                 </CardContent>
-    //                     {admin ? <CardContent><HoldCheckbox label="Contaced successfully"/></CardContent> : null}
-    //                     {admin ? <CardContent><HoldCheckbox label="Approved"/></CardContent> : null}
-    //                     {admin ? <CardContent>Notes:</CardContent> : null}
-    //                 <CardContent>
-    //                     {admin ? <div><TextField rows={4} multiline variant="outlined" label="New notes" onChange={e => setRef2Notes(e.target.value)}/></div> : null}
-    //                 </CardContent>
-    //             </Card>
-    //             <Card className={classes.root}>
-    //                 <CardContent>
-    //                     <Typography variant="h5" component="h2">
-    //                         Reference #3
-    //                     </Typography>
-    //                     <div>
-    //                     <TextField variant="outlined" label="Name" onChange={e => setRef3Name(e.target.value)}/>
-    //                     <TextField type="number" variant="outlined" label="Phone" onChange={e => setRef3Phone(e.target.value)}/>
-    //                     <TextField variant="outlined" label="Email" onChange={e => setRef3Email(e.target.value)}/>
-    //                     </div>
-    //                 </CardContent>
-    //                     {admin ? <CardContent><HoldCheckbox label="Contaced successfully"/></CardContent> : null}
-    //                     {admin ? <CardContent><HoldCheckbox label="Approved"/></CardContent> : null}
-    //                     {admin ? <CardContent>Notes:</CardContent> : null}
-    //                 <CardContent>
-    //                     {admin ? <div><TextField rows={4} multiline variant="outlined" label="New notes" onChange={e => setRef3Notes(e.target.value)}/></div> : null}
-    //                 </CardContent>
-    //             </Card>
-    //         </Grid>
-    //     </Grid>
-    // )
-
-    // const adminNotes = (
-    //     <Grid item container className={classes.itemContainer, classes.marginFix}>
-    //     <Grid container>
-    //         <Grid item style={{marginTop: "3em"}}>
-    //             <Typography variant="h4">Admin Notes</Typography>
-    //             <Divider/>
-    //         </Grid>
-    //     </Grid>
-    //     <Grid container>
-    //         <Grid item container style={{marginTop: "1em"}} justify="center">
-    //             <TextField className={classes.largeTextfield} InputLabelProps={{shrink: true}} label="Admin Notes" rows={6} multiline variant="outlined" onChange={createUserInputChange} value={userIntakeData.adminNotes} name="adminNotes"/>
-    //         </Grid>
-    //     </Grid>
-    // </Grid>
-    // )
-
     return (
         <form onSubmit={props.submitFunction}>
         <Grid item container className={classes.itemContainer}>
@@ -216,13 +114,7 @@ export default function ProfileForm(props){
                     .filter(field => props.editable.includes(field.name) || (props.editable.includes("*") && !props.editable.includes(`!${field.name}`)))}
             /> : null
         }
-
-        {/* <Grid item>
-            <Typography variant="h4">References</Typography>
-            <Divider/>
-        </Grid>
-        {references} */}
-        {/* {adminNotes} */}
+        
         <Grid item container className={classes.formItem} justify={"flex-end"}>
             <SaveButton buttonText="Save Changes"/>
         </Grid>

@@ -144,6 +144,9 @@ export default function SignUp(){
                                 <TextField className={classes.addressItem} variant="outlined" label="Street" onChange={handleAddressInputChange} value={addressFormData.street} name="street"/>
                             </Grid>
                             <Grid item className={classes.formItem}>
+                                <TextField className={classes.addressItem} variant="outlined" label="Apt/Unit #" onChange={handleAddressInputChange} value={addressFormData.street} name="street2"/>
+                            </Grid>
+                            <Grid item className={classes.formItem}>
                                 <TextField className={classes.addressItem} variant="outlined" label="City" onChange={handleAddressInputChange} value={addressFormData.city} name="city"/>
                             </Grid>
                             <Grid item className={classes.formItem}>
