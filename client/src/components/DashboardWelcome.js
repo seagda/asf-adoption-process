@@ -15,6 +15,12 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import Divider from '@material-ui/core/Divider';
+import Grid from "@material-ui/core/Grid";
+import ApplyButton from "./ApplyButton";
+import AddIcon from '@material-ui/icons/Add';
+import EditIcon from '@material-ui/icons/Edit';
+import FolderSharedIcon from '@material-ui/icons/FolderShared';
 
 import { SocialLink, SocialProvider } from '@mui-treasury/components/socialLink';
 
@@ -22,9 +28,11 @@ import { SocialLink, SocialProvider } from '@mui-treasury/components/socialLink'
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
-
     borderRadius: 30,
     boxShadow: '0 8px 16px 0 #BDC9D7',
+  },
+  header: {
+    fontSize: '20pt'
   },
   media: {
     height: 0,
@@ -42,14 +50,10 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     backgroundColor: red[500],
-    gap: 3,
-    thickness: 3,
-    gapColor: '#f4f7fa',
-    color: 'linear-gradient(to bottom right, #feac5e, #c779d0, #4bc0c8)',
   },
 }));
 
-export default function RecipeReviewCard() {
+export default function RecipeReviewCard(props) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
 
@@ -59,7 +63,7 @@ export default function RecipeReviewCard() {
 
   return (
     <Card className={classes.root}>
-      <CardHeader
+      <CardHeader className={classes.header}
         avatar={
           <Avatar aria-label="recipe" className={classes.avatar}>
             R
@@ -70,23 +74,38 @@ export default function RecipeReviewCard() {
             <MoreVertIcon />
           </IconButton>
         }
-        title="Shrimp and Chorizo Paella"
-        subheader="September 14, 2016"
+        title={<Typography variant="h5" component="h2">
+        Welcome, ${props.name}! Thanks for supporting ASF.
+      </Typography>}
       />
-      {/* <CardMedia
-        className={classes.media}
-        image="/static/images/cards/paella.jpg"
-        title="Paella dish"
-      /> */}
+      <Divider />
       <CardContent>
-        <Typography variant="body2" color="textSecondary" component="p">
-          This impressive paella is a perfect party dish and a fun meal to cook together with your
-          guests. Add 1 cup of frozen peas along with the mussels, if you like.
-        </Typography>
+      <Grid container justify="space-evenly" style={{marginTop: "1em"}}>
+            <Grid item>
+                <ApplyButton toLink="/createdog" buttonText="Adopt a Dog" color="secondary" icon={<AddIcon />}/>
+            </Grid>
+            <Grid item>
+                <ApplyButton toLink="/editprofile" buttonText="Apply to Foster" color="secondary" icon={<AddIcon />}/>
+            </Grid>
+            <Grid item>
+                <ApplyButton toLink="/Manage-ASF-Users" buttonText="Apply to Transport" color="secondary"  icon={<AddIcon />} />
+            </Grid>
+        </Grid>
+        <Grid container justify="space-evenly" style={{marginTop: "1em"}}>
+            <Grid item>
+                <ApplyButton toLink="/createdog" buttonText="Apply to Internal Roles" color="secondary" icon={<AddIcon />}/>
+            </Grid>
+            <Grid item>
+                <ApplyButton toLink="/editprofile" buttonText="Fundraise" color="secondary" icon={<AddIcon />}/>
+            </Grid>
+            <Grid item>
+                <ApplyButton toLink="/Manage-ASF-Users" buttonText="Donate" color="secondary"  icon={<AddIcon />} />
+            </Grid>
+        </Grid>
       </CardContent>
       <CardActions disableSpacing>
-      <IconButton aria-label="share">
-          <ShareIcon />
+         <IconButton aria-label="share">
+            <ShareIcon toLink="https://www.australianshepherdsfurever.org/" />
         </IconButton>
             <SocialProvider>
                 <SocialLink
@@ -104,10 +123,6 @@ export default function RecipeReviewCard() {
                 <SocialLink
                     brand={'Pinterest'}
                     href={'https://www.pinterest.com/asfurever/_created/'}
-                />
-                <SocialLink
-                    brand={'YouTube'}
-                    href={'https://www.youtube.com/channel/UCRZn7bRQKDv9ZX9Xbuhz2sQ'}
                 />
             </SocialProvider>
         
