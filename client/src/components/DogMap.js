@@ -27,7 +27,7 @@ function DogMap(props) {
 
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
-    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY
+    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
   })
 
   const [map, setMap] = React.useState(null)
@@ -44,6 +44,10 @@ function DogMap(props) {
 
   const classes = useStyles()
 
+  function onMarkerClick(props, marker, e) {
+    console.log("it worked")
+  }
+
   return isLoaded ? (
       <GoogleMap
         mapContainerStyle={containerStyle}
@@ -57,7 +61,8 @@ function DogMap(props) {
         
         <Marker 
           key={dogOrUser?.id}
-          position={dogOrUser?.coordinates} >
+          position={dogOrUser?.coordinates} 
+          onClick={dogOrUser?.onMarkerClick}>
             <NavLink gutterBottom style={{textDecoration: "none"}} to={dogOrUser?.name ? (`/dogView/${dogOrUser.id}`): (`/userView/${dogOrUser.id}`)}>
                 <InfoWindow 
                   key={dogOrUser?.id}
