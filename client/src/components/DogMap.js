@@ -76,8 +76,8 @@ function DogMap(props) {
                         className={classes.markerPhotos}/>
                       <h3 className={classes.cardText} >{dogOrUser?.name || dogOrUser?.firstName && dogOrUser?.lastName}</h3>
                       <p className={classes.cardText} >{dogOrUser?.DogStatus?.name}</p>
-                      <p className={classes.cardText} >{dogOrUser?.gender || dogOrUser?.email}</p>
-                      <p className={classes.cardText} >{dogOrUser?.dob || dogOrUser?.phone}</p>
+                      <p className={classes.cardText} >{dogOrUser?.email}</p>
+                      <p className={classes.cardText} >{dogOrUser?.phone}</p>
                     </div>
                 </InfoWindow>
               </NavLink>

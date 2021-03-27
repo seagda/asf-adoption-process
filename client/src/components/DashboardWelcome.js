@@ -1,5 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import { Link } from 'react-router-dom';
 import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -84,9 +85,9 @@ export default function RecipeReviewCard(props) {
           <VertButtonSet />
       </CardContent>
       <CardActions disableSpacing>
-         <IconButton aria-label="share">
-            <ShareIcon toLink="https://www.australianshepherdsfurever.org/" />
-        </IconButton>
+            <IconButton aria-label="share">
+                    <ShareIcon onClick={event =>  window.location.href='https://www.australianshepherdsfurever.org/'} />
+            </IconButton>
             <SocialProvider>
                 <SocialLink
                     brand={'FacebookCircle'}
