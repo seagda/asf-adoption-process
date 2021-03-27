@@ -34,18 +34,7 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: '0 8px 16px 0 #BDC9D7',
   },
   header: {
-    fontSize: '20pt'
-  },
-  media: {
-    height: 0,
-    paddingTop: '56.25%', // 16:9
-  },
-  expand: {
-    transform: 'rotate(0deg)',
-    marginLeft: 'auto',
-    transition: theme.transitions.create('transform', {
-      duration: theme.transitions.duration.shortest,
-    }),
+    fontSize: '20pt', 
   },
   expandOpen: {
     transform: 'rotate(180deg)',
@@ -53,6 +42,9 @@ const useStyles = makeStyles((theme) => ({
   avatar: {
     backgroundColor: red[500],
   },
+  content: {
+      padding: "0%",
+  }
 }));
 
 export default function RecipeReviewCard(props) {
@@ -81,7 +73,7 @@ export default function RecipeReviewCard(props) {
       </Typography>}
       />
       <Divider />
-      <CardContent>
+      <CardContent className={classes.content}>
           <VertButtonSet />
       </CardContent>
       <CardActions disableSpacing>
@@ -106,23 +98,7 @@ export default function RecipeReviewCard(props) {
                     href={'https://www.pinterest.com/asfurever/_created/'}
                 />
             </SocialProvider>
-        
-        {/* <IconButton
-          className={clsx(classes.expand, {
-            [classes.expandOpen]: expanded,
-          })}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="show more"
-        >
-          <ExpandMoreIcon />
-        </IconButton> */}
       </CardActions>
-      {/* <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent>
-          <Typography paragraph>Method:</Typography>
-        </CardContent>
-      </Collapse> */}
     </Card>
   );
 }

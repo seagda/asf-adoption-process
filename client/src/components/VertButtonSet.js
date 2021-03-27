@@ -7,6 +7,11 @@ import { NavLink } from 'react-router-dom';
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
+    [theme.breakpoints.down("md")]:{
+        justifyContent: "center",
+        alignItems: "center",
+        display: "inherit !important",
+    },
     '& > *': {
       margin: theme.spacing(1),
     },
@@ -18,6 +23,12 @@ const useStyles = makeStyles((theme) => ({
     minWidth: '500px', 
     minHeight: '40px',
     color: "#28527A",
+    [theme.breakpoints.down("md")]:{
+        maxWidth: '290px', 
+        maxHeight: '40px', 
+        minWidth: '290px', 
+        minHeight: '40px',
+    },
   }, 
   button: {
     textDecoration: 'none',
