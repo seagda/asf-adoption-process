@@ -33,8 +33,11 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 30,
     boxShadow: '0 8px 16px 0 #BDC9D7',
   },
-  header: {
-    fontSize: '20pt', 
+  headerText: {
+    fontSize: '1.5rem', 
+    [theme.breakpoints.down("md")]:{
+        fontSize: '1.2rem'
+    },
   },
   expandOpen: {
     transform: 'rotate(180deg)',
@@ -68,8 +71,8 @@ export default function RecipeReviewCard(props) {
             <MoreVertIcon />
           </IconButton>
         }
-        title={<Typography variant="h5" component="h2">
-        Welcome, ${props.name}! Thanks for supporting ASF.
+        title={<Typography variant="h5" component="h2" className={classes.headerText}>
+        Welcome, ${props.name}! Thank you for supporting ASF.
       </Typography>}
       />
       <Divider />
