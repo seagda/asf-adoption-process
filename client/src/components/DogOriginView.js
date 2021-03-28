@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: "row-reverse"
     },
     badge: {
-        
+        paddingRight: "0.25em"
     }
 }));
 
@@ -39,7 +39,7 @@ export default function DogOriginView(props){
                             <Paper style={{padding: "1em"}}>
                                 <Grid item container className={classes.badgeConatiner}>
                                     <Grid item style={{paddingRight: "1em"}}>
-                                        <Badge className={classes.badge} badgeContent={props.pullCost} color="secondary" anchorOrigin={{vertical: "bottom", horizontal: "right"}} >
+                                        <Badge className={classes.badge} max={999} badgeContent={props.pullCost} color="secondary" anchorOrigin={{vertical: "bottom", horizontal: "right"}} >
                                             <AttachMoneySharpIcon fontSize="medium"/>
                                         </Badge>
                                     </Grid>
