@@ -43,7 +43,7 @@ export default function DogProfileView(){
         MicrochipMfg:{}, 
         DogStatus:{}, 
         DogPhotos: [], 
-        origin: {Region: {}, Address: {}},
+        Origin: {Region: {}, Address: {}},
         CurrentlyWith: {
             firstName: "",
             lastName: "",
@@ -91,14 +91,14 @@ export default function DogProfileView(){
             secondary={dogData.secondaryBreed}/>
 
             <DogOriginView 
-            origin={dogData?.origin}
-            originName={dogData.origin?.fullName} 
-            originRegion={dogData.origin?.Region.name} 
-            originStreet={dogData.origin?.Address.street} 
-            originCity={dogData.origin?.Address.city} 
-            originState={dogData.origin?.Address.state} 
-            originZip={dogData.origin?.Address.zip5} 
-            originPhone={dogData.origin?.phone} 
+            origin={dogData?.Origin}
+            originName={dogData.Origin?.fullName} 
+            originRegion={dogData.Origin?.Region.name} 
+            originStreet={dogData.Origin?.Address.street} 
+            originCity={dogData.Origin?.Address.city} 
+            originState={dogData.Origin?.Address.state} 
+            originZip={dogData.Origin?.Address.zip5} 
+            originPhone={dogData.Origin?.phone} 
             pullCost={dogData?.pullCost}/>
 
             <DogInfoCurrent 
