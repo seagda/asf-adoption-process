@@ -15,12 +15,6 @@ const useStyles = makeStyles((theme) => ({
             justifyContent: "center",
             alignItems: "center"
         }
-    },
-    button: {
-        maxWidth: '500px', 
-        maxHeight: '40px', 
-        minWidth: '500px', 
-        minHeight: '40px'
     }
 }));
 
@@ -38,18 +32,18 @@ export default function ProfileActions(props){
     return(
         <Grid container justify="space-evenly" style={{marginTop: "4em"}}>
             <Grid item>
-                <EditButton className={classes.button} toLink={`/user/${props.id}/edit`} buttonText="Edit Profile"/>
+                <EditButton toLink={`/user/${props.id}/edit`} buttonText="Edit Profile"/>
             </Grid>
             <Grid item>
-               <UpdateButton className={classes.button} toLink="/" buttonText="Update Password"/>
+               <UpdateButton toLink="/" buttonText="Update Password"/>
             </Grid>
             {window.location.href.includes("userView") ? 
                     <React.Fragment>
                         <Grid item>
-                            <ApplyButton className={classes.button} toLink="/appAnswersAdopt" buttonText="View Adopter Application" color="secondary" icon={<PlayArrowIcon />} />
+                            <ApplyButton toLink="/appAnswersAdopt" buttonText="View Adopter Application" color="secondary" icon={<PlayArrowIcon />} />
                         </Grid>
                         <Grid item>
-                            <ApplyButton className={classes.button} toLink="/appAnswersFoster" buttonText="View Foster Application" color="secondary" icon={<PlayArrowIcon />} />
+                            <ApplyButton toLink="/appAnswersFoster" buttonText="View Foster Application" color="secondary" icon={<PlayArrowIcon />} />
                         </Grid>
                     </React.Fragment>
             : 
@@ -59,10 +53,10 @@ export default function ProfileActions(props){
                     : 
                         <React.Fragment>
                             <Grid item>
-                                <ApplyButton className={classes.button} toLink="/adopterApplication" buttonText="Apply To Adopt" color="secondary" icon={<PlayArrowIcon />} />
+                                <ApplyButton toLink="/adopterApplication" buttonText="Apply To Adopt" color="secondary" icon={<PlayArrowIcon />} />
                             </Grid>
                             <Grid item>
-                                <ApplyButton className={classes.button} toLink="/fosterApplication" buttonText="Apply To Foster" color="secondary" icon={<PlayArrowIcon />} />
+                                <ApplyButton toLink="/fosterApplication" buttonText="Apply To Foster" color="secondary" icon={<PlayArrowIcon />} />
                             </Grid>
                         </React.Fragment>
                     }
