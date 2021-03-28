@@ -38,32 +38,31 @@ const useStyles=makeStyles(theme => ({
 }))
 
 
-export default function BehaveAssessAnswers() {
+export default function AppAnswersUser() {
     const classes = useStyles();
     const [survey, setSurvey] = useState( new Survey.Model())
 
     let {id} = useParams();
     console.log(id)
 
-    const [behaveData, setBehaveData] = useState({
-        Dog: {},
-        response: {}
+    const [adoptData, setadoptData] = useState({
+        
     })
 
-    let answers = [Object.entries(behaveData.response)]
+    let answers = [Object.entries(adoptData.response)]
     console.log(answers)
 
     const [appQuestions, setAppQuestions] = useState([])
 
     useEffect(()=>{
-        const assessPromise = API.getSingleAssessment(id)
-        API.getBehaviorQuestions().then(res=>{
+        const assessPromise = API.getUserAppResponses(id)
+        API.getAdopterApp().then(res=>{
             setAppQuestions(res.data)
             let newSurvey = new Survey.Model({elements: res.data})
             console.log(res.data)
             return assessPromise.then(ans =>{
                 console.log(ans.data)
-                setBehaveData(ans.data)
+                setadoptData(ans.data)
                 newSurvey.data = ans.data.response
                 setSurvey(newSurvey)
             })
@@ -75,7 +74,7 @@ export default function BehaveAssessAnswers() {
     return (
         <Grid container className={classes.mainContainer}>
             <Grid item style={{marginBottom: "1em"}}>
-                <Typography variant="h4" color="primary">Behavior Assessment for {behaveData.Dog.name}</Typography>
+                <Typography variant="h4" color="primary">Behavior Assessment for </Typography>
                 <Divider/>
             </Grid>
             <Grid item container>
@@ -83,7 +82,7 @@ export default function BehaveAssessAnswers() {
                     <Typography style={{fontWeight: "bold"}}>Completed by: <Typography></Typography></Typography>
                 </Grid>
                 <Grid item>
-                    <Typography style={{fontWeight: "bold"}}>Date: <Typography>{behaveData.date}</Typography></Typography>
+                    <Typography style={{fontWeight: "bold"}}>Date: <Typography> </Typography></Typography>
                     <Divider/>
                 </Grid>
                 

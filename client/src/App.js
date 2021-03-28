@@ -25,6 +25,7 @@ import Profile from "./pages/Profile";
 import AppAnswersAdopt from "./pages/AppAnswersAdopt";
 import AppAnswersFoster from "./pages/AppAnswersFoster";
 import BehaveAssessAnswers from "./pages/BehavAssessAnswers";
+import AppAnswersUser from "./pages/AppAnswersUser";
 
 export default function App() {
     return (
@@ -57,6 +58,7 @@ export default function App() {
                     <Route path="/appAnswersAdopt"><AppAnswersAdopt/></Route>
                     <Route path="/appAnswersFoster"><AppAnswersFoster/></Route>
                     <Route path="/behaveAnswers/:id"><BehaveAssessAnswers/></Route>
+                    <Route path="/appAnswersUser/:id"><AppAnswersUser/></Route>
                 </Switch>
             </BrowserRouter>
         </ThemeProvider>
