@@ -18,12 +18,14 @@ const useStyles = makeStyles((theme) => ({
         display: "flex",
         justifyContent: "space-between",
         flexDirection: "row-reverse"
+    },
+    badge: {
+        
     }
 }));
 
 export default function DogOriginView(props){
     const classes = useStyles();
-    const admin = true;
 
     return(
         <Grid item container className={classes.itemContainer}>
@@ -36,9 +38,9 @@ export default function DogOriginView(props){
                         {props.origin ? 
                             <Paper style={{padding: "1em"}}>
                                 <Grid item container className={classes.badgeConatiner}>
-                                    <Grid item>
-                                        <Badge badgeContent={props.pullCost} color="secondary" anchorOrigin={{vertical: "bottom", horizontal: "right"}} >
-                                            <AttachMoneySharpIcon fontSize="large"/>
+                                    <Grid item style={{paddingRight: "1em"}}>
+                                        <Badge className={classes.badge} badgeContent={props.pullCost} color="secondary" anchorOrigin={{vertical: "bottom", horizontal: "right"}} >
+                                            <AttachMoneySharpIcon fontSize="medium"/>
                                         </Badge>
                                     </Grid>
                                     <Grid item>
