@@ -41,6 +41,7 @@ export default function DogBlockView(props){
                 <Image alt={"cool dog"} pic={props.image} />
             </Grid>
             <Grid item className={classes.form}>
+                <Paper style={{padding: "3em"}}>
                 <Grid item container className={classes.formItem}>
                     <Typography style={{fontWeight: "bold"}}>Name: <Typography>{props.name}</Typography> </Typography>
                 </Grid>
@@ -56,9 +57,10 @@ export default function DogBlockView(props){
                 <Grid item container className={classes.formItem}>
                     <Typography style={{fontWeight: "bold"}}>Size: <Typography>{props.size}</Typography> </Typography>
                 </Grid>
-                <Grid item container className={classes.formItem}>
+                <Grid item container>
                      <Typography style={{fontWeight: "bold"}}>Microchip Info: <Typography>{props.mfgCompany}, {props.microchipId}</Typography></Typography>
                  </Grid>
+                 </Paper>
             </Grid>
         </Grid>
     </Grid>
