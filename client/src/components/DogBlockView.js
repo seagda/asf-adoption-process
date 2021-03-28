@@ -6,6 +6,7 @@ import Paper from "@material-ui/core/Paper";
 import Image from "../components/Image";
 
 import dog from "../assets/Cool_Dog.png";
+import { Divider } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
     itemContainer: {
@@ -21,7 +22,7 @@ const useStyles = makeStyles(theme => ({
         }
     },
     formItem: {
-        marginBottom: "1.25em"
+        marginBottom: "0.25em"
     },
     picContainer: {
         [theme.breakpoints.down("xs")]:{
@@ -41,22 +42,27 @@ export default function DogBlockView(props){
                 <Image alt={"cool dog"} pic={props.image} />
             </Grid>
             <Grid item className={classes.form}>
-                <Paper style={{padding: "3em"}}>
+                <Paper style={{padding: "2em"}}>
                 <Grid item container className={classes.formItem}>
                     <Typography style={{fontWeight: "bold"}}>Name: <Typography>{props.name}</Typography> </Typography>
                 </Grid>
+                <Divider/>
                 <Grid item container className={classes.formItem}>
                      <Typography style={{fontWeight: "bold"}}>ASF ID: <Typography>{props.asfId}</Typography> </Typography>
                 </Grid>
+                <Divider/>
                 <Grid item container className={classes.formItem}>
                      <Typography style={{fontWeight: "bold"}}>DOB: <Typography>{props.dob}</Typography> </Typography>
                 </Grid>
+                <Divider/>
                 <Grid item container className={classes.formItem}>
                      <Typography style={{fontWeight: "bold"}}>Gender: <Typography>{props.gender}</Typography> </Typography>
                 </Grid>
+                <Divider/>
                 <Grid item container className={classes.formItem}>
                     <Typography style={{fontWeight: "bold"}}>Size: <Typography>{props.size}</Typography> </Typography>
                 </Grid>
+                <Divider/>
                 <Grid item container>
                      <Typography style={{fontWeight: "bold"}}>Microchip Info: <Typography>{props.mfgCompany}, {props.microchipId}</Typography></Typography>
                  </Grid>
