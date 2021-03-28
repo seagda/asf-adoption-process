@@ -6,6 +6,7 @@ import {NavLink} from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
 import Divider from "@material-ui/core/Divider";
+import Hidden from "@material-ui/core/Hidden";
 
 const useStyles=makeStyles(theme => ({
     mainContainer: {
@@ -98,7 +99,9 @@ export default function Home(){
                         <Button color="secondary" variant="contained">Login</Button>
                     </NavLink>
                 </Grid>
-                <Divider orientation="vertical" flexItem />
+                <Hidden smDown>
+                    <Divider orientation="vertical" flexItem />
+                </Hidden>
                 <Grid item align="center" className={classes.signup}>
                     <Typography>If you need to create an account,</Typography>
                     <Typography style={{marginBottom: "1em"}}> press "SIGN UP" to get started.</Typography>
