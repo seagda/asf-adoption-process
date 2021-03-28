@@ -109,6 +109,7 @@ export default function DogProfileView(){
             medicalIssues={dogData?.medicalIssues} 
             blocked={dogData?.blocked}
             currentlyWithId={dogData.CurrentlyWith?.id}
+            avatar={dogData.CurrentlyWith?.photoUrl}
             />
 
             <HealthRecordView

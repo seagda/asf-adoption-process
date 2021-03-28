@@ -5,6 +5,7 @@ import {NavLink} from "react-router-dom";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
+import Avatar from "@material-ui/core/Avatar";
 
 const useStyles = makeStyles((theme) => ({
     itemContainer: {
@@ -12,6 +13,10 @@ const useStyles = makeStyles((theme) => ({
             justifyContent: "center",
             alignItems: "center"
         }
+    },
+    avatarContainer: {
+        display: "flex",
+        justifyContent: "space-between"
     }
 }));
 
@@ -31,7 +36,10 @@ export default function DogInfoCurrent(props){
                             {props.currentlyWith ? 
                             <Typography style={{fontWeight: "bold"}}>Currently With:
                             <NavLink gutterBottom style={{textDecoration: "none"}} to={`/userView/${props.currentlyWithId}`}> 
-                                <Typography>{props.currentlyWith.firstName} {props.currentlyWith.lastName}</Typography>
+                                <div className={classes.avatarContainer}>
+                                    <Avatar alt="user photo" src={props.avatar}/>
+                                    <Typography>{props.currentlyWith.firstName} {props.currentlyWith.lastName}</Typography>
+                                </div>
                             </NavLink> 
                                 <Typography>{props.region?.name}</Typography>
                                 <Typography>{props.address?.street}</Typography>
