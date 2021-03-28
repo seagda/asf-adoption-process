@@ -7,6 +7,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
+import Paper from "@material-ui/core/Paper";
 
 const useStyles = makeStyles((theme) => ({
     itemContainer: {
@@ -42,9 +43,20 @@ export default function DogBreedView(props){
                         <Typography variant="h4">Breed Info</Typography>
                         <Divider/>
                     </Grid>
-                    <Grid item container style={{marginTop: "1em"}}>
+                    <Grid item xs={10} sm={6} md={4} lg={3} style={{marginTop: "1em"}} justify={"space-between"}>
+                        <Paper style={{padding: "1em"}}>
+                            <Grid>
+                                <Typography style={{fontWeight: "bold"}}>Coat:<Typography>{props.coat}</Typography></Typography>
+                            </Grid>
+                            <Grid>
+                                <Typography style={{marginTop: "1em", fontWeight: "bold"}}>Weight:<Typography>{props.weight}</Typography></Typography>
+                            </Grid>
+                            <Grid>
+                                {props.purebred ? <Typography style={{marginTop: "1em", fontWeight: "bold"}}> Purebred</Typography> : <Typography style={{marginTop: "1em", fontWeight: "bold"}}>Mixed with: <Typography>{props.secondary}</Typography> </Typography>}
+                            </Grid>
+                        </Paper>
 
-                        <Card className={classes.root} variant="outlined">
+                        {/* <Card className={classes.root} variant="outlined">
                             <CardContent>
                                 <Typography className={classes.pos} color="textPrimary" gutterBottom>
                                     Coat: <span>{props.coat}</span>
@@ -55,7 +67,7 @@ export default function DogBreedView(props){
                                 <Divider/>
                                 {props.purebred ? <Typography style={{marginTop: "1em", fontWeight: "bold"}}> Purebred</Typography> : <Typography style={{marginTop: "1em"}}>Mixed with: {props.secondary}</Typography>}
                             </CardContent>
-                        </Card>
+                        </Card> */}
                     </Grid>
             </Grid>
         </Grid>
