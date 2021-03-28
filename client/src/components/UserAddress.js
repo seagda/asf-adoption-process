@@ -33,7 +33,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function UserAddress(props){
     const classes = useStyles();
-    const bull = <span className={classes.bullet}>•</span>;
 
     return(
         <Grid item container className={classes.itemContainer}>
