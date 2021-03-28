@@ -14,6 +14,12 @@ const useStyles = makeStyles((theme) => ({
             justifyContent: "center",
             alignItems: "center"
         }
+    },
+    button: {
+        maxWidth: '500px', 
+        maxHeight: '40px', 
+        minWidth: '500px', 
+        minHeight: '40px'
     }
 }));
 
@@ -24,13 +30,13 @@ export default function DogProfileActions(props){
     return(
         <Grid container justify="space-evenly" style={{marginTop: "4em"}}>
             <Grid item>
-                <EditButton toLink={"/editDog/" + props.id} buttonText="Edit Dog Info"/>
+                <EditButton className={classes.button} toLink={"/editDog/" + props.id} buttonText="Edit Dog Info"/>
             </Grid>
             <Grid item>
-                <EditButton toLink={"/behavior/" + props.id} buttonText="Complete Behavior Assessment"/>
+                <EditButton className={classes.button} toLink={"/behavior/" + props.id} buttonText="Complete Behavior Assessment"/>
             </Grid>
             <Grid item>
-                <EditButton toLink={"/dogDocument/" + props.id} buttonText="View or Upload Documents"/>
+                <EditButton className={classes.button} toLink={"/dogDocument/" + props.id} buttonText="View or Upload Documents"/>
             </Grid>
         </Grid>
     )

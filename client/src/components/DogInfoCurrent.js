@@ -41,7 +41,9 @@ export default function DogInfoCurrent(props){
                                     <Typography>{props.currentlyWith.firstName} {props.currentlyWith.lastName}</Typography>
                                 </div>
                             </NavLink> 
-                                <Typography>{props.region?.name}</Typography>
+                            <Divider/>
+                                <Typography>Region: {props.region?.name}</Typography>
+                                <Divider/>
                                 <Typography>{props.address?.street}</Typography>
                                 <Typography>{props.address?.street2}</Typography>
                                 <Typography>{props.address?.city}, {props.address?.state}</Typography>
@@ -52,7 +54,10 @@ export default function DogInfoCurrent(props){
                         </Grid>
 
                         <Grid item xs={10} sm={6} md={8} lg={10}>
-                            {props.behaviorIssues ? <Typography style={{fontWeight: "bold", marginTop: "1em"}}>Behaviorial Issues:<Typography>{props.behaviorIssues}</Typography> </Typography> : <Typography style={{fontWeight: "bold"}}>Behaviorial Issues: <Typography>No</Typography></Typography>}
+                            <Typography style={{fontWeight: "bold", marginTop: "1em"}}>
+                                Behaviorial Issues:
+                                <Typography>{props.behaviorIssues}</Typography> 
+                            </Typography>
                         </Grid>
 
                         <Grid item xs={10} sm={6} md={8} lg={6}>
