@@ -1,7 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from "@material-ui/core/Grid";
-
+import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 
@@ -27,22 +27,22 @@ export default function DogOriginView(props){
                     </Grid>
                     <Grid item container style={{marginTop: "1em"}} justify={"space-between"}>
                         {props.origin ? 
-                            <React.Fragment>
-                                <Grid item xs={10} sm={6} md={8} lg={6}>
+                            <Paper style={{padding: "1em"}}>
+                                <Grid item xs={10} sm={6} md={8} lg={10}>
                                     <Typography style={{marginTop: "1em", fontWeight: "bold"}}>Region:<Typography>{props.originRegion}</Typography></Typography>
                                 </Grid>
-                                <Grid item xs={10} sm={6} md={8} lg={6}>
+                                <Grid item xs={10} sm={6} md={8} lg={10}>
                                     <Typography style={{marginTop: "1em", fontWeight: "bold"}}>Name:<Typography>{props.originName}</Typography></Typography>
                                 </Grid>
-                                <Grid item xs={10} sm={6} md={8} lg={6}>
+                                <Grid item xs={10} sm={6} md={8} lg={10}>
                                     <Typography style={{marginTop: "1em", fontWeight: "bold"}}>Phone:<Typography>{props.originPhone}</Typography></Typography>
                                 </Grid>
-                                <Grid item xs={10} sm={6} md={8} lg={6}>
-                                    <Typography style={{marginTop: "1em", fontWeight: "bold"}}>Address</Typography>
+                                <Grid item xs={10} sm={6} md={8} lg={10}>
+                                    <Typography style={{marginTop: "1em", fontWeight: "bold"}}>Address:</Typography>
                                     <Typography>{props.originStreet}</Typography>
                                     <Typography>{props.originCity}, {props.originState} {props.originZip}</Typography> 
                                 </Grid>
-                            </React.Fragment>
+                            </Paper>
                             :   <Typography style={{ fontWeight: "bold"}}>Origin info unknown</Typography>
                         }
 
