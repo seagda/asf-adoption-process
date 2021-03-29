@@ -55,7 +55,7 @@ export default function BehaviorAssessment (){
             <Grid item container direction="column" align="center">
                 <Typography variant="h5">Thanks for completing a behavior assessment!</Typography>
                 <Typography variant="h5">We're one step closer to saving another Aussie.</Typography>
-                <NavLink className={classes.link} to="/Dog-Dossiers">
+                <NavLink className={classes.link} to="/My-Dashboard">
                 <Button
                 variant="contained"
                 color="secondary"
