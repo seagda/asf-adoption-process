@@ -40,7 +40,7 @@ const useStyles=makeStyles(theme => ({
 
 export default function AppAnswersMe() {
     const classes = useStyles();
-    const [survey, setSurvey] = useState( new Survey.Model())
+    const [adoptSurvey, setSurvey] = useState( new Survey.Model())
 
     let {id} = useParams();
     console.log(id)
@@ -83,7 +83,7 @@ export default function AppAnswersMe() {
                     <Grid item container style={{marginTop: "1em"}}>
                         <Grid item xs={6} sm={4} md={4} lg={4}>
                             <Survey.Survey
-                            model={survey}
+                            model={adoptSurvey}
                             mode="display"
                             />
                         </Grid>
