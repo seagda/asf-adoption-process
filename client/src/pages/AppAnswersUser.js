@@ -45,7 +45,11 @@ export default function AppAnswersUser() {
     let {id} = useParams();
     console.log(id)
 
-    const [adoptData, setadoptData] = useState({})
+    const [adoptData, setadoptData] = useState({
+        response: {},
+        AppStatus: {},
+        AppType: {}
+    })
 
     const [appQuestions, setAppQuestions] = useState([])
 
@@ -57,8 +61,8 @@ export default function AppAnswersUser() {
             console.log(res.data)
             return appPromise.then(ans =>{
                 console.log(ans)
-                setadoptData(ans.data)
-                newSurvey.data = ans.data
+                setadoptData(ans.data[0])
+                newSurvey.data = ans.data[0].response
                 setSurvey(newSurvey)
             })
         }).catch(err=>{
@@ -73,11 +77,17 @@ export default function AppAnswersUser() {
                 <Divider/>
             </Grid>
 
+            <Grid item container>
+                <Grid item style={{marginRight: "4em"}}>
+                    <Typography style={{fontWeight: "bold"}}>Status: <Typography>{adoptData.AppStatus?.name}</Typography></Typography>
+                </Grid>
+                <Grid item>
+                    <Typography style={{fontWeight: "bold"}}>App type: <Typography>{adoptData.AppType?.name} </Typography></Typography>
+                </Grid>
+            </Grid>
+
             <Grid item container className={classes.itemContainer}>
                 <Grid item container xs={10} sm={8} md={8} lg={7} style={{marginTop: "3em"}} direction="column">
-                    <Grid item>
-                        <Divider/>
-                    </Grid>
                     <Grid item container style={{marginTop: "1em"}}>
                         <Grid item xs={6} sm={4} md={4} lg={4}>
                             <Survey.Survey

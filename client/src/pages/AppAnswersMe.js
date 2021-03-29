@@ -84,7 +84,6 @@ export default function AppAnswersMe() {
                 <Grid item>
                     <Typography style={{fontWeight: "bold"}}>App type: <Typography>{adoptData.AppType?.name} </Typography></Typography>
                 </Grid>
-                
             </Grid>
 
             <Grid item container className={classes.itemContainer}>
