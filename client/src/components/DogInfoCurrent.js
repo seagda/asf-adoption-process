@@ -2,9 +2,10 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from "@material-ui/core/Grid";
 import {NavLink} from "react-router-dom";
-
+import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
+import Avatar from "@material-ui/core/Avatar";
 
 const useStyles = makeStyles((theme) => ({
     itemContainer: {
@@ -12,6 +13,10 @@ const useStyles = makeStyles((theme) => ({
             justifyContent: "center",
             alignItems: "center"
         }
+    },
+    avatarContainer: {
+        display: "flex",
+        justifyContent: "space-between"
     }
 }));
 
@@ -26,13 +31,19 @@ export default function DogInfoCurrent(props){
                         <Divider/>
                     </Grid>
                     <Grid item container style={{marginTop: "1em"}}>
-                        <Grid item xs={10} sm={6} md={8} lg={6}>
+                        <Paper style={{padding: "1em"}}>
+                        <Grid item xs={10} sm={6} md={8} lg={10}>
                             {props.currentlyWith ? 
                             <Typography style={{fontWeight: "bold"}}>Currently With:
                             <NavLink gutterBottom style={{textDecoration: "none"}} to={`/userView/${props.currentlyWithId}`}> 
-                                <Typography>{props.currentlyWith.firstName} {props.currentlyWith.lastName}</Typography>
+                                <div className={classes.avatarContainer}>
+                                    <Avatar alt="user photo" src={props.avatar}/>
+                                    <Typography>{props.currentlyWith.firstName} {props.currentlyWith.lastName}</Typography>
+                                </div>
                             </NavLink> 
-                                <Typography>{props.region?.name}</Typography>
+                            <Divider/>
+                                <Typography>Region: {props.region?.name}</Typography>
+                                <Divider/>
                                 <Typography>{props.address?.street}</Typography>
                                 <Typography>{props.address?.street2}</Typography>
                                 <Typography>{props.address?.city}, {props.address?.state}</Typography>
@@ -41,15 +52,18 @@ export default function DogInfoCurrent(props){
                             </Typography> : 
                             <Typography style={{fontWeight: "bold", marginRight: "3em"}}>Dog not currently assigned to ASF team member</Typography>}
                         </Grid>
-                        <Grid item xs={10} sm={6} md={8} lg={6}>
-                            {props.behaviorIssues ? <Typography style={{fontWeight: "bold"}}>Behaviorial Issues:<Typography>{props.behaviorIssues}</Typography> </Typography> : <Typography style={{fontWeight: "bold"}}>Behaviorial Issues: <Typography>No</Typography></Typography>}
+
+                        <Grid item xs={10} sm={6} md={8} lg={10}>
+                            <Typography style={{fontWeight: "bold", marginTop: "1em"}}>
+                                Behaviorial Issues:
+                                <Typography>{props.behaviorIssues}</Typography> 
+                            </Typography>
                         </Grid>
-                        <Grid item xs={10} sm={6} md={8} lg={6}>
-                            
-                        </Grid>
+
                         <Grid item xs={10} sm={6} md={8} lg={6}>
                             {props.blocked ? <Typography style={{marginTop: "1em", color: "red", fontWeight: "bold"}}>Dog is BLOCKED</Typography> : null}
                         </Grid>
+                        </Paper>
                     </Grid>
             </Grid>
         </Grid>

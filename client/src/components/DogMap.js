@@ -72,7 +72,7 @@ function DogMap(props) {
                         component="img"
                         alt="profile photo"
                         height="100%"
-                        image={dogOrUser?.DogPhotos?.[0].url || dogOrUser?.photoUrl}
+                        image={dogOrUser?.DogPhotos?.[0]?.url || dogOrUser?.photoUrl}
                         className={classes.markerPhotos}/>
                       <h3 className={classes.cardText} >{dogOrUser?.name || dogOrUser?.firstName && dogOrUser?.lastName}</h3>
                       <p className={classes.cardText} >{dogOrUser?.DogStatus?.name}</p>

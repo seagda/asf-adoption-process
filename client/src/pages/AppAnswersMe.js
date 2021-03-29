@@ -38,31 +38,32 @@ const useStyles=makeStyles(theme => ({
 }))
 
 
-export default function BehaveAssessAnswers() {
+export default function AppAnswersMe() {
     const classes = useStyles();
-    const [survey, setSurvey] = useState( new Survey.Model())
+    const [adoptSurvey, setAdoptSurvey] = useState( new Survey.Model())
 
     let {id} = useParams();
     console.log(id)
 
-    const [behaveData, setBehaveData] = useState({
-        Dog: {},
-        response: {}
+    const [adoptData, setadoptData] = useState({
+        response: {},
+        AppStatus: {},
+        AppType: {}
     })
 
     const [appQuestions, setAppQuestions] = useState([])
 
     useEffect(()=>{
-        const assessPromise = API.getSingleAssessment(id)
-        API.getBehaviorQuestions().then(res=>{
+        const appPromise = API.getMyAppResponses(id)
+        API.getAdopterApp().then(res=>{
             setAppQuestions(res.data)
             let newSurvey = new Survey.Model({elements: res.data})
             console.log(res.data)
-            return assessPromise.then(ans =>{
+            return appPromise.then(ans =>{
                 console.log(ans.data)
-                setBehaveData(ans.data)
-                newSurvey.data = ans.data.response
-                setSurvey(newSurvey)
+                setadoptData(ans.data[0])
+                newSurvey.data = ans.data[0].response
+                setAdoptSurvey(newSurvey)
             })
         }).catch(err=>{
             console.error(err.response.data.message)
@@ -72,44 +73,25 @@ export default function BehaveAssessAnswers() {
     return (
         <Grid container className={classes.mainContainer}>
             <Grid item style={{marginBottom: "1em"}}>
-                <Typography variant="h4" color="primary">Behavior Assessment for {behaveData.Dog.name}</Typography>
+                <Typography variant="h4" color="primary">Application Submission </Typography>
                 <Divider/>
             </Grid>
+
             <Grid item container>
                 <Grid item style={{marginRight: "4em"}}>
-                    <Typography style={{fontWeight: "bold"}}>Completed by: <Typography></Typography></Typography>
+                    <Typography style={{fontWeight: "bold"}}>Status: <Typography>{adoptData.AppStatus?.name}</Typography></Typography>
                 </Grid>
                 <Grid item>
-                    <Typography style={{fontWeight: "bold"}}>Date: <Typography>{behaveData.date}</Typography></Typography>
-                    <Divider/>
-                </Grid>
-                
-            </Grid>
-            
-            <Grid item container direction="column" style={{marginTop: "2em"}}>
-                <Grid item>
-                    <Typography>All answers are based on a scale of 0-5.</Typography>
-                </Grid>
-                <Grid item>
-                    <Typography>0- the dog has no experience with the subject</Typography>
-                </Grid>
-                <Grid item>
-                    <Typography>1- the dog performs poorly</Typography>
-                </Grid>
-                <Grid item>
-                    <Typography>5- the dog performs expertly</Typography>
+                    <Typography style={{fontWeight: "bold"}}>App type: <Typography>{adoptData.AppType?.name} </Typography></Typography>
                 </Grid>
             </Grid>
 
             <Grid item container className={classes.itemContainer}>
                 <Grid item container xs={10} sm={8} md={8} lg={7} style={{marginTop: "3em"}} direction="column">
-                    <Grid item>
-                        <Divider/>
-                    </Grid>
                     <Grid item container style={{marginTop: "1em"}}>
                         <Grid item xs={6} sm={4} md={4} lg={4}>
                             <Survey.Survey
-                            model={survey}
+                            model={adoptSurvey}
                             mode="display"
                             />
                         </Grid>

@@ -22,9 +22,9 @@ import BehaviorAssessment from "./pages/BehaviorAssessment";
 import DogDossierDocs from "./pages/DogDossierDocs";
 import UserProfileView from "./pages/UserProfileView";
 import Profile from "./pages/Profile";
-import AppAnswersAdopt from "./pages/AppAnswersAdopt";
-import AppAnswersFoster from "./pages/AppAnswersFoster";
 import BehaveAssessAnswers from "./pages/BehavAssessAnswers";
+import AppAnswersUser from "./pages/AppAnswersUser";
+import AppAnswersMe from "./pages/AppAnswersMe";
 
 export default function App() {
     return (
@@ -54,9 +54,9 @@ export default function App() {
                     <Route path="/user/:id"><Profile/></Route>
                     <Redirect from="/userView/:id" to="/user/:id" />
                     <Redirect from="/editOtherUser/:id" to="/user/:id/edit" />
-                    <Route path="/appAnswersAdopt"><AppAnswersAdopt/></Route>
-                    <Route path="/appAnswersFoster"><AppAnswersFoster/></Route>
                     <Route path="/behaveAnswers/:id"><BehaveAssessAnswers/></Route>
+                    <Route path="/appAnswersUser/:id"><AppAnswersUser/></Route>
+                    <Route path="/appAnswersMe/:id"><AppAnswersMe/></Route>
                 </Switch>
             </BrowserRouter>
         </ThemeProvider>
