@@ -63,7 +63,6 @@ export default function RecipeReviewCard(props) {
       <CardHeader className={classes.header}
         avatar={
           <Avatar aria-label="recipe" className={classes.avatar}>
-            R
           </Avatar>
         }
         action={
@@ -72,7 +71,7 @@ export default function RecipeReviewCard(props) {
           </IconButton>
         }
         title={<Typography variant="h5" component="h2" className={classes.headerText}>
-        Welcome, ${props.name}! Thank you for supporting ASF.
+        Welcome! Thank you for supporting ASF.
       </Typography>}
       />
       <Divider />
