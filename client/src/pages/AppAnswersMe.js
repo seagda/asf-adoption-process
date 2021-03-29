@@ -41,7 +41,6 @@ const useStyles=makeStyles(theme => ({
 export default function AppAnswersMe() {
     const classes = useStyles();
     const [adoptSurvey, setAdoptSurvey] = useState( new Survey.Model())
-    const [fosterSurvey, setFosterSurvey] = useState( new Survey.Model())
 
     let {id} = useParams();
     console.log(id)
