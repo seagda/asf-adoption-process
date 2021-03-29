@@ -38,7 +38,7 @@ export default function ProfileActions(props){
             <Grid item>
                <UpdateButton toLink="/" buttonText="Update Password"/>
             </Grid>
-            {window.location.href.includes("userView") ? 
+            {window.location.href.includes("user") ? 
                     <React.Fragment>
                         <Grid item>
                             <ApplyButton toLink="/appAnswersAdopt" buttonText="View Adopter Application" color="secondary" icon={<PlayArrowIcon />} />
@@ -47,7 +47,7 @@ export default function ProfileActions(props){
                             <ApplyButton toLink="/appAnswersFoster" buttonText="View Foster Application" color="secondary" icon={<PlayArrowIcon />} />
                         </Grid>
                         <Grid item>
-                            <ViewAppAnswersBtn toLink={`/appAnswersMe/${props.id}`} buttonText="View Application Submissions" color="secondary"/>
+                            <ViewAppAnswersBtn toLink={`/appAnswersUser/${props.id}`} buttonText="View Application Submissions" color="secondary"/>
                         </Grid>
                     </React.Fragment>
             : 
