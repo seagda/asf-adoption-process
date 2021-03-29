@@ -47,7 +47,8 @@ export default function AppAnswersMe() {
 
     const [adoptData, setadoptData] = useState({
         response: {},
-        AppStatus: {}
+        AppStatus: {},
+        AppType: {}
     })
 
     const [appQuestions, setAppQuestions] = useState([])
@@ -81,7 +82,7 @@ export default function AppAnswersMe() {
                     <Typography style={{fontWeight: "bold"}}>Status: <Typography>{adoptData.AppStatus?.name}</Typography></Typography>
                 </Grid>
                 <Grid item>
-                    <Typography style={{fontWeight: "bold"}}>Date: <Typography> </Typography></Typography>
+                    <Typography style={{fontWeight: "bold"}}>App type: <Typography>{adoptData.AppType?.name} </Typography></Typography>
                 </Grid>
                 
             </Grid>
