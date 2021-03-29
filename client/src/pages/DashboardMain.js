@@ -9,11 +9,13 @@ import PieChartContainer from "../components/PieChartContainer";
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import AvatarList from '../components/AvatarList';
-import BasicList from '../components/BasicList';
+import AlertWarning from '../components/AlertWarning';
 import ListContainer from '../components/ListContainer';
 import API from '../utils/API';
 import MediaCard from '../components/MediaCard';
-import SimpleCard from '../components/SimpleCard';
+import DashboardWelcome from '../components/DashboardWelcome';
+
+import {useParams} from "react-router-dom";
 
 
 const useStyles=makeStyles(theme => ({
@@ -43,17 +45,28 @@ const useStyles=makeStyles(theme => ({
 export default function DashboardMain(){
     const classes = useStyles();
 
+    let {id} = useParams();
     const [dashboardData, setDashboardState] = useState({})
-  
+    const [alerts, setAlerts] = useState([]);
+
     function loadDashboard() {
     API.getDashboardData()
         .then(res => {
         console.log(res.data)
         setDashboardState(res.data)
-        
+        setAlerts(res.data.alerts)
         })
         .catch(err => console.log(err));
     };
+
+    const handleAlertRead=({target})=>{
+        setAlerts({
+            ...alerts,
+            [target.read]: target.true
+        })
+    }
+
+
 
     useEffect(() => {
         loadDashboard()
@@ -76,7 +89,7 @@ export default function DashboardMain(){
                 </Typography>
             </Grid>
             <Grid item xs={12}>
-                <SimpleCard />
+                <DashboardWelcome />
             </Grid>
             <Grid item xs={12} s={10}>
                 <Typography variant="h5" component="h6" gutterBottom color="primary">
@@ -165,7 +178,9 @@ export default function DashboardMain(){
                         <ListContainer>
                             {dashboardData.alerts.map(alert =>{
                                 return (
-                                    <BasicList message={alert.message} />
+                                
+                                    <AlertWarning message={alert.message} handleAlertRead={handleAlertRead} />
+        
                                 )
                             })}    
                         </ListContainer>

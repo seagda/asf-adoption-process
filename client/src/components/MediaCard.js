@@ -14,7 +14,9 @@ const useStyles = makeStyles(theme => ({
   
   root: {
     maxWidth: "90%",
-    minWidth: "70%",
+    minWidth: "90%",
+    maxHeight: '100%',
+    minHeight: '100%',
     marginTop: theme.spacing(2),
     flex: "wrap",
     border: '2px solid',
@@ -25,6 +27,12 @@ const useStyles = makeStyles(theme => ({
     '&:hover': {
       borderColor: '#5B9FED',
     },
+  }, 
+  media: {
+    maxWidth: "100%",
+    minWidth: "100%",
+    maxHeight: '200px',
+    minHeight: '200px',
   }
 }));
 

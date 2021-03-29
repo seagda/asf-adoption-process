@@ -8,6 +8,10 @@ import Add from '@material-ui/icons/Add';
 const useStyles = makeStyles((theme) => ({
   button: {
     margin: theme.spacing(1),
+    maxWidth: '200px', 
+    maxHeight: '40px', 
+    minWidth: '200px', 
+    minHeight: '40px',
   },
   link: {
     textDecoration: "none"
