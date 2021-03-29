@@ -15,6 +15,8 @@ import API from '../utils/API';
 import MediaCard from '../components/MediaCard';
 import DashboardWelcome from '../components/DashboardWelcome';
 
+import {useParams} from "react-router-dom";
+
 
 const useStyles=makeStyles(theme => ({
     mainContainer: {
@@ -43,17 +45,28 @@ const useStyles=makeStyles(theme => ({
 export default function DashboardMain(){
     const classes = useStyles();
 
+    let {id} = useParams();
     const [dashboardData, setDashboardState] = useState({})
-  
+    const [alerts, setAlerts] = useState([]);
+
     function loadDashboard() {
     API.getDashboardData()
         .then(res => {
         console.log(res.data)
         setDashboardState(res.data)
-        
+        setAlerts(res.data.alerts)
         })
         .catch(err => console.log(err));
     };
+
+    const handleAlertRead=({target})=>{
+        setAlerts({
+            ...alerts,
+            [target.read]: target.true
+        })
+    }
+
+
 
     useEffect(() => {
         loadDashboard()
@@ -165,7 +178,9 @@ export default function DashboardMain(){
                         <ListContainer>
                             {dashboardData.alerts.map(alert =>{
                                 return (
-                                    <AlertWarning message={alert.message} />
+                                
+                                    <AlertWarning message={alert.message} handleAlertRead={handleAlertRead} />
+        
                                 )
                             })}    
                         </ListContainer>
