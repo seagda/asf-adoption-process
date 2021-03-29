@@ -8,7 +8,7 @@ import DogDossiersAll from "../src/pages/DogDossiersAll"
 import Login from "../src/pages/Login"
 import CreateUser from "../src/pages/CreateUser";
 import AdopterApplication from "./pages/AdopterApplication";
-import ManageASFUsers from "./pages/ManageASFUsers";
+import ViewASFUsers from "./pages/ViewASFUsers";
 import EditProfile from "./pages/EditProfile";
 import DogProfileView from "./pages/DogProfileView";
 import DogProfileCreate from "./pages/DogProfileCreate";
@@ -38,7 +38,7 @@ export default function App() {
                     <Route path="/Settings"><Settings/></Route>
                     <Route path="/Logout" />
                     <Route path="/Dog-Dossiers"><DogDossiersAll /></Route>
-                    <Route path="/Manage-ASF-Users"><ManageASFUsers/></Route>
+                    <Route path="/View-ASF-Users"><ViewASFUsers/></Route>
                     <Redirect from="/editprofile" to="/user/me/edit" />
                     <Route path="/adopterApplication"><AdopterApplication/></Route>
                     <Route path="/fosterApplication"><FosterApplication/></Route>
