@@ -15,9 +15,6 @@ import API from '../utils/API';
 import MediaCard from '../components/MediaCard';
 import DashboardWelcome from '../components/DashboardWelcome';
 
-import {useParams} from "react-router-dom";
-
-
 const useStyles=makeStyles(theme => ({
     mainContainer: {
         marginLeft: theme.spacing(35),
@@ -96,7 +93,7 @@ export default function DashboardMain(){
                 </Typography>
             </Grid>
             <Grid item xs={12}>
-                <DashboardWelcome />
+                <DashboardWelcome photoUrl={photoUrl} />
             </Grid>
             <Grid item xs={12} s={10}>
                 <Typography variant="h5" component="h6" gutterBottom color="primary">
