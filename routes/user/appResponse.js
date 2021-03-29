@@ -1,11 +1,13 @@
 const db = require("../../models");
 const ac = require("../../helpers/ac");
-const router = require("express").Router();
+const express = require("express");
+const responseRouter = express.Router();
+const userRouter = express.Router();
 const sId = require("../../scripts/staticIds");
 
 
 // show all APP RESPONSES, with correct ROLE permission
-router.get("/", (req, res) => {
+responseRouter.get("/", (req, res) => {
     const permission = ac.can(req.roles).readAny("AppResponse");
     if (permission.granted) {
 
@@ -21,11 +23,11 @@ router.get("/", (req, res) => {
 });
 
 // get app responses for own user
-router.get("/me", (req, res) => {
+userRouter.get("/me/app-response", (req, res) => {
     const permission = ac.can(req.roles).readOwn("AppResponse");
     if (permission.granted) {
         db.AppResponse.findAll({ where: { UserId: req.userId }, include: [db.AppStatus, db.AppType] })
-            .then(responses => responses.map(response => permission.filter(response.toJSON())))
+            .then(responses => res.json(responses.map(response => permission.filter(response.toJSON()))))
             .catch(err => {
                 console.error(err);
                 res.status(500).send({ message: "whoops" });
@@ -34,11 +36,11 @@ router.get("/me", (req, res) => {
 });
 
 // get app responses by user id
-router.get("/user/:id", (req, res) => {
-    const permission = req.params.id === req.userId ? ac.can(req.roles).readOwn("AppResponse") : ac.can(req.roles).readAny("AppResponse");
+userRouter.get("/:UserId/app-response", (req, res) => {
+    const permission = ac.can(req.roles).readAny("AppResponse");
     if (permission.granted) {
-        db.AppResponse.findAll({ where: { UserId: req.params.id }, include: [db.AppStatus, db.AppType] })
-            .then(responses => responses.map(response => permission.filter(response.toJSON())))
+        db.AppResponse.findAll({ where: { UserId: req.params.UserId }, include: [db.AppStatus, db.AppType] })
+            .then(responses => res.json(responses.map(response => permission.filter(response.toJSON()))))
             .catch(err => {
                 console.error(err);
                 res.status(500).send({ message: "whoops" });
@@ -47,7 +49,7 @@ router.get("/user/:id", (req, res) => {
 });
 
 // show one APP RESPONSE, with correct ROLE permission
-router.get("/:id", (req, res) => {
+responseRouter.get("/:id", (req, res) => {
     const permissionAny = ac.can(req.roles).readAny("AppResponse");
     const permissionOwn = ac.can(req.roles).readOwn("AppResponse");
     if (permissionAny.granted || permissionOwn.granted) {
@@ -65,7 +67,7 @@ router.get("/:id", (req, res) => {
 });
 
 // create new APP RESPONSE, with correct ROLE permission
-router.post("/", (req, res) => {
+responseRouter.post("/", (req, res) => {
     const permission = ac.can(req.roles).createOwn("AppResponse");
     if (permission.granted) {
 
@@ -81,7 +83,7 @@ router.post("/", (req, res) => {
 });
 
 // update APP RESPONSE by id, with correct ROLE permission
-router.put("/:id", (req, res) => {
+responseRouter.put("/:id", (req, res) => {
     const permission = ac.can(req.roles).updateAny("AppResponse");
     if (permission.granted) {
         db.AppResponse
@@ -99,7 +101,7 @@ router.put("/:id", (req, res) => {
     } else return res.status(403).send({ message: "Not authorized update an AppResponse" });
 });
 // delete APP RESPONSE by id, with correct ROLE permission
-router.delete("/:id", (req, res) => {
+responseRouter.delete("/:id", (req, res) => {
     const permission = ac.can(req.roles).deleteAny("AppResponse");
     if (permission.granted) {
         db.AppResponse
@@ -144,4 +146,6 @@ function generateStatusAlerts(appResp) {
         .catch(console.error);
 }
 
-module.exports = router;
+userRouter.use("/app-response", responseRouter);
+
+module.exports = userRouter;

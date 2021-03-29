@@ -7,7 +7,7 @@ const controllers = require("../../controllers");
 const router = require("express").Router();
 
 router.use("/alert", require("./alert"));
-router.use("/app-response", require("./appResponse"));
+router.use(require("./appResponse"));
 router.use("/family", require("./familymember"));
 router.use("/reference", require("./reference"));
 
