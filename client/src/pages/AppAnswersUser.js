@@ -88,6 +88,7 @@ export default function AppAnswersUser() {
 
             <Grid item container className={classes.itemContainer}>
                 <Grid item container xs={10} sm={8} md={8} lg={7} style={{marginTop: "3em"}} direction="column">
+
                     <Grid item container style={{marginTop: "1em"}}>
                         <Grid item xs={6} sm={4} md={4} lg={4}>
                             <Survey.Survey
