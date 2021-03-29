@@ -6,9 +6,10 @@ import {
   Chart,
   PieSeries,
   Title,
-  Legend
+  Legend, 
 } from '@devexpress/dx-react-chart-material-ui';
 import { Animation } from '@devexpress/dx-react-chart';
+
 import Hidden from '@material-ui/core/Hidden';
 
 export default class Demo extends React.PureComponent {
@@ -30,10 +31,11 @@ export default class Demo extends React.PureComponent {
             <Grid item >
               <Paper marginLeft="1em" >
                 <Chart data={this.state.data} height="50" width="300">
-                  <Legend/>
+                  <Legend />
                   <Title text={text}/>
                   <Hidden xsUp>
-                    <PieSeries valueField="number" argumentField="status"/>
+                    <PieSeries valueField="number" argumentField="status">
+                    </PieSeries>
                   </Hidden>
                 </Chart>
               </Paper>

@@ -7,7 +7,8 @@ import ApplyButton from "./ApplyButton";
 import HoldCheckbox from "./HoldCheckbox";
 import UpdateButton from "./UpdateButton";
 import ContactButton from "./ContactButton";
-import PlayArrowIcon from '@material-ui/icons/PlayArrow'
+import PlayArrowIcon from '@material-ui/icons/PlayArrow';
+import ViewAppAnswersBtn from "./ViewAppAnswersBtn";
 
 const useStyles = makeStyles((theme) => ({
     itemContainer: {
@@ -37,18 +38,37 @@ export default function ProfileActions(props){
             <Grid item>
                <UpdateButton toLink="/" buttonText="Update Password"/>
             </Grid>
-            {window.location.href.includes("userView") ? 
+
+            {/* Roles conditional not working properly. Commented out and switched to reference user/me in href. But needs to be adjusted for admin, regional etc. view */}
+            {window.location.href.includes("user/me") ? 
                     <React.Fragment>
                         <Grid item>
-                            <ApplyButton toLink="/appAnswersAdopt" buttonText="View Adopter Application" color="secondary" icon={<PlayArrowIcon />} />
+                            <ApplyButton toLink="/adopterApplication" buttonText="Apply To Adopt" color="secondary" icon={<PlayArrowIcon />} />
                         </Grid>
                         <Grid item>
-                            <ApplyButton toLink="/appAnswersFoster" buttonText="View Foster Application" color="secondary" icon={<PlayArrowIcon />} />
+                            <ApplyButton toLink="/fosterApplication" buttonText="Apply To Foster" color="secondary" icon={<PlayArrowIcon />} />
+                        </Grid>
+                        <Grid item>
+                            <ViewAppAnswersBtn toLink={`/appAnswersMe/${props.id}`} buttonText="View Application Submissions" color="secondary"/>
                         </Grid>
                     </React.Fragment>
+                    // <React.Fragment>
+                    //     <Grid item>
+                    //         <ApplyButton toLink="/appAnswersAdopt" buttonText="View Adopter Application" color="secondary" icon={<PlayArrowIcon />} />
+                    //     </Grid>
+                    //     <Grid item>
+                    //         <ApplyButton toLink="/appAnswersFoster" buttonText="View Foster Application" color="secondary" icon={<PlayArrowIcon />} />
+                    //     </Grid>
+                    //     <Grid item>
+                    //         <ViewAppAnswersBtn toLink={`/appAnswersUser/${props.id}`} buttonText="View Application Submissions" color="secondary"/>
+                    //     </Grid>
+                    // </React.Fragment>
             : 
                 <React.Fragment>
-                    {props.roles.includes("Super Admin" && "Regional" && "Admin") ? 
+                        <Grid item>
+                            <ViewAppAnswersBtn toLink={`/appAnswersUser/${props.id}`} buttonText="View Application Submissions" color="secondary"/>
+                        </Grid>
+                    {/* {props.roles.includes("Super Admin" && "Regional" && "Admin") ? 
                         null
                     : 
                         <React.Fragment>
@@ -58,8 +78,11 @@ export default function ProfileActions(props){
                             <Grid item>
                                 <ApplyButton toLink="/fosterApplication" buttonText="Apply To Foster" color="secondary" icon={<PlayArrowIcon />} />
                             </Grid>
+                            <Grid item>
+                                <ViewAppAnswersBtn toLink={`/appAnswersMe/${props.id}`} buttonText="View Application Submissions" color="secondary"/>
+                            </Grid>
                         </React.Fragment>
-                    }
+                    } */}
                 </React.Fragment>
             }
 

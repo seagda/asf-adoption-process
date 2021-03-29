@@ -40,7 +40,7 @@ const useStyles=makeStyles(theme => ({
 }
 }))
 
-export default function ManageASFUsers() {
+export default function ViewASFUsers() {
     const [error, setError] = useState("");
     
     const [selectedRegions, setRegion] = React.useState([]);
@@ -105,7 +105,7 @@ export default function ManageASFUsers() {
             <Grid container spacing={2}>
                 <Grid item xs={12}>
                 <Typography variant="h3" component="h4" gutterBottom align="center" color="primary" selectedOption={searchUser} onOptionChange={handleUserSearch}>
-                    Manage ASF Users
+                    View ASF Users
                     <Divider />
                 </Typography>
                 </Grid>

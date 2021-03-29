@@ -8,7 +8,7 @@ import DogDossiersAll from "../src/pages/DogDossiersAll"
 import Login from "../src/pages/Login"
 import CreateUser from "../src/pages/CreateUser";
 import AdopterApplication from "./pages/AdopterApplication";
-import ManageASFUsers from "./pages/ManageASFUsers";
+import ViewASFUsers from "./pages/ViewASFUsers";
 import EditProfile from "./pages/EditProfile";
 import DogProfileView from "./pages/DogProfileView";
 import DogProfileCreate from "./pages/DogProfileCreate";
@@ -22,9 +22,9 @@ import BehaviorAssessment from "./pages/BehaviorAssessment";
 import DogDossierDocs from "./pages/DogDossierDocs";
 import UserProfileView from "./pages/UserProfileView";
 import Profile from "./pages/Profile";
-import AppAnswersAdopt from "./pages/AppAnswersAdopt";
-import AppAnswersFoster from "./pages/AppAnswersFoster";
 import BehaveAssessAnswers from "./pages/BehavAssessAnswers";
+import AppAnswersUser from "./pages/AppAnswersUser";
+import AppAnswersMe from "./pages/AppAnswersMe";
 
 export default function App() {
     return (
@@ -38,7 +38,7 @@ export default function App() {
                     <Route path="/Settings"><Settings/></Route>
                     <Route path="/Logout" />
                     <Route path="/Dog-Dossiers"><DogDossiersAll /></Route>
-                    <Route path="/Manage-ASF-Users"><ManageASFUsers/></Route>
+                    <Route path="/View-ASF-Users"><ViewASFUsers/></Route>
                     <Redirect from="/editprofile" to="/user/me/edit" />
                     <Route path="/adopterApplication"><AdopterApplication/></Route>
                     <Route path="/fosterApplication"><FosterApplication/></Route>
@@ -54,9 +54,9 @@ export default function App() {
                     <Route path="/user/:id"><Profile/></Route>
                     <Redirect from="/userView/:id" to="/user/:id" />
                     <Redirect from="/editOtherUser/:id" to="/user/:id/edit" />
-                    <Route path="/appAnswersAdopt"><AppAnswersAdopt/></Route>
-                    <Route path="/appAnswersFoster"><AppAnswersFoster/></Route>
                     <Route path="/behaveAnswers/:id"><BehaveAssessAnswers/></Route>
+                    <Route path="/appAnswersUser/:id"><AppAnswersUser/></Route>
+                    <Route path="/appAnswersMe/:id"><AppAnswersMe/></Route>
                 </Switch>
             </BrowserRouter>
         </ThemeProvider>

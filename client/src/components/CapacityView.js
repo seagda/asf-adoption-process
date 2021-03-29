@@ -4,7 +4,7 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import Chip from "@material-ui/core/Chip";
-
+import Paper from "@material-ui/core/Paper";
 import CapacityNums from "../components/CapacityNums";
 import CaresFor from "../components/CaresFor";
 
@@ -33,11 +33,13 @@ export default function CapacityView(props){
                         <Divider/>
                     </Grid>
                     <Grid item container>
-                        <Grid>
-                            <Typography style={{marginTop: "1em", fontWeight: "bold"}}>Max Capacity: <Typography>{props.maxCapacity}</Typography> </Typography>
-                            {/* <Typography style={{marginTop: "1em"}}>Dogs in care:</Typography>
-                            <Typography style={{marginTop: "1em", marginRight: "0.5em"}}>Available space:</Typography> */}
-                        </Grid>
+                        <Paper style={{padding: "1em", marginTop: "1em"}}>
+                            <Grid>
+                                <Typography style={{marginTop: "1em", fontWeight: "bold"}}>Max Capacity: <Typography>{props.maxCapacity}</Typography> </Typography>
+                                {/* <Typography style={{marginTop: "1em"}}>Dogs in care:</Typography>
+                                <Typography style={{marginTop: "1em", marginRight: "0.5em"}}>Available space:</Typography> */}
+                            </Grid>
+                        </Paper>
                         {/* <Grid item xs={6} sm={6} md={8} lg={6}>
                             {capacityNums.map((number)=>(
                                 <CapacityNums

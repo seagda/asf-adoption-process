@@ -25,7 +25,7 @@ export default function Profile() {
             })
         ]).catch(err => {
             console.error(err.response.data.message)
-            alert("get data failed")
+            // alert("get data failed")
         });
     }
 
