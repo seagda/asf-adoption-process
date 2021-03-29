@@ -9,7 +9,7 @@ import PieChartContainer from "../components/PieChartContainer";
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import AvatarList from '../components/AvatarList';
-import BasicList from '../components/BasicList';
+import AlertWarning from '../components/AlertWarning';
 import ListContainer from '../components/ListContainer';
 import API from '../utils/API';
 import MediaCard from '../components/MediaCard';
@@ -165,7 +165,7 @@ export default function DashboardMain(){
                         <ListContainer>
                             {dashboardData.alerts.map(alert =>{
                                 return (
-                                    <BasicList message={alert.message} />
+                                    <AlertWarning message={alert.message} />
                                 )
                             })}    
                         </ListContainer>
