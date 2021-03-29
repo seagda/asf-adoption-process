@@ -29,12 +29,6 @@ const useStyles = makeStyles((theme) => ({
     },
     pos: {
         marginBottom: 3,
-    },
-    paper: {
-        // display: "flex",
-        // alignItems: "center",
-        // justifyContent: "space-between",
-        // flexDirection: "column"
     }
 }));
 
@@ -50,7 +44,7 @@ export default function DogBreedView(props){
                         <Divider/>
                     </Grid>
                     <Grid item xs={10} sm={6} md={4} lg={2} style={{marginTop: "1em"}} justify={"space-between"}>
-                        <Paper style={{padding: "1em"}} className={classes.paper}>
+                        <Paper style={{padding: "1em"}}>
                             <Grid>
                                 <Typography style={{fontWeight: "bold"}}>Coat:<Typography>{props.coat}</Typography></Typography>
                             </Grid>
