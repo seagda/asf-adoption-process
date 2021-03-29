@@ -46,7 +46,8 @@ export default function AppAnswersMe() {
     console.log(id)
 
     const [adoptData, setadoptData] = useState({
-        response: {}
+        response: {},
+        AppStatus: {}
     })
 
     const [appQuestions, setAppQuestions] = useState([])
@@ -58,8 +59,8 @@ export default function AppAnswersMe() {
             let newSurvey = new Survey.Model({elements: res.data})
             console.log(res.data)
             return appPromise.then(ans =>{
-                console.log(ans.data[0].response)
-                setadoptData(ans.data)
+                console.log(ans.data)
+                setadoptData(ans.data[0])
                 newSurvey.data = ans.data[0].response
                 setAdoptSurvey(newSurvey)
             })
@@ -71,15 +72,22 @@ export default function AppAnswersMe() {
     return (
         <Grid container className={classes.mainContainer}>
             <Grid item style={{marginBottom: "1em"}}>
-                <Typography variant="h4" color="primary">Application Answers </Typography>
+                <Typography variant="h4" color="primary">Application Submission </Typography>
                 <Divider/>
+            </Grid>
+
+            <Grid item container>
+                <Grid item style={{marginRight: "4em"}}>
+                    <Typography style={{fontWeight: "bold"}}>Status: <Typography>{adoptData.AppStatus?.name}</Typography></Typography>
+                </Grid>
+                <Grid item>
+                    <Typography style={{fontWeight: "bold"}}>Date: <Typography> </Typography></Typography>
+                </Grid>
+                
             </Grid>
 
             <Grid item container className={classes.itemContainer}>
                 <Grid item container xs={10} sm={8} md={8} lg={7} style={{marginTop: "3em"}} direction="column">
-                    <Grid item>
-                        <Divider/>
-                    </Grid>
                     <Grid item container style={{marginTop: "1em"}}>
                         <Grid item xs={6} sm={4} md={4} lg={4}>
                             <Survey.Survey
