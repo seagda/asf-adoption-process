@@ -45,7 +45,9 @@ export default function AppAnswersMe() {
     let {id} = useParams();
     console.log(id)
 
-    const [adoptData, setadoptData] = useState({})
+    const [adoptData, setadoptData] = useState({
+        response: {}
+    })
 
     const [appQuestions, setAppQuestions] = useState([])
 
@@ -56,9 +58,9 @@ export default function AppAnswersMe() {
             let newSurvey = new Survey.Model({elements: res.data})
             console.log(res.data)
             return appPromise.then(ans =>{
-                console.log(ans)
+                console.log(ans.data[0].response)
                 setadoptData(ans.data)
-                newSurvey.data = ans.data
+                newSurvey.data = ans.data[0].response
                 setSurvey(newSurvey)
             })
         }).catch(err=>{
