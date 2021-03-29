@@ -40,7 +40,7 @@ const useStyles=makeStyles(theme => ({
 
 export default function AppAnswersMe() {
     const classes = useStyles();
-    const [adoptSurvey, setSurvey] = useState( new Survey.Model())
+    const [adoptSurvey, setAdoptSurvey] = useState( new Survey.Model())
 
     let {id} = useParams();
     console.log(id)
@@ -61,7 +61,7 @@ export default function AppAnswersMe() {
                 console.log(ans.data[0].response)
                 setadoptData(ans.data)
                 newSurvey.data = ans.data[0].response
-                setSurvey(newSurvey)
+                setAdoptSurvey(newSurvey)
             })
         }).catch(err=>{
             console.error(err.response.data.message)
