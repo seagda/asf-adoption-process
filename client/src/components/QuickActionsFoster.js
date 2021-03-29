@@ -19,7 +19,7 @@ export default function QuickActionsFoster(){
                 <ApplyButton toLink="/editprofile" buttonText="Edit My Profile and Capacity" color="secondary" icon={<EditIcon />}/>
             </Grid>
             <Grid item>
-                <ApplyButton toLink="/Manage-ASF-Users" buttonText="ASF Team Directory" color="secondary"  icon={<FolderSharedIcon />} />
+                <ApplyButton toLink="/View-ASF-Users" buttonText="ASF Team Directory" color="secondary"  icon={<FolderSharedIcon />} />
             </Grid>
         </Grid>
     )
