@@ -93,7 +93,7 @@ export default function DashboardMain(){
                 </Typography>
             </Grid>
             <Grid item xs={12}>
-                <DashboardWelcome photoUrl={photoUrl} />
+                <DashboardWelcome name={dashboardData.user && `${dashboardData.user.firstName} ${dashboardData.user.lastName}`} photoUrl={photoUrl} />
             </Grid>
             <Grid item xs={12} s={10}>
                 <Typography variant="h5" component="h6" gutterBottom color="primary">

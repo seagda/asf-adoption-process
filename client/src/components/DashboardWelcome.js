@@ -70,7 +70,7 @@ export default function RecipeReviewCard(props) {
           </IconButton>
         }
         title={<Typography variant="h5" component="h2" className={classes.headerText}>
-        Welcome! Thank you for supporting ASF.
+        Welcome {props.name}! Thank you for supporting ASF.
       </Typography>}
       />
       <Divider />
