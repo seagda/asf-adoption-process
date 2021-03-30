@@ -46,6 +46,9 @@ const API = {
     getMyAppResponses: function() {
         return this.getUserAppResponses("me")
     },
+    getAppResponse: function(id) {
+        return axios.get(`/api/user/app-response/${id}`, getHeaders())
+    },
     getBehaviorQuestions: function (){
         return axios.get(`/api/dog/assess/questions`, getHeaders())
     },
