@@ -15,9 +15,6 @@ import API from '../utils/API';
 import MediaCard from '../components/MediaCard';
 import DashboardWelcome from '../components/DashboardWelcome';
 
-import {useParams} from "react-router-dom";
-
-
 const useStyles=makeStyles(theme => ({
     mainContainer: {
         marginLeft: theme.spacing(35),
@@ -45,18 +42,25 @@ const useStyles=makeStyles(theme => ({
 export default function DashboardMain(){
     const classes = useStyles();
 
-    let {id} = useParams();
     const [dashboardData, setDashboardState] = useState({})
     const [alerts, setAlerts] = useState([]);
+    const [photo, setPhoto] = useState(new Blob());
+    const [photoUrl, setPhotoUrl] = useState("");
+
+    useEffect(() => setPhotoUrl(URL.createObjectURL(photo)), [photo]);
 
     function loadDashboard() {
-    API.getDashboardData()
-        .then(res => {
-        console.log(res.data)
-        setDashboardState(res.data)
-        setAlerts(res.data.alerts)
-        })
-        .catch(err => console.log(err));
+        Promise.all([
+            API.getDashboardData().then(res => {
+                console.log(res.data)
+                setDashboardState(res.data)
+                setAlerts(res.data.alerts)
+            }),
+            API.getMyProfilePhoto().then(res => {
+                setPhoto(res.data)
+            })
+        ])
+            .catch(err => console.log(err));
     };
 
     const handleAlertRead=({target})=>{
@@ -89,7 +93,7 @@ export default function DashboardMain(){
                 </Typography>
             </Grid>
             <Grid item xs={12}>
-                <DashboardWelcome />
+                <DashboardWelcome name={dashboardData.user && `${dashboardData.user.firstName} ${dashboardData.user.lastName}`} photoUrl={photoUrl} />
             </Grid>
             <Grid item xs={12} s={10}>
                 <Typography variant="h5" component="h6" gutterBottom color="primary">
