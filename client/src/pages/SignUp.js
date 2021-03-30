@@ -14,7 +14,7 @@ const useStyles=makeStyles(theme => ({
         marginLeft: theme.spacing(35),
         marginTop: theme.spacing(13),
         marginBottom: "5em",
-        width: "70%",
+        width: "60%",
         [theme.breakpoints.down("md")]:{
             width: "80%"
         },
@@ -114,6 +114,11 @@ export default function SignUp(){
             <Paper>
             <form onSubmit={handleSignupFormSubmit}>
                 <Grid item container className={classes.itemContainer}>
+                    <Grid item container style={{marginLeft: "1em"}} align="flext-start">
+                        <Grid item>
+                            <Typography variant="h6">Registration info</Typography>
+                        </Grid>
+                    </Grid>
                     <Grid item container className={classes.form}>
                         {/* <div className={classes.form}> */}
                             <Grid item className={classes.formItem}>
