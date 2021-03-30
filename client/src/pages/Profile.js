@@ -42,7 +42,7 @@ export default function Profile() {
 
     return (
         <Switch>
-            <Route path="/user/:id/edit"><EditProfile id={id} userData={userData} photo={photo} submitFunction={submitFunction} /></Route>
+            <Route path="/user/:id/edit"><EditProfile userData={userData} photo={photo} submitFunction={submitFunction} /></Route>
             <Route><UserProfileView id={id} userData={userData} photoUrl={photoUrl} /></Route>
         </Switch>
     );
