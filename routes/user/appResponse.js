@@ -53,8 +53,8 @@ responseRouter.get("/:id", (req, res) => {
     const permissionOwn = ac.can(req.roles).readOwn("AppResponse");
     if (permissionAny.granted || permissionOwn.granted) {
         controllers.appResponse.get(req.params.id).then(appResp => {
-            if (appResp.UserId == req.userId) res.json(permissionOwn.filter(appResp.toJSON()));
-            else if (permissionAny.granted) res.json(permissionAny.filter(appResp.toJSON()));
+            if (appResp.UserId == req.userId) res.json(permissionOwn.filter(appResp));
+            else if (permissionAny.granted) res.json(permissionAny.filter(appResp));
             else return res.status(403).send({ message: "Not authorized to view this application response" });
         }).catch(err => {
             console.error(err);
