@@ -62,6 +62,7 @@ export default function CreateUser() {
     return (
         <Grid container className={classes.mainContainer}>
             <ProfileForm 
+            editable={["*"]}
             userData={userData} 
             addressData={addressData} 
             handleInputChange={handleInputChange} 
