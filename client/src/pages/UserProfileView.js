@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {useParams} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import Grid from '@material-ui/core/Grid';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Typography from "@material-ui/core/Typography";
@@ -35,6 +35,15 @@ const useStyles=makeStyles(theme => ({
 export default function UserProfileView(props){
     const classes = useStyles();
 
+    const [appResponses, setAppResponses] = useState([]);
+
+    useEffect(() => {
+        API.getUserAppResponses(props.id).then(res => {
+            setAppResponses(res.data)
+            console.log(res.data)
+        }).catch(console.error)
+    }, [props.id])
+
     return(
         <Grid container className={classes.mainContainer}>
             <Grid item style={{marginBottom: "3em"}}>
@@ -65,6 +74,23 @@ export default function UserProfileView(props){
             <Roles
             roles={props.userData?.Roles?.map((role)=><Chip key={role.id} label={role.name}/>)}
             />
+
+            {/* TODO: make this look good */}
+            {appResponses.length ? <Grid item container className={classes.itemContainer}>
+            <Grid item container style={{marginTop: "3em"}} direction="column">
+                    <Grid item>
+                        <Typography variant="h4">Applications</Typography>
+                        <Divider/>
+                    </Grid>
+                    <Grid item container>
+                        <Grid container>
+                            <Grid item container direction="column" style={{marginTop: "2em"}} xs={10}>
+                                {appResponses.map(response => <Link to={`/appResponse/${response.id}`} key={response.id}><p>Application status: {response.AppStatus.name}, Application type: {response.AppType.name}</p></Link>)}
+                            </Grid>
+                        </Grid>
+                    </Grid>
+            </Grid>
+        </Grid> : null}
 
             <CapacityView style={{ marginBottom: "5em" }}
                 maxCapacity={props.userData?.maxCapacity}
