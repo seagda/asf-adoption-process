@@ -101,7 +101,7 @@ function ResponsiveDrawer(props) {
     const drawer = (
         <div>
             {/* <div className={classes.toolbar} /> */}
-            <NavLink to="/My-Dashboard" className={classes.logoContainer}>
+            <NavLink to="/My-Dashboard" className={classes.logoContainer} onClick={() => setMobileOpen(false)}>
                 <img src={logo} className={classes.logo}/>
             </NavLink>
             <List>
