@@ -37,4 +37,4 @@ const get = (typeWhere, questionWhere) => db.AppQuestionCategory.findAll({
 module.exports.getForType = (type) => get({ name: type });
 module.exports.getForTypeId = (typeId) => get({ id: typeId });
 
-module.exports.getForResponse = (typeId, questionNames) => get({ id: typeId }, { name: { [db.Sequelize.Op.any]: questionNames } });
+module.exports.getForResponse = (typeId, questionNames) => get({ id: typeId }, { name: { [db.Sequelize.Op.in]: questionNames } });
