@@ -41,10 +41,10 @@ const API = {
         return axios.post(`/api/user/app-response`, {response, AppTypeId}, getHeaders())
     },
     getUserAppResponses: function(userId) {
-        return axios.get(`/api/user/${userId}/app-response`, getHeaders())
+        return axios.get(`/api/user/${userId}/app-responses`, getHeaders())
     },
     getMyAppResponses: function() {
-        return axios.get(`/api/user/me/app-response`, getHeaders())
+        return this.getUserAppResponses("me")
     },
     getBehaviorQuestions: function (){
         return axios.get(`/api/dog/assess/questions`, getHeaders())

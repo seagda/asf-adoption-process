@@ -22,7 +22,7 @@ responseRouter.get("/", (req, res) => {
 });
 
 // get app responses for own user
-userRouter.get("/me/app-response", (req, res) => {
+userRouter.get("/me/app-responses", (req, res) => {
     const permission = ac.can(req.roles).readOwn("AppResponse");
     if (permission.granted) {
         db.AppResponse.findAll({ attributes: { exclude: ["response"] }, where: { UserId: req.userId }, include: [db.AppStatus, db.AppType] })
@@ -35,7 +35,7 @@ userRouter.get("/me/app-response", (req, res) => {
 });
 
 // get app responses by user id
-userRouter.get("/:UserId/app-response", (req, res) => {
+userRouter.get("/:UserId/app-responses", (req, res) => {
     const permission = ac.can(req.roles).readAny("AppResponse");
     if (permission.granted) {
         db.AppResponse.findAll({ attributes: { exclude: ["response"] }, where: { UserId: req.params.UserId }, include: [db.AppStatus, db.AppType] })
