@@ -39,7 +39,7 @@ export default function HealthRecordView(props){
         </Grid>
         <Grid container>
             <Paper style={{padding: "1em", marginTop: "1em"}}>
-                <Typography style={{fontWeight: "bold", marginTop: "1em"}}>Details: <Typography>{props.medicalIssues}</Typography></Typography>
+                <Typography style={{fontWeight: "bold", marginTop: "0.25em"}}>Details: <Typography>{props.medicalIssues}</Typography></Typography>
             </Paper>
         </Grid>
     </Grid>

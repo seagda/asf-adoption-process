@@ -35,6 +35,15 @@ export default function DogInfoCurrentEdit(props){
         props.handleInputChange(event)
     }
 
+    const sortIt = sortBy => (a, b) => {
+        if (a[sortBy] > b[sortBy]) {
+          return 1;
+        } else if (a[sortBy] < b[sortBy]) {
+          return -1;
+        }
+        return 0;
+      }
+
     useEffect(()=>{
         setSelectData({
             CurrentlyWithId: props.dogData?.CurrentlyWithId
@@ -62,7 +71,7 @@ export default function DogInfoCurrentEdit(props){
                                         onChange={handleSelectChange}
                                     >
                                         <MenuItem disabled value="">Currently with?</MenuItem>
-                                        {props.asfUsers}
+                                        {props.asfUsers.sort(sortIt(props.asfUsers))}
                                         
                                     </Select>
                                 </FormControl>
