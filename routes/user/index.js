@@ -83,21 +83,19 @@ router.post("/new", (req, res) => {
                 if (user && user.Auth.createKey) {
                     return Promise.all([user.update(permission.filter(req.body)), user.Auth.update({ createKey })]).then(([user]) => user);
                 } else if (!user) {
-                    return db.User.create({ ...permission.filter(req.body), Auth: { createKey }, Setting: {} }, { include: [db.Auth, db.Setting] });
+                    return Promise.all([db.User.create({ ...permission.filter(req.body), Auth: { createKey }, Setting: {} }, { include: [db.Auth, db.Setting] })]);
                 } else res.status(409).send({ message: "There is already an account associated with that email" });
             })
-            .then(user => user.setRoles([1, ...(req.body.roles || [])]))
-            .then(() => mail.sendMail({
+            .then(([user]) => user.setRoles([1, ...(req.body.roles || [])]).then(() => mail.sendMail({
                 from: '"Australian Shepherds Furever" <aussiesfurever@outlook.com>',
                 to: req.body.email,
                 subject: "Invitation to Australian Shepherds Furever",
                 text: `You have been invited to Australian Shepherds Furever!\nClick this link to create an account: http://localhost:3000/create-account?key=${createKey}`,
                 html: `You have been invited to Australian Shepherds Furever!<br /><a href="http://localhost:3000/create-account?key=${createKey}">Click here to create an account</a>`
-            }))
-            .then(info => {
+            })).then(info => {
                 console.log(info);
-                res.send({ message: "Email sent to create an account!" });
-            })
+                res.json({ id: user.id, message: "Email sent to create an account!" });
+            }))
             .catch(err => {
                 console.error(err);
                 res.status(500).send({ message: "Error creating and emailing user", error: err });
