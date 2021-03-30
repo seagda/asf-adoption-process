@@ -76,11 +76,12 @@ export default function BehaveAssessAnswers() {
                 <Divider/>
             </Grid>
             <Grid item container>
-                <Grid item style={{marginRight: "4em"}}>
+                {/* coming back to add name of user who completed assessment */}
+                {/* <Grid item style={{marginRight: "4em"}}>
                     <Typography style={{fontWeight: "bold"}}>Completed by: <Typography></Typography></Typography>
-                </Grid>
+                </Grid> */}
                 <Grid item>
-                    <Typography style={{fontWeight: "bold"}}>Date: <Typography>{behaveData.date}</Typography></Typography>
+                    <Typography style={{fontWeight: "bold"}}>Completed on: <Typography>{behaveData.date}</Typography></Typography>
                     <Divider/>
                 </Grid>
                 
@@ -102,9 +103,8 @@ export default function BehaveAssessAnswers() {
             </Grid>
 
             <Grid item container className={classes.itemContainer}>
-                <Grid item container xs={10} sm={8} md={8} lg={7} style={{marginTop: "3em"}} direction="column">
+                <Grid item container xs={10} sm={8} md={8} lg={6} style={{marginTop: "3em"}} direction="column">
                     <Grid item>
-                        <Divider/>
                     </Grid>
                     <Grid item container style={{marginTop: "1em"}}>
                         <Grid item xs={6} sm={4} md={4} lg={4}>
