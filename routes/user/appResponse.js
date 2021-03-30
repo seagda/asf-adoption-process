@@ -10,10 +10,8 @@ const sId = require("../../scripts/staticIds");
 responseRouter.get("/", (req, res) => {
     const permission = ac.can(req.roles).readAny("AppResponse");
     if (permission.granted) {
-
-        db.AppResponse
-            .findAll({ where: req.query })
-            .then(appResps => res.json(appResps.map(appResp => permission.filter(appResp.toJSON()))))
+        db.AppResponse.findAll({ attributes: { exclude: ["response"] }, where: req.query, include: [db.AppStatus, db.AppType] })
+            .then(responses => res.json(responses.map(response => permission.filter(response.toJSON()))))
             .catch(err => {
                 console.error(err)
                 res.status(400).send({ message: "Error with request" })
@@ -26,7 +24,7 @@ responseRouter.get("/", (req, res) => {
 userRouter.get("/me/app-response", (req, res) => {
     const permission = ac.can(req.roles).readOwn("AppResponse");
     if (permission.granted) {
-        db.AppResponse.findAll({ where: { UserId: req.userId }, include: [db.AppStatus, db.AppType] })
+        db.AppResponse.findAll({ attributes: { exclude: ["response"] }, where: { UserId: req.userId }, include: [db.AppStatus, db.AppType] })
             .then(responses => res.json(responses.map(response => permission.filter(response.toJSON()))))
             .catch(err => {
                 console.error(err);
@@ -39,7 +37,7 @@ userRouter.get("/me/app-response", (req, res) => {
 userRouter.get("/:UserId/app-response", (req, res) => {
     const permission = ac.can(req.roles).readAny("AppResponse");
     if (permission.granted) {
-        db.AppResponse.findAll({ where: { UserId: req.params.UserId }, include: [db.AppStatus, db.AppType] })
+        db.AppResponse.findAll({ attributes: { exclude: ["response"] }, where: { UserId: req.params.UserId }, include: [db.AppStatus, db.AppType] })
             .then(responses => res.json(responses.map(response => permission.filter(response.toJSON()))))
             .catch(err => {
                 console.error(err);
