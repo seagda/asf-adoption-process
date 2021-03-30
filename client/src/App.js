@@ -25,6 +25,7 @@ import Profile from "./pages/Profile";
 import BehaveAssessAnswers from "./pages/BehavAssessAnswers";
 import AppAnswersUser from "./pages/AppAnswersUser";
 import AppAnswersMe from "./pages/AppAnswersMe";
+import AppResponse from "./pages/AppResponse";
 
 export default function App() {
     return (
@@ -55,6 +56,7 @@ export default function App() {
                     <Redirect from="/userView/:id" to="/user/:id" />
                     <Redirect from="/editOtherUser/:id" to="/user/:id/edit" />
                     <Route path="/behaveAnswers/:id"><BehaveAssessAnswers/></Route>
+                    <Route path="/appResponse/:id"><AppResponse /></Route>
                     <Route path="/appAnswersUser/:id"><AppAnswersUser/></Route>
                     <Route path="/appAnswersMe/:id"><AppAnswersMe/></Route>
                 </Switch>
