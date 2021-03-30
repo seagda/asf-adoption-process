@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Route, Switch, useParams } from "react-router-dom";
+import { Route, Redirect, Switch, useParams } from "react-router-dom";
 import UserProfileView from "../pages/UserProfileView";
 import EditProfile from "../pages/EditProfile";
 import API from "../utils/API";
@@ -29,9 +29,20 @@ export default function Profile() {
         });
     }
 
+    function submitFunction(userInputData, photoInput, setRedirect) {
+        const promises = [API.updateOtherUser(userInputData, id)];
+        if (photoInput.type.startsWith("image")) promises.push(API.setProfilePhoto(photoInput, id));
+        Promise.all(promises).then(()=>{
+            loadData();
+            setRedirect(<Redirect push to={`/user/${id}`} />);
+        }).catch(err=>{
+            console.error(err.response.data.message)
+        });
+    }
+
     return (
         <Switch>
-            <Route path="/user/:id/edit"><EditProfile id={id} userData={userData} photoUrl={photoUrl} reload={loadData} /></Route>
+            <Route path="/user/:id/edit"><EditProfile id={id} userData={userData} photo={photo} submitFunction={submitFunction} /></Route>
             <Route><UserProfileView id={id} userData={userData} photoUrl={photoUrl} /></Route>
         </Switch>
     );

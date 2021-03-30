@@ -1,7 +1,6 @@
 import React, {useState, useEffect, createRef} from 'react';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import {useParams, Redirect} from "react-router-dom";
 
 import ProfileForm from "../components/ProfileForm";
 import API from "../utils/API";
@@ -29,14 +28,13 @@ const useStyles=makeStyles(theme => ({
 export default function EditProfile(props) {
     const classes = useStyles()
 
-    const id = useParams().id || "me";
     const [redirect, setRedirect] = useState();
     const [userInputData, setUserInputData] = useState(props.userData);
     const [editable, setEditable] = useState(props.userData?.editable || []);
-    const [photo, setPhoto] = useState(new Blob());
+    const [photoInput, setPhotoInput] = useState(new Blob());
     const [photoInputUrl, setPhotoInputUrl] = useState("");
 
-    useEffect(() => setPhotoInputUrl(URL.createObjectURL(photo)), [photo]);
+    useEffect(() => setPhotoInputUrl(URL.createObjectURL(photoInput)), [photoInput]);
 
     const handleInputChange = ({ target: { name, value } }) => {
         let newData;
@@ -59,7 +57,7 @@ export default function EditProfile(props) {
     }
 
     const handlePhotoChange = event => {
-        setPhoto(event.target.files[0]);
+        setPhotoInput(event.target.files[0]);
     }
 
     useEffect(() => {
@@ -68,25 +66,17 @@ export default function EditProfile(props) {
             setEditable(editable || []);
         })(props.userData);
     }, [props.userData]);
-    useEffect(() => setPhotoInputUrl(props.photoUrl), [props.photoUrl]);
+    useEffect(() => setPhotoInput(props.photo), [props.photo]);
 
-    const submitFunction = event =>{
+    const submitFunction = event => {
         event.preventDefault();
-        const promises = [API.updateOtherUser(userInputData, id)];
-        if (photo.type.startsWith("image")) promises.push(API.setProfilePhoto(photo, id));
-        Promise.all(promises).then(()=>{
-            setUserInputData({});
-            props.reload();
-            setRedirect(<Redirect push to={`/user/${id}`} />);
-        }).catch(err=>{
-            console.error(err.response.data.message)
-        })
+        props.submitFunction(userInputData, photoInput, setRedirect);
     }
 
     return (
         <Grid container className={classes.mainContainer}>
             {redirect}
-            <ProfileForm 
+            <ProfileForm
             handleInputChange={handleInputChange}
             submitFunction={submitFunction}
             userData={userInputData}
