@@ -29,12 +29,12 @@ export default function Profile() {
         });
     }
 
-    function submitFunction(userInputData, photoInput, setRedirect) {
+    function submitFunction(userInputData, photoInput, redirect) {
         const promises = [API.updateOtherUser(userInputData, id)];
         if (photoInput.type.startsWith("image")) promises.push(API.setProfilePhoto(photoInput, id));
         Promise.all(promises).then(()=>{
             loadData();
-            setRedirect(<Redirect push to={`/user/${id}`} />);
+            redirect(`/user/${id}`);
         }).catch(err=>{
             console.error(err.response.data.message)
         });

@@ -1,6 +1,7 @@
 import React, {useState, useEffect, createRef} from 'react';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { Redirect } from 'react-router-dom';
 
 import ProfileForm from "../components/ProfileForm";
 import API from "../utils/API";
@@ -70,7 +71,7 @@ export default function EditProfile(props) {
 
     const submitFunction = event => {
         event.preventDefault();
-        props.submitFunction(userInputData, photoInput, setRedirect);
+        props.submitFunction(userInputData, photoInput, url => setRedirect(<Redirect push to={url} />));
     }
 
     return (
