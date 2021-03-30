@@ -1,6 +1,7 @@
 const db = require("../../models");
 const ac = require("../../helpers/ac");
 const express = require("express");
+const controllers = require("../../controllers");
 const responseRouter = express.Router();
 const userRouter = express.Router();
 const sId = require("../../scripts/staticIds");
@@ -51,16 +52,14 @@ responseRouter.get("/:id", (req, res) => {
     const permissionAny = ac.can(req.roles).readAny("AppResponse");
     const permissionOwn = ac.can(req.roles).readOwn("AppResponse");
     if (permissionAny.granted || permissionOwn.granted) {
-        db.AppResponse
-            .findByPk(req.params.id)
-            .then(appResp => {
-                if (appResp.UserId == req.userId) res.json(permissionOwn.filter(appResp.toJSON()));
-                else if (permissionAny.granted) res.json(permissionAny.filter(appResp.toJSON()));
-                else return res.status(403).send({ message: "Not authorized to view this application response" });
-            }).catch(err => {
-                console.error(err);
-                res.status(400).send({ message: "Error with request" });
-            });
+        controllers.appResponse.get(req.params.id).then(appResp => {
+            if (appResp.UserId == req.userId) res.json(permissionOwn.filter(appResp.toJSON()));
+            else if (permissionAny.granted) res.json(permissionAny.filter(appResp.toJSON()));
+            else return res.status(403).send({ message: "Not authorized to view this application response" });
+        }).catch(err => {
+            console.error(err);
+            res.status(400).send({ message: "Error with request" });
+        });
     } else return res.status(403).send({ message: "Not authorized to view AppResponses" });
 });
 
