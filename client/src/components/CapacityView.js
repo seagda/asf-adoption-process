@@ -35,7 +35,7 @@ export default function CapacityView(props){
                     <Grid item container>
                         <Paper style={{padding: "1em", marginTop: "1em"}}>
                             <Grid>
-                                <Typography style={{marginTop: "1em", fontWeight: "bold"}}>Max Capacity: <Typography>{props.maxCapacity}</Typography> </Typography>
+                                <Typography style={{marginTop: "0.25em", fontWeight: "bold"}}>Max Capacity: <Typography>{props.maxCapacity}</Typography> </Typography>
                                 {/* <Typography style={{marginTop: "1em"}}>Dogs in care:</Typography>
                                 <Typography style={{marginTop: "1em", marginRight: "0.5em"}}>Available space:</Typography> */}
                             </Grid>
