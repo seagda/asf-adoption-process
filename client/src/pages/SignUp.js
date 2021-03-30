@@ -58,6 +58,16 @@ const useStyles=makeStyles(theme => ({
     },
     addressItem: {
         minWidth: 250
+    },  
+    button: {
+        margin: theme.spacing(1),
+        maxWidth: '15em', 
+        maxHeight: '4em', 
+        minWidth: '15em', 
+        minHeight: '4em'
+    },
+    link: {
+        textDecoration: "none"
     }
 }))
 
@@ -163,7 +173,7 @@ export default function SignUp(){
                     </Grid>
         
                     <Grid item container className={classes.formItem} justify={"center"}>
-                        <Button type="submit" color="secondary" variant="contained">Sign Up</Button>
+                        <Button className={classes.button} type="submit" color="secondary" variant="contained">Sign Up</Button>
                     </Grid>
                 </Grid>
             </form>

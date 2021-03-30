@@ -71,6 +71,16 @@ const useStyles=makeStyles(theme => ({
             width: "90%"
         }
     },
+    button: {
+        margin: theme.spacing(1),
+        maxWidth: '15em', 
+        maxHeight: '4em', 
+        minWidth: '15em', 
+        minHeight: '4em'
+      },
+      link: {
+        textDecoration: "none"
+      }
 
 }))
 
@@ -96,7 +106,7 @@ export default function Home(){
                     <Typography>If you already have an account,</Typography>
                     <Typography style={{marginBottom: "1em"}}> press "LOGIN" to continue.</Typography>
                     <NavLink style={{textDecoration: "none"}} to="/signin">
-                        <Button color="secondary" variant="contained">Login</Button>
+                        <Button className={classes.button} color="secondary" variant="contained">Login</Button>
                     </NavLink>
                 </Grid>
                 <Hidden smDown>
@@ -106,7 +116,7 @@ export default function Home(){
                     <Typography>If you need to create an account,</Typography>
                     <Typography style={{marginBottom: "1em"}}> press "SIGN UP" to get started.</Typography>
                     <NavLink style={{textDecoration: "none"}} to="/signup">
-                        <Button color="secondary" variant="contained">Sign Up</Button>
+                        <Button className={classes.button} color="secondary" variant="contained">Sign Up</Button>
                     </NavLink>
                 </Grid>
             </Grid>
