@@ -60,7 +60,7 @@ router.get("/me", (req, res) => {
 router.put("/me", (req, res) => {
     const permission = ac.can(req.roles).updateOwn("User");
     if (permission.granted) {
-        db.User.findByPk(req.userId, {include: [db.Address]})
+        db.User.findByPk(req.userId, { include: [db.Address] })
             .then(user => user.update(permission.filter(req.body)).then(() => user.Address.update(permission.filter(req.body).Address)))
             .then(() => res.sendStatus(200))
             .catch(err => {
@@ -83,7 +83,7 @@ router.post("/new", (req, res) => {
                 if (user && user.Auth.createKey) {
                     return Promise.all([user.update(permission.filter(req.body)), user.Auth.update({ createKey })]).then(([user]) => user);
                 } else if (!user) {
-                    return Promise.all([db.User.create({ ...permission.filter(req.body), Auth: { createKey }, Setting: {} }, { include: [db.Auth, db.Setting] })]);
+                    return Promise.all([db.User.create({ ...permission.filter(req.body), Auth: { createKey }, Setting: {} }, { include: [db.Auth, db.Setting, db.Address] })]);
                 } else res.status(409).send({ message: "There is already an account associated with that email" });
             })
             .then(([user]) => user.setRoles([1, ...(req.body.roles || [])]).then(() => mail.sendMail({
