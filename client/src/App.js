@@ -9,7 +9,6 @@ import Login from "../src/pages/Login"
 import CreateUser from "../src/pages/CreateUser";
 import AdopterApplication from "./pages/AdopterApplication";
 import ViewASFUsers from "./pages/ViewASFUsers";
-import EditProfile from "./pages/EditProfile";
 import DogProfileView from "./pages/DogProfileView";
 import DogProfileCreate from "./pages/DogProfileCreate";
 import DashboardMain from "./pages/DashboardMain";
@@ -20,11 +19,8 @@ import FosterApplication from "./pages/FosterApplication";
 import DogProfileEdit from "./pages/DogProfileEdit";
 import BehaviorAssessment from "./pages/BehaviorAssessment";
 import DogDossierDocs from "./pages/DogDossierDocs";
-import UserProfileView from "./pages/UserProfileView";
 import Profile from "./pages/Profile";
 import BehaveAssessAnswers from "./pages/BehavAssessAnswers";
-import AppAnswersUser from "./pages/AppAnswersUser";
-import AppAnswersMe from "./pages/AppAnswersMe";
 import AppResponse from "./pages/AppResponse";
 
 export default function App() {
@@ -57,8 +53,8 @@ export default function App() {
                     <Redirect from="/editOtherUser/:id" to="/user/:id/edit" />
                     <Route path="/behaveAnswers/:id"><BehaveAssessAnswers/></Route>
                     <Route path="/appResponse/:id"><AppResponse /></Route>
-                    <Route path="/appAnswersUser/:id"><AppAnswersUser/></Route>
-                    <Route path="/appAnswersMe/:id"><AppAnswersMe/></Route>
+                    <Redirect from="/appAnswersUser/:id" to="/user/:id" />
+                    <Redirect from="/appAnswersMe/:id" to="/user/:id" />
                 </Switch>
             </BrowserRouter>
         </ThemeProvider>

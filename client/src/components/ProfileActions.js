@@ -22,14 +22,6 @@ const useStyles = makeStyles((theme) => ({
 export default function ProfileActions(props){
     const classes = useStyles();
 
-    const userString = localStorage.getItem("user")
-    if(!userString){
-        window.location = "/"
-    }
-    const user = JSON.parse(userString)
-
-    // const id = 
-
     return(
         <Grid container justify="space-evenly" style={{marginTop: "4em"}}>
             <Grid item>
@@ -40,16 +32,13 @@ export default function ProfileActions(props){
             </Grid>
 
             {/* Roles conditional not working properly. Commented out and switched to reference user/me in href. But needs to be adjusted for admin, regional etc. view */}
-            {window.location.href.includes("user/me") ? 
+            {props.id == "me" ? 
                     <React.Fragment>
                         <Grid item>
                             <ApplyButton toLink="/adopterApplication" buttonText="Apply To Adopt" color="secondary" icon={<PlayArrowIcon />} />
                         </Grid>
                         <Grid item>
                             <ApplyButton toLink="/fosterApplication" buttonText="Apply To Foster" color="secondary" icon={<PlayArrowIcon />} />
-                        </Grid>
-                        <Grid item>
-                            <ViewAppAnswersBtn toLink={`/appAnswersMe/${props.id}`} buttonText="View Application Submissions" color="secondary"/>
                         </Grid>
                     </React.Fragment>
                     // <React.Fragment>
@@ -63,28 +52,7 @@ export default function ProfileActions(props){
                     //         <ViewAppAnswersBtn toLink={`/appAnswersUser/${props.id}`} buttonText="View Application Submissions" color="secondary"/>
                     //     </Grid>
                     // </React.Fragment>
-            : 
-                <React.Fragment>
-                        <Grid item>
-                            <ViewAppAnswersBtn toLink={`/appAnswersUser/${props.id}`} buttonText="View Application Submissions" color="secondary"/>
-                        </Grid>
-                    {/* {props.roles.includes("Super Admin" && "Regional" && "Admin") ? 
-                        null
-                    : 
-                        <React.Fragment>
-                            <Grid item>
-                                <ApplyButton toLink="/adopterApplication" buttonText="Apply To Adopt" color="secondary" icon={<PlayArrowIcon />} />
-                            </Grid>
-                            <Grid item>
-                                <ApplyButton toLink="/fosterApplication" buttonText="Apply To Foster" color="secondary" icon={<PlayArrowIcon />} />
-                            </Grid>
-                            <Grid item>
-                                <ViewAppAnswersBtn toLink={`/appAnswersMe/${props.id}`} buttonText="View Application Submissions" color="secondary"/>
-                            </Grid>
-                        </React.Fragment>
-                    } */}
-                </React.Fragment>
-            }
+            : null }
 
             {/* <Grid item>
                 {admin ? <ContactButton toLink="/" buttonText="Contact"/> : <ContactButton toLink="/" buttonText="Contact Admin"/>}
