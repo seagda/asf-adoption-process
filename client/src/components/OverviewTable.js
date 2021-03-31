@@ -310,8 +310,8 @@ export default function OverviewTable(props) {
                       </TableCell>
                       <TableCell ><NavLink gutterBottom style={{textDecoration: "none"}} to={`/dogView/${row.id}`}>{row.name}</NavLink></TableCell>
                       <TableCell >{row.currentlyWith ? row.currentlyWith.firstName + " " + row.currentlyWith.lastName : "not assigned"}</TableCell>
-                      <TableCell >{row.city}</TableCell>
-                      <TableCell >{row.state}</TableCell>
+                      <TableCell >{row.Address.city}</TableCell>
+                      <TableCell >{row.Address.state}</TableCell>
                       <TableCell >{row.gender}</TableCell>
                       <TableCell >{row.dob}</TableCell>
                       <TableCell >{row.Region.name}</TableCell>

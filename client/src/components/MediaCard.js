@@ -14,9 +14,25 @@ const useStyles = makeStyles(theme => ({
   
   root: {
     maxWidth: "90%",
-    minWidth: "70%",
+    minWidth: "90%",
+    maxHeight: '100%',
+    minHeight: '100%',
     marginTop: theme.spacing(2),
-    flex: "wrap"
+    flex: "wrap",
+    border: '2px solid',
+    borderColor: '#E7EDF3',
+    borderRadius: 16,
+    transition: '0.4s',
+    boxShadow: '0 8px 16px 0 #BDC9D7',
+    '&:hover': {
+      borderColor: '#5B9FED',
+    },
+  }, 
+  media: {
+    maxWidth: "100%",
+    minWidth: "100%",
+    maxHeight: '200px',
+    minHeight: '200px',
   }
 }));
 
@@ -49,9 +65,11 @@ export default function MediaCard(props) {
         </CardContent>
       </CardActionArea>
       <CardActions>
+      <NavLink style={{textDecoration: "none"}} to={`/dogView/${props.id}`}>
         <Button size="small" color="primary" to={props.dossierLink}>
           View Dossier
         </Button>
+      </NavLink>
       </CardActions>
     </Card>
   );

@@ -3,32 +3,20 @@ const jwt = require("jsonwebtoken");
 const db = require("../../models");
 const ac = require("../../helpers/ac");
 const mail = require("../../helpers/mail");
-
+const controllers = require("../../controllers");
 const router = require("express").Router();
 
-router.use("/alert", require("./alertController"));
-router.use("/app-response", require("./appResponseController"));
-router.use("/family", require("./familymemberController"));
-router.use("/reference", require("./referenceController"));
+router.use("/alert", require("./alert"));
+router.use(require("./appResponse"));
+router.use("/family", require("./familymember"));
+router.use("/reference", require("./reference"));
 
 // get all users
 router.get("/", (req, res) => {
     const permission = ac.can(req.roles).readAny("User");
     if (permission.granted) {
         db.User.findAll({ include: [db.Address, { association: "ResidesInRegion" }, db.Role] })
-            .then(users => res.json(permission.filter(users.map(user => {
-                userJson = user.toJSON();
-                return {
-                    id: userJson.id,
-                    firstName: userJson.firstName,
-                    lastName: userJson.lastName,
-                    email: userJson.email,
-                    city: userJson.Address ? userJson.Address.city : "No Address",
-                    state: userJson.Address ? userJson.Address.state : "--",
-                    ResidesInRegion: userJson.ResidesInRegion,
-                    Roles: userJson.Roles.filter(role => role.name !== "user")
-                }
-            }))))
+            .then(users => res.json(permission.filter(users.map(user => user.toJSON()))))
             .catch(err => {
                 console.error(err);
                 res.status(500).send({ message: "error getting users from the database" });
@@ -36,24 +24,44 @@ router.get("/", (req, res) => {
     } else return res.status(403).send({ message: "not authorized to view all users" });
 });
 
+router.get("/me/photo", (req, res) => {
+    controllers.user.getProfilePhoto(req.userId).then(([photo, metadata]) => {
+        res.set({ "Content-Type": metadata[0].contentType });
+        photo.createReadStream().pipe(res);
+    }).catch(err => {
+        console.error(err);
+        res.sendStatus(500);
+    });
+});
+
+router.post("/me/photo", require("express-fileupload")(), (req, res) => {
+    if (ac.can(req.roles).updateOwn("User").granted) controllers.user.setProfilePhoto(req.userId, req.files.photo)
+        .then(() => res.sendStatus(200))
+        .catch(err => {
+            console.error(err);
+            res.sendStatus(500);
+        });
+});
+
 // get own user data
 router.get("/me", (req, res) => {
-    // everyone has this permission but we check to get the filter
-    const permission = ac.can(req.roles).readOwn("User");
-    if (permission.granted) {
-        db.User.findByPk(req.userId).then(user => res.json(permission.filter(user.toJSON()))).catch(err => {
+    controllers.user.get(req.userId)
+        .then(user => res.json({
+            ...ac.can(req.roles).readOwn("User").filter(user),
+            editable: ac.can(req.roles).updateOwn("User").attributes
+        }))
+        .catch(err => {
             console.error(err);
-            res.status(500).send({ message: "Server error finding this user" });
+            res.status(500).send({ message: "Database error finding this user" });
         });
-    } else return res.status(403).send({ message: "whoops we broke something, everyone should have readOwn user" });
 });
 
 // edit own user data
 router.put("/me", (req, res) => {
     const permission = ac.can(req.roles).updateOwn("User");
     if (permission.granted) {
-        db.User.findByPk(req.userId)
-            .then(user => user.update(permission.filter(req.body)))
+        db.User.findByPk(req.userId, { include: [db.Address] })
+            .then(user => user.update(permission.filter(req.body)).then(() => user.Address.update(permission.filter(req.body).Address)))
             .then(() => res.sendStatus(200))
             .catch(err => {
                 console.error(err);
@@ -75,21 +83,19 @@ router.post("/new", (req, res) => {
                 if (user && user.Auth.createKey) {
                     return Promise.all([user.update(permission.filter(req.body)), user.Auth.update({ createKey })]).then(([user]) => user);
                 } else if (!user) {
-                    return db.User.create({ ...permission.filter(req.body), Auth: { createKey } }, { include: db.Auth });
+                    return Promise.all([db.User.create({ ...permission.filter(req.body), Auth: { createKey }, Setting: {} }, { include: [db.Auth, db.Setting, db.Address] })]);
                 } else res.status(409).send({ message: "There is already an account associated with that email" });
             })
-            .then(user => user.setRoles([1, ...(req.body.roles || [])]))
-            .then(() => mail.sendMail({
+            .then(([user]) => user.setRoles([1, ...(req.body.roles || [])]).then(() => mail.sendMail({
                 from: '"Australian Shepherds Furever" <aussiesfurever@outlook.com>',
                 to: req.body.email,
                 subject: "Invitation to Australian Shepherds Furever",
                 text: `You have been invited to Australian Shepherds Furever!\nClick this link to create an account: http://localhost:3000/create-account?key=${createKey}`,
                 html: `You have been invited to Australian Shepherds Furever!<br /><a href="http://localhost:3000/create-account?key=${createKey}">Click here to create an account</a>`
-            }))
-            .then(info => {
+            })).then(info => {
                 console.log(info);
-                res.send({ message: "Email sent to create an account!" });
-            })
+                res.json({ id: user.id, message: "Email sent to create an account!" });
+            }))
             .catch(err => {
                 console.error(err);
                 res.status(500).send({ message: "Error creating and emailing user", error: err });
@@ -97,24 +103,46 @@ router.post("/new", (req, res) => {
     } else return res.status(403).send({ message: "Not authorized to create a user" });
 });
 
+router.get("/:id/photo", (req, res) => {
+    controllers.user.getProfilePhoto(req.params.id).then(([photo, metadata]) => {
+        res.set({ "Content-Type": metadata[0].contentType });
+        photo.createReadStream().pipe(res);
+    }).catch(err => {
+        console.error(err);
+        res.sendStatus(500);
+    });
+});
+
+router.post("/:id/photo", require("express-fileupload")(), (req, res) => {
+    if (ac.can(req.roles).updateAny("User").granted) controllers.user.setProfilePhoto(req.params.id, req.files.photo)
+        .then(() => res.sendStatus(200))
+        .catch(err => {
+            console.error(err);
+            res.sendStatus(500);
+        });
+});
+
 // view user profile by id
 router.get("/:id", (req, res) => {
     const permissionRead = ac.can(req.roles).readAny("User");
     const permissionUpdate = ac.can(req.roles).updateAny("User");
-    if (permissionRead.granted) {
-        db.User.findByPk(req.params.id).then(user => res.json({ ...permissionRead.filter(user.toJSON()), canEdit: permissionUpdate.granted })).catch(err => {
+    if (permissionRead.granted) controllers.user.get(req.params.id)
+        .then(user => res.json({ ...permissionRead.filter(user), editable: permissionUpdate.attributes }))
+        .catch(err => {
             console.error(err);
             res.status(500).send({ message: "Database error" });
         });
-    } else return res.status(403).send({ message: "Not authorized to view this user" });
+    else return res.status(403).send({ message: "Not authorized to view this user" });
 });
 
 // edit user by id
 router.put("/:id", (req, res) => {
     const permission = ac.can(req.roles).updateAny("User");
     if (permission.granted) {
-        db.User.findByPk(req.params.id)
-            .then(user => user.update(permission.filter(req.body)))
+        const Address = permission.filter(req.body).Address;
+        db.User.findByPk(req.params.id, { include: [db.Address] })
+            .then(user => user.update(permission.filter(req.body))
+                .then(() => user.AddressId ? user.Address.update(Address) : user.createAddress(Address)))
             .then(() => res.sendStatus(200))
             .catch(err => {
                 console.error(err);

@@ -2,10 +2,11 @@ import React from 'react';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-
+import Paper from "@material-ui/core/Paper";
 import Image from "../components/Image";
 
 import dog from "../assets/Cool_Dog.png";
+import { Divider } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
     itemContainer: {
@@ -21,11 +22,12 @@ const useStyles = makeStyles(theme => ({
         }
     },
     formItem: {
-        marginBottom: "2em"
+        marginBottom: "0.25em"
     },
     picContainer: {
         [theme.breakpoints.down("xs")]:{
             justifyContent: "center",
+            padding: 5
         }
     }
 }))
@@ -40,24 +42,31 @@ export default function DogBlockView(props){
                 <Image alt={"cool dog"} pic={props.image} />
             </Grid>
             <Grid item className={classes.form}>
+                <Paper style={{padding: "2em"}}>
                 <Grid item container className={classes.formItem}>
-                    <Typography>Name: {props.name}</Typography>
+                    <Typography style={{fontWeight: "bold"}}>Name: <Typography>{props.name}</Typography> </Typography>
                 </Grid>
+                <Divider/>
                 <Grid item container className={classes.formItem}>
-                     <Typography>DOB: {props.dob}</Typography>
+                     <Typography style={{fontWeight: "bold"}}>ASF ID: <Typography>{props.asfId}</Typography> </Typography>
                 </Grid>
+                <Divider/>
                 <Grid item container className={classes.formItem}>
-                     <Typography>Gender: {props.gender}</Typography>
+                     <Typography style={{fontWeight: "bold"}}>DOB: <Typography>{props.dob}</Typography> </Typography>
                 </Grid>
+                <Divider/>
                 <Grid item container className={classes.formItem}>
-                    <Typography>Size: {props.size}</Typography>
+                     <Typography style={{fontWeight: "bold"}}>Gender: <Typography>{props.gender}</Typography> </Typography>
                 </Grid>
+                <Divider/>
                 <Grid item container className={classes.formItem}>
-                     <Typography>Microchip Info: {props.microchipName} {props.microchipId}</Typography>
+                    <Typography style={{fontWeight: "bold"}}>Size: <Typography>{props.size}</Typography> </Typography>
+                </Grid>
+                <Divider/>
+                <Grid item container>
+                     <Typography style={{fontWeight: "bold"}}>Microchip Info: <Typography>{props.mfgCompany}, {props.microchipId}</Typography></Typography>
                  </Grid>
-                <Grid item container className={classes.formItem}>
-                     <Typography>ASF ID: {props.asfId}</Typography>
-                </Grid>
+                 </Paper>
             </Grid>
         </Grid>
     </Grid>

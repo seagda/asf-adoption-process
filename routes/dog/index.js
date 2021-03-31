@@ -1,47 +1,25 @@
 const db = require("../../models");
 const ac = require("../../helpers/ac");
 const router = require("express").Router();
-const sId = require("../../scripts/staticIds");
+const controllers = require("../../controllers");
 
-router.use("/assess", require("./behavioralAssessmentController"));
-router.use("/document", require("./documentController"));
-router.use("/medi-status", require("./mediStatusController"));
+router.use("/assess", require("./behavioralAssessment"));
+router.use("/document", require("./document"));
+router.use("/medi-status", require("./mediStatus"));
 
 // show all DOGS, with correct ROLE permission
 router.get("/", (req, res) => {
     const permissionOwn = ac.can(req.roles).readOwn("Dog");
     const permissionAny = ac.can(req.roles).readAny("Dog");
     if (permissionAny.granted || permissionOwn.granted) {
-        const currentlyWith = { association: "currentlyWith", include: [db.Address, { association: "ResidesInRegion" }] };
-        if (!permissionAny.granted) currentlyWith.where = { id: req.userId };
-        db.Dog.findAll({
-            include: [
-                currentlyWith,
-                db.DogStatus,
-                { association: "origin", include: [db.Address, db.Region] },
-                { model: db.DogPhoto, required: false, where: { profilePhoto: true } }
-            ]
-        }).then(dogs => {
-            const dogRes = dogs.map(dog => {
-                const dogJson = permissionAny.granted ? permissionAny.filter(dog.toJSON()) : permissionOwn.filter(dog.toJSON());
-                if (dogJson.currentlyWithId) {
-                    dogJson.city = dogJson.currentlyWith.Address.city;
-                    dogJson.state = dogJson.currentlyWith.Address.state;
-                    dogJson.Region = dogJson.currentlyWith.ResidesInRegion;
-                } else {
-                    dogJson.city = dogJson.origin.Address.city;
-                    dogJson.state = dogJson.origin.Address.state;
-                    dogJson.Region = dogJson.origin.Region;
-                }
-                const { currentlyWith, ...dogToSend } = dogJson;
-                if (dogJson.currentlyWith) dogToSend.currentlyWith = { firstName: currentlyWith.firstName, lastName: currentlyWith.lastName, id: currentlyWith.id };
-                return dogToSend;
+        let withFilter;
+        if (!permissionAny.granted) withFilter = { id: req.userId };
+        controllers.dog.getAll(null, withFilter)
+            .then(dogs => res.json(permissionAny.granted ? permissionAny.filter(dogs) : permissionOwn.filter(dogs)))
+            .catch(err => {
+                console.error(err);
+                res.sendStatus(500);
             });
-            res.json(dogRes);
-        }).catch(err => {
-            console.error(err);
-            res.sendStatus(500);
-        });
     } else return res.status(403).send({ message: "Not authorized to view dogs" });
 });
 
@@ -58,31 +36,61 @@ router.get("/microchip-mfg", (req, res) => db.MicrochipMfg.findAll().then(microc
     res.status(500).send({ message: "Database error" });
 }));
 
-// show one DOG, with correct ROLE permission
+// show all DOCUMENTs for ONE dog, with correct ROLE permission
+router.get("/:DogId/documents", (req, res) => {
+    const permissionOwn = ac.can(req.roles).readOwn("Document");
+    const permissionAny = ac.can(req.roles).readAny("Document");
+    if (permissionOwn.granted || permissionAny.granted) {
+        controllers.document.getForDog(req.params.DogId).then(docs => {
+            if (docs.CurrentlyWithId == req.userId) res.json(permissionOwn.filter(docs.documents));
+            else if (permissionAny.granted) res.json(permissionAny.filter(docs.documents));
+            else res.status(403).send({ message: "Not authorized to view documents for this dog" });
+        })
+    } else return res.status(403).send({ message: "Not authorized to view documents" });
+});
 
+// show all BEHAVIORAL ASSESSMENT for ONE dog, with correct ROLE permission
+router.get("/:DogId/assessments", (req, res) => {
+    const permissionOwn = ac.can(req.roles).readOwn("BehavioralAssessment");
+    const permissionAny = ac.can(req.roles).readAny("BehavioralAssessment");
+    if (permissionOwn.granted || permissionAny.granted) {
+        db.Dog.findByPk(req.params.DogId, { include: { model: db.BehavioralAssessment, include: {model: db.User, attributes: ["firstName", "lastName"]} } }).then(dog => {
+            let behAssJson = dog.BehavioralAssessments.map(behAss => behAss.toJSON());
+            if (dog.CurrentlyWithId === req.userId) {
+                behAssJson = permissionOwn.filter(behAssJson)
+            } else if (permissionAny.granted) {
+                behAssJson = permissionAny.filter(behAssJson)
+            } else return res.status(403).send({ message: "you can't view this dog's assessments" });
+            // TODO: Calculate score
+            res.json(behAssJson);
+        }).catch(err => {
+            console.error(err);
+            res.status(422).send({ message: "Error with request" });
+        });
+    } else return res.status(403).send({ message: "Not authorized to view Behavioral Assessments" });
+});
+
+// show one DOG, with correct ROLE permission
 router.get("/:id", (req, res) => {
     const permissionReadOwn = ac.can(req.roles).readOwn("Dog");
     const permissionReadAny = ac.can(req.roles).readAny("Dog");
     const permissionUpdateOwn = ac.can(req.roles).updateOwn("Dog");
     const permissionUpdateAny = ac.can(req.roles).updateAny("Dog");
     if (permissionReadOwn.granted || permissionReadAny.granted) {
-        db.Dog.findByPk(req.params.id, {
-            include: [
-                { association: "currentlyWith", include: [db.Address, { association: "ResidesInRegion" }] },
-                { association: "origin", include: [db.Address, db.Region] },
-                db.MicrochipMfg, db.DogPhoto
-            ],
-        }).then(dog => {
-            // TODO: also check permissions for currently with and origin
-            let dogJson;
-            if (dog.currentlyWithId === req.userId) {
-                dogJson = { ...permissionReadOwn.filter(dog.toJSON()), canEdit: permissionUpdateOwn.granted }
+        controllers.dog.get(req.params.id).then(dog => {
+            let dogFiltered;
+            if (dog.CurrentlyWithId === req.userId) {
+                dogFiltered = { ...permissionReadOwn.filter(dog), editable: permissionUpdateOwn.attributes }
             } else if (permissionReadAny.granted) {
-                dogJson = { ...permissionReadAny.filter(dog.toJSON()), canEdit: permissionUpdateAny.granted }
+                dogFiltered = { ...permissionReadAny.filter(dog), editable: permissionUpdateAny.attributes }
             } else return res.status(403).send({ message: "you can't view this dog" });
-            res.json(dogJson);
+            if (dogFiltered.CurrentlyWith) dogFiltered.CurrentlyWith = ac.can(req.roles).readAny("User").filter(dogFiltered.CurrentlyWith);
+            if (dogFiltered.Origin) dogFiltered.Origin = ac.can(req.roles).readAny("ExtContact").filter(dogFiltered.Origin);
+            res.json(dogFiltered);
+        }).catch(err => {
+            console.error(err);
+            res.status(500).send({ message: "Database error" })
         });
-
     } else return res.status(403).send({ message: "Not authorized to view dogs" });
 });
 
@@ -95,8 +103,8 @@ router.post("/", (req, res) => {
     const permissionAny = ac.can(req.roles).createAny("Dog");
     console.log(permissionAny.filter(req.body))
     if (permissionAny.granted) {
-        db.Dog.create({ ...permissionAny.filter(req.body), DogStatusId: 1 }, { include: { model: db.ExtContact, as: "origin", include: db.Address } })
-            // currentlyWith always starts null
+        db.Dog.create({ ...permissionAny.filter(req.body), DogStatusId: 1 }, { include: { association: "Origin", include: db.Address } })
+            // CurrentlyWith always starts null
             .then(dog => res.status(200).send({ id: dog.id }))
             .catch(err => {
                 console.error(err);
@@ -109,7 +117,7 @@ router.post("/", (req, res) => {
 router.post("/:DogId/photo", (req, res) => {
     const permissionOwn = ac.can(req.roles).updateOwn("Dog");
     const permissionAny = ac.can(req.roles).updateAny("Dog");
-    Promise.resolve((() => permissionOwn.granted && !permissionAny.granted ? db.Dog.findByPk(req.params.DogId).then(dog => dog.currentlyWithId === req.userId) : permissionAny.granted)())
+    Promise.resolve((() => permissionOwn.granted && !permissionAny.granted ? db.Dog.findByPk(req.params.DogId).then(dog => dog.CurrentlyWithId === req.userId) : permissionAny.granted)())
         .then(granted => granted ? (req.body.profilePhoto ? db.DogPhoto.update({ profilePhoto: false }, { where: { DogId: req.params.DogId } }).then(() => true) : true) : false)
         .then(granted => granted
             ? db.DogPhoto.create({ DogId: req.params.DogId, url: req.body.url, profilePhoto: req.body.profilePhoto }).then(() => res.status(200).send({ message: "Successfully added photo" }))
@@ -124,7 +132,7 @@ router.post("/:DogId/photo", (req, res) => {
 router.put("/:DogId/profile-photo/:PhotoId", (req, res) => {
     const permissionOwn = ac.can(req.roles).updateOwn("Dog");
     const permissionAny = ac.can(req.roles).updateAny("Dog");
-    Promise.resolve((() => permissionOwn.granted && !permissionAny.granted ? db.Dog.findByPk(req.params.DogId).then(dog => dog.currentlyWithId === req.userId) : permissionAny.granted)())
+    Promise.resolve((() => permissionOwn.granted && !permissionAny.granted ? db.Dog.findByPk(req.params.DogId).then(dog => dog.CurrentlyWithId === req.userId) : permissionAny.granted)())
         .then(granted => granted ? Promise.all([
             db.DogPhoto.update({ profilePhoto: false }, { where: { DogId: req.params.DogId, id: { [db.Sequelize.Op.ne]: req.params.PhotoId } } }),
             db.DogPhoto.update({ profilePhoto: true }, { where: { DogId: req.params.DogId, id: req.params.PhotoId } })
@@ -145,15 +153,17 @@ router.put("/:id", (req, res) => {
         db.Dog.findByPk(req.params.id)
             .then(dog => {
                 let updates;
-                if (dog.currentlyWithId === req.userId) updates = permissionOwn.filter(req.body);
+                if (dog.CurrentlyWithId === req.userId) updates = permissionOwn.filter(req.body);
                 else if (permissionAny.granted) updates = permissionAny.filter(req.body);
                 else return res.status(403).send({ message: "Not authorized to update this dog" });
-                const promises = [dog, updates];
-                if (updates.name && updates.name !== dog.name) promises[2] = dog.createDogAlias({ name: dog.name });
-                if (updates.DogStatusId && updates.DogStatusId !== dog.DogStatusId) generateStatusAlerts(dog);
+                const { name, CurrentlyWithId, DogStatusId, ...other } = updates;
+                const promises = [];
+                if (Object.entries(other).length) promises[0] = controllers.dog.update(dog, other);
+                if (CurrentlyWithId) promises[1] = controllers.dog.updateCurrentlyWith(dog, CurrentlyWithId);
+                if (DogStatusId) promises[2] = controllers.dog.updateStatus(dog, DogStatusId);
+                if (name) promises[3] = controllers.dog.updateName(dog, name);
                 return Promise.all(promises);
             })
-            .then(([dog, updates, alias]) => dog.update(updates))
             .then(() => res.sendStatus(200))
             .catch(err => {
                 console.error(err);
@@ -178,7 +188,7 @@ router.delete("/archive/:id", (req, res) => {
 
 // Generate ALERTS
 
-function generateStatusAlerts(dog) {
+/* function generateStatusAlerts(dog) {
     dog.getRegion().then(Region => {
         const or = [
             { "$Roles.id$": sId.ROLES.ADMIN },
@@ -203,11 +213,14 @@ function generateStatusAlerts(dog) {
         return Promise.all([db.User.findAll({
             where: {
                 [db.Sequelize.Op.or]: or
-            }, include: db.Role
+            }, include: [db.Role, { association: "AssignedRegions" }]
         }),
         dog.getDogStatus()
         ]);
-    }).then(([users, DogStatus]) => users.forEach(user => user.createAlert({ message: `${dog.name} is ${DogStatus.name}`, aboutDogId: dog.id }))).catch(console.error);
-}
+    })
+        .then(([users, DogStatus]) => Promise.all(users.map(user => user.createAlert({ message: `${dog.name} is ${DogStatus.name}`, AboutDogId: dog.id }))))
+        .then(alerts => alertController.notifyUsers(alerts))
+        .catch(console.error);
+} */
 
 module.exports = router;

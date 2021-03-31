@@ -11,6 +11,8 @@ import DogProfileActions from "../components/DogProfileActions";
 import DogBreedView from "../components/DogBreedView";
 import DogOriginView from "../components/DogOriginView";
 import DogInfoCurrent from "../components/DogInfoCurrent";
+import DogStatusView from "../components/DogStatusView";
+import HealthRecordView from "../components/HealthRecordView";
 
 const useStyles=makeStyles(theme => ({
     mainContainer: {
@@ -41,7 +43,16 @@ export default function DogProfileView(){
         MicrochipMfg:{}, 
         DogStatus:{}, 
         DogPhotos: [], 
-        origin: {Region: {}, Address: {}}
+        Origin: {Region: {}, Address: {}},
+        CurrentlyWith: {
+            firstName: "",
+            lastName: "",
+            ResidesInRegion: {},
+            Address: {},
+            phone: "",
+            email: "",
+            id: 0
+        }
     })
     useEffect(()=>{
         API.getSingleDogData(id).then(res =>{
@@ -61,16 +72,17 @@ export default function DogProfileView(){
             </Grid>
 
             <DogBlockView 
-            name={dogData.name} 
-            dob={dogData.dob} 
-            gender={dogData.gender} 
-            size={dogData.size} 
-            microchipId={dogData.microchipId} 
-            asfId={dogData.asfId} 
+            name={dogData?.name} 
+            dob={dogData?.dob} 
+            gender={dogData?.gender} 
+            size={dogData?.size} 
+            mfgCompany={dogData?.MicrochipMfg?.name}
+            microchipId={dogData?.microchipId} 
+            asfId={dogData?.id} 
             // microchipName={dogData.MicrochipMfg.name} 
             image={(dogData.DogPhotos.find((photo)=> photo.profilePhoto)||{}).url}/>
 
-            {dogData.canEdit ? <DogProfileActions id={id}/> : null}
+            {dogData.editable ? <DogProfileActions id={id}/> : null}
 
             <DogBreedView 
             coat={dogData.coat} 
@@ -79,20 +91,35 @@ export default function DogProfileView(){
             secondary={dogData.secondaryBreed}/>
 
             <DogOriginView 
-            originName={dogData.origin.fullName} 
-            originRegion={dogData.origin.Region.name} 
-            originStreet={dogData.origin.Address.street} 
-            originCity={dogData.origin.Address.city} 
-            originState={dogData.origin.Address.state} 
-            originZip={dogData.origin.Address.zip5} 
-            originPhone={dogData.origin.phone} 
-            pullCost={dogData.pullCost}/>
+            origin={dogData?.Origin}
+            originName={dogData.Origin?.fullName} 
+            originRegion={dogData.Origin?.Region.name} 
+            originStreet={dogData.Origin?.Address.street} 
+            originCity={dogData.Origin?.Address.city} 
+            originState={dogData.Origin?.Address.state} 
+            originZip={dogData.Origin?.Address.zip5} 
+            originPhone={dogData.Origin?.phone} 
+            pullCost={dogData?.pullCost}/>
 
             <DogInfoCurrent 
-            currentlyWith={dogData.currentlyWith} 
-            behaviorIssues={dogData.behaviorIssues} 
-            medicalIssues={dogData.medicalIssues} 
-            blocked={dogData.blocked}/>
+            currentlyWith={dogData?.CurrentlyWith}
+            region={dogData.CurrentlyWith?.ResidesInRegion}
+            address={dogData.CurrentlyWith?.Address} 
+            behaviorIssues={dogData?.behaviorIssues} 
+            medicalIssues={dogData?.medicalIssues} 
+            blocked={dogData?.blocked}
+            currentlyWithId={dogData.CurrentlyWith?.id}
+            avatar={dogData.CurrentlyWith?.photoUrl}
+            />
+
+            <HealthRecordView
+            medicalIssues={dogData?.medicalIssues}
+            />
+
+            <DogStatusView
+            dogData={dogData}
+            />
+
         </Grid>
     )
 }

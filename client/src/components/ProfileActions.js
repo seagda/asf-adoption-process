@@ -7,7 +7,8 @@ import ApplyButton from "./ApplyButton";
 import HoldCheckbox from "./HoldCheckbox";
 import UpdateButton from "./UpdateButton";
 import ContactButton from "./ContactButton";
-import PlayArrowIcon from '@material-ui/icons/PlayArrow'
+import PlayArrowIcon from '@material-ui/icons/PlayArrow';
+import ViewAppAnswersBtn from "./ViewAppAnswersBtn";
 
 const useStyles = makeStyles((theme) => ({
     itemContainer: {
@@ -18,33 +19,41 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function ProfileActions(){
+export default function ProfileActions(props){
     const classes = useStyles();
-
-    const userString = localStorage.getItem("user")
-    if(!userString){
-        window.location = "/"
-    }
-    const user = JSON.parse(userString)
 
     return(
         <Grid container justify="space-evenly" style={{marginTop: "4em"}}>
             <Grid item>
-                <EditButton toLink="/editprofile" buttonText="Edit Profile"/> 
+                <EditButton toLink={`/user/${props.id}/edit`} buttonText="Edit Profile"/>
             </Grid>
             <Grid item>
                <UpdateButton toLink="/" buttonText="Update Password"/>
             </Grid>
-            {!user.roles.includes("adopter") ? (
-                <Grid item>
-                    <ApplyButton toLink="/adopterApplication" buttonText="Apply To Adopt" color="secondary" icon={<PlayArrowIcon />} />
-                </Grid>)
-            : null}
-            {!user.roles.includes("foster") ? (
-                <Grid item>
-                    <ApplyButton toLink="/fosterApplication" buttonText="Apply To Foster" color="secondary" icon={<PlayArrowIcon />} />
-                </Grid>)
-            : null}
+
+            {/* Roles conditional not working properly. Commented out and switched to reference user/me in href. But needs to be adjusted for admin, regional etc. view */}
+            {props.id == "me" ? 
+                    <React.Fragment>
+                        <Grid item>
+                            <ApplyButton toLink="/adopterApplication" buttonText="Apply To Adopt" color="secondary" icon={<PlayArrowIcon />} />
+                        </Grid>
+                        <Grid item>
+                            <ApplyButton toLink="/fosterApplication" buttonText="Apply To Foster" color="secondary" icon={<PlayArrowIcon />} />
+                        </Grid>
+                    </React.Fragment>
+                    // <React.Fragment>
+                    //     <Grid item>
+                    //         <ApplyButton toLink="/appAnswersAdopt" buttonText="View Adopter Application" color="secondary" icon={<PlayArrowIcon />} />
+                    //     </Grid>
+                    //     <Grid item>
+                    //         <ApplyButton toLink="/appAnswersFoster" buttonText="View Foster Application" color="secondary" icon={<PlayArrowIcon />} />
+                    //     </Grid>
+                    //     <Grid item>
+                    //         <ViewAppAnswersBtn toLink={`/appAnswersUser/${props.id}`} buttonText="View Application Submissions" color="secondary"/>
+                    //     </Grid>
+                    // </React.Fragment>
+            : null }
+
             {/* <Grid item>
                 {admin ? <ContactButton toLink="/" buttonText="Contact"/> : <ContactButton toLink="/" buttonText="Contact Admin"/>}
             </Grid> */}

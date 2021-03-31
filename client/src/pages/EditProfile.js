@@ -1,6 +1,7 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, createRef} from 'react';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { Redirect } from 'react-router-dom';
 
 import ProfileForm from "../components/ProfileForm";
 import API from "../utils/API";
@@ -25,23 +26,65 @@ const useStyles=makeStyles(theme => ({
 }))
 
 
-export default function EditProfile() {
+export default function EditProfile(props) {
     const classes = useStyles()
 
-    const [userData, setUserData] = useState({})
-    useEffect(()=>{
-        API.getMyUserData().then(res =>{
-            console.log(res.data)
-            setUserData(res.data)
-        }).catch(err=>{
-            console.error(err.response.data.message)
-            // alert("get data failed")
-        })
-    }, [])
+    const [redirect, setRedirect] = useState();
+    const [userInputData, setUserInputData] = useState(props.userData);
+    const [editable, setEditable] = useState(props.userData?.editable || []);
+    const [photoInput, setPhotoInput] = useState(new Blob());
+    const [photoInputUrl, setPhotoInputUrl] = useState("");
+
+    useEffect(() => setPhotoInputUrl(URL.createObjectURL(photoInput)), [photoInput]);
+
+    const handleInputChange = ({ target: { name, value } }) => {
+        let newData;
+        if (name.includes(".")) {
+            const names = name.split(".")
+            newData = {
+                ...userInputData,
+                [names[0]]: {
+                    ...userInputData[names[0]],
+                    [names[1]]: value
+                }
+            }
+        } else {
+            newData = {
+                ...userInputData,
+                [name]: value
+            }
+        }
+        setUserInputData(newData)
+    }
+
+    const handlePhotoChange = event => {
+        setPhotoInput(event.target.files[0]);
+    }
+
+    useEffect(() => {
+        (({ editable, ...data }) => {
+            setUserInputData(data);
+            setEditable(editable || []);
+        })(props.userData);
+    }, [props.userData]);
+    useEffect(() => setPhotoInput(props.photo), [props.photo]);
+
+    const submitFunction = event => {
+        event.preventDefault();
+        props.submitFunction(userInputData, photoInput, url => setRedirect(<Redirect push to={url} />));
+    }
 
     return (
         <Grid container className={classes.mainContainer}>
-            <ProfileForm submitFunction={API.updateMyUserData} userData={userData}/>
+            {redirect}
+            <ProfileForm
+            handleInputChange={handleInputChange}
+            submitFunction={submitFunction}
+            userData={userInputData}
+            editable={editable}
+            photoUrl={photoInputUrl}
+            handlePhotoChange={handlePhotoChange}
+            />
         </Grid>
        
     )

@@ -9,11 +9,11 @@ import PieChartContainer from "../components/PieChartContainer";
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import AvatarList from '../components/AvatarList';
-import BasicList from '../components/BasicList';
+import AlertWarning from '../components/AlertWarning';
 import ListContainer from '../components/ListContainer';
 import API from '../utils/API';
 import MediaCard from '../components/MediaCard';
-
+import DashboardWelcome from '../components/DashboardWelcome';
 
 const useStyles=makeStyles(theme => ({
     mainContainer: {
@@ -43,16 +43,34 @@ export default function DashboardMain(){
     const classes = useStyles();
 
     const [dashboardData, setDashboardState] = useState({})
-  
+    const [alerts, setAlerts] = useState([]);
+    const [photo, setPhoto] = useState(new Blob());
+    const [photoUrl, setPhotoUrl] = useState("");
+
+    useEffect(() => setPhotoUrl(URL.createObjectURL(photo)), [photo]);
+
     function loadDashboard() {
-    API.getDashboardData()
-        .then(res => {
-        console.log(res.data)
-        setDashboardState(res.data)
-        
-        })
-        .catch(err => console.log(err));
+        Promise.all([
+            API.getDashboardData().then(res => {
+                console.log(res.data)
+                setDashboardState(res.data)
+                setAlerts(res.data.alerts)
+            }),
+            API.getMyProfilePhoto().then(res => {
+                setPhoto(res.data)
+            })
+        ])
+            .catch(err => console.log(err));
     };
+
+    const handleAlertRead=({target})=>{
+        setAlerts({
+            ...alerts,
+            [target.read]: target.true
+        })
+    }
+
+
 
     useEffect(() => {
         loadDashboard()
@@ -74,6 +92,9 @@ export default function DashboardMain(){
                     <Divider />
                 </Typography>
             </Grid>
+            <Grid item xs={12}>
+                <DashboardWelcome name={dashboardData.user && `${dashboardData.user.firstName} ${dashboardData.user.lastName}`} photoUrl={photoUrl} />
+            </Grid>
             <Grid item xs={12} s={10}>
                 <Typography variant="h5" component="h6" gutterBottom color="primary">
                     Quick Actions
@@ -81,19 +102,19 @@ export default function DashboardMain(){
                 </Typography>
 
                 {/* If Admin credentials, display these quick actions */}
-                {user.roles.some( (role) => ["regional", "admin", "superAdmin"].includes(role)) ? 
+                {user.roles.some( (role) => ["Regional", "Admin", "Super Admin"].includes(role)) ? 
                 <Grid item xs={12}>
                     <QuickActionsAdmin/>
                 </Grid>: null}
 
                 {/* And/or if Foster credentials, display these quick actions */}
-                {user.roles.includes("foster") ?
+                {user.roles.includes("Foster") ?
                 <Grid item xs={12}>
                     <QuickActionsFoster/>
                 </Grid>: null}
 
                 {/* And/or if Foster credentials, display these quick actions */}
-                {user.roles.includes("adopter") ?
+                {user.roles.includes("Adopter") ?
                 <Grid item xs={12}>
                     <QuickActionsAdopter/>
                 </Grid>: null}
@@ -143,7 +164,7 @@ export default function DashboardMain(){
                         <ListContainer>
                             {dashboardData.teamMembers.map(teamMember =>{
                                 return (
-                                    <AvatarList firstName={teamMember.firstName} lastName={teamMember.lastName} image={teamMember.photoUrl} roles={teamMember.Roles} ResidesInRegion={teamMember.ResidesInRegion} email={teamMember.email}/>
+                                    <AvatarList firstName={teamMember.firstName} lastName={teamMember.lastName} image={teamMember.photoUrl} roles={teamMember.Roles} ResidesInRegion={teamMember.ResidesInRegion} email={teamMember.email} id={teamMember.id}/>
                                 )
                             })}    
                         </ListContainer>
@@ -161,7 +182,9 @@ export default function DashboardMain(){
                         <ListContainer>
                             {dashboardData.alerts.map(alert =>{
                                 return (
-                                    <BasicList message={alert.message} />
+                                
+                                    <AlertWarning message={alert.message} handleAlertRead={handleAlertRead} />
+        
                                 )
                             })}    
                         </ListContainer>

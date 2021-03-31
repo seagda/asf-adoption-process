@@ -79,7 +79,17 @@ const useStyles=makeStyles(theme => ({
         [theme.breakpoints.down("xs")]:{
             marginLeft: 0,
         }
-    }
+    },
+    button: {
+        margin: theme.spacing(1),
+        maxWidth: '10em', 
+        maxHeight: '4em', 
+        minWidth: '10em', 
+        minHeight: '4em'
+      },
+      link: {
+        textDecoration: "none"
+      }
 }))
 
 export default function Login(){
@@ -135,7 +145,7 @@ export default function Login(){
                     </Grid>
         
                     <Grid item container className={classes.formItem} justify={"center"}>
-                        <Button type="submit" color="secondary" variant="contained">Login</Button>
+                        <Button className={classes.button} type="submit" color="secondary" variant="contained">Login</Button>
                     </Grid>
                 </Grid>
             </form>

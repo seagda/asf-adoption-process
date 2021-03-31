@@ -14,7 +14,7 @@ const useStyles=makeStyles(theme => ({
         marginLeft: theme.spacing(35),
         marginTop: theme.spacing(13),
         marginBottom: "5em",
-        width: "70%",
+        width: "60%",
         [theme.breakpoints.down("md")]:{
             width: "80%"
         },
@@ -58,6 +58,16 @@ const useStyles=makeStyles(theme => ({
     },
     addressItem: {
         minWidth: 250
+    },  
+    button: {
+        margin: theme.spacing(1),
+        maxWidth: '15em', 
+        maxHeight: '4em', 
+        minWidth: '15em', 
+        minHeight: '4em'
+    },
+    link: {
+        textDecoration: "none"
     }
 }))
 
@@ -114,6 +124,11 @@ export default function SignUp(){
             <Paper>
             <form onSubmit={handleSignupFormSubmit}>
                 <Grid item container className={classes.itemContainer}>
+                    <Grid item container style={{marginLeft: "1em"}} align="flext-start">
+                        <Grid item>
+                            <Typography variant="h6">Registration info</Typography>
+                        </Grid>
+                    </Grid>
                     <Grid item container className={classes.form}>
                         {/* <div className={classes.form}> */}
                             <Grid item className={classes.formItem}>
@@ -144,6 +159,9 @@ export default function SignUp(){
                                 <TextField className={classes.addressItem} variant="outlined" label="Street" onChange={handleAddressInputChange} value={addressFormData.street} name="street"/>
                             </Grid>
                             <Grid item className={classes.formItem}>
+                                <TextField className={classes.addressItem} variant="outlined" label="Apt/Unit #" onChange={handleAddressInputChange} value={addressFormData.street2} name="street2"/>
+                            </Grid>
+                            <Grid item className={classes.formItem}>
                                 <TextField className={classes.addressItem} variant="outlined" label="City" onChange={handleAddressInputChange} value={addressFormData.city} name="city"/>
                             </Grid>
                             <Grid item className={classes.formItem}>
@@ -155,7 +173,7 @@ export default function SignUp(){
                     </Grid>
         
                     <Grid item container className={classes.formItem} justify={"center"}>
-                        <Button type="submit" color="secondary" variant="contained">Sign Up</Button>
+                        <Button className={classes.button} type="submit" color="secondary" variant="contained">Sign Up</Button>
                     </Grid>
                 </Grid>
             </form>

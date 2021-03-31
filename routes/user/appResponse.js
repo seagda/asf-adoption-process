@@ -1,17 +1,18 @@
 const db = require("../../models");
 const ac = require("../../helpers/ac");
-const router = require("express").Router();
+const express = require("express");
+const controllers = require("../../controllers");
+const responseRouter = express.Router();
+const userRouter = express.Router();
 const sId = require("../../scripts/staticIds");
 
 
 // show all APP RESPONSES, with correct ROLE permission
-router.get("/", (req, res) => {
+responseRouter.get("/", (req, res) => {
     const permission = ac.can(req.roles).readAny("AppResponse");
     if (permission.granted) {
-
-        db.AppResponse
-            .findAll({ where: req.query })
-            .then(appResps => res.json(appResps.map(appResp => permission.filter(appResp.toJSON()))))
+        db.AppResponse.findAll({ attributes: { exclude: ["response"] }, where: req.query, include: [db.AppStatus, db.AppType] })
+            .then(responses => res.json(responses.map(response => permission.filter(response.toJSON()))))
             .catch(err => {
                 console.error(err)
                 res.status(400).send({ message: "Error with request" })
@@ -21,11 +22,11 @@ router.get("/", (req, res) => {
 });
 
 // get app responses for own user
-router.get("/me", (req, res) => {
+userRouter.get("/me/app-responses", (req, res) => {
     const permission = ac.can(req.roles).readOwn("AppResponse");
     if (permission.granted) {
-        db.AppResponse.findAll({ where: { UserId: req.userId }, include: [db.AppStatus, db.AppType] })
-            .then(responses => responses.map(response => permission.filter(response.toJSON())))
+        db.AppResponse.findAll({ attributes: { exclude: ["response"] }, where: { UserId: req.userId }, include: [db.AppStatus, db.AppType] })
+            .then(responses => res.json(responses.map(response => permission.filter(response.toJSON()))))
             .catch(err => {
                 console.error(err);
                 res.status(500).send({ message: "whoops" });
@@ -34,11 +35,11 @@ router.get("/me", (req, res) => {
 });
 
 // get app responses by user id
-router.get("/user/:id", (req, res) => {
-    const permission = req.params.id === req.userId ? ac.can(req.roles).readOwn("AppResponse") : ac.can(req.roles).readAny("AppResponse");
+userRouter.get("/:UserId/app-responses", (req, res) => {
+    const permission = ac.can(req.roles).readAny("AppResponse");
     if (permission.granted) {
-        db.AppResponse.findAll({ where: { UserId: req.params.id }, include: [db.AppStatus, db.AppType] })
-            .then(responses => responses.map(response => permission.filter(response.toJSON())))
+        db.AppResponse.findAll({ attributes: { exclude: ["response"] }, where: { UserId: req.params.UserId }, include: [db.AppStatus, db.AppType] })
+            .then(responses => res.json(responses.map(response => permission.filter(response.toJSON()))))
             .catch(err => {
                 console.error(err);
                 res.status(500).send({ message: "whoops" });
@@ -47,25 +48,23 @@ router.get("/user/:id", (req, res) => {
 });
 
 // show one APP RESPONSE, with correct ROLE permission
-router.get("/:id", (req, res) => {
+responseRouter.get("/:id", (req, res) => {
     const permissionAny = ac.can(req.roles).readAny("AppResponse");
     const permissionOwn = ac.can(req.roles).readOwn("AppResponse");
     if (permissionAny.granted || permissionOwn.granted) {
-        db.AppResponse
-            .findByPk(req.params.id)
-            .then(appResp => {
-                if (appResp.UserId == req.userId) res.json(permissionOwn.filter(appResp.toJSON()));
-                else if (permissionAny.granted) res.json(permissionAny.filter(appResp.toJSON()));
-                else return res.status(403).send({ message: "Not authorized to view this application response" });
-            }).catch(err => {
-                console.error(err);
-                res.status(400).send({ message: "Error with request" });
-            });
+        controllers.appResponse.get(req.params.id).then(appResp => {
+            if (appResp.UserId == req.userId) res.json(permissionOwn.filter(appResp));
+            else if (permissionAny.granted) res.json(permissionAny.filter(appResp));
+            else return res.status(403).send({ message: "Not authorized to view this application response" });
+        }).catch(err => {
+            console.error(err);
+            res.status(400).send({ message: "Error with request" });
+        });
     } else return res.status(403).send({ message: "Not authorized to view AppResponses" });
 });
 
 // create new APP RESPONSE, with correct ROLE permission
-router.post("/", (req, res) => {
+responseRouter.post("/", (req, res) => {
     const permission = ac.can(req.roles).createOwn("AppResponse");
     if (permission.granted) {
 
@@ -81,7 +80,7 @@ router.post("/", (req, res) => {
 });
 
 // update APP RESPONSE by id, with correct ROLE permission
-router.put("/:id", (req, res) => {
+responseRouter.put("/:id", (req, res) => {
     const permission = ac.can(req.roles).updateAny("AppResponse");
     if (permission.granted) {
         db.AppResponse
@@ -99,7 +98,7 @@ router.put("/:id", (req, res) => {
     } else return res.status(403).send({ message: "Not authorized update an AppResponse" });
 });
 // delete APP RESPONSE by id, with correct ROLE permission
-router.delete("/:id", (req, res) => {
+responseRouter.delete("/:id", (req, res) => {
     const permission = ac.can(req.roles).deleteAny("AppResponse");
     if (permission.granted) {
         db.AppResponse
@@ -139,9 +138,11 @@ function generateStatusAlerts(appResp) {
             }),
             appResp.getAppStatus(),
             appResp.getAppType()
-        ]).then(([alertUsers, AppStatus, AppType]) => alertUsers.forEach(alertUser => alertUser.createAlert({ message: `${user.firstName} ${user.lastName}'s ${AppType.name} application: ${AppStatus.name}`, aboutUserId: user.id })))
+        ]).then(([alertUsers, AppStatus, AppType]) => alertUsers.forEach(alertUser => alertUser.createAlert({ message: `${user.firstName} ${user.lastName}'s ${AppType.name} application: ${AppStatus.name}`, AboutUserId: user.id })))
     })
         .catch(console.error);
 }
 
-module.exports = router;
+userRouter.use("/app-response", responseRouter);
+
+module.exports = userRouter;

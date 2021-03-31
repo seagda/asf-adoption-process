@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import ReactFlow, { removeElements, addEdge } from 'react-flow-renderer';
+
 const onLoad = (reactFlowInstance) => reactFlowInstance.fitView();
-// const onNodeMouseEnter = (event, node) => console.log('mouse enter:', node);
-// const onNodeMouseMove = (event, node) => console.log('mouse move:', node);
-// const onNodeMouseLeave = (event, node) => console.log('mouse leave:', node);
 const onNodeContextMenu = (event, node) => {
   event.preventDefault();
   console.log('context menu:', node);
@@ -22,6 +20,7 @@ const initialElements = [
       color: '#28527A',
       border: '3px solid #28527A',
       width: 150,
+      boxShadow: '0 6px 12px 0 #BDC9D7',
     }
   },
   {
@@ -35,6 +34,7 @@ const initialElements = [
       color: '#28527A',
       border: '3px solid #28527A',
       width: 150,
+      boxShadow: '0 6px 12px 0 #BDC9D7',
     }
   },
   {
@@ -48,6 +48,7 @@ const initialElements = [
       color: '#28527A',
       border: '3px solid #28527A',
       width: 150,
+      boxShadow: '0 6px 12px 0 #BDC9D7',
     }
   },
   {
@@ -61,6 +62,7 @@ const initialElements = [
       color: '#ffffff',
       border: '3px solid #28527A',
       width: 150,
+      boxShadow: '0 6px 12px 0 #BDC9D7',
     }
   },
   {
@@ -74,6 +76,7 @@ const initialElements = [
       color: '#ffffff',
       border: '3px solid #F4D160',
       width: 150,
+      boxShadow: '0 6px 12px 0 #BDC9D7',
     }
   },
   {

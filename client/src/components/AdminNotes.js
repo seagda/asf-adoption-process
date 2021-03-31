@@ -15,21 +15,22 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function AdminNotes(){
+export default function AdminNotes(props){
     const classes = useStyles();
-    const adminNotes = ["Looking like a viable candidate. Waiting to hear back from vet."]
 
     return(
         <Grid item container className={classes.itemContainer}>
-            <Grid container>
-                <Grid item style={{marginTop: "3em"}}>
-                    <Typography variant="h4">Admin notes</Typography>
-                    <Divider/>
+            <Grid container direction="row">
+                <Grid item container xs={12} sm={6} md={6} lg={12} style={{marginTop: "3em"}} direction="column">
+                    <Grid item>
+                        <Typography variant="h4">Admin notes</Typography>
+                        <Divider/>
+                    </Grid>
                 </Grid>
             </Grid>
             <Grid container>
                 <Grid item style={{marginTop: "1em"}}>
-                    <Typography>{adminNotes}</Typography>
+                    <Typography>{props.notes}</Typography>
                 </Grid>
             </Grid>
         </Grid>

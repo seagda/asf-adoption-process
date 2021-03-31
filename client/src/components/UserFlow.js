@@ -21,13 +21,14 @@ const initialElements = [
       border: '3px solid #28527A',
       width: 150,
       height: 60,
+      boxShadow: '0 6px 12px 0 #BDC9D7',
     }
   },
   {
     id: 'horizontal-3',
     sourcePosition: 'right',
     targetPosition: 'left',
-    data: { label: 'Background Check Completed' },
+    data: { label: 'Screening Questions Reviewed' },
     position: { x: 200, y: 0},
     style: {
       background: '#FBEEAC',
@@ -35,34 +36,52 @@ const initialElements = [
       border: '3px solid #28527A',
       width: 150,
       height: 60,
+      boxShadow: '0 6px 12px 0 #BDC9D7',
     }
   },
   {
     id: 'horizontal-4',
     sourcePosition: 'right',
     targetPosition: 'left',
-    data: { label: 'Reference Check Completed' },
-    position: { x: 400, y: 0 },
+    data: { label: 'Background Check Completed' },
+    position: { x: 400, y: 0},
     style: {
       background: '#F4D160',
       color: '#28527A',
       border: '3px solid #28527A',
       width: 150,
       height: 60,
+      boxShadow: '0 6px 12px 0 #BDC9D7',
     }
   },
   {
     id: 'horizontal-5',
     sourcePosition: 'right',
     targetPosition: 'left',
-    data: { label: 'Applicant Approved' },
+    data: { label: 'Reference Check Completed' },
     position: { x: 600, y: 0 },
+    style: {
+      background: '#7e97af',
+      color: '#ffffff',
+      border: '3px solid #28527A',
+      width: 150,
+      height: 60,
+      boxShadow: '0 6px 12px 0 #BDC9D7',
+    }
+  },
+  {
+    id: 'horizontal-6',
+    sourcePosition: 'right',
+    targetPosition: 'left',
+    data: { label: 'Applicant Approved' },
+    position: { x: 800, y: 0 },
     style: {
       background: '#28527A',
       color: '#ffffff',
       border: '3px solid #F4D160',
       width: 150,
       height: 60,
+      boxShadow: '0 6px 12px 0 #BDC9D7',
     }
   },
   {
@@ -85,7 +104,14 @@ const initialElements = [
     type: 'smoothstep',
     target: 'horizontal-5',
     animated: true,
-  }
+  },
+  {
+    id: 'horizontal-e4',
+    source: 'horizontal-5',
+    type: 'smoothstep',
+    target: 'horizontal-6',
+    animated: true,
+  },
 ];
 const UserFlow = () => {
   const [elements, setElements] = useState(initialElements);

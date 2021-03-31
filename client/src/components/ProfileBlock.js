@@ -3,8 +3,8 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Avatar from "@material-ui/core/Avatar";
-
-import Image from "../components/Image";
+import Paper from "@material-ui/core/Paper";
+import Divider from "@material-ui/core/Divider";
 
 
 const useStyles = makeStyles(theme => ({
@@ -21,7 +21,7 @@ const useStyles = makeStyles(theme => ({
         }
     },
     formItem: {
-        marginBottom: "2em"
+        marginBottom: "0.25em"
     },
     picContainer: {
         [theme.breakpoints.down("xs")]:{
@@ -59,30 +59,27 @@ export default function ProfileBlock(props){
                 <Avatar className={classes.large} src={props.image} alt="user-photo"/>
             </Grid>
             <Grid item className={classes.form}>
+                <Paper style={{padding: "2em"}}>
                 <Grid item container className={classes.formItem}>
-                    <Typography>First Name: {props.firstName}</Typography>
+                    <Typography style={{fontWeight: "bold"}}>First Name:<Typography> {props.firstName}</Typography></Typography>
                 </Grid>
+                <Divider/>
                 <Grid item container className={classes.formItem}>
-                    <Typography>Last Name: {props.lastName}</Typography>
+                    <Typography style={{fontWeight: "bold"}}>Last Name:<Typography>{props.lastName}</Typography> </Typography>
                 </Grid>
+                <Divider/>
                 <Grid item container className={classes.formItem}>
-                     <Typography>Phone: {props.phone}</Typography>
+                     <Typography style={{fontWeight: "bold"}}>Phone:<Typography>{props.phone}</Typography> </Typography>
                 </Grid>
+                <Divider/>
                 <Grid item container className={classes.formItem}>
-                     <Typography>Email: {props.email}</Typography>
+                     <Typography style={{fontWeight: "bold"}}>Email:<Typography>{props.email}</Typography> </Typography>
                 </Grid>
+                <Divider/>
                 <Grid item container className={classes.formItem}>
-                     <Typography>DOB: {props.dob}</Typography>
+                     <Typography style={{fontWeight: "bold"}}>DOB:<Typography>{props.dob}</Typography> </Typography>
                 </Grid>
-                {/* <Grid item container className={classes.formItem}>
-                    <Typography>City: Camarillo</Typography>
-                </Grid>
-                <Grid item container className={classes.formItem}>
-                     <Typography>State: CA</Typography>
-                 </Grid> */}
-                {/* <Grid item container className={classes.formItem}>
-                     <Typography>About Me: Passionate about animal rescue!</Typography>
-                </Grid> */}
+                </Paper>
             </Grid>
         </Grid>
     </Grid>

@@ -41,10 +41,13 @@ const API = {
         return axios.post(`/api/user/app-response`, {response, AppTypeId}, getHeaders())
     },
     getUserAppResponses: function(userId) {
-        return axios.get(`/api/user/app-response/user/${userId}`, getHeaders())
+        return axios.get(`/api/user/${userId}/app-responses`, getHeaders())
     },
     getMyAppResponses: function() {
-        return axios.get(`/api/user/app-response/me`, getHeaders())
+        return this.getUserAppResponses("me")
+    },
+    getAppResponse: function(id) {
+        return axios.get(`/api/user/app-response/${id}`, getHeaders())
     },
     getBehaviorQuestions: function (){
         return axios.get(`/api/dog/assess/questions`, getHeaders())
@@ -89,6 +92,43 @@ const API = {
     },
     getDashboardData: function(){
         return axios.get(`/api/dashboard`, getHeaders())
+    },
+    getDogDocs: function(dogId){
+        return axios.get(`/api/dog/${dogId}/documents`, getHeaders())
+    },
+    getBehaviorAnswers: function(dogId){
+        return axios.get(`/api/dog/${dogId}/assessments`, getHeaders())
+    },
+    getSingleAssessment: function(assessId){
+        return axios.get(`/api/dog/assess/${assessId}`, getHeaders())
+    },
+    getSingleUser: function (userId){
+        return axios.get(`/api/user/${userId}`, getHeaders())
+    },
+    updateOtherUser: function (userData, userId){
+        return axios.put(`/api/user/${userId}`, userData, getHeaders())
+    },
+    createDocuments: function (files, dogId){
+        const formData = new FormData()
+        for (let i = 0; i < files.length; i++) formData.append(i, files[i])
+        return axios.post(`/api/dog/document/${dogId}`, formData, getHeaders())
+    },
+    getDocument: function (id){
+         return axios.get(`/api/dog/document/${id}`, {...getHeaders(), responseType: "blob"})
+    },
+    getProfilePhoto: function (id){
+        return axios.get(`/api/user/${id}/photo`, {...getHeaders(), responseType: "blob"})
+    },
+    setProfilePhoto: function (photo, id){
+        const formData = new FormData()
+        formData.append("photo", photo)
+        return axios.post(`/api/user/${id}/photo`, formData, getHeaders())
+    },
+    getMyProfilePhoto: function (){
+        return this.getProfilePhoto("me");
+    },
+    setMyProfilePhoto: function (photo){
+        return this.setProfilePhoto(photo, "me");
     }
 }
 

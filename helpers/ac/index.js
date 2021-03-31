@@ -8,8 +8,8 @@ require("./adopter")(ac);
 require("./foster")(ac);
 require("./placement")(ac);
 require("./regional")(ac);
-//require("./transporter")(ac);
+require("./transporter")(ac);
 require("./superAdmin")(ac);
-
+require("./admin")(ac);
 
 module.exports = ac;

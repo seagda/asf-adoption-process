@@ -5,6 +5,7 @@
     "database": "asf_dog_dossiers",
     "host": "localhost",
     "dialect": "mysql",
+    "omitNull": true,
     "define": {
       "underscored": true,
       "paranoid": true
@@ -12,6 +13,7 @@
   },
   "production": {
     "use_env_variable": "JAWSDB_URL",
+    "omitNull": true,
     "define": {
       "paranoid": true
     }

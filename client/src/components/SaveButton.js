@@ -8,7 +8,14 @@ import SaveIcon from '@material-ui/icons/Save';
 const useStyles = makeStyles((theme) => ({
   button: {
     margin: theme.spacing(1),
+    maxWidth: '15em', 
+    maxHeight: '4em', 
+    minWidth: '15em', 
+    minHeight: '4em'
   },
+  link: {
+    textDecoration: "none"
+  }
 }));
 
 export default function SaveButton(props) {

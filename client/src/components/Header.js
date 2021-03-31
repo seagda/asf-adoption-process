@@ -101,7 +101,7 @@ function ResponsiveDrawer(props) {
     const drawer = (
         <div>
             {/* <div className={classes.toolbar} /> */}
-            <NavLink to="/My-Dashboard" className={classes.logoContainer}>
+            <NavLink to="/My-Dashboard" className={classes.logoContainer} onClick={() => setMobileOpen(false)}>
                 <img src={logo} className={classes.logo}/>
             </NavLink>
             <List>
@@ -118,7 +118,7 @@ function ResponsiveDrawer(props) {
             </List>
             <Divider />
             <List>
-                {['Dog-Dossiers', 'Manage-ASF-Users'].map((text, index) => (
+                {['Dog-Dossiers', 'View-ASF-Users'].map((text, index) => (
                     <ListItem button key={text} className={classes.listItem} onClick={() => setMobileOpen(false)}>
                         <ListItemIcon className={classes.listItem}>{index === 0 ? <DescriptionIcon /> : index === 1 ? <SupervisorAccountIcon /> : <PermDataSettingIcon />}</ListItemIcon>
                         <NavLink className={classes.link} to={`/${text}`}>{`${text.replace("-", " ")}`}</NavLink>

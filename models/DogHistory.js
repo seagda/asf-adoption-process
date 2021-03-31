@@ -1,14 +1,14 @@
 module.exports = (sequelize, DataTypes) => {
     const DogHistory = sequelize.define("DogHistory", {
-        dateFrom: DataTypes.DATEONLY,
-        dateTo: DataTypes.DATEONLY
+        dateFrom: { type: DataTypes.DATEONLY, allowNull: false },
+        dateTo: { type: DataTypes.DATEONLY, allowNull: false }
     });
 
     DogHistory.associate = db => {
-        db.Dog.hasMany(DogHistory);
-        DogHistory.belongsTo(db.Dog);
-        db.User.hasMany(DogHistory);
-        DogHistory.belongsTo(db.User);
+        db.Dog.hasMany(DogHistory, { foreignKey: { allowNull: false } });
+        DogHistory.belongsTo(db.Dog, { foreignKey: { allowNull: false } });
+        db.User.hasMany(DogHistory, { foreignKey: { allowNull: false } });
+        DogHistory.belongsTo(db.User, { foreignKey: { allowNull: false } });
     };
 
     return DogHistory;

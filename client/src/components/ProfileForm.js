@@ -5,24 +5,18 @@ import TextField from '@material-ui/core/TextField';
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import Card from "@material-ui/core/Card";
-import CardActions from "@material-ui/core/CardActionArea";
 import CardContent from "@material-ui/core/CardContent";
-import FormControl from "@material-ui/core/FormControl";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
 import InputLabel from "@material-ui/core/InputLabel";
-import Select from "@material-ui/core/Select";
-import MenuItem from "@material-ui/core/MenuItem";
-import API from "../utils/API";
 
-import PhoneInput from "../components/PhoneInput";
 import Image from "../components/Image";
-import AddButton from "../components/AddButton";
 import EditButton from "../components/EditButton";
-import MultiLineText from "../components/MultiLineText";
 import SaveButton from "../components/SaveButton";
 import RoleTitles from "../components/RoleTitles";
 import MultiSelectChips from "../components/MultiSelectChips";
 import HoldCheckbox from "../components/HoldCheckbox";
+import SelectBooleanBlock from "../components/SelectBooleanBlock";
+import UserCapacityEdit from "../components/UserCapacityEdit";
+import UserMainInfoEdit from "../components/UserMainInfoEdit";
 
 import ashley from "../assets/ashley.jpg";
 
@@ -61,11 +55,6 @@ const useStyles = makeStyles(theme => ({
             width: '25ch',
         }
     },
-    formControl: {
-        margin: theme.spacing(1),
-        minWidth: 300,
-        // fullWidth: true
-    },
     largeTextfield: {
         minWidth: "60em",
         [theme.breakpoints.down("sm")]:{
@@ -76,510 +65,56 @@ const useStyles = makeStyles(theme => ({
         [theme.breakpoints.down("sm")]: {
             marginLeft: "2.5em"
         }
-    },
-    seniorContainer: {
-        marginTop: "3em",
-        [theme.breakpoints.down("xs")]: {
-            marginTop: "1em"
-        }
-    },
-    seniorItem: {
-        marginTop: "4.25em",
-        [theme.breakpoints.down("xs")]: {
-            marginTop: "0.5em"
-        }
     }
 }))
 
 export default function ProfileForm(props){
     const classes = useStyles();
-    const admin = true;
-    const roles = [{role: "Adopter"}, {role: "Foster"}];
-    const names = ["Adopter", "Foster", "Regional", "Volunteer", "Rescuer", "Transporter", "Placement"]
-
-    const [userIntakeData, setUserIntakeData] = useState({})
-    const createUserInputChange = event =>{
-        const {name,value} = event.target
-        setUserIntakeData({
-            ...userIntakeData,
-            [name]: value
-        })
-    }
-
-    const [isActiveData, setIsActiveData] = useState({});
-    const handleActiveChange = (event) => {
-      const {name, value} = event.target
-      console.log(value)
-      setIsActiveData({
-          ...isActiveData,
-          [name]: value
-      })
-    };
-
-    const [isBlockedData, setIsBlockedData] = useState({});
-    const handleBlockedChange = (event) => {
-      const {name, value} = event.target
-      setIsBlockedData({
-          ...isBlockedData,
-          [name]: value
-      })
-    };
-
-    const [caresForPuppiesData, setCaresForPuppiesData] = useState({});
-    const handlePuppiesChange = (event) => {
-      const {name, value} = event.target
-      setCaresForPuppiesData({
-          ...caresForPuppiesData,
-          [name]: value
-      })
-    };
-
-    const [caresForAdultsData, setCaresForAdultsData] = useState({});
-    const handleAdultsChange = (event) => {
-      const {name, value} = event.target
-      setCaresForAdultsData({
-          ...caresForAdultsData,
-          [name]: value
-      })
-    };
-
-    const [caresForSeniorsData, setCaresForSeniorsData] = useState({});
-    const handleSeniorsChange = (event) => {
-      const {name, value} = event.target
-      setCaresForSeniorsData({
-          ...caresForSeniorsData,
-          [name]: value
-      })
-    };
-
-    const [withMedIssuesData, setWithMedIssuesData] = useState({});
-    const handleMedIssuesChange = (event) => {
-      const {name, value} = event.target
-      setWithMedIssuesData({
-          ...withMedIssuesData,
-          [name]: value
-      })
-    };
-
-    const [withBehaviorIssuesData, setWithBehaviorIssuesData] = useState({});
-    const handleBehaviorChange = (event) => {
-      const {name, value} = event.target
-      setWithBehaviorIssuesData({
-          ...withBehaviorIssuesData,
-          [name]: value
-      })
-    };
-
-    const [onHoldData, setOnHoldData] = useState({});
-    const handleHoldChange = (event) => {
-      const {name, value} = event.target
-      setOnHoldData({
-          ...onHoldData,
-          [name]: value
-      })
-    };
-
-    useEffect(()=>{
-        setUserIntakeData({
-            firstName: props.userData.firstName, 
-            lastName: props.userData.lastName,
-            phone: props.userData.phone,
-            email: props.userData.email,
-            dob: props.userData.dob,
-            maxCapacity: props.userData.maxCapacity
-        })
-        setIsActiveData({active: false})
-        console.log(isActiveData)
-    }, [props.userData])
-
-
-    const handleUserIntakeFormSubmit = event =>{
-        event.preventDefault();
-        props.submitFunction({...userIntakeData,
-            ...isActiveData,
-            ...isBlockedData,
-            ...caresForPuppiesData,
-            ...caresForAdultsData,
-            ...caresForSeniorsData,
-            ...withMedIssuesData,
-            ...withBehaviorIssuesData,
-            ...onHoldData
-        })
-        .then(res =>{
-            console.log(res.data)
-            setUserIntakeData({})
-            setIsActiveData({})
-            setIsBlockedData({})
-            setCaresForPuppiesData({})
-            setCaresForAdultsData({})
-            setCaresForSeniorsData({})
-            setWithMedIssuesData({})
-            setWithBehaviorIssuesData({})
-            setOnHoldData({})
-            window.location = "/Manage-ASF-Users"
-        }).catch(err=>{
-            console.error(err.response.data.message)
-            // alert("Create dog failed")
-        })
-    }
-
-
-    // const roleEdit = (
-    //     <Grid item container className={classes.itemContainer}>
-    //     <Grid container style={{marginTop: "1em"}}>
-    //         <Grid item>
-    //             <Typography variant="h4">Role Title</Typography>
-    //         </Grid>
-    //     </Grid>
-    //     <Grid container justify="space-between">
-    //         <Grid item style={{marginTop: "1em"}}>
-    //             {roles.map((role)=> (
-    //                 <RoleTitles
-    //                 label={role.role}
-    //                 />
-    //             ))}
-    //         </Grid>
-    //         <Grid item>
-    //             <MultiSelectChips names={names} title="Add Role(s)"/>
-    //         </Grid>
-    //     </Grid>
-    // </Grid>
-    // )
-
-    const userStatus = (
-        <Grid item container className={classes.itemContainer, classes.marginFix}>
-        <Grid container style={{marginTop: "1em"}}>
-            <Grid item>
-                <Typography variant="h4">Status</Typography>
-                <Divider/>
-            </Grid>
-        </Grid>
-        <Grid container justify="space-between">
-            <Grid item style={{marginTop: "1em"}}>
-                <div>
-                    <FormControl variant="outlined" className={classes.formControl}>
-                    <InputLabel id="active">Active?</InputLabel>
-                    <Select
-                    labelId="active"
-                    id="active"
-                    onChange={handleActiveChange}
-                    value={isActiveData.active}
-                    name="active"
-                    label="Is active?"
-                    InputLabelProps={{shrink: true}}
-                    >
-                    <MenuItem value={true}>Yes</MenuItem>
-                    <MenuItem value={false}>No</MenuItem>
-                    </Select>
-                    </FormControl>
-                </div>
-            </Grid>
-            <Grid item style={{marginTop: "1em"}}>
-                <div>
-                    <FormControl variant="outlined" className={classes.formControl}>
-                    <InputLabel id="blocked">Blocked?</InputLabel>
-                    <Select
-                    labelId="blocked"
-                    id="blocked"
-                    onChange={handleBlockedChange}
-                    value={isBlockedData.blocked}
-                    name="blocked"
-                    label="Is blocked?"
-                    InputLabelProps={{shrink: true}}
-                    >
-                    <MenuItem value={true}>Yes</MenuItem>
-                    <MenuItem value={false}>No</MenuItem>
-                    </Select>
-                    </FormControl>
-                </div>
-            </Grid>
-            <Grid item style={{marginTop: "1em"}}>
-                <div>
-                    <FormControl variant="outlined" className={classes.formControl}>
-                    <InputLabel id="hold">On Hold?</InputLabel>
-                    <Select
-                    labelId="hold"
-                    id="hold"
-                    onChange={handleHoldChange}
-                    value={onHoldData.hold}
-                    name="hold"
-                    label="On hold?"
-                    InputLabelProps={{shrink: true}}
-                    >
-                    <MenuItem value={true}>Yes</MenuItem>
-                    <MenuItem value={false}>No</MenuItem>
-                    </Select>
-                    </FormControl>
-                </div>
-            </Grid>
-        </Grid>
-    </Grid>
-    )
-
-    const capacity = (
-        <Grid item container className={classes.itemContainer, classes.marginFix}>
-            <Grid container direction="row" justify={"space-between"}>
-            <Grid item container xs={10} sm={6} md={6} lg={6} style={{marginTop: "3em"}} direction="column">
-                <Grid item>
-                    <Typography variant="h4">Capacity</Typography>
-                    <Divider/>
-                </Grid>
-                <Grid item container>
-                    <Grid item xs={6} sm={6} md={8} lg={6}>
-                        <Typography style={{marginTop: "1em"}}>Max Capacity:</Typography>
-                        {/* <Typography style={{marginTop: "1.5em"}}>Dogs in care:</Typography>
-                        <Typography style={{marginTop: "2em"}}>Available space:</Typography> */}
-                    </Grid>
-                    <Grid item xs={6} sm={6} md={8} lg={6}>
-                        <div>
-                        <TextField variant="outlined" type="number" style={{marginTop: "0.5em"}} onChange={createUserInputChange} value={userIntakeData.maxCapacity} name="maxCapacity"></TextField>
-                        {/* <TextField type="number" style={{marginTop: "1em"}}></TextField>
-                        <TextField type="number" style={{marginTop: "1em"}}></TextField> */}
-                        </div>
-                    </Grid>
-                </Grid>
-            </Grid>
-        </Grid>
-        </Grid>
-
-    )
-
-    const caresFor = (
-        <Grid item container className={classes.itemContainer}>
-            <Grid item container xs={10} sm={6} md={6} lg={6} style={{marginTop: "3em"}} direction="column">
-                <Grid item>
-                    <Typography variant="h4">Cares for:</Typography>
-                    <Divider/>
-                </Grid>
-                <Grid item container style={{marginTop: "1em"}}>
-                    <Grid item style={{marginTop: "1em"}}>
-                    <div>
-                    <FormControl variant="outlined" className={classes.formControl}>
-                    <InputLabel id="puppies">Puppies?</InputLabel>
-                    <Select
-                    labelId="puppies"
-                    id="puppies"
-                    onChange={handlePuppiesChange}
-                    value={caresForPuppiesData.puppies}
-                    name="puppies"
-                    label="Puppies?"
-                    InputLabelProps={{shrink: true}}
-                    >
-                    <MenuItem value={true}>Yes</MenuItem>
-                    <MenuItem value={false}>No</MenuItem>
-                    </Select>
-                    </FormControl>
-                    </div>
-                    </Grid>
-                </Grid>
-                <Grid item container style={{marginTop: "1em"}}>
-                    <Grid item style={{marginTop: "1em"}}>
-                    <div>
-                    <FormControl variant="outlined" className={classes.formControl}>
-                    <InputLabel id="adults">Adults?</InputLabel>
-                    <Select
-                    labelId="adults"
-                    id="adults"
-                    onChange={handleAdultsChange}
-                    value={caresForAdultsData.adults}
-                    name="adults"
-                    label="Adults?"
-                    InputLabelProps={{shrink: true}}
-                    >
-                    <MenuItem value={true}>Yes</MenuItem>
-                    <MenuItem value={false}>No</MenuItem>
-                    </Select>
-                    </FormControl>
-                    </div>
-                    </Grid>
-                </Grid>
-            </Grid>
-            <Grid item container xs={10} sm={6} md={6} lg={6} className={classes.seniorContainer} direction="column">
-                <Grid item container className={classes.seniorItem}>
-                    <Grid item style={{marginTop: "1em"}}>
-                    <div>
-                    <FormControl variant="outlined" className={classes.formControl}>
-                    <InputLabel id="seniors">Seniors?</InputLabel>
-                    <Select
-                    labelId="seniors"
-                    id="seniors"
-                    onChange={handleSeniorsChange}
-                    value={caresForSeniorsData.seniors}
-                    name="active"
-                    label="Seniors?"
-                    InputLabelProps={{shrink: true}}
-                    >
-                    <MenuItem value={true}>Yes</MenuItem>
-                    <MenuItem value={false}>No</MenuItem>
-                    </Select>
-                    </FormControl>
-                    </div>
-                    </Grid>
-                </Grid>
-                <Grid item container style={{marginTop: "1em"}}>
-                    <Grid item style={{marginTop: "1em"}}>
-                    <div>
-                    <FormControl variant="outlined" className={classes.formControl}>
-                    <InputLabel id="withBehaviorIssues">Behaviorial Issues?</InputLabel>
-                    <Select
-                    labelId="withBehaviorIssues"
-                    id="withBehaviorIssues"
-                    onChange={handleBehaviorChange}
-                    value={withBehaviorIssuesData.withBehaviorIssues}
-                    name="withBehaviorIssues"
-                    label="With behaviorial issues?"
-                    InputLabelProps={{shrink: true}}
-                    >
-                    <MenuItem value={true}>Yes</MenuItem>
-                    <MenuItem value={false}>No</MenuItem>
-                    </Select>
-                    </FormControl>
-                    </div>
-                    </Grid>
-                </Grid>
-            </Grid>
-            <Grid item container xs={10} sm={6} md={6} lg={6} style={{marginTop: "1em"}} direction="column">
-                <Grid item container style={{marginTop: "1em"}}>
-                    <Grid item>
-                    <div>
-                    <FormControl variant="outlined" className={classes.formControl}>
-                    <InputLabel id="withMedicalIssues">Medical Issues?</InputLabel>
-                    <Select
-                    labelId="withMedicalIssues"
-                    id="withMedicalIssues"
-                    onChange={handleMedIssuesChange}
-                    value={withMedIssuesData.withMedicalIssues}
-                    name="withMedicalIssues"
-                    label="Medical Issues?"
-                    InputLabelProps={{shrink: true}}
-                    >
-                    <MenuItem value={true}>Yes</MenuItem>
-                    <MenuItem value={false}>No</MenuItem>
-                    </Select>
-                    </FormControl>
-                    </div>
-                    </Grid>
-                </Grid>
-            </Grid>
-    </Grid>
-    )
-
-    // const references = (
-    //     <Grid item container justify="space-evenly" className={classes.references}>
-    //         <Grid item style={{marginTop: "1em", marginBottom: "5em"}}> 
-    //             <Card className={classes.root}>
-    //                 <CardContent>
-    //                     <Typography variant="h5" component="h2">
-    //                         Reference #1
-    //                     </Typography>
-    //                     <div>
-    //                     <TextField variant="outlined" label="Name" onChange={e => setRef1Name(e.target.value)}/>
-    //                     <TextField type="number" variant="outlined" label="Phone" onChange={e => setRef1Phone(e.target.value)}/>
-    //                     <TextField variant="outlined" label="Email" onChange={e => setRef1Email(e.target.value)}/>
-    //                     </div>
-    //                 </CardContent>
-    //                     {admin ? <CardContent><HoldCheckbox label="Contaced successfully"/></CardContent> : null}
-    //                     {admin ? <CardContent><HoldCheckbox label="Approved"/></CardContent> : null}
-    //                     {admin ? <CardContent>Notes:</CardContent> : null}
-    //                 <CardContent>
-    //                     {admin ? <div><TextField rows={4} multiline variant="outlined" label="New notes" onChange={e => setRef1Notes(e.target.value)}/></div> : null}
-    //                 </CardContent>
-    //             </Card>
-    //             <Card className={classes.root}>
-    //                 <CardContent>
-    //                     <Typography variant="h5" component="h2">
-    //                         Reference #2
-    //                     </Typography>
-    //                     <div>
-    //                     <TextField variant="outlined" label="Name" onChange={e => setRef2Name(e.target.value)}/>
-    //                     <TextField type="number" variant="outlined" label="Phone" onChange={e => setRef2Phone(e.target.value)}/>
-    //                     <TextField variant="outlined" label="Email" onChange={e => setRef2Email(e.target.value)}/>
-    //                     </div>
-    //                 </CardContent>
-    //                     {admin ? <CardContent><HoldCheckbox label="Contaced successfully"/></CardContent> : null}
-    //                     {admin ? <CardContent><HoldCheckbox label="Approved"/></CardContent> : null}
-    //                     {admin ? <CardContent>Notes:</CardContent> : null}
-    //                 <CardContent>
-    //                     {admin ? <div><TextField rows={4} multiline variant="outlined" label="New notes" onChange={e => setRef2Notes(e.target.value)}/></div> : null}
-    //                 </CardContent>
-    //             </Card>
-    //             <Card className={classes.root}>
-    //                 <CardContent>
-    //                     <Typography variant="h5" component="h2">
-    //                         Reference #3
-    //                     </Typography>
-    //                     <div>
-    //                     <TextField variant="outlined" label="Name" onChange={e => setRef3Name(e.target.value)}/>
-    //                     <TextField type="number" variant="outlined" label="Phone" onChange={e => setRef3Phone(e.target.value)}/>
-    //                     <TextField variant="outlined" label="Email" onChange={e => setRef3Email(e.target.value)}/>
-    //                     </div>
-    //                 </CardContent>
-    //                     {admin ? <CardContent><HoldCheckbox label="Contaced successfully"/></CardContent> : null}
-    //                     {admin ? <CardContent><HoldCheckbox label="Approved"/></CardContent> : null}
-    //                     {admin ? <CardContent>Notes:</CardContent> : null}
-    //                 <CardContent>
-    //                     {admin ? <div><TextField rows={4} multiline variant="outlined" label="New notes" onChange={e => setRef3Notes(e.target.value)}/></div> : null}
-    //                 </CardContent>
-    //             </Card>
-    //         </Grid>
-    //     </Grid>
-    // )
-
-    // const adminNotes = (
-    //     <Grid item container className={classes.itemContainer, classes.marginFix}>
-    //     <Grid container>
-    //         <Grid item style={{marginTop: "3em"}}>
-    //             <Typography variant="h4">Admin Notes</Typography>
-    //             <Divider/>
-    //         </Grid>
-    //     </Grid>
-    //     <Grid container>
-    //         <Grid item container style={{marginTop: "1em"}} justify="center">
-    //             <TextField className={classes.largeTextfield} InputLabelProps={{shrink: true}} label="Admin Notes" rows={6} multiline variant="outlined" onChange={createUserInputChange} value={userIntakeData.adminNotes} name="adminNotes"/>
-    //         </Grid>
-    //     </Grid>
-    // </Grid>
-    // )
 
     return (
-        <form onSubmit={handleUserIntakeFormSubmit}>
+        <form onSubmit={props.submitFunction}>
         <Grid item container className={classes.itemContainer}>
         <Grid container justify="space-evenly" className={classes.picContainer}>
-            <Grid item>
-                <Image alt={"Ashley"} pic={ashley} />
-                <EditButton buttonText="Change Photo" toLink="/"/>
-            </Grid>
-            <Grid item>
-                <div className={classes.form}>
-                    <Grid item container className={classes.formItem}>
-                        <TextField variant="outlined" InputLabelProps={{shrink: true}} label="First Name" onChange={createUserInputChange} value={userIntakeData.firstName} name="firstName"/>
-                    </Grid>
-                    <Grid item container className={classes.formItem}>
-                        <TextField variant="outlined" InputLabelProps={{shrink: true}} label="Last Name" onChange={createUserInputChange} value={userIntakeData.lastName} name="lastName"/>
-                    </Grid>
-                    <Grid item container className={classes.formItem}>
-                        <TextField variant="outlined" InputLabelProps={{shrink: true}} label="Phone" onChange={createUserInputChange} value={userIntakeData.phone} name="phone"/>
-                    </Grid>
-                    <Grid item container className={classes.formItem}>
-                        <TextField type="email" variant="outlined" InputLabelProps={{shrink: true}} label="Email" onChange={createUserInputChange} value={userIntakeData.email} name="email"/>
-                    </Grid>
-                    <Grid item container className={classes.formItem} direction="column">
-                        <InputLabel id="birthday">Date of birth</InputLabel>
-                        <TextField type="date" variant="outlined" InputLabelProps={{shrink: true}} labelId="birthday" onChange={createUserInputChange} value={userIntakeData.dob} name="dob"/>
-                    </Grid>
-                </div>
-            </Grid>
-            {/* {admin ? roleEdit : null} */}
-            {userStatus}
+            <UserMainInfoEdit
+            handleInputChange={props.handleInputChange}
+            handleAddressChange={props.handleAddressChange}
+            userData={props.userData}
+            editable={props.editable}
+            photoUrl={props.photoUrl}
+            handlePhotoChange={props.handlePhotoChange}
+            />
+
+            {(props.editable.includes("*") && !["!active", "!blocked", "!hold"].every(field => props.editable.includes(field))) ||
+                ["active", "blocked", "hold"].some(field => props.editable.includes(field)) ?
+                <SelectBooleanBlock
+                    handleInputChange={props.handleInputChange}
+                    data={props.userData}
+                    editable={props.editable}
+                    fields={[{name: "active", label: "Is active?"}, {name: "blocked", label: "Is blocked?"}, {name: "hold", label: "Is on hold?"}]
+                        .filter(field => props.editable.includes(field.name) || (props.editable.includes("*") && !props.editable.includes(`!${field.name}`)))}
+                /> : null
+            }
+
         </Grid>
-        {capacity}
-        {caresFor}
-        {/* <Grid item>
-            <Typography variant="h4">References</Typography>
-            <Divider/>
-        </Grid>
-        {references} */}
-        {/* {adminNotes} */}
+
+        {props.editable.includes("maxCapacity") || (props.editable.includes("*") && !props.editable.includes("!maxCapacity")) ?
+            <UserCapacityEdit
+                handleInputChange={props.handleInputChange}
+                userData={props.userData}
+            /> : null
+        }
+
+        {(props.editable.includes("*") && !["!puppies", "!adults", "!seniors", "!withBehaviorIssues", "!withMedicalIssues"].every(field => props.editable.includes(field))) ||
+            ["puppies", "adults", "seniors", "withBehaviorIssues", "withMedicalIssues"].some(field => props.editable.includes(field)) ?
+            <SelectBooleanBlock
+                handleInputChange={props.handleInputChange}
+                data={props.userData}
+                editable={props.editable}
+                fields={[{name: "puppies", label: "Puppies?"}, {name: "adults", label: "Adults?"}, {name: "seniors", label: "Seniors?"}, {name: "withBehaviorIssues", label: "With behavior issues?"}, {name: "withMedicalIssues", label: "With medical issues?"}]
+                    .filter(field => props.editable.includes(field.name) || (props.editable.includes("*") && !props.editable.includes(`!${field.name}`)))}
+            /> : null
+        }
+        
         <Grid item container className={classes.formItem} justify={"flex-end"}>
             <SaveButton buttonText="Save Changes"/>
         </Grid>

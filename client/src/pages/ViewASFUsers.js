@@ -11,6 +11,16 @@ import UserTable from '../components/UserTable';
 import Hidden from '@material-ui/core/Hidden';
 import API from '../utils/API';
 import SearchBar from "../components/SearchBar";
+import Geocode from "react-geocode";
+import DogMap from '../components/DogMap';
+
+// set Google Maps Geocoding API for purposes of quota management. Its optional but recommended.
+Geocode.setApiKey(process.env.REACT_APP_GOOGLE_MAPS_API_KEY);
+
+// set response language. Defaults to english.
+Geocode.setLanguage("en");
+Geocode.setRegion("us");
+Geocode.setLocationType("ROOFTOP");
 
 const useStyles=makeStyles(theme => ({
     mainContainer: {
@@ -30,7 +40,7 @@ const useStyles=makeStyles(theme => ({
 }
 }))
 
-export default function ManageASFUsers() {
+export default function ViewASFUsers() {
     const [error, setError] = useState("");
     
     const [selectedRegions, setRegion] = React.useState([]);
@@ -49,22 +59,24 @@ export default function ManageASFUsers() {
         function loadUsers() {
             API.getUsersAll()
                 .then(res => {
-                setUserState(res.data)
-                console.log(res)
-                })
-                .catch(err => console.log(err));
+                    console.log(res)
+                    return Promise.all(res.data.map(user => Geocode.fromAddress(`${user.Address.street} ${user.Address.street2} ${user.Address.city}, ${user.Address.state} ${user.Address.zip5}`).then(response => {
+                        const { lat, lng } = response.results[0].geometry.location;
+                        return { ...user, coordinates: { lat, lng } }
+                    })));
+                }).then(users => {
+                    setUserState(users)
+                }).catch(console.error);
 
             API.getRegions()
                 .then(res => {
                 setRegionList(res.data)
-                console.log(res)
                 })
                 .catch(err => console.log(err));
 
             API.getRoles()
                 .then(res => {
                 setRoleList(res.data)
-                console.log(res)
                 })
                 .catch(err => console.log(err));
         };
@@ -93,12 +105,12 @@ export default function ManageASFUsers() {
             <Grid container spacing={2}>
                 <Grid item xs={12}>
                 <Typography variant="h3" component="h4" gutterBottom align="center" color="primary" selectedOption={searchUser} onOptionChange={handleUserSearch}>
-                    Manage ASF Users
+                    View ASF Users
                     <Divider />
                 </Typography>
                 </Grid>
                 <Grid item xs={4} s={4} m={8} lg={10} />
-                {user.roles.some(role => ["superAdmin", "regional", "admin"].includes(role)) ? 
+                {user.roles.some(role => ["Super Admin", "Regional", "Admin"].includes(role)) ? 
                 (<Grid item xs={8} s={8} m={4} lg={2}>
                     <AddButton buttonText="Add User" toLink="/createUser" />
                 </Grid>) : null}
@@ -114,17 +126,30 @@ export default function ManageASFUsers() {
                 <Grid item xs={12}>
                     <Divider />
                 </Grid>
-                <Grid item xs={2}/>
-                <Grid item xs={10}>
+                <Grid item xs={12}>
                     <Hidden smDown>
-                    <div style={{height: 150, width: '80%'}} >
+                    <div style={{height: 150, width: '100%'}} >
                         <UserFlow />
                     </div>
                     </Hidden>
                 </Grid>
                 <Grid item xs={12}>
-                <UserTable rows={users.filter( (user) => {
-                    console.log(user)
+                    <UserTable rows={users.filter( (user) => {
+                            if (selectedRegions.length > 0 && !selectedRegions.includes(user.ResidesInRegion.id)) {
+                                return false;
+                            } 
+                            if (selectedRoles.length > 0 && !selectedRoles.some( (selectedRole) => user.Roles.some(role => role.id === selectedRole))) {
+                                return false; 
+                            }
+                            if (!(parseInt(searchUser) === user.id || (user.firstName + " " + user.lastName).toLowerCase().includes(searchUser.toLowerCase()))) {
+                                return false; 
+                            }
+                            return true;
+
+                    })}/>
+                </Grid>
+                <Grid item xs={12}>
+                    <DogMap displaySubjects={users.filter( (user) => {
                         if (selectedRegions.length > 0 && !selectedRegions.includes(user.ResidesInRegion.id)) {
                             return false;
                         } 
@@ -136,7 +161,7 @@ export default function ManageASFUsers() {
                         }
                         return true;
 
-                    })}/>
+                    })} />
                 </Grid>
             </Grid>
         </Grid>

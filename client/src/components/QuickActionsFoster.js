@@ -6,33 +6,20 @@ import AddIcon from '@material-ui/icons/Add';
 import EditIcon from '@material-ui/icons/Edit';
 import FolderSharedIcon from '@material-ui/icons/FolderShared';
 
-const useStyles = makeStyles(theme => ({
-    itemContainer: {
-        [theme.breakpoints.down("xs")]:{
-            justifyContent: "center",
-            alignItems: "center"
-        }
-    },
-    picContainer: {
-        [theme.breakpoints.down("xs")]:{
-            justifyContent: "center",
-        }
-    }
-}))
+// const useStyles = makeStyles(theme => ({
+
+// }))
 
 export default function QuickActionsFoster(){
-    const classes = useStyles();
+    // const classes = useStyles();
 
     return (
         <Grid container justify="space-evenly" style={{marginTop: "1em"}}>
-            {/* <Grid item>
-                <ApplyButton toLink="/createdog" buttonText="Add Behavior Assessment" color="secondary" icon={<AddIcon />}/>
-            </Grid> */}
             <Grid item>
                 <ApplyButton toLink="/editprofile" buttonText="Edit My Profile and Capacity" color="secondary" icon={<EditIcon />}/>
             </Grid>
             <Grid item>
-                <ApplyButton toLink="/Manage-ASF-Users" buttonText="ASF Team Directory" color="secondary"  icon={<FolderSharedIcon />} />
+                <ApplyButton toLink="/View-ASF-Users" buttonText="ASF Team Directory" color="secondary"  icon={<FolderSharedIcon />} />
             </Grid>
         </Grid>
     )

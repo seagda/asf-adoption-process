@@ -12,6 +12,16 @@ import OverviewTable from '../components/OverviewTable';
 import SearchBar from '../components/SearchBar';
 import Hidden from '@material-ui/core/Hidden';
 import API from '../utils/API';
+import DogMap from '../components/DogMap';
+import Geocode from "react-geocode";
+
+// set Google Maps Geocoding API for purposes of quota management. Its optional but recommended.
+Geocode.setApiKey(process.env.REACT_APP_GOOGLE_MAPS_API_KEY);
+
+// set response language. Defaults to english.
+Geocode.setLanguage("en");
+Geocode.setRegion("us");
+Geocode.setLocationType("ROOFTOP");
 
 const useStyles=makeStyles(theme => ({
     mainContainer: {
@@ -42,7 +52,7 @@ export default function DogDossiersAll() {
    
     const [searchDog, setDogSearch] = React.useState("");
     const [dogs, setDogState] = useState([])
-
+    
     useEffect(() => {
     loadDogs()
     }, [])
@@ -50,22 +60,29 @@ export default function DogDossiersAll() {
     function loadDogs() {
         API.getDogDossiersAll()
             .then(res => {
-            setDogState(res.data)
-            console.log(res)
-            })
-            .catch(err => console.log(err));
+                return Promise.all(res.data.map(dog => Geocode.fromAddress(`${dog.Address.street} ${dog.Address.street2} ${dog.Address.city}, ${dog.Address.state} ${dog.Address.zip5}`).then(response => {
+                    const { lat, lng } = response.results[0].geometry.location;
+                    return { ...dog, coordinates: { lat, lng } }
+                })));
+            }).then(dogs => {
+                setDogState(dogs)
+                console.log(dogs)
+            }).catch(err => {
+                console.error('here')
+                console.error(err);
+            });
 
         API.getRegions()
             .then(res => {
             setRegionList(res.data)
-            console.log(res)
+           
             })
             .catch(err => console.log(err));
 
         API.getDogStatus()
             .then(res => {
             setDogStatusList(res.data)
-            console.log(res)
+         
             })
             .catch(err => console.log(err));
     };
@@ -107,10 +124,9 @@ export default function DogDossiersAll() {
                 <Grid item xs={12}>
                     <Divider />
                 </Grid>
-                <Grid item xs={1} />
-                <Grid item xs={11} justifyContent="center" >
+                <Grid item xs={12} justifyContent="center" >
                     <Hidden smDown>
-                    <div style={{height: 120, width: '80%'}}>
+                    <div style={{height: 120, width: '100%'}}>
                         <DogAdoptionFlow />
                     </div>
                     </Hidden>
@@ -129,6 +145,21 @@ export default function DogDossiersAll() {
                         return true;
 
                     })}/>
+                </Grid>
+                <Grid item xs={12}>
+                    <DogMap displaySubjects={dogs.filter( (dog) => {
+                        if (selectedRegions.length > 0 && !selectedRegions.includes(dog.Region.id)) {
+                            return false;
+                        } 
+                        if (selectedDogStatus.length > 0 && !selectedDogStatus.includes(dog.DogStatus.id)) {
+                            return false; 
+                        }
+                        if (!(parseInt(searchDog) === dog.id || dog.name.toLowerCase().includes(searchDog.toLowerCase()))) {
+                            return false; 
+                        }
+                        return true;
+
+                    })} />
                 </Grid>
             </Grid>
         </Grid>

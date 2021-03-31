@@ -27,7 +27,10 @@ export default function DogProfileActions(props){
                 <EditButton toLink={"/editDog/" + props.id} buttonText="Edit Dog Info"/>
             </Grid>
             <Grid item>
-                <EditButton toLink={"/behavior/" + props.id} buttonText="Complete Behavior Assessment"/>
+                <EditButton toLink={"/behavior/" + props.id} buttonText="Add Behavior Assessment"/>
+            </Grid>
+            <Grid item>
+                <EditButton toLink={"/dogDocument/" + props.id} buttonText="View or Upload Documents"/>
             </Grid>
         </Grid>
     )

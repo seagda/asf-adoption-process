@@ -1,6 +1,7 @@
 const db = require("../models");
 const ac = require("../helpers/ac");
 const router = require("express").Router();
+const controllers = require("../controllers");
 
 const STATIC_IDS = require("../scripts/staticIds");
 
@@ -13,17 +14,17 @@ router.get("/", (req, res) => {
     const permissionOwnDog = ac.can(req.roles).readOwn("Dog");
     db.User.findByPk(req.userId, { include: [db.Role, { association: "AssignedRegions" }] })
         .then(user => {
-            const dashboardPromises = [];
+            const dashboardPromises = [user];
             if (permissionOwnAlerts.granted) {
-                dashboardPromises[0] = user.getAlerts();
+                dashboardPromises[1] = controllers.alert.getUnread({ ToUserId: user.id });
             }
             if (permissionAnyDog.granted) {
-                dashboardPromises[1] = db.Dog.count({ include: db.DogStatus, group: ["DogStatusId", "DogStatus.name"] });
-                dashboardPromises[2] = db.User.sum("maxCapacity");
-                dashboardPromises[3] = db.Dog.count({ where: { currentlyWithId: { [db.Sequelize.Op.not]: null } } });
+                dashboardPromises[2] = db.Dog.count({ include: db.DogStatus, group: ["DogStatusId", "DogStatus.name"] });
+                dashboardPromises[3] = db.User.sum("maxCapacity");
+                dashboardPromises[4] = db.Dog.count({ where: { CurrentlyWithId: { [db.Sequelize.Op.not]: null } } });
             }
             if (permissionAnyAppResponse.granted) {
-                dashboardPromises[4] = db.AppResponse.count({ where: { AppStatusId: { [db.Sequelize.Op.lt]: STATIC_IDS.APP_STATUS.APPROVED } }, include: db.AppType, group: ["AppTypeId", "AppType.name"] });
+                dashboardPromises[5] = db.AppResponse.count({ where: { AppStatusId: { [db.Sequelize.Op.lt]: STATIC_IDS.APP_STATUS.APPROVED } }, include: db.AppType, group: ["AppTypeId", "AppType.name"] });
                 // none of this works the way I want it to, if at all:
                 /* // dashboardPromises[1]
                 db.AppType.findAll({ include: { model: db.AppResponse, where: { AppStatusId: STATIC_IDS.APP_STATUS.APPROVED }, include: db.User } }).then()
@@ -34,8 +35,8 @@ router.get("/", (req, res) => {
                 //     db.User.findByPk(3).then(user => user.getDogsByStatus("Adopted")).then(console.log) */
             }
             if (permissionAnyUser.granted) {
-                dashboardPromises[5] = db.User.findAll({ include: [{ association: "currentlyWith" }, { model: db.Role, where: { id: STATIC_IDS.ROLES.FOSTER } }] });
-                dashboardPromises[6] = db.User.findAll({ include: [{ association: "currentlyWith" }, { model: db.Role, where: { id: STATIC_IDS.ROLES.ADOPTER } }] });
+                dashboardPromises[6] = db.User.findAll({ include: [{ association: "CurrentlyWith" }, { model: db.Role, where: { id: STATIC_IDS.ROLES.FOSTER } }] });
+                dashboardPromises[7] = db.User.findAll({ include: [{ association: "CurrentlyWith" }, { model: db.Role, where: { id: STATIC_IDS.ROLES.ADOPTER } }] });
                 let roleWhere = { id: { [db.Sequelize.Op.is]: null } };
                 let regionWhere = { id: { [db.Sequelize.Op.is]: null } };
                 if (user.Roles.find(role => role.id === STATIC_IDS.ROLES.SUPERADMIN)) {
@@ -46,23 +47,23 @@ router.get("/", (req, res) => {
                     roleWhere.id = { [db.Sequelize.Op.in]: [STATIC_IDS.ROLES.RESCUER, STATIC_IDS.ROLES.ADOPTER, STATIC_IDS.ROLES.FOSTER] };
                     regionWhere.id = { [db.Sequelize.Op.in]: user.AssignedRegions.map(region => region.id) };
                 }
-                dashboardPromises[7] = db.User.findAll({ include: [{ model: db.Role, where: roleWhere }, { association: "ResidesInRegion", where: regionWhere }] });
+                dashboardPromises[8] = db.User.findAll({ include: [{ model: db.Role, where: roleWhere }, { association: "ResidesInRegion", where: regionWhere }] });
             }
             if (permissionOwnDog.granted) {
-                dashboardPromises[8] = user.getCurrentlyWith({ include: [{ model: db.DogPhoto, where: { profilePhoto: true } }, db.DogStatus], order: ["DogStatusId"] });
+                dashboardPromises[9] = controllers.dog.getAll(null, { id: user.id });
             }
 
             return Promise.all(dashboardPromises);
         })
-        .then(([Alerts, dogStatusCounts, totalMaxCapacity, totalDogsInOurCare, pendingAppCounts, fosters, adopters, teamMembers, myDogs]) => {
-            const dashboardData = {};
-            if (Alerts) dashboardData.alerts = permissionOwnAlerts.filter(Alerts.map(alert => alert.toJSON()));
+        .then(([user, alerts, dogStatusCounts, totalMaxCapacity, totalDogsInOurCare, pendingAppCounts, fosters, adopters, teamMembers, myDogs]) => {
+            const dashboardData = { user: { firstName: user.firstName, lastName: user.lastName } };
+            if (alerts) dashboardData.alerts = permissionOwnAlerts.filter(alerts);
             if (dogStatusCounts) dashboardData.dogStatusCounts = dogStatusCounts.map(statusCount => ({ status: statusCount.name, number: statusCount.count }));
             if (totalMaxCapacity !== undefined) dashboardData.totalMaxCapacity = totalMaxCapacity;
             if (totalDogsInOurCare !== undefined) dashboardData.totalDogsInOurCare = totalDogsInOurCare;
             if (pendingAppCounts) dashboardData.pendingAppCounts = pendingAppCounts;
             if (fosters) {
-                const fostersWithSpace = fosters.filter(foster => foster.currentlyWith.length < foster.maxCapacity);
+                const fostersWithSpace = fosters.filter(foster => foster.CurrentlyWith.length < foster.maxCapacity);
                 dashboardData.fosterCounts = [
                     { status: "Pending Applications", number: (pendingAppCounts.find(appCount => appCount.name === "foster") || { count: 0 }).count },
                     { status: "Available Fosters", number: fostersWithSpace.length },
@@ -70,7 +71,7 @@ router.get("/", (req, res) => {
                 ];
             }
             if (adopters) {
-                const adoptersWithSpace = adopters.filter(adopter => adopter.currentlyWith.length < adopter.maxCapacity);
+                const adoptersWithSpace = adopters.filter(adopter => adopter.CurrentlyWith.length < adopter.maxCapacity);
                 dashboardData.adopterCounts = [
                     { status: "Pending Applications", number: (pendingAppCounts.find(appCount => appCount.name === "adopter") || { count: 0 }).count },
                     { status: "Available Adopters", number: adoptersWithSpace.length },
@@ -78,7 +79,7 @@ router.get("/", (req, res) => {
                 ];
             }
             if (teamMembers) dashboardData.teamMembers = permissionAnyUser.filter(teamMembers.map(member => member.toJSON()));
-            if (myDogs) dashboardData.myDogs = permissionOwnDog.filter(myDogs.map(dog => dog.toJSON()));
+            if (myDogs) dashboardData.myDogs = permissionOwnDog.filter(myDogs);
             res.json(dashboardData);
         })
         .catch(err => {
