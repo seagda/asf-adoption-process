@@ -30,7 +30,7 @@ export default function SimpleAccordion(props) {
           <Typography className={classes.heading}>{props.name}</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <Typography>
+          <Typography onClick={props.download}>
             {props.createdAt}
           </Typography>
         </AccordionDetails>
