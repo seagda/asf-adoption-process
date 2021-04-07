@@ -93,11 +93,11 @@ export default function DogProfileView(){
             <DogOriginView 
             origin={dogData?.Origin}
             originName={dogData.Origin?.fullName} 
-            originRegion={dogData.Origin?.Region.name} 
-            originStreet={dogData.Origin?.Address.street} 
-            originCity={dogData.Origin?.Address.city} 
-            originState={dogData.Origin?.Address.state} 
-            originZip={dogData.Origin?.Address.zip5} 
+            originRegion={dogData.Origin?.Region?.name} 
+            originStreet={dogData.Origin?.Address?.street} 
+            originCity={dogData.Origin?.Address?.city} 
+            originState={dogData.Origin?.Address?.state} 
+            originZip={dogData.Origin?.Address?.zip5} 
             originPhone={dogData.Origin?.phone} 
             pullCost={dogData?.pullCost}/>
 

@@ -135,7 +135,7 @@ export default function ViewASFUsers() {
                 </Grid>
                 <Grid item xs={12}>
                     <UserTable rows={users.filter( (user) => {
-                            if (selectedRegions.length > 0 && !selectedRegions.includes(user.ResidesInRegion.id)) {
+                            if (selectedRegions.length > 0 && !selectedRegions.includes(user.ResidesInRegion?.id)) {
                                 return false;
                             } 
                             if (selectedRoles.length > 0 && !selectedRoles.some( (selectedRole) => user.Roles.some(role => role.id === selectedRole))) {
@@ -150,7 +150,7 @@ export default function ViewASFUsers() {
                 </Grid>
                 <Grid item xs={12}>
                     <DogMap displaySubjects={users.filter( (user) => {
-                        if (selectedRegions.length > 0 && !selectedRegions.includes(user.ResidesInRegion.id)) {
+                        if (selectedRegions.length > 0 && !selectedRegions.includes(user.ResidesInRegion?.id)) {
                             return false;
                         } 
                         if (selectedRoles.length > 0 && !selectedRoles.some( (selectedRole) => user.Roles.some(role => role.id === selectedRole))) {
