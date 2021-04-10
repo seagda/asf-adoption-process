@@ -1,4 +1,5 @@
 module.exports = {
+    address: require("./address"),
     alert: require("./alert"),
     appQuestion: require("./appQuestion"),
     appResponse: require("./appResponse"),
