@@ -26,26 +26,26 @@ const appTypeSeed = [
 
 // Seed the ADDRESS TABLE
 const AddressSeed = [
-    { street: "123 Test Street", street2: "#341", state: "Texas", city: "Dallas", zip5: "57063" },
-    { street: "234 Sample Ave", street2: "", state: "Texas", city: "Dallas", zip5: "57001" },
-    { street: "123 Test Street", street2: "", state: "Texas", city: "Houston", zip5: "77001" },
-    { street: "234 Sample Ave", street2: "", state: "Texas", city: "Houston", zip5: "77024" },
-    { street: "123 Test Street", street2: "", state: "Oklahoma", city: "Oklahoma City", zip5: "73008" },
-    { street: "234 Sample Ave", street2: "", state: "Oklahoma", city: "Oklahoma City", zip5: "73104" },
-    { street: "123 Test Street", street2: "", state: "Missouri", city: "St. Louis", zip5: "63101" },
-    { street: "234 Sample Ave", street2: "801", state: "Missouri", city: "St. Louis", zip5: "63136" },
-    { street: "123 Test Street", street2: "", state: "Massachusetts", city: "Boston", zip5: "02215" },
-    { street: "234 Sample Ave", street2: "", state: "Massachusetts", city: "Somerville", zip5: "02138" },
-    { street: "123 Test Street", street2: "801", state: "Arkansas", city: "Little Rock", zip5: "72002" },
-    { street: "234 Sample Ave", street2: "", state: "Arkansas", city: "Little Rock", zip5: "72255" },
-    { street: "123 Test Street", street2: "", state: "Maine", city: "Bangor", zip5: "04462" },
-    { street: "234 Sample Ave", street2: "", state: "Maine", city: "Bangor", zip5: "04462" },
-    { street: "123 Test Street", street2: "", state: "Mississippi", city: "Jackson", zip5: "39056" },
-    { street: "234 Sample Ave", street2: "801", state: "Mississippi", city: "Jackson", zip5: "39215" },
-    { street: "123 Test Street", street2: "", state: "Louisiana", city: "Baton Rouge", zip5: "70831" },
-    { street: "234 Sample Ave", street2: "", state: "Louisiana", city: "Baton Rouge", zip5: "70801" },
-  ];
-  
+    { street: "123 Test Street", street2: "#341", state: "Texas", city: "Dallas", zip5: "57063", lat: 32.7766642, lng: -96.79698789999999 },
+    { street: "234 Sample Ave", street2: "", state: "Texas", city: "Dallas", zip5: "57001", lat: 32.7766642, lng: -96.79698789999999 },
+    { street: "123 Test Street", street2: "", state: "Texas", city: "Houston", zip5: "77001", lat: 29.77, lng: -95.36999999999999 },
+    { street: "234 Sample Ave", street2: "", state: "Texas", city: "Houston", zip5: "77024", lat: 29.7810228, lng: -95.55926679999999 },
+    { street: "123 Test Street", street2: "", state: "Oklahoma", city: "Oklahoma City", zip5: "73008", lat: 35.5094529, lng: -97.64396110000001 },
+    { street: "234 Sample Ave", street2: "", state: "Oklahoma", city: "Oklahoma City", zip5: "73104", lat: 35.4718556, lng: -97.50577369999999 },
+    { street: "123 Test Street", street2: "", state: "Missouri", city: "St. Louis", zip5: "63101", lat: 38.593784, lng: -90.379632 },
+    { street: "234 Sample Ave", street2: "801", state: "Missouri", city: "St. Louis", zip5: "63136", lat: 38.7470186, lng: -90.2526163 },
+    { street: "123 Test Street", street2: "", state: "Massachusetts", city: "Boston", zip5: "02215", lat: 42.3476181, lng: -71.1002881 },
+    { street: "234 Sample Ave", street2: "", state: "Massachusetts", city: "Somerville", zip5: "02138", lat: 42.3803274, lng: -71.13891009999999 },
+    { street: "123 Test Street", street2: "801", state: "Arkansas", city: "Little Rock", zip5: "72002", lat: 34.6705694, lng: -92.52969709999999 },
+    { street: "234 Sample Ave", street2: "", state: "Arkansas", city: "Little Rock", zip5: "72255", lat: 34.7579124, lng: -92.3247604 },
+    { street: "123 Test Street", street2: "", state: "Maine", city: "Bangor", zip5: "04462", lat: 45.6573388, lng: -68.71016039999999 },
+    { street: "234 Sample Ave", street2: "", state: "Maine", city: "Bangor", zip5: "04462", lat: 45.6573388, lng: -68.71016039999999 },
+    { street: "123 Test Street", street2: "", state: "Mississippi", city: "Jackson", zip5: "39056", lat: 32.3782595, lng: -90.3560076 },
+    { street: "234 Sample Ave", street2: "801", state: "Mississippi", city: "Jackson", zip5: "39215", lat: 32.3, lng: -90.17999999999999 },
+    { street: "123 Test Street", street2: "", state: "Louisiana", city: "Baton Rouge", zip5: "70831", lat: 30.45, lng: -91.14999999999999 },
+    { street: "234 Sample Ave", street2: "", state: "Louisiana", city: "Baton Rouge", zip5: "70801", lat: 30.4483779, lng: -91.18870799999999 },
+];
+
   // Seed the REGIONS table
 const regionSeed = [
     { name: "Midwest/South" },
