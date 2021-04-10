@@ -139,7 +139,7 @@ router.get("/:id", (req, res) => {
 router.put("/:id", (req, res) => {
     const permission = ac.can(req.roles).updateAny("User");
     if (permission.granted) {
-        const Address = permission.filter(req.body).Address;
+        const Address = controllers.address.getWithCoords(permission.filter(req.body).Address);
         db.User.findByPk(req.params.id, { include: [db.Address] })
             .then(user => user.update(permission.filter(req.body))
                 .then(() => user.AddressId ? user.Address.update(Address) : user.createAddress(Address)))
