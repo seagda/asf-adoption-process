@@ -75,8 +75,6 @@ export default function ViewASFUsers() {
     };
 
     useEffect(() => {
-        console.log("filter users:")
-        console.log(users)
         setFilteredUsers((users || []).filter((user) => {
             if (selectedRegions.length > 0 && !selectedRegions.includes(user.ResidesInRegion?.id)) {
                 return false;
