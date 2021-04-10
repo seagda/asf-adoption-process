@@ -31,11 +31,14 @@ export default function App() {
                 <Switch>
                     <Route exact path="/"><Home /></Route>
                     <Redirect from="/My-Profile" to="/user/me" />
-                    <Route path="/My-Dashboard"><DashboardMain/></Route>
+                    <Redirect from="/My-Dashboard" to="/dashboard" />
+                    <Route path="/dashboard"><DashboardMain/></Route>
                     <Route path="/Settings"><Settings/></Route>
                     <Route path="/Logout" />
-                    <Route path="/Dog-Dossiers"><DogDossiersAll /></Route>
-                    <Route path="/View-ASF-Users"><ViewASFUsers/></Route>
+                    <Redirect from="/Dog-Dossiers" to="/dossiers" />
+                    <Route path="/dossiers"><DogDossiersAll /></Route>
+                    <Redirect from="/View-ASF-Users" to="/users" />
+                    <Route path="/users"><ViewASFUsers/></Route>
                     <Redirect from="/editprofile" to="/user/me/edit" />
                     <Route path="/adopterApplication"><AdopterApplication/></Route>
                     <Route path="/fosterApplication"><FosterApplication/></Route>
