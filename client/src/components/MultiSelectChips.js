@@ -54,8 +54,7 @@ function getStyles(name, personName, theme) {
     const classes = useStyles();
     const theme = useTheme();
 
-  var selected =props.selectedOption || []
-    console.log(props.selectedOption)
+  var selected =props.selectedOption || [];
     return (
         <div>
           <FormControl className={classes.formControl}>
