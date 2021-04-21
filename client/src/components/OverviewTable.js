@@ -22,8 +22,6 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import {NavLink} from "react-router-dom";
 
-
-
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
@@ -50,17 +48,6 @@ function stableSort(array, comparator) {
   return stabilizedThis.map((el) => el[0]);
 }
 
-const headCells = [
-  { id: 'id', numeric: true, disablePadding: true, label: 'Id' },
-  { id: 'name', numeric: false, disablePadding: false, label: 'Dog Name' },
-  { id: 'user', numeric: false, disablePadding: false, label: 'ASF User' },
-  { id: 'city', numeric: false, disablePadding: false, label: 'City' },
-  { id: 'state', numeric: false, disablePadding: false, label: 'State' },
-  { id: 'gender', numeric: false, disablePadding: false, label: 'Gender' },
-  { id: 'dob', numeric: false, disablePadding: false, label: 'Date of Birth' },
-  { id: 'region', numeric: false, disablePadding: false, label: 'Region' },
-  { id: 'status', numeric: false, disablePadding: false, label: 'Status' },
-];
 
 function EnhancedTableHead(props) {
   const { classes, onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props;
@@ -79,7 +66,7 @@ function EnhancedTableHead(props) {
             inputProps={{ 'aria-label': 'select all desserts' }}
           /> */}
         </TableCell>
-        {headCells.map((headCell) => (
+        {props.columns.map((headCell) => (
           <TableCell
             key={headCell.id}
             // align={headCell.numeric ? 'right' : 'left'}
@@ -151,23 +138,9 @@ const EnhancedTableToolbar = (props) => {
         </Typography>
       ) : (
         <Typography className={classes.title} variant="h6" id="tableTitle" component="div">
-          Dog Dossiers
+          {props.title}
         </Typography>
       )}
-
-      {/* {numSelected > 0 ? (
-        <Tooltip title="Delete">
-          <IconButton aria-label="delete">
-            <DeleteIcon />
-          </IconButton>
-        </Tooltip>
-      ) : (
-        <Tooltip title="Filter list">
-          <IconButton aria-label="filter list">
-            <FilterListIcon />
-          </IconButton>
-        </Tooltip>
-      )} */}
     </Toolbar>
   );
 };
@@ -200,7 +173,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-// rows becomes props.rows
 export default function OverviewTable(props) {
   const classes = useStyles();
   const [order, setOrder] = React.useState('asc');
@@ -265,7 +237,7 @@ export default function OverviewTable(props) {
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
-        <EnhancedTableToolbar numSelected={selected.length} />
+        <EnhancedTableToolbar title={props.title} numSelected={selected.length} />
         <TableContainer>
           <Table
             className={classes.table}
@@ -274,6 +246,7 @@ export default function OverviewTable(props) {
             aria-label="enhanced table"
           >
             <EnhancedTableHead
+              columns={props.columns}
               classes={classes}
               numSelected={selected.length}
               order={order}
@@ -286,17 +259,17 @@ export default function OverviewTable(props) {
               {stableSort(props.rows, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-                  const isItemSelected = isSelected(row.name);
+                  const isItemSelected = isSelected(row.id);
                   const labelId = `enhanced-table-checkbox-${index}`;
 
                   return (
                     <TableRow
                       hover
-                      onClick={(event) => handleClick(event, row.name)}
+                      onClick={(event) => handleClick(event, row.id)}
                       role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
-                      key={row.name}
+                      key={row.id}
                       selected={isItemSelected}
                     >
                       <TableCell padding="checkbox">
@@ -305,17 +278,7 @@ export default function OverviewTable(props) {
                           inputProps={{ 'aria-labelledby': labelId }}
                         /> */}
                       </TableCell>
-                      <TableCell component="th" id={labelId} scope="row" padding="none">
-                        {row.id}
-                      </TableCell>
-                      <TableCell ><NavLink gutterBottom style={{textDecoration: "none"}} to={`/dogView/${row.id}`}>{row.name}</NavLink></TableCell>
-                      <TableCell >{row.CurrentlyWith ? row.CurrentlyWith.firstName + " " + row.CurrentlyWith.lastName : "not assigned"}</TableCell>
-                      <TableCell >{row.Address.city}</TableCell>
-                      <TableCell >{row.Address.state}</TableCell>
-                      <TableCell >{row.gender}</TableCell>
-                      <TableCell >{row.dob}</TableCell>
-                      <TableCell >{row.Region.name}</TableCell>
-                      <TableCell >{row.DogStatus.name}</TableCell>
+                      {props.columns.map(column => <TableCell key={column.id}>{row[column.id]}</TableCell>)}
                     </TableRow>
                   );
                 })}

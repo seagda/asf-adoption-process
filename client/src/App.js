@@ -3,12 +3,12 @@ import { ThemeProvider } from '@material-ui/styles';
 import {BrowserRouter, Route, Switch, Redirect} from "react-router-dom";
 
 import theme from "../src/components/Theme";
-import ResponsiveDrawer from "../src/components/Header"; 
-import DogDossiersAll from "../src/pages/DogDossiersAll"
+import ResponsiveDrawer from "../src/components/Header";
 import Login from "../src/pages/Login"
 import CreateUser from "../src/pages/CreateUser";
 import AdopterApplication from "./pages/AdopterApplication";
-import ViewASFUsers from "./pages/ViewASFUsers";
+import ViewAllUsers from "./pages/ViewAllUsers";
+import ViewAllDogs from "./pages/ViewAllDogs";
 import DogProfileView from "./pages/DogProfileView";
 import DogProfileCreate from "./pages/DogProfileCreate";
 import DashboardMain from "./pages/DashboardMain";
@@ -36,9 +36,9 @@ export default function App() {
                     <Route path="/Settings"><Settings/></Route>
                     <Route path="/Logout" />
                     <Redirect from="/Dog-Dossiers" to="/dossiers" />
-                    <Route path="/dossiers"><DogDossiersAll /></Route>
+                    <Route path="/dossiers"><ViewAllDogs /></Route>
                     <Redirect from="/View-ASF-Users" to="/users" />
-                    <Route path="/users"><ViewASFUsers/></Route>
+                    <Route path="/users"><ViewAllUsers /></Route>
                     <Redirect from="/editprofile" to="/user/me/edit" />
                     <Route path="/adopterApplication"><AdopterApplication/></Route>
                     <Route path="/fosterApplication"><FosterApplication/></Route>
