@@ -51,22 +51,15 @@ export default function DogDossiersAll() {
     const [dogStatusList, setDogStatusList] = React.useState([]);
    
     const [searchDog, setDogSearch] = React.useState("");
-    const [dogs, setDogState] = useState([])
-    
-    useEffect(() => {
-    loadDogs()
-    }, [])
+    const [dogs, setDogState] = useState([]);
+    const [filteredDogs, setFilteredDogs] = useState([]);
+
+    useEffect(loadDogs, [])
 
     function loadDogs() {
         API.getDogDossiersAll()
             .then(res => {
-                return Promise.all(res.data.map(dog => Geocode.fromAddress(`${dog.Address.street} ${dog.Address.street2} ${dog.Address.city}, ${dog.Address.state} ${dog.Address.zip5}`).then(response => {
-                    const { lat, lng } = response.results[0].geometry.location;
-                    return { ...dog, coordinates: { lat, lng } }
-                })));
-            }).then(dogs => {
-                setDogState(dogs)
-                console.log(dogs)
+                setDogState(res.data.map(dog => ({ ...dog, coordinates: { lat: +dog.Address.lat, lng: +dog.Address.lng } })));
             }).catch(err => {
                 console.error('here')
                 console.error(err);
@@ -74,19 +67,32 @@ export default function DogDossiersAll() {
 
         API.getRegions()
             .then(res => {
-            setRegionList(res.data)
-           
+                setRegionList(res.data)
             })
             .catch(err => console.log(err));
 
         API.getDogStatus()
             .then(res => {
-            setDogStatusList(res.data)
-         
+                setDogStatusList(res.data)
             })
             .catch(err => console.log(err));
     };
-  
+
+    useEffect(() => {
+        setFilteredDogs(dogs.filter((dog) => {
+            if (selectedRegions.length > 0 && !selectedRegions.includes(dog.Region.id)) {
+                return false;
+            }
+            if (selectedDogStatus.length > 0 && !selectedDogStatus.includes(dog.DogStatus.id)) {
+                return false;
+            }
+            if (!(parseInt(searchDog) === dog.id || dog.name.toLowerCase().includes(searchDog.toLowerCase()))) {
+                return false;
+            }
+            return true;
+        }))
+    }, [dogs, selectedRegions, selectedDogStatus, searchDog])
+
     const handleRegionChange = (event) => {
       setRegion(event.target.value);
     };
@@ -132,34 +138,10 @@ export default function DogDossiersAll() {
                     </Hidden>
                 </Grid>
                 <Grid item xs={12}>
-                    <OverviewTable rows={dogs.filter( (dog) => {
-                        if (selectedRegions.length > 0 && !selectedRegions.includes(dog.Region.id)) {
-                            return false;
-                        } 
-                        if (selectedDogStatus.length > 0 && !selectedDogStatus.includes(dog.DogStatus.id)) {
-                            return false; 
-                        }
-                        if (!(parseInt(searchDog) === dog.id || dog.name.toLowerCase().includes(searchDog.toLowerCase()))) {
-                            return false; 
-                        }
-                        return true;
-
-                    })}/>
+                    <OverviewTable rows={filteredDogs}/>
                 </Grid>
                 <Grid item xs={12}>
-                    <DogMap displaySubjects={dogs.filter( (dog) => {
-                        if (selectedRegions.length > 0 && !selectedRegions.includes(dog.Region.id)) {
-                            return false;
-                        } 
-                        if (selectedDogStatus.length > 0 && !selectedDogStatus.includes(dog.DogStatus.id)) {
-                            return false; 
-                        }
-                        if (!(parseInt(searchDog) === dog.id || dog.name.toLowerCase().includes(searchDog.toLowerCase()))) {
-                            return false; 
-                        }
-                        return true;
-
-                    })} />
+                    <DogMap displaySubjects={filteredDogs} />
                 </Grid>
             </Grid>
         </Grid>

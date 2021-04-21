@@ -129,7 +129,7 @@ export default function DogDossierDocs(){
                         {dogDocs.map(doc => {
                             return (
                             <Grid item xs={12} style={{margin: "0.5em"}}>
-                                <SimpleAccordion name={doc.name} createdAt={doc.createdAt} />
+                                <SimpleAccordion download={() => download(doc.id)} name={doc.name} createdAt={doc.createdAt} />
                             </Grid>
                             )
                         })}

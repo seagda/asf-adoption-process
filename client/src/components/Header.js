@@ -101,28 +101,22 @@ function ResponsiveDrawer(props) {
     const drawer = (
         <div>
             {/* <div className={classes.toolbar} /> */}
-            <NavLink to="/My-Dashboard" className={classes.logoContainer} onClick={() => setMobileOpen(false)}>
+            <NavLink to="/dashboard" className={classes.logoContainer} onClick={() => setMobileOpen(false)}>
                 <img src={logo} className={classes.logo}/>
             </NavLink>
             <List>
-                {['My-Dashboard', 'My-Profile'].map((text, index) => (
-                    <ListItem button key={text} className={classes.listItem} onClick={() => setMobileOpen(false)}>
-                        <ListItemIcon className={classes.listItem}>{index === 0 ? <PersonIcon /> : <PetsIcon /> }</ListItemIcon>
-                        <NavLink className={classes.link} to={`/${text}`}>{`${text.replace("-", " ")}`}</NavLink>
-                    </ListItem>
-                ))}
-                <ListItem button className={classes.listItem} onClick={() => {setMobileOpen(false); handleLogout()}}>
-                    <ListItemIcon className={classes.listItem}><ExitToAppIcon /></ListItemIcon>
-                    <NavLink className={classes.link} to={"/"}>Logout</NavLink>
-                </ListItem>
-            </List>
-            <Divider />
-            <List>
-                {['Dog-Dossiers', 'View-ASF-Users'].map((text, index) => (
-                    <ListItem button key={text} className={classes.listItem} onClick={() => setMobileOpen(false)}>
-                        <ListItemIcon className={classes.listItem}>{index === 0 ? <DescriptionIcon /> : index === 1 ? <SupervisorAccountIcon /> : <PermDataSettingIcon />}</ListItemIcon>
-                        <NavLink className={classes.link} to={`/${text}`}>{`${text.replace("-", " ")}`}</NavLink>
-                    </ListItem>
+                {[
+                    { path: "/dashboard", text: "My Dashboard", icon: <PersonIcon /> },
+                    { path: "/user/me", text: "My Profile", icon: <PetsIcon /> },
+                    { path: "/", text: "Logout", icon: <ExitToAppIcon />, action: handleLogout },
+                    "Divider",
+                    { path: "/dossiers", text: "Dog Dossiers", icon: <DescriptionIcon /> },
+                    { path: "/users", text: "View ASF Users", icon: <SupervisorAccountIcon /> },
+                ].map(link => link === "Divider" ? <Divider /> : (
+                    <NavLink className={classes.link} to={link.path} onClick={() => { setMobileOpen(false); if (link.action) link.action(); }}><ListItem button key={link.path} className={classes.listItem}>
+                        <ListItemIcon className={classes.listItem}>{link.icon}</ListItemIcon>
+                        {link.text}
+                    </ListItem></NavLink>
                 ))}
             </List>
         </div>

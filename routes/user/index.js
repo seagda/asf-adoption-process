@@ -60,12 +60,14 @@ router.get("/me", (req, res) => {
 router.put("/me", (req, res) => {
     const permission = ac.can(req.roles).updateOwn("User");
     if (permission.granted) {
+        const Address = controllers.address.getWithCoords(permission.filter(req.body).Address);
         db.User.findByPk(req.userId, { include: [db.Address] })
-            .then(user => user.update(permission.filter(req.body)).then(() => user.Address.update(permission.filter(req.body).Address)))
+            .then(user => user.update(permission.filter(req.body))
+                .then(() => user.AddressId ? user.Address.update(Address) : user.createAddress(Address)))
             .then(() => res.sendStatus(200))
             .catch(err => {
                 console.error(err);
-                res.sendStatus(500);
+                res.status(500).send({ message: "Database error" });
             });
     } else return res.status(403).send({ message: "whoops we broke something, everyone should have updateOwn user" });
 });
@@ -139,7 +141,7 @@ router.get("/:id", (req, res) => {
 router.put("/:id", (req, res) => {
     const permission = ac.can(req.roles).updateAny("User");
     if (permission.granted) {
-        const Address = permission.filter(req.body).Address;
+        const Address = controllers.address.getWithCoords(permission.filter(req.body).Address);
         db.User.findByPk(req.params.id, { include: [db.Address] })
             .then(user => user.update(permission.filter(req.body))
                 .then(() => user.AddressId ? user.Address.update(Address) : user.createAddress(Address)))

@@ -2,6 +2,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const db = require("../models");
 const ac = require("../helpers/ac");
+const controllers = require("../controllers");
 
 const router = require("express").Router();
 
@@ -9,8 +10,11 @@ router.post("/signup", (req, res) => {
     if (!(req.body.email && req.body.password && req.body.firstName && req.body.lastName && req.body.phone))
         return res.status(400).send({ message: "Signup request must have an email, password, first name, last name, phone" });
 
-    bcrypt.hash(req.body.password, 8)
-        .then(hash => {
+    const promises = [bcrypt.hash(req.body.password, 8)];
+    if (req.body.Address.street || req.body.Address.street2 || req.body.Address.city || req.body.Address.state || req.body.Address.zip5) promises.push(controllers.address.getWithCoords(req.body.Address));
+        
+    promise.all(promises)
+        .then(([hash, Address]) => {
             const newUser = {
                 ...req.body,
                 email: req.body.email,
@@ -18,12 +22,12 @@ router.post("/signup", (req, res) => {
                 lastName: req.body.lastName,
                 phone: req.body.phone,
                 photoUrl: req.body.photoUrl,
-                Address: req.body.Address,
+                Address,
                 Auth: { password: hash },
                 Setting: {}
             };
             const include = [db.Auth, db.Setting];
-            if (req.body.Address.street || req.body.Address.street2 || req.body.Address.city || req.body.Address.state || req.body.Address.zip5) include.push(db.Address);
+            if (Address) include.push(db.Address);
             return db.User.create(newUser, { include });
         })
         .then(user => user.addRole(1))
