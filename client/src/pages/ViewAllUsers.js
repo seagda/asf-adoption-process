@@ -16,7 +16,7 @@ export default function ViewAllUsers() {
                 city: user.Address.city,
                 state: user.Address.state,
                 region: user.ResidesInRegion.name,
-                roles: user.Roles.map( (role) => role.name).join(", ")
+                roles: user.Roles.map((role) => role.name).join(", ")
             })))
         })
     }, []);
@@ -24,8 +24,8 @@ export default function ViewAllUsers() {
     return (
         <ViewAll title="View ASF Users"
             tableColumns={[
-                { id: 'firstName', label: 'First Name' },
-                { id: 'lastName', label: 'Last Name' },
+                { id: 'firstName', label: 'First Name', link: true },
+                { id: 'lastName', label: 'Last Name', link: true },
                 { id: 'email', label: 'Email' },
                 { id: 'city', label: 'City' },
                 { id: 'state', label: 'State' },

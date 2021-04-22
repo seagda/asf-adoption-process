@@ -29,7 +29,7 @@ export default function ViewAllApps() {
     return (
         <ViewAll title="Applications"
             tableColumns={[
-                { id: 'id', label: 'ID' },
+                { id: 'id', label: 'ID', link: true },
                 { id: 'name', label: 'Applicant' },
                 { id: 'type', label: 'Application Type' },
                 { id: 'status', label: 'Status' },
