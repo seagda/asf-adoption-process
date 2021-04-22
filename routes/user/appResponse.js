@@ -11,8 +11,10 @@ const sId = require("../../scripts/staticIds");
 responseRouter.get("/", (req, res) => {
     const permission = ac.can(req.roles).readAny("AppResponse");
     if (permission.granted) {
-        db.AppResponse.findAll({ attributes: { exclude: ["response"] }, where: req.query, include: [db.AppStatus, db.AppType] })
-            .then(responses => res.json(responses.map(response => permission.filter(response.toJSON()))))
+        db.AppResponse.findAll({
+            attributes: { exclude: ["response"] }, where: req.query, include: [db.AppStatus, db.AppType,
+            { association: "ForDog" }, { model: db.User, include: [db.Address] }]
+        }).then(responses => res.json(responses.map(response => permission.filter(response.toJSON()))))
             .catch(err => {
                 console.error(err)
                 res.status(400).send({ message: "Error with request" })
