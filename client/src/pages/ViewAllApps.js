@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import ViewAll from "./ViewAll";
 import API from "../utils/API";
-import DogAdoptionFlow from "../components/DogAdoptionFlow";
+import AppFlow from "../components/AppFlow";
 
 export default function ViewAllApps() {
     const [data, setData] = useState([]);
@@ -37,15 +37,15 @@ export default function ViewAllApps() {
                 { id: 'createdAt', label: 'Date Created' },
                 { id: 'updatedAt', label: 'Date Updated' }
             ]}
-            viewLinkPrefix="/viewDog/"
+            viewLinkPrefix="/appResponse/"
             canCreate={false}
             data={data}
-            tableTitle="Dog Details"
+            tableTitle="Application Details"
             flow={<div style={{ height: 120, width: '100%' }} >
-                <DogAdoptionFlow />
+                <AppFlow />
             </div>}
             filter2Check={(selectedFilter2, obj) => selectedFilter2.includes(obj.AppStatus.id)}
             filter2Text="Status"
-            loadDataFunction={API.getAllAppResponses} getFilter2List={API.getAppStatuses} />
+            getFilter2List={API.getAppStatuses} />
     )
 }

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import ViewAll from "./ViewAll";
 import API from "../utils/API";
-import UserFlow from "../components/UserFlow";
+import UserFlow from "../components/AppFlow";
 
 export default function ViewAllUsers() {
     const [data, setData] = useState([]);
