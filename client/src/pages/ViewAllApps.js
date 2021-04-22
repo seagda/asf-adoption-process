@@ -12,6 +12,7 @@ export default function ViewAllApps() {
                 ...app,
                 name: `${app.User.firstName} ${app.User.lastName}`,
                 coordinates: { lat: +app.User.Address.lat, lng: +app.User.Address.lng },
+                Region: app.User.ResidesInRegion,
                 city: app.User.Address.city,
                 state: app.User.Address.state,
                 dog: app.ForDog?.name,
