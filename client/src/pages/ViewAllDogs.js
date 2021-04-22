@@ -25,15 +25,15 @@ export default function ViewAllDogs() {
     return (
         <ViewAll title="Dog Dossiers"
             tableColumns={[
-                { id: 'id', numeric: true, disablePadding: true, label: 'Id' },
-                { id: 'name', numeric: false, disablePadding: false, label: 'Dog Name' },
-                { id: 'currentlyWith', numeric: false, disablePadding: false, label: 'In Care Of' },
-                { id: 'city', numeric: false, disablePadding: false, label: 'City' },
-                { id: 'state', numeric: false, disablePadding: false, label: 'State' },
-                { id: 'gender', numeric: false, disablePadding: false, label: 'Gender' },
-                { id: 'dob', numeric: false, disablePadding: false, label: 'Date of Birth' },
-                { id: 'region', numeric: false, disablePadding: false, label: 'Region' },
-                { id: 'status', numeric: false, disablePadding: false, label: 'Status' },
+                { id: 'id', label: 'Id' },
+                { id: 'name', label: 'Dog Name' },
+                { id: 'currentlyWith', label: 'In Care Of' },
+                { id: 'city', label: 'City' },
+                { id: 'state', label: 'State' },
+                { id: 'gender', label: 'Gender' },
+                { id: 'dob', label: 'Date of Birth' },
+                { id: 'region', label: 'Region' },
+                { id: 'status', label: 'Status' },
               ]}
             viewLinkPrefix="/viewDog/"
             canCreate={true} createText="Add Dog" createPath="/createDog"

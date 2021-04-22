@@ -24,13 +24,13 @@ export default function ViewAllUsers() {
     return (
         <ViewAll title="View ASF Users"
             tableColumns={[
-                { id: 'firstName', numeric: false, disablePadding: false, label: 'First Name' },
-                { id: 'lastName', numeric: false, disablePadding: false, label: 'Last Name' },
-                { id: 'email', numeric: false, disablePadding: false, label: 'Email' },
-                { id: 'city', numeric: false, disablePadding: false, label: 'City' },
-                { id: 'state', numeric: false, disablePadding: false, label: 'State' },
-                { id: 'region', numeric: false, disablePadding: false, label: 'Region' },
-                { id: 'roles', numeric: false, disablePadding: false, label: 'Roles' }
+                { id: 'firstName', label: 'First Name' },
+                { id: 'lastName', label: 'Last Name' },
+                { id: 'email', label: 'Email' },
+                { id: 'city', label: 'City' },
+                { id: 'state', label: 'State' },
+                { id: 'region', label: 'Region' },
+                { id: 'roles', label: 'Roles' }
             ]}
             viewLinkPrefix="/user/"
             canCreate={true} createText="Add User" createPath="/createUser"
