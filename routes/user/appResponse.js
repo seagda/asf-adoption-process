@@ -13,7 +13,7 @@ responseRouter.get("/", (req, res) => {
     if (permission.granted) {
         db.AppResponse.findAll({
             attributes: { exclude: ["response"] }, where: req.query, include: [db.AppStatus, db.AppType,
-            { association: "ForDog", attributes: ["name", "id"] }, { model: db.User, attributes: ["firstName", "lastName", "id"], include: [db.Address] }]
+            { association: "ForDog", attributes: ["name", "id"] }, { model: db.User, attributes: ["firstName", "lastName", "id"], include: [db.Address, { association: "ResidesInRegion" }] }]
         }).then(responses => res.json(responses.map(response => permission.filter(response.toJSON()))))
             .catch(err => {
                 console.error(err)
