@@ -38,7 +38,7 @@ export default function ViewAllApps() {
                 { id: 'updatedAt', label: 'Date Updated' }
             ]}
             viewLinkPrefix="/viewDog/"
-            canCreate={true} createText="Add Dog" createPath="/createDog"
+            canCreate={false}
             data={data}
             tableTitle="Dog Details"
             flow={<div style={{ height: 120, width: '100%' }} >
