@@ -22,6 +22,7 @@ import DogDossierDocs from "./pages/DogDossierDocs";
 import Profile from "./pages/Profile";
 import BehaveAssessAnswers from "./pages/BehavAssessAnswers";
 import AppResponse from "./pages/AppResponse";
+import ViewAllApps from "./pages/ViewAllApps";
 
 export default function App() {
     return (
@@ -39,6 +40,7 @@ export default function App() {
                     <Route path="/dossiers"><ViewAllDogs /></Route>
                     <Redirect from="/View-ASF-Users" to="/users" />
                     <Route path="/users"><ViewAllUsers /></Route>
+                    <Route path="/apps"><ViewAllApps /></Route>
                     <Redirect from="/editprofile" to="/user/me/edit" />
                     <Route path="/adopterApplication"><AdopterApplication/></Route>
                     <Route path="/fosterApplication"><FosterApplication/></Route>

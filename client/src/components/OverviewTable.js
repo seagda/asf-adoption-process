@@ -20,7 +20,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
-import {NavLink} from "react-router-dom";
+import {Link} from "react-router-dom";
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -69,8 +69,6 @@ function EnhancedTableHead(props) {
         {props.columns.map((headCell) => (
           <TableCell
             key={headCell.id}
-            // align={headCell.numeric ? 'right' : 'left'}
-            padding={headCell.disablePadding ? 'none' : 'default'}
             sortDirection={orderBy === headCell.id ? order : false}
           >
             <TableSortLabel
@@ -176,7 +174,7 @@ const useStyles = makeStyles((theme) => ({
 export default function OverviewTable(props) {
   const classes = useStyles();
   const [order, setOrder] = React.useState('asc');
-  const [orderBy, setOrderBy] = React.useState('calories');
+  const [orderBy, setOrderBy] = React.useState('id');
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
@@ -278,7 +276,7 @@ export default function OverviewTable(props) {
                           inputProps={{ 'aria-labelledby': labelId }}
                         /> */}
                       </TableCell>
-                      {props.columns.map(column => <TableCell key={column.id}>{row[column.id]}</TableCell>)}
+                      {props.columns.map(column => <TableCell key={column.id}>{column.link ? <Link to={`${props.linkPrefix}${row.id}`}>{row[column.id]}</Link> : row[column.id]}</TableCell>)}
                     </TableRow>
                   );
                 })}
