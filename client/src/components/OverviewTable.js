@@ -20,7 +20,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
-import {NavLink} from "react-router-dom";
+import {Link} from "react-router-dom";
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -276,7 +276,7 @@ export default function OverviewTable(props) {
                           inputProps={{ 'aria-labelledby': labelId }}
                         /> */}
                       </TableCell>
-                      {props.columns.map(column => <TableCell key={column.id}>{row[column.id]}</TableCell>)}
+                      {props.columns.map(column => <TableCell key={column.id}>{column.link ? <Link to={`${props.linkPrefix}${row.id}`}>{row[column.id]}</Link> : row[column.id]}</TableCell>)}
                     </TableRow>
                   );
                 })}
