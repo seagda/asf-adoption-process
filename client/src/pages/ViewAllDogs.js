@@ -15,9 +15,7 @@ export default function ViewAllDogs() {
                 state: dog.Address.state,
                 region: dog.Region.name,
                 currentlyWith: dog.CurrentlyWith ? `${dog.CurrentlyWith.firstName} ${dog.CurrentlyWith.lastName}` : "Not Assigned",
-                status: dog.DogStatus.name,
-                city: dog.Address.city,
-                state: dog.Address.state
+                status: dog.DogStatus.name
             })))
         })
     }, []);
