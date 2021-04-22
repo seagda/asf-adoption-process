@@ -16,6 +16,14 @@ router.get("/types", (req, res) => {
     else res.status(403).send({ message: "Not authorized to view application types" });
 });
 
+// get list of statuses
+router.get("/statuses", (req, res) => {
+    db.AppStatus.findall().then(statuses => res.json(statuses)).catch(err => {
+        console.error(err);
+        res.status(500).send({ message: "Database error" })
+    })
+})
+
 // get application questions for a certain type of application
 router.get("/:type/questions", (req, res) => {
     const permission = ac.can(req.roles).readAny("AppQuestion");
