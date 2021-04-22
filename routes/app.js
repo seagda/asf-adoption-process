@@ -18,7 +18,7 @@ router.get("/types", (req, res) => {
 
 // get list of statuses
 router.get("/statuses", (req, res) => {
-    db.AppStatus.findall().then(statuses => res.json(statuses)).catch(err => {
+    db.AppStatus.findAll().then(statuses => res.json(statuses)).catch(err => {
         console.error(err);
         res.status(500).send({ message: "Database error" })
     })
