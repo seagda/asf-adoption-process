@@ -28,7 +28,7 @@ export default function QuickActionsAdmin(){
                 <ApplyButton toLink="/Dog-Dossiers" buttonText="Approve Pending Intake" color="primary" icon={<PetsIcon />}/>
             </Grid>
             <Grid item>
-                <ApplyButton toLink="/View-ASF-Users" buttonText="Approve Foster or Adopter" color="primary" icon={<ThumbUpIcon />}/>
+                <ApplyButton toLink="/apps" buttonText="Approve Applications" color="primary" icon={<ThumbUpIcon />}/>
             </Grid>
         </Grid>
     )
