@@ -23,7 +23,7 @@ export default function ViewAllDogs() {
     return (
         <ViewAll title="Dog Dossiers"
             tableColumns={[
-                { id: 'id', label: 'Id' },
+                { id: 'id', label: 'ID' },
                 { id: 'name', label: 'Dog Name' },
                 { id: 'currentlyWith', label: 'In Care Of' },
                 { id: 'city', label: 'City' },
