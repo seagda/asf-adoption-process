@@ -8,7 +8,6 @@ export default function ViewAllApps() {
 
     useEffect(() => {
         API.getAllAppResponses().then(res => {
-            console.log(res);
             setData(res.data.map(app => ({
                 ...app,
                 name: `${app.User.firstName} ${app.User.lastName}`,
