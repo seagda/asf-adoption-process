@@ -59,7 +59,7 @@ export default function App() {
                     <Route path="/behaveAnswers/:id"><BehaveAssessAnswers/></Route>
                     <Route path="/appResponse/:id"><AppResponse /></Route>
                     <Redirect from="/appAnswersUser/:id" to="/user/:id" />
-                    <Redirect from="/appAnswersMe/:id" to="/user/:id" />
+                    <Redirect from="/appAnswersMe/:id" to="/user/me" />
                 </Switch>
             </BrowserRouter>
         </ThemeProvider>
