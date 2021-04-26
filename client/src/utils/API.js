@@ -31,11 +31,8 @@ const API = {
     createUser: function(userData){
         return axios.post(`/api/user/new`, userData, getHeaders())
     },
-    getAdopterApp: function(){
-        return axios.get(`/api/app/adopter/questions`, getHeaders())
-    },
-    getFosterApp: function(){
-        return axios.get(`/api/app/foster/questions`, getHeaders())
+    getAppQuestions: function(type){
+        return axios.get(`/api/app/${type}/questions`, getHeaders())
     },
     sendAppData: function(response, AppTypeId){
         return axios.post(`/api/user/app-response`, {response, AppTypeId}, getHeaders())

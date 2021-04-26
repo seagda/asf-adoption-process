@@ -28,13 +28,24 @@ const useStyles = makeStyles(theme => ({
 export default function Application() {
     const classes = useStyles();
     const [showPage, setShowPage] = useState(true);
+    const [appType, setAppType] = useState({});
 
-    const { appType } = useParams();
+    const { appTypeName } = useParams();
 
     const [appQuestions, setAppQuestions] = useState([])
 
+    useEffect(() => {
+        API.getAppQuestions(appTypeName).then(res => {
+            setAppQuestions(res.data.panels)
+            setAppType(res.data.AppType)
+        }).catch(err => {
+            console.error(err.response.data.message)
+            alert("get data failed")
+        })
+    }, [])
+
     const onCompletePage = useCallback((data) => {
-        API.sendAppData(data, 2);
+        API.sendAppData(data, appType.id);
         setShowPage(!showPage)
     }, [showPage])
 
@@ -49,7 +60,7 @@ export default function Application() {
 
     return (
         <Grid container className={classes.mainContainer}>
-            <Typography variant="h4" color="primary">Foster Application</Typography>
+            <Typography variant="h4" color="primary">{appTypeName[0].toUpperCase() + appTypeName.substring(1)} Application</Typography>
             {showPage ? <Survey.Survey
                 className="sv_main sv_body"
                 json={{ elements: appQuestions }}

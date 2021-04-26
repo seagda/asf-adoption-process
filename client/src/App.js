@@ -15,7 +15,7 @@ import DashboardMain from "./pages/DashboardMain";
 import SignUp from "./pages/SignUp";
 import Home from "./pages/Home";
 import Settings from "./pages/Settings";
-import FosterApplication from "./pages/FosterApplication";
+import Application from "./pages/Application";
 import DogProfileEdit from "./pages/DogProfileEdit";
 import BehaviorAssessment from "./pages/BehaviorAssessment";
 import DogDossierDocs from "./pages/DogDossierDocs";
@@ -42,8 +42,9 @@ export default function App() {
                     <Route path="/users"><ViewAllUsers /></Route>
                     <Route path="/apps"><ViewAllApps /></Route>
                     <Redirect from="/editprofile" to="/user/me/edit" />
-                    <Route path="/adopterApplication"><AdopterApplication/></Route>
-                    <Route path="/fosterApplication"><FosterApplication/></Route>
+                    <Redirect from="/adopterApplication" to="/application/adopter" />
+                    <Redirect from="/fosterApplication" to="/application/foster" />
+                    <Route path="/application/:appTypeName"><Application /></Route>
                     <Route path="/createUser"><CreateUser/></Route>
                     <Route path="/dogView/:id"><DogProfileView/></Route>
                     <Redirect from="/viewDog/:id" to="/dogView/:id" />
