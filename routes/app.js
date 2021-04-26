@@ -60,7 +60,8 @@ router.get("/:type/questions", (req, res) => {
                         return question;
                     })
                 }));
-                res.json(panels);
+                console.log(categories[0].AppQuestions[0].AppTypes[0]);
+                res.json({ panels, AppType: categories[0].AppQuestions[0].AppTypes[0] });
             })
             .catch(err => {
                 console.error(err);
