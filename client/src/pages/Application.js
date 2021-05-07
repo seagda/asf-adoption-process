@@ -30,7 +30,7 @@ export default function Application() {
     const [showPage, setShowPage] = useState(true);
     const [appType, setAppType] = useState({});
 
-    const { appTypeName } = useParams();
+    const { appTypeName, dogId } = useParams();
 
     const [appQuestions, setAppQuestions] = useState([])
 

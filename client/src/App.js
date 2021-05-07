@@ -43,7 +43,7 @@ export default function App() {
                     <Redirect from="/editprofile" to="/user/me/edit" />
                     <Redirect from="/adopterApplication" to="/application/adopter" />
                     <Redirect from="/fosterApplication" to="/application/foster" />
-                    <Route path="/application/:appTypeName"><Application /></Route>
+                    <Route path="/application/:appTypeName/:dogId"><Application /></Route>
                     <Route path="/createUser"><CreateUser/></Route>
                     <Route path="/dogView/:id"><DogProfileView/></Route>
                     <Redirect from="/viewDog/:id" to="/dogView/:id" />
