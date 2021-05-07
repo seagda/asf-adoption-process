@@ -45,7 +45,7 @@ export default function Application() {
     }, [])
 
     const onCompletePage = useCallback((data) => {
-        API.sendAppData(data, appType.id);
+        API.sendAppData(data, appType.id, dogId);
         setShowPage(!showPage)
     }, [showPage])
 

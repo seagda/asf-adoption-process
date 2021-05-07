@@ -34,7 +34,7 @@ const API = {
     getAppQuestions: function(type){
         return axios.get(`/api/app/${type}/questions`, getHeaders())
     },
-    sendAppData: function(response, AppTypeId){
+    sendAppData: function(response, AppTypeId, ForDogId){
         return axios.post(`/api/user/app-response`, {response, AppTypeId}, getHeaders())
     },
     getAllAppResponses: function() {
