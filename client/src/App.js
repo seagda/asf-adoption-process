@@ -6,7 +6,6 @@ import theme from "../src/components/Theme";
 import ResponsiveDrawer from "../src/components/Header";
 import Login from "../src/pages/Login"
 import CreateUser from "../src/pages/CreateUser";
-import AdopterApplication from "./pages/AdopterApplication";
 import ViewAllUsers from "./pages/ViewAllUsers";
 import ViewAllDogs from "./pages/ViewAllDogs";
 import DogProfileView from "./pages/DogProfileView";
